@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="DealerLocator-1.3.5.2">
+    <CLASSES>
+      <root url="jar://$jarRepo$/DealerLocator/1.3.5.2/DealerLocator-1.3.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$jarRepo$/DealerLocator/1.3.5.2/src" />
+    </SOURCES>
+  </library>
+</component>

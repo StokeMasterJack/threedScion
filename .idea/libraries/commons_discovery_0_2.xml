@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons-discovery-0.2">
+    <CLASSES>
+      <root url="jar://$jarRepo$/commons-discovery/0.2/commons-discovery-0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

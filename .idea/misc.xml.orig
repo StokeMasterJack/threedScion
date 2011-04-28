@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BuildJarProjectSettings">
+    <option name="BUILD_JARS_ON_MAKE" value="false" />
+  </component>
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
+  <component name="CppTools.Loader" reportImplicitCastToBool="false" reportNameReferencedOnce="false" version="3" compilerSelect="AUTO" />
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OPEN_IN_BROWSER" value="true" />
+    <option name="OUTPUT_DIRECTORY" value="/temp/exportToHTML" />
+  </component>
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="javaeeApplication">
+        <modules>
+          <module name="Configurator-ToyotaApp">
+            <files>
+              <file url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
+              <file url="file://$PROJECT_DIR$/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+      <facet-type id="gwt">
+        <modules>
+          <module name="gwtCollections">
+            <files>
+              <file url="file://$PROJECT_DIR$/gwtCollections/out/production/gwtCollections/com/google/gwt/collections/Collections.gwt.xml" />
+              <file url="file://$PROJECT_DIR$/gwtCollections/src/com/google/gwt/collections/Collections.gwt.xml" />
+            </files>
+          </module>
+          <module name="Threed_Framework">
+            <files>
+              <file url="file:///temp/Threed_Framework-2010-03-27-BU/src/java/com/tms/threed/Threed.gwt.xml" />
+            </files>
+          </module>
+          <module name="featureModel">
+            <files>
+              <file url="file://$PROJECT_DIR$/featureModel/src/com/tms/threed/featureModel/FeatureModel.gwt.xml" />
+            </files>
+          </module>
+          <module name="imageModel">
+            <files>
+              <file url="file://$PROJECT_DIR$/imageModel/src/com/tms/threed/imageModel/ImageModel.gwt.xml" />
+            </files>
+          </module>
+          <module name="threedCore">
+            <files>
+              <file url="file://$PROJECT_DIR$/threedCore/src/com/tms/threed/threedCore/ThreedCore.gwt.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+      <facet-type id="web">
+        <modules>
+          <module name="htdocs">
+            <files>
+              <file url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pub/WEB-INF/web.xml" />
+              <file url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pubOriginal/WEB-INF/web.xml" />
+            </files>
+          </module>
+          <module name="Configurator-ToyotaApp">
+            <files>
+              <file url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
+            </files>
+          </module>
+          <module name="jpgGen">
+            <files>
+              <file url="file://$PROJECT_DIR$/jpgGen/web/WEB-INF/web.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
+<<<<<<< HEAD
+  <component name="IdProvider" IDEtalkID="14397794B3282DBC2BC6163ECE1A8D0D" />
+=======
+  <component name="IdProvider" IDEtalkID="3AA234F3284B11A001C2C7AFDD0424F1" />
+>>>>>>> fm-reduce
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" />
+    <option name="OPTION_SCOPE" value="protected" />
+    <option name="OPTION_HIERARCHY" value="true" />
+    <option name="OPTION_NAVIGATOR" value="true" />
+    <option name="OPTION_INDEX" value="true" />
+    <option name="OPTION_SEPARATE_INDEX" value="true" />
+    <option name="OPTION_DOCUMENT_TAG_USE" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_AUTHOR" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_VERSION" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="true" />
+    <option name="OPTION_DEPRECATED_LIST" value="true" />
+    <option name="OTHER_OPTIONS" value="" />
+    <option name="HEAP_SIZE" />
+    <option name="LOCALE" />
+    <option name="OPEN_IN_BROWSER" value="true" />
+  </component>
+  <component name="ProjectFacetManager">
+    <default-configurations>
+      <entry facet-type="gwt">
+        <default-facet-configuration>
+          <configuration>
+            <setting name="compilerMaxHeapSize" value="128" />
+            <setting name="gwtScriptOutputStyle" value="DETAILED" />
+            <setting name="gwtSdkUrl" value="file:///../../../p-java/gwt-2.0.3" />
+          </configuration>
+        </default-facet-configuration>
+      </entry>
+    </default-configurations>
+  </component>
+  <component name="ProjectResources">
+    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+    <output url="file://$tmsOut$/threed" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="/../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/ebro/tmsTools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/ebro/tmsTools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/ebro/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="/../_projects/tmsRepo/TMS/framework/Configurator-ToyotaFramework">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/ebro/tmsTools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/ebro/tmsTools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/ebro/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="/../_projects/tmsRepo/TMS/htdocs/configurator_toyota">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/ebro/tmsTools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/ebro/tmsTools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/ebro/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/.idea">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/featureModel">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/featureModelJavaBdd">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/featurePicker">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/imageModel">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/javaBdd">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jpgGen">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/previewPane">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/previewPaneAdapter">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/previewPanel">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/testHarness">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/threedCore">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/threedFramework">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/util">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://subversion.assembla.com/svn/tmsThreed/tools">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://subversion.assembla.com/svn/tmsThreed/tools" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://subversion.assembla.com/svn/tmsThreed/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
+</project>
+

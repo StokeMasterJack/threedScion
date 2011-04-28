@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons-httpclient-2.0.2">
+    <CLASSES>
+      <root url="jar://$jarRepo$/commons-httpclient/2.0.2/commons-httpclient-2.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

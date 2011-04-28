@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="threed.jar">
+    <output-path>$USER_HOME$/cvsCheckouts/CVSROOT/lib/ThreedFramework/SNAPSHOT</output-path>
+    <root id="archive" name="ThreedFramework.jar">
+      <element id="module-output" name="ThreedFramework" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,27 @@
+versions:
+    jpg gen only deals with "tags" which are less frequent than commits
+    a tag is the team site edition
+    a tag a applies to a series/year
+
+
+a jpg job:
+     series/year/tag/width
+
+
+Need a way to list all Tagged SeriesCommits(series/year/commitTag)
+
+	And see, has analysys been done yet?
+		A way to 
+			persist that fact - 
+				for each png give it a 2 char id
+				a tree struct to represent all combinations (or a false file)
+				compress and persist
+				sha the whole thing
+				save as commitId.jpgs
+			verify that fact
+
+	For each width, has jpgGen been completed.
+		A way to 
+			persist that fact
+			verify that fact
+

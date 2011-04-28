@@ -1,0 +1,33 @@
+<!--
+  Ant file compiles the VIN Locator framework package.
+-->
+
+<!DOCTYPE project [
+  <!ENTITY include_init SYSTEM "../../builder/build_init.xml">
+  <!ENTITY include_path SYSTEM "../../builder/build_path.xml">
+  <!ENTITY include_compile_init SYSTEM "../../builder/build_compile_init.xml">
+  <!ENTITY include_targets SYSTEM "../../builder/build_targets.xml">
+]>
+
+<project name="VINLocator" default="help" basedir="">
+
+  &include_targets;
+
+  <target name="init" description="Initialize required items">
+    <property environment="myenv" />
+
+    <property file="build.properties"/>
+
+    &include_init;
+    &include_path;
+    &include_compile_init;
+  </target>
+
+  <target name="prepare" depends="init,prepare_core"
+      description="Prepare for build">
+  </target>
+
+  <target name="clean" depends="init,clean_core"
+      description="Clean up all generated files">
+  </target>
+</project>

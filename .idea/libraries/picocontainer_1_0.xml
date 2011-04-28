@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="picocontainer-1.0">
+    <CLASSES>
+      <root url="jar://$jarRepo$/picocontainer/1.0/picocontainer-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$jarRepo$/picocontainer/1.0/src" />
+    </SOURCES>
+  </library>
+</component>

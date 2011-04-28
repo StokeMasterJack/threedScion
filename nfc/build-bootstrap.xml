@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+provides project-level targets that check out all required build scripts
+and libraries required to perform builds for this application
+
+Version $Id: build-bootstrap.xml,v 1.3 2009/03/25 03:29:17 douglas Exp $
+-->
+
+<project default="bootstrap" basedir=".">
+	<property environment="env"/>
+	<property file="${user.home}/build.properties"/>
+	<property file="build.properties"/>
+
+	<property name="bootstrap.cvsroot" value="${env.CVSROOT}"/>
+	<property name="bootstrap.cvs_rsh" value="${env.CVS_RSH}"/>
+
+	<property name="client" value="TMS"/>
+
+	<target name="init">
+		<condition property="tagged.build">
+			 <isset property="build.tag"/>
+		</condition>
+		<condition property="branched.build">
+			 <isset property="build.branch"/>
+		</condition>
+	</target>
+
+	<!-- 
+	  - checkout targets begin
+	  - 
+	  - Check out required libraries from CVS that will allow the build.xml program
+	  - to successfully execute
+	  -->
+	<target name="cvs:update_with_branch" if="branched.build">
+		<property name="checkout.done" value="true" />
+		<echo message="BOOTSTRAP: checking out code from branch ${build.branch}" />
+		<cvs command="update -r${build.branch} -d builder build.xml" dest="../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+		<cvs command="checkout -r${build.branch} TMS/config TMS/scripts" dest="../../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+	</target>
+
+	<target name="cvs:update_with_tag" if="tagged.build">
+		<property name="checkout.done" value="true" />
+		<echo message="BOOTSTRAP: checking out code with tag ${build.tag}" />
+		<cvs command="update -r${build.tag} -d builder build.xml" dest="../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+		<cvs command="checkout -r${build.tag} TMS/config TMS/scripts" dest="../../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+	</target>
+
+	<target name="cvs:update" unless="checkout.done">
+		<echo message="BOOTSTRAP: checking out top-of-tree for project" />
+		<cvs command="update -Ad builder build.xml" dest="../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+		<cvs command="checkout -A TMS/config TMS/scripts" dest="../../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+	</target>
+	<!-- checkout targets end -->
+	
+	<target name="bootstrap" depends="init,cvs:update_with_branch,cvs:update_with_tag,cvs:update">
+		<cvs command="checkout tools" dest="../../.."
+			cvsRoot="${bootstrap.cvsroot}" cvsRsh="${bootstrap.cvs_rsh}"/>
+	</target>
+
+        <target name="package" depends="bootstrap">
+                <ant antfile="build.xml" target="package" inheritAll="true" dir="${basedir}"/>
+        </target>
+
+	<target name="official" depends="bootstrap">
+		<ant antfile="build.xml" target="official" inheritAll="true" dir="${basedir}" />
+	</target>
+
+	<target name="deploy" depends="bootstrap">
+		<ant antfile="build.xml" target="deploy" inheritAll="true" dir="${basedir}"/>
+	</target>
+
+	<!-- Anthill uses this target when building dependency groups -->
+	<target name="dependency">
+	</target>
+
+</project>
+

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="TMSFramework-2.2.16">
+    <CLASSES>
+      <root url="jar://$jarRepo$/TMSFramework/2.2.16/TMSFramework-2.2.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$jarRepo$/TMSFramework/2.2.16/src" />
+    </SOURCES>
+  </library>
+</component>

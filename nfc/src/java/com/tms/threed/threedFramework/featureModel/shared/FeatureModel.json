@@ -1,0 +1,1973 @@
+{
+  "rootVar" : {
+    "code" : "camry",
+    "childNodes" : [ {
+      "code" : "Trim",
+      "childNodes" : [ {
+        "code" : "Grade",
+        "childNodes" : [ {
+          "code" : "Base"
+        }, {
+          "code" : "LE"
+        }, {
+          "code" : "SE"
+        }, {
+          "code" : "XLE"
+        }, {
+          "code" : "Hyb"
+        } ]
+      }, {
+        "code" : "Engine",
+        "childNodes" : [ {
+          "code" : "L4"
+        }, {
+          "code" : "V6"
+        }, {
+          "code" : "Hybrid"
+        } ]
+      }, {
+        "code" : "Transmission",
+        "childNodes" : [ {
+          "code" : "6MT"
+        }, {
+          "code" : "6AT"
+        }, {
+          "code" : "ECVT"
+        } ]
+      }, {
+        "code" : "ModelCode",
+        "childNodes" : [ {
+          "code" : "2513"
+        }, {
+          "code" : "2514"
+        }, {
+          "code" : "2531"
+        }, {
+          "code" : "2532"
+        }, {
+          "code" : "2552"
+        }, {
+          "code" : "2540"
+        }, {
+          "code" : "2554"
+        }, {
+          "code" : "2545"
+        }, {
+          "code" : "2546"
+        }, {
+          "code" : "2550"
+        }, {
+          "code" : "2560"
+        } ]
+      } ]
+    }, {
+      "code" : "Color",
+      "childNodes" : [ {
+        "code" : "FabricPlusColor",
+        "childNodes" : [ {
+          "code" : "FB13"
+        }, {
+          "code" : "FB40"
+        }, {
+          "code" : "FA13"
+        }, {
+          "code" : "FA40"
+        }, {
+          "code" : "FC14"
+        }, {
+          "code" : "FC15"
+        }, {
+          "code" : "LA13"
+        }, {
+          "code" : "LA40"
+        }, {
+          "code" : "LB14"
+        }, {
+          "code" : "LB15"
+        } ]
+      }, {
+        "code" : "ExteriorColor",
+        "childNodes" : [ {
+          "code" : "040"
+        }, {
+          "code" : "1F7"
+        }, {
+          "code" : "1G3"
+        }, {
+          "code" : "202"
+        }, {
+          "code" : "3R3"
+        }, {
+          "code" : "4T8"
+        }, {
+          "code" : "6V4"
+        }, {
+          "code" : "776"
+        }, {
+          "code" : "8T5"
+        }, {
+          "code" : "8U8"
+        } ]
+      }, {
+        "code" : "InteriorColor",
+        "childNodes" : [ {
+          "code" : "Ash"
+        }, {
+          "code" : "Charcoal"
+        }, {
+          "code" : "Bisque"
+        }, {
+          "code" : "13"
+        }, {
+          "code" : "14"
+        }, {
+          "code" : "15"
+        }, {
+          "code" : "40"
+        } ]
+      }, {
+        "code" : "InteriorMaterial",
+        "childNodes" : [ {
+          "code" : "Fabric"
+        }, {
+          "code" : "Leather"
+        } ]
+      } ]
+    }, {
+      "code" : "Accessories",
+      "childNodes" : [ {
+        "code" : "ExteriorAccessories",
+        "childNodes" : [ {
+          "code" : "E5"
+        }, {
+          "code" : "WB"
+        }, {
+          "code" : "BM"
+        }, {
+          "code" : "DIO3"
+        }, {
+          "code" : "R7"
+        } ]
+      }, {
+        "code" : "InteriorAccessories",
+        "childNodes" : [ {
+          "code" : "28"
+        }, {
+          "code" : "CF"
+        }, {
+          "code" : "2Q"
+        } ]
+      } ]
+    } ]
+  },
+  "constraints" : {
+    "type" : "Junction",
+    "subtype" : "And",
+    "exprList" : [ {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "Base"
+      }, {
+        "type" : "Var",
+        "code" : "LE"
+      }, {
+        "type" : "Var",
+        "code" : "SE"
+      }, {
+        "type" : "Var",
+        "code" : "XLE"
+      }, {
+        "type" : "Var",
+        "code" : "Hyb"
+      } ]
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "L4"
+      }, {
+        "type" : "Var",
+        "code" : "V6"
+      }, {
+        "type" : "Var",
+        "code" : "Hybrid"
+      } ]
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "6MT"
+      }, {
+        "type" : "Var",
+        "code" : "6AT"
+      }, {
+        "type" : "Var",
+        "code" : "ECVT"
+      } ]
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "2513"
+      }, {
+        "type" : "Var",
+        "code" : "2514"
+      }, {
+        "type" : "Var",
+        "code" : "2531"
+      }, {
+        "type" : "Var",
+        "code" : "2532"
+      }, {
+        "type" : "Var",
+        "code" : "2552"
+      }, {
+        "type" : "Var",
+        "code" : "2540"
+      }, {
+        "type" : "Var",
+        "code" : "2554"
+      }, {
+        "type" : "Var",
+        "code" : "2545"
+      }, {
+        "type" : "Var",
+        "code" : "2546"
+      }, {
+        "type" : "Var",
+        "code" : "2550"
+      }, {
+        "type" : "Var",
+        "code" : "2560"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2513"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6MT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2514"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2531"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6MT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2532"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2552"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "V6"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2540"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "XLE"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2554"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "XLE"
+        }, {
+          "type" : "Var",
+          "code" : "V6"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2545"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "SE"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6MT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2546"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "SE"
+        }, {
+          "type" : "Var",
+          "code" : "L4"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2550"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "SE"
+        }, {
+          "type" : "Var",
+          "code" : "V6"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2560"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Hyb"
+        }, {
+          "type" : "Var",
+          "code" : "Hybrid"
+        }, {
+          "type" : "Var",
+          "code" : "ECVT"
+        } ]
+      }
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "040"
+      }, {
+        "type" : "Var",
+        "code" : "1F7"
+      }, {
+        "type" : "Var",
+        "code" : "1G3"
+      }, {
+        "type" : "Var",
+        "code" : "202"
+      }, {
+        "type" : "Var",
+        "code" : "3R3"
+      }, {
+        "type" : "Var",
+        "code" : "4T8"
+      }, {
+        "type" : "Var",
+        "code" : "6V4"
+      }, {
+        "type" : "Var",
+        "code" : "776"
+      }, {
+        "type" : "Var",
+        "code" : "8T5"
+      }, {
+        "type" : "Var",
+        "code" : "8U8"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Base"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "1G3"
+        }, {
+          "type" : "Var",
+          "code" : "3R3"
+        }, {
+          "type" : "Var",
+          "code" : "6V4"
+        }, {
+          "type" : "Var",
+          "code" : "776"
+        }, {
+          "type" : "Var",
+          "code" : "8U8"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "8U8"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "SE"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "4T8"
+        }, {
+          "type" : "Var",
+          "code" : "6V4"
+        }, {
+          "type" : "Var",
+          "code" : "776"
+        }, {
+          "type" : "Var",
+          "code" : "8U8"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "XLE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "8U8"
+      }
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "Fabric"
+      }, {
+        "type" : "Var",
+        "code" : "Leather"
+      } ]
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "Ash"
+      }, {
+        "type" : "Var",
+        "code" : "Charcoal"
+      }, {
+        "type" : "Var",
+        "code" : "Bisque"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Ash"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "4T8"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Ash"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "776"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Bisque"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "1F7"
+      }
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "13"
+      }, {
+        "type" : "Var",
+        "code" : "14"
+      }, {
+        "type" : "Var",
+        "code" : "15"
+      }, {
+        "type" : "Var",
+        "code" : "40"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "13"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Ash"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "14"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Ash"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "15"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Charcoal"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "40"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Bisque"
+      }
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "FA13"
+      }, {
+        "type" : "Var",
+        "code" : "FB13"
+      }, {
+        "type" : "Var",
+        "code" : "FC14"
+      }, {
+        "type" : "Var",
+        "code" : "LA13"
+      }, {
+        "type" : "Var",
+        "code" : "LB14"
+      }, {
+        "type" : "Var",
+        "code" : "FA40"
+      }, {
+        "type" : "Var",
+        "code" : "FB40"
+      }, {
+        "type" : "Var",
+        "code" : "LA40"
+      }, {
+        "type" : "Var",
+        "code" : "FC15"
+      }, {
+        "type" : "Var",
+        "code" : "LB15"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FA13"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Ash"
+        }, {
+          "type" : "Var",
+          "code" : "13"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Hyb"
+          }, {
+            "type" : "Var",
+            "code" : "XLE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FB13"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Ash"
+        }, {
+          "type" : "Var",
+          "code" : "13"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Base"
+          }, {
+            "type" : "Var",
+            "code" : "LE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FC14"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Ash"
+        }, {
+          "type" : "Var",
+          "code" : "14"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA13"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Ash"
+        }, {
+          "type" : "Var",
+          "code" : "13"
+        }, {
+          "type" : "Var",
+          "code" : "Leather"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Hyb"
+          }, {
+            "type" : "Var",
+            "code" : "XLE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LB14"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Ash"
+        }, {
+          "type" : "Var",
+          "code" : "14"
+        }, {
+          "type" : "Var",
+          "code" : "Leather"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FA40"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Bisque"
+        }, {
+          "type" : "Var",
+          "code" : "40"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Hyb"
+          }, {
+            "type" : "Var",
+            "code" : "XLE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FB40"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Bisque"
+        }, {
+          "type" : "Var",
+          "code" : "40"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Base"
+          }, {
+            "type" : "Var",
+            "code" : "LE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA40"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Bisque"
+        }, {
+          "type" : "Var",
+          "code" : "40"
+        }, {
+          "type" : "Var",
+          "code" : "Leather"
+        }, {
+          "type" : "Junction",
+          "subtype" : "Or",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Hyb"
+          }, {
+            "type" : "Var",
+            "code" : "XLE"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "FC15"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Charcoal"
+        }, {
+          "type" : "Var",
+          "code" : "15"
+        }, {
+          "type" : "Var",
+          "code" : "Fabric"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LB15"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Charcoal"
+        }, {
+          "type" : "Var",
+          "code" : "15"
+        }, {
+          "type" : "Var",
+          "code" : "Leather"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "32"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SE"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "CQ"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "HD"
+        }, {
+          "type" : "Var",
+          "code" : "Hyb"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QA"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "AW"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QB"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "EC"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        }, {
+          "type" : "Var",
+          "code" : "6AT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Base"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SR"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "XLE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SR"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "NV"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "NV"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "EJ"
+        }, {
+          "type" : "Var",
+          "code" : "EX"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Leather"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Junction",
+          "subtype" : "And",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Ash"
+          }, {
+            "type" : "Var",
+            "code" : "4T8"
+          } ]
+        }, {
+          "type" : "Junction",
+          "subtype" : "And",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Ash"
+          }, {
+            "type" : "Var",
+            "code" : "776"
+          } ]
+        }, {
+          "type" : "Junction",
+          "subtype" : "And",
+          "exprList" : [ {
+            "type" : "Var",
+            "code" : "Bisque"
+          }, {
+            "type" : "Var",
+            "code" : "1F7"
+          } ]
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QC"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SE"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QC"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "HD"
+        }, {
+          "type" : "Var",
+          "code" : "LA"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "NV"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QE"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "Hyb"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QF"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "HD"
+        }, {
+          "type" : "Var",
+          "code" : "SK"
+        }, {
+          "type" : "Var",
+          "code" : "XLE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "HD"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "CQ"
+        }, {
+          "type" : "Var",
+          "code" : "QC"
+        }, {
+          "type" : "Var",
+          "code" : "QF"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "HD"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Base"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "HD"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "LE"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EC"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Base"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "XLE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "EC"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EJ"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "EX"
+        }, {
+          "type" : "Var",
+          "code" : "NV"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EX"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "EJ"
+        }, {
+          "type" : "Var",
+          "code" : "NV"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "XLE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "EX"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "SK"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "6MT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LF"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "SE"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "LF"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "NV"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Camera"
+        }, {
+          "type" : "Var",
+          "code" : "Antenna"
+        }, {
+          "type" : "Var",
+          "code" : "BTButton"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "XLE"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Chrome"
+        }, {
+          "type" : "Var",
+          "code" : "RearAC"
+        }, {
+          "type" : "Var",
+          "code" : "Wood"
+        }, {
+          "type" : "Var",
+          "code" : "ACButton"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Hyb"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Chrome"
+        }, {
+          "type" : "Var",
+          "code" : "RearAC"
+        }, {
+          "type" : "Var",
+          "code" : "ACButton"
+        }, {
+          "type" : "Var",
+          "code" : "SK"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "UP"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "EC"
+        }, {
+          "type" : "Var",
+          "code" : "EJ"
+        }, {
+          "type" : "Var",
+          "code" : "LeatherWheel"
+        }, {
+          "type" : "Var",
+          "code" : "Hyb"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "UT"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "NV"
+        }, {
+          "type" : "Var",
+          "code" : "EC"
+        }, {
+          "type" : "Var",
+          "code" : "LeatherWheel"
+        }, {
+          "type" : "Var",
+          "code" : "Hyb"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EJ"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Antenna"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EJ"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "BTButton"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Iff",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "SK"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Buttons"
+        }, {
+          "type" : "Var",
+          "code" : "StartButton"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Camera"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "NV"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "ACButton"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "XLE"
+        }, {
+          "type" : "Var",
+          "code" : "Hyb"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Buttons"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SK"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "StartButton"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SK"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EX"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Antenna"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "EX"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "BTButton"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Camera"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Chrome"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "RearAC"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Wood"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Wood"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "XLE"
+        }, {
+          "type" : "Var",
+          "code" : "LA"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LeatherWheel"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Hyb"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LeatherWheel"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "UP"
+        }, {
+          "type" : "Var",
+          "code" : "UT"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "BTButton"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "Base"
+        }, {
+          "type" : "Var",
+          "code" : "LE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "BTButton"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "NV"
+        }, {
+          "type" : "Var",
+          "code" : "EJ"
+        }, {
+          "type" : "Var",
+          "code" : "EX"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "Antenna"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "Or",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "NV"
+        }, {
+          "type" : "Var",
+          "code" : "EJ"
+        }, {
+          "type" : "Var",
+          "code" : "EX"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "LA"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "Wood"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "UP"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "WB"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "UT"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "WB"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "2540"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "E5"
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Conflict",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "28"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "6MT"
+      }
+    }, {
+      "type" : "Junction",
+      "subtype" : "Xor",
+      "exprList" : [ {
+        "type" : "Var",
+        "code" : "2Q"
+      }, {
+        "type" : "Var",
+        "code" : "CF"
+      } ]
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "QD"
+      },
+      "expr2" : {
+        "type" : "Junction",
+        "subtype" : "And",
+        "exprList" : [ {
+          "type" : "Var",
+          "code" : "R7"
+        }, {
+          "type" : "Var",
+          "code" : "SR"
+        }, {
+          "type" : "Var",
+          "code" : "SE"
+        } ]
+      }
+    }, {
+      "type" : "Pair",
+      "subtype" : "Implication",
+      "expr1" : {
+        "type" : "Var",
+        "code" : "R7"
+      },
+      "expr2" : {
+        "type" : "Var",
+        "code" : "SE"
+      }
+    } ]
+  }
+}

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="trillium-7.6">
+    <CLASSES>
+      <root url="jar://$jarRepo$/trillium/7.6/trillium-7.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

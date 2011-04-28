@@ -1,0 +1,351 @@
+<html>
+<head><title>Micro-Deliverables</title>
+    <style type="text/css">ol {
+        margin: 0;
+        padding: 0
+    }
+
+    p {
+        margin: 0
+    }
+
+    .c2 {
+        padding-left: 0pt;
+        line-height: 1.15;
+        direction: ltr;
+        margin-left: 36.0pt
+    }
+
+    .c15 {
+        padding-left: 0pt;
+        line-height: 1.15;
+        direction: ltr;
+        margin-left: 72.0pt
+    }
+
+    .c11 {
+        color: #000000;
+        font-size: 12pt;
+        font-family: Arial
+    }
+
+    .c8 {
+        color: #000000;
+        font-size: 14pt;
+        font-family: Arial
+    }
+
+    .c9 {
+        line-height: 1.15;
+        text-indent: 36.0pt;
+        direction: ltr
+    }
+
+    .c0 {
+        color: #000000;
+        font-size: 11pt;
+        font-family: Arial
+    }
+
+    .c4 {
+        line-height: 1.15;
+        text-indent: 0pt;
+        direction: ltr
+    }
+
+    .c20 {
+        color: #000000;
+        font-size: 24pt;
+        font-family: Arial
+    }
+
+    .c13 {
+        color: #ff0000;
+        font-size: 11pt;
+        font-family: Arial
+    }
+
+    .c6 {
+        color: #000000;
+        font-size: 18pt;
+        font-family: Arial
+    }
+
+    .c16 {
+        padding-top: 18.0pt;
+        padding-bottom: 4.0pt
+    }
+
+    .c10 {
+        padding-top: 12.0pt;
+        padding-bottom: 2.0pt
+    }
+
+    .c12 {
+        padding-top: 14.0pt;
+        padding-bottom: 4.0pt
+    }
+
+    .c18 {
+        padding-top: 24.0pt;
+        padding-bottom: 6.0pt
+    }
+
+    .c17 {
+        list-style-type: disc
+    }
+
+    .c5 {
+        font-style: italic
+    }
+
+    .c14 {
+        list-style-type: decimal
+    }
+
+    .c1 {
+        background-color: #ffffff
+    }
+
+    .c7 {
+        margin-left: 36.0pt
+    }
+
+    .c3 {
+        font-weight: bold
+    }
+
+    .c19 {
+        list-style-type: lower-latin
+    }</style>
+</head>
+<body class="c1"><p class="c4 c18"><a name="h.byfifafirztp"></a><span class="c3 c20">Micro Deliverables</span></p>
+
+<p class="c4 c16"><a name="h.luyu546ygnoc"></a><span class="c6 c3">Design</span></p>
+
+<p class="c4"><span class="c0 c3">Repository layout spec.</span><span class="c0"> Specification of repository file/directory structure.</span>
+</p>
+
+<p class="c4"><span class="c0 c3">Image URL spec.</span><span class="c0"> Specification of url scheme for png and jpg requests.</span>
+</p>
+
+<p class="c4 c16"><a name="h.k249u3ggb6mc"></a><span class="c6 c3">Local Source Repository Commands</span></p>
+
+<p class="c4"><span class="c0">All of these commands are </span><span class="c0 c5">local</span><span class="c0"> operations. They operate on a local repository and make no use of the network.</span>
+</p>
+
+<p class="c4"><span class="c0">The below commands all assume the </span><span class="c13 c5">source repsoitory</span>
+</p>
+
+<p class="c4 c12"><a name="h.lfnqx-52rkcp"></a><span class="c3 c8">Internal Commands</span></p>
+
+<p class="c4 c10"><a name="h.fm0g38-d6k8rp"></a><span class="c11 c3">putBlob</span></p>
+
+<p class="c4"><span
+        class="c0">Copy a file from the working directory into the repository if it is not already there. </span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Parameters</span><span class="c0">: &nbsp;working-directory-relative path to a file (non-directory) in the working directory</span>
+</p>
+
+<p class="c4"><span class="c0 c5">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Return</span><span class="c0 c3">:</span><span class="c0"> AddObjectResonse(wasAdded: bool, id: sha)</span>
+</p>
+<ol class="c17">
+    <li class="c2" value="1"><span
+            class="c0">wasAdded: bool - true if object is added, false if object was already in </span><span
+            class="c13 c5">source repository db</span><span class="c0"> </span></li>
+    <li class="c2"><span class="c0">id: sha - a new or exisitng the sha id</span></li>
+</ol>
+<p class="c4"><span class="c0 c5">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">What is does:</span></p>
+<ol class="c14">
+    <li class="c2" value="1"><span class="c0">Compute sha of the file in working dir</span></li>
+    <li class="c2"><span class="c0">If new BlobObject sha is already in the source repository, return new AddObjectResonse(false,oldSha)</span>
+    </li>
+    <li class="c2"><span class="c0">Else, copy file from working directory into </span><span class="c5 c13">source repository db</span><span
+            class="c0">.</span></li>
+    <li class="c2"><span class="c0">return new AddObjectResonse(true,newSha)</span></li>
+</ol>
+<p class="c4 c10"><a name="h.4ttcme-2w9nik"></a><span class="c11 c3">putTree</span></p>
+
+<p class="c4"><span class="c0">Copy a directory (recursively) from the working directory into the repository if it&rsquo;s not already there. </span>
+</p>
+
+<p class="c4"><span class="c0 c5">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Parameters: </span></p>
+
+<p class="c4 c7"><span class="c0">dirPath: Path - path to a directory in working directory (relative to working directory). Null implies the working directory itself.</span>
+</p>
+
+<p class="c4 c7"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">What is does:</span></p>
+<ol class="c14">
+    <li class="c2" value="1"><span class="c0">Create a new List&lt;TreeEntry&gt;()</span></li>
+    <li class="c2"><span class="c0">For each child of dirPath</span></li>
+</ol>
+<ol class="c19">
+    <li class="c15" value="1"><span class="c0">Call addObject</span></li>
+    <li class="c15"><span class="c0">Create a new TreeEntry(sha,name) </span></li>
+</ol>
+<ol class="">
+    <li class="c2" value="3"><span class="c0">Create a new TreeObject(List&lt;TreeEntry&gt;)</span></li>
+    <li class="c2"><span class="c0">Compute sha of newly created TreeObject</span></li>
+    <li class="c2"><span
+            class="c0">If sha is already in the source repository, return AddObjectResonse(false,oldSha)</span></li>
+    <li class="c2"><span class="c0">Else, write TreeObject to </span><span class="c13 c5">source repository db</span>
+    </li>
+</ol>
+<p class="c4 c10"><a name="h.1g9w93-dw0ype"></a><span class="c11 c3">putObject</span></p>
+
+<p class="c4"><span class="c0">Add a directory or file from working directory into repository db, if it&rsquo;s not already there.</span>
+</p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Parameters:</span><span class="c0"> working directory relative path to a file or directory</span>
+</p>
+
+<p class="c4"><span class="c0 c5">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Returns:</span><span class="c0"> </span><span class="c0 c5">Return</span><span
+        class="c0 c3">:</span><span class="c0"> AddObjectResonse(wasAdded: bool, id: sha)</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">What is does:</span></p>
+
+<p class="c4 c7"><span class="c0">If parameter is a file, call putBlob</span></p>
+
+<p class="c4 c7"><span class="c0">If parameter is a dir, call putTree</span></p>
+
+<p class="c4 c7"><span class="c0">&nbsp;</span></p>
+
+<p class="c4 c10"><a name="h.8jday9-3i4v98"></a><span class="c11 c3">putCommit</span></p>
+
+<p class="c4"><span class="c0">Creates a new commit and puts it into repository if not already there.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">Parameters: </span></p>
+
+<p class="c9"><span class="c0">rootTreeSha</span></p>
+
+<p class="c9"><span class="c0">commitMessage</span></p>
+
+<p class="c4 c12"><a name="h.eznti3-abhu3j"></a><span class="c8 c3">External Commands</span></p>
+
+<p class="c4 c10"><a name="h.oo2uo6-l57lq4"></a><span class="c3 c11">Commit</span></p>
+
+<p class="c4"><span class="c0">Saves working directory content to repository, creating a new version (commit object) in the process. This includes transforming files and directories from their human readable </span><span
+        class="c13 c5">working directory representation</span><span class="c0"> to the </span><span class="c13 c5">repository&rsquo;s internal representation</span><span
+        class="c0">.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Parameters: </span><span class="c0">commit message, committer-initials</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">Returns: </span><span class="c0">newly generated </span><span class="c13 c5">sha commit id</span><span
+        class="c0"> which is the sha of the newly created </span><span class="c13 c5">commit object</span><span
+        class="c0">. If working directory was clean, a message &ldquo;nothing to commit&rdquo; is returned.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c5">What is does:</span><span class="c0"> </span></p>
+<ol class="c14">
+    <li class="c2" value="1"><span class="c0">Call putTree on working directory root.</span></li>
+    <li class="c2"><span class="c0">Create a new </span><span class="c13 c5">commit object</span><span class="c0"> and add it to the </span><span
+            class="c13 c5">source repository</span><span
+            class="c0"> under its its sha commit id (by calling putCommit)</span></li>
+    <li class="c2"><span class="c0">Record the new sha commit id into the source repository&rsquo;s </span><span
+            class="c13 c5">HEAD</span><span class="c0"> file</span></li>
+</ol>
+<p class="c9"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c3">List commits. </span><span
+        class="c0">Show a table of all commits in the repository</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c3">Tag a commit. </span><span class="c0">Assign a tag name (i.e. version number) to a commit.</span>
+</p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c3">Checkout.</span><span class="c0"> </span></p>
+
+<p class="c4"><span
+        class="c0">For a given version, update working directory to reflect the state of the repository.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">More specifically, make the working directory content exactly match the repository content (though with a different representation) for the givenversion. This includes transforming source objects from the </span><span
+        class="c0 c5">repository&rsquo;s internal representation</span><span
+        class="c0"> into the more human readable </span><span class="c0 c5">working directory representation.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">If working directory is dirty, user must confirm that those changes will be lost.</span>
+</p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c3">Import series src repo</span><span class="c0">. Script to perform one-time, bulk import/rename of source content from old repository format to new repository format. This is an entirely </span><span
+        class="c0 c5">local</span><span class="c0"> operation. This implies that before running this script, the old series repo from NetStorage must be downloaded to a local temp folder using rsync. The newly created series src repo will be created on the local file system.</span>
+</p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0 c3">Import series gen repo</span><span class="c0">. Same comments as above.</span></p>
+
+<p class="c4 c16"><a name="h.iy2biswev8ds"></a><span class="c6 c3">Remote Repo Commands</span></p>
+
+<p class="c4"><span class="c0"> </span></p>
+
+<p class="c4"><span class="c0 c3">Repo Clone. </span><span class="c0">Command to perform a full or shallow clone (i.e. copy remote to local repo copy) for a single series. Parameters: series, [src]|gen|both, versionDepth[.</span>
+</p>
+
+<p class="c4"><span class="c0">Repo Push. </span></p>
+
+<p class="c4"><span class="c0">Repo Pull.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4 c16"><a name="h.u95gqv-pe30h2"></a><span class="c6 c3">Design Notes:</span></p>
+
+<p class="c4"><span class="c0">All writing of objects should be atomic, use atomic file copy for this purpose</span></p>
+
+<p class="c4"><span class="c0">under its </span><span class="c13 c5">2/38 sha</span><span
+        class="c0"> style path/name.</span></p>
+
+<p class="c4"><span class="c0">&nbsp;</span></p>
+
+<p class="c4"><span class="c0">Notes:</span></p>
+
+<p class="c4"><span class="c0">The sha1 commit id is also the version id</span></p>
+
+<p class="c4"><span class="c0">Commit Object fields: </span></p>
+
+<p class="c9"><span class="c0">sha id of root tree object</span></p>
+
+<p class="c9"><span class="c0">commit message</span></p>
+
+<p class="c9"><span class="c0">commit date</span></p>
+
+<p class="c9"><span class="c0">committer initials</span></p>
+
+<p class="c9"><span class="c0">sha id of parent (previous) commit</span></p></body>
+</html>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="oracleJdbc-11">
+    <CLASSES>
+      <root url="jar://$jarRepo$/oracleJdbc/11/ojdbc6_g.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

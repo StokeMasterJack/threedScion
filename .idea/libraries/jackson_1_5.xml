@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jackson-1.5">
+    <CLASSES>
+      <root url="jar://$jarRepo$/jackson/1.5/jackson-core-asl-1.5.0.jar!/" />
+      <root url="jar://$jarRepo$/jackson/1.5/jackson-mapper-asl-1.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="guava-08">
+    <CLASSES>
+      <root url="jar://$jarRepo$/guava/r08/guava-r08.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$jarRepo$/guava/r08/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$jarRepo$/guava/r08/src" />
+    </SOURCES>
+  </library>
+</component>

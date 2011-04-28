@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="backport-concurrent-util-3.1">
+    <CLASSES>
+      <root url="jar://$jarRepo$/backport-concurrent-util/3.1/backport-util-concurrent-3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
