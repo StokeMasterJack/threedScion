@@ -9,7 +9,7 @@ lib=$cvsRoot/lib
 repos=$userHome/repos
 repo=$repos/threed
 
-src1=/Users/dford/repos/nfc/nfc/src/java
+src1=/Users/dford/repos/threed/ThreedFramework/src/java
 
 echo src1 $src1
 
@@ -29,9 +29,11 @@ lib5=$lib/jsr305/1.0/jsr305.jar
 
 modName=com.tms.threed.previewPaneAdapter.PreviewPaneAdapter
 
+bindAddress=10.211.55.2
 war=$userHome/p-java/apache-tomcat-6.0.10/webapps/previewPaneAdapter/
 extra=$userHome/temp
 
+g0="-bindAddress $bindAddress "
 g1="-war $war "
 g3="-startupUrl $startupUrl "
 g4="-noserver "
@@ -46,7 +48,7 @@ libs=$lib1:$lib2:$lib3:$lib4:$lib5:$lib6
 cp="$src:$libs"
 
 gwtDevModeParams="$g1 $g3 $g4 $g5 $g6 $modName"
-gwtCompileParams="$g1 $g2 $g6 -style OBF -XdisableCastChecking $modName"
+gwtCompileParams="$g1 $g2 $g6 -style PRETTY -XdisableCastChecking $modName"
 
 gwtParams=$gwtDevModeParams
 mainClass=com.google.gwt.dev.DevMode
@@ -56,6 +58,9 @@ mainClass=com.google.gwt.dev.Compiler
 jvmParams="$j3 $j0 $j1 $j2"
 
 echo $jvmParams
+
+#Java vars
+
 
 JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
 export JAVA_HOME
