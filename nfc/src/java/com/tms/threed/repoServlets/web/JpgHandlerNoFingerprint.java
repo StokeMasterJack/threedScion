@@ -61,7 +61,8 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
         ImageStack imageStack = (ImageStack) threedModel.getImageStack(r.getSlice(), fixResult, r.getJpgWidth());
 
 
-        ImJpg jpg = imageStack.getJpg();
+
+        ImJpg jpg = imageStack.getFullJpg();
 
         JpgId jpgId = new JpgId(r.getSeriesKey(), r.getJpgWidth(), jpg.getFingerprint());
 

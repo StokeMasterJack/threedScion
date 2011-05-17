@@ -19,33 +19,44 @@ public class ImageStack implements IImageStack {
     private final List<ImPng> zPngs;
 
     private transient final List<IPng> allPngs;
+    private transient final List<ImPng> allPngs2;
     private transient final List<ImPng> blinkPngs;
     private transient final ImJpg jpg;
+    private transient final ImJpg fullJpg;
 
 
     public ImageStack(List<ImPng> basePngs, List<ImPng> zPngs, ImView view, int angle, JpgWidth jpgWidth) {
         this.basePngs = basePngs;
         this.zPngs = zPngs;
         this.view = view;
-        this.allPngs = initAllPngList();
-        this.blinkPngs = initBlinkPngList();
+        this.allPngs = initAllPngs();
+        this.allPngs2 = initAllPngs2();
+        this.blinkPngs = initBlinkPngs();
         this.jpg = new ImJpg(view, basePngs, angle, jpgWidth);
+
+        this.fullJpg = new ImJpg(view, allPngs2, angle, jpgWidth);
     }
 
-    private List initAllPngList() {
-        ArrayList a = new ArrayList(basePngs);
+    private List<IPng> initAllPngs() {
+        ArrayList<IPng> a = new ArrayList<IPng>(basePngs);
         a.addAll(zPngs);
         return a;
     }
 
-    private List initBlinkPngList() {
+    private List<ImPng> initAllPngs2() {
+        ArrayList<ImPng> a = new ArrayList<ImPng>(basePngs);
+        a.addAll(zPngs);
+        return a;
+    }
+
+    private List<ImPng> initBlinkPngs() {
 //        System.out.println("ImageStack.initBlinkPngList");
         ArrayList a = new ArrayList();
         for (IPng png : allPngs) {
             if (png.isBlink()) {
 //                System.out.println("IsBlink: " + png.toString());
                 a.add(png);
-            }else{
+            } else {
 //                System.out.println("NOT Blink: " + png.toString());
             }
         }
@@ -77,6 +88,9 @@ public class ImageStack implements IImageStack {
         return jpg;
     }
 
+    public ImJpg getFullJpg() {
+        return fullJpg;
+    }
 
     @Override
     public Path getImageBase() {
@@ -104,7 +118,8 @@ public class ImageStack implements IImageStack {
         return list;
     }
 
-    @Override public List<Path> getUrlsJpgMode() {
+    @Override
+    public List<Path> getUrlsJpgMode() {
         return getUrlsJpgMode(true);
     }
 

@@ -2,10 +2,9 @@
   <artifact type="exploded-war" name="repo exploded">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/configurator-content</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="ThreedFramework/web/repo" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="ThreedFramework" />
+          <element id="module-output" name="nfc" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="dom4j-1.6.1" />
@@ -18,6 +17,7 @@
           <element id="library" level="project" name="gwt-servlet-2" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="nfc/web/repo" />
     </root>
   </artifact>
 </component>

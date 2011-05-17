@@ -84,6 +84,7 @@
           </module>
           <module name="util">
             <files>
+              <file url="file://$PROJECT_DIR$/util/src/com/tms/nfc/util/Util.gwt.xml" />
               <file url="file://$PROJECT_DIR$/util/src/com/tms/threed/util/Util.gwt.xml" />
             </files>
           </module>
@@ -102,6 +103,11 @@
       </facet-type>
       <facet-type id="web">
         <modules>
+          <module name="adminTool">
+            <files>
+              <file url="file://$PROJECT_DIR$/adminTool/src/web/WEB-INF/web.xml" />
+            </files>
+          </module>
           <module name="Configurator-ToyotaApp">
             <files>
               <file url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
