@@ -62,7 +62,8 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
         ImageStack imageStack = (ImageStack) threedModel.getImageStack(r.getSlice(), fixResult, r.getJpgWidth());
 
 
-        ImJpg jpg = imageStack.getJpg();
+        //added support for single, full jpg that includes all zLayers built-int
+        ImJpg jpg = imageStack.getFullJpg();
 
         JpgId jpgId = new JpgId(r.getSeriesId().getSeriesKey(), r.getJpgWidth(), jpg.getFingerprint());
 
