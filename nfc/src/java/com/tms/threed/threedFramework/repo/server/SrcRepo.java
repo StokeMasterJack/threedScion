@@ -501,11 +501,14 @@ public class SrcRepo {
         log.info("Add complete");
     }
 
-    public RevCommit commit(String commitMessage) throws Exception {
+    public RevCommit commitAll(String commitMessage) throws Exception {
         log.info("Committing to the repository");
         Git git = new Git(repo);
-        CommitCommand commit = git.commit()
-                .setMessage(commitMessage);
+
+         CommitCommand commit = git.commit()
+                .setMessage(commitMessage)
+                .setAll(true);
+
         RevCommit revCommit = commit.call();
         log.info("Commit complete");
         return revCommit;
@@ -530,7 +533,7 @@ public class SrcRepo {
 
     public RevCommit addAllAndCommit(String commitMessage) throws Exception {
         addAll();
-        return commit(commitMessage);
+        return commitAll(commitMessage);
     }
 
     public RevCommit addAllCommitAndTag(String commitMessage, String newTagName) throws Exception {
