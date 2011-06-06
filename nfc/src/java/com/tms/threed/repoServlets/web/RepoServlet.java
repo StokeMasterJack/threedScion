@@ -3,7 +3,7 @@ package com.tms.threed.repoServlets.web;
 import com.google.common.io.ByteStreams;
 import com.tms.threed.threedFramework.repo.server.RepoHttp;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.config.ConfigHelper;
+import com.tms.threed.threedFramework.threedCore.server.config.ConfigHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -108,7 +108,7 @@ public class RepoServlet extends HttpServlet {
             } else if (isObjectRequest(request)) {
                 gitObjectHandler.handle(new GitObjectRequest(request, response));
             } else {
-                throw new NotFoundException("No handler for this URL");
+                throw new NotFoundException("No handler for this URL: [" + request.getRequestURI() + "]");
             }
 
 

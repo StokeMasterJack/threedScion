@@ -7,6 +7,8 @@ import com.tms.threed.threedFramework.servletUtil.http.headers.CacheUtil;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
 import com.tms.threed.threedFramework.threedModel.server.JsonMarshallerTm;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -42,7 +44,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
     public void handle(ThreedModelRequest repoRequest) {
         SeriesId seriesId = repoRequest.getSeriesId();
 
-
+        log.debug("Received request for ThreedModel[" + seriesId.toString() + "]");
         byte[] retVal = jsonMap.get(seriesId);
 
 
@@ -87,6 +89,8 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
 
         return os.toByteArray();
     }
+
+    protected static Log log = LogFactory.getLog(ThreedModelHandler.class);
 
 
 }

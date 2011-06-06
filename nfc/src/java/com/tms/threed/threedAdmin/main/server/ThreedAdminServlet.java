@@ -1,9 +1,9 @@
 package com.tms.threed.threedAdmin.main.server;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gwt.rpc.server.ClientOracle;
 import com.google.gwt.rpc.server.RpcServlet;
-import com.tms.threed.threedFramework.repo.server.BlinkCheckin;
-import com.tms.threed.threedFramework.repo.server.VtcService;
+import com.google.gwt.user.client.rpc.SerializationException;
 import com.tms.threed.threedAdmin.main.shared.InitData;
 import com.tms.threed.threedAdmin.main.shared.ThreedAdminService2;
 import com.tms.threed.threedFramework.jpgGen.server.JobStatus;
@@ -17,19 +17,20 @@ import com.tms.threed.threedFramework.jpgGen.shared.ExecutorStatus;
 import com.tms.threed.threedFramework.jpgGen.shared.JobId;
 import com.tms.threed.threedFramework.jpgGen.shared.JobState;
 import com.tms.threed.threedFramework.jpgGen.shared.Stats;
+import com.tms.threed.threedFramework.repo.server.BlinkCheckin;
 import com.tms.threed.threedFramework.repo.server.RepoHttp;
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.server.SeriesRepo;
 import com.tms.threed.threedFramework.repo.server.SrcRepo;
-import com.tms.threed.threedFramework.repo.server.UnableToResolveRevisionParameterException;
+import com.tms.threed.threedFramework.repo.server.VtcService;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
+import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RevisionParameter;
+import com.tms.threed.threedFramework.repo.shared.RepoHasNoHeadException;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.RtConfig;
 import com.tms.threed.threedFramework.repo.shared.SeriesNamesWithYears;
-import com.tms.threed.threedFramework.repo.shared.TagCommit;
-import com.tms.threed.threedFramework.threedCore.config.ConfigHelper;
-import com.tms.threed.threedFramework.threedCore.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedCore.shared.Slice;
@@ -52,12 +53,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import static com.tms.threed.threedFramework.util.date.shared.StringUtil.isEmpty;
+import static com.tms.threed.threedFramework.util.lang.server.StringUtil.notEmpty;
 
 //import com.tms.threed.threedFramework.repo.shared.SeriesCommit;
 
@@ -112,7 +115,8 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     }
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
         super.destroy();
         log.info("Shutting down ThreedAdminWebApp..");
 
@@ -162,8 +166,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
                     retVal = getJpgQueueStatus(req);
                 } else if (command.equals("load_pngs")) {
                     retVal = checkinFromTeamSite(req);
-                } else if (command.equals("addAllAndCommit")) {
-                    retVal = addAllAndCommit(req);
                 } else if (command.equals("jpgQueueDetails")) {
                     retVal = getJpgQueueDetails(req);
                 } else if (command.equals("cancelJob")) {
@@ -394,17 +396,23 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
         JpgGenStatusVersionWidth status = new JpgGenStatusVersionWidth(repos, seriesId, jpgWidth);
 
+
         List<JpgGenStatusVersionWidthSlice> slices = status.getSlices();
+
+        System.out.println("slices = " + slices);
 
 
         ArrayNode jsArray = f.arrayNode();
 
         for (JpgGenStatusVersionWidthSlice slice : slices) {
+            System.out.println("\t one-slice = " + slice.getSlice());
             ObjectNode jsObject = f.objectNode();
             putSlice(jsObject, slice.getSlice());
 
+            Integer jpgCount = slice.getJpgCount();
+
             jsObject.put("started", slice.getStarted());
-            jsObject.put("jpgCount", slice.getJpgCount());
+            jsObject.put("jpgCount", (Integer) jpgCount);
             jsObject.put("jpgSet", slice.jpgSetFileExists());
             jsObject.put("complete", slice.getComplete());
 
@@ -459,70 +467,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
 
     }
-
-    public JsonNode checkinFromTeamSite(HttpServletRequest request) throws Exception {
-        SeriesKey seriesKey = getSeriesKey(request);
-        String edition = request.getParameter("edition");
-
-        if (isEmpty(edition)) throw new IllegalArgumentException("edition is a required request parameter");
-
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
-
-        String commitMessage = "Loaded from TeamSite edition[" + edition + "]";
-        String tagName = edition;
-
-        SrcRepo srcRepo = seriesRepo.getSrcRepo();
-
-        log.info("Verifying uniqueness of tag");
-        try {
-            srcRepo.resolve(new RevisionParameter(tagName));
-            throw new RuntimeException("tag " + tagName + " already exists in the repository! aborting commit");
-        } catch (UnableToResolveRevisionParameterException e) {
-            //ignore
-        }
-
-        RevCommit revCommit = srcRepo.addAllCommitAndTag(commitMessage, tagName);
-
-        ObjectId newCommitId = revCommit.getId();
-
-
-        ObjectNode o = f.objectNode();
-        o.put("message", "Commit successful");
-        o.put("newCommitId", newCommitId.getName());
-        o.put("edition", edition);
-
-        return o;
-
-    }
-
-    public JsonNode addAllAndCommit(HttpServletRequest request) throws Exception {
-        SeriesKey seriesKey = getSeriesKey(request);
-
-        String commitMessage = request.getParameter("commitMessage");
-        if (commitMessage == null) {
-            commitMessage = System.currentTimeMillis() + "";
-        }
-
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
-
-        SrcRepo srcRepo = seriesRepo.getSrcRepo();
-
-
-        RevCommit revCommit = srcRepo.addAllAndCommit(commitMessage);
-
-        BlinkCheckin.processBlinks(srcRepo.getGitRepo(), revCommit);
-
-        ObjectId newCommitId = revCommit.getId();
-
-        ObjectNode o = f.objectNode();
-        o.put("newCommitId", newCommitId.getName());
-
-        return o;
-
-    }
-
-
-
 
 
     public ObjectNode startJpgJob(HttpServletRequest request) {
@@ -594,66 +538,141 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         return new SeriesId(seriesKey, new RootTreeId(rootTreeId));
     }
 
-    @Override public InitData getInitData() {
+    @Override
+    public InitData getInitData() {
         ArrayList<SeriesNamesWithYears> seriesNamesWithYears = repos.getSeriesNamesWithYears();
         RtConfig rtConfig = repos.getRtConfig();
         log.info("serving [" + rtConfig + "]");
 
         String repoBaseUrlName = ThreedConfig.getRepoBaseUrlName();
-        if(isEmpty(repoBaseUrlName)){
+        if (isEmpty(repoBaseUrlName)) {
             throw new IllegalStateException("repoBaseUrlName is empty. It was pulled from config file[" + ThreedConfig.getConfigFile() + "]");
-        } else{
+        } else {
             log.info("repoBaseUrlName is [" + repoBaseUrlName + ". It was pulled from config file[" + ThreedConfig.getConfigFile() + "]");
         }
 
         Path repoBaseUrl = new Path(repoBaseUrlName);
-        return new InitData(seriesNamesWithYears, rtConfig,repoBaseUrl);
+        return new InitData(seriesNamesWithYears, rtConfig, repoBaseUrl);
     }
 
-    @Override public ArrayList<SeriesNamesWithYears> getSeriesNameWithYears() {
+    @Override
+    public ArrayList<SeriesNamesWithYears> getSeriesNameWithYears() {
         ArrayList<SeriesNamesWithYears> seriesNamesWithYears = repos.getSeriesNamesWithYears();
         return seriesNamesWithYears;
     }
 
-    @Override public Stats getJpgGenFinalStats(JobId jobId) {
+    @Override
+    public Stats getJpgGenFinalStats(JobId jobId) {
         return jpgGen.getJob(jobId).getStats();
     }
 
-    @Override public RootTreeId getVtcRootTreeId(SeriesKey seriesKey) {
+    @Override
+    public RootTreeId getVtcRootTreeId(SeriesKey seriesKey) {
         VtcService vtcService = new VtcService(repos);
         return vtcService.getVtcRootTreeId(seriesKey);
     }
 
-    @Override public void setVtcRootTreeId(SeriesKey seriesKey, RootTreeId rootTreeId) {
+    @Override
+    public void setVtcRootTreeId(SeriesKey seriesKey, RootTreeId rootTreeId) {
         VtcService vtcService = new VtcService(repos);
         vtcService.setVtcCommitId(seriesKey, rootTreeId);
         log.info(seriesKey + " VTC set to [" + rootTreeId + "]");
     }
 
-    @Override public RtConfig getRepoConfig() {
+    @Override
+    public RtConfig getRepoConfig() {
         return repos.getRtConfigHelper().read();
     }
 
-    @Override public void saveRtConfig(RtConfig config) {
+    @Override
+    public void saveRtConfig(RtConfig config) {
         repos.getRtConfigHelper().save(config);
     }
 
-    @Override public List<TagCommit> getTagCommits(SeriesKey seriesKey) {
+    @Override
+    public CommitHistory getCommitHistory(SeriesKey seriesKey) throws RepoHasNoHeadException {
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
-        List<TagCommit> tagCommits = srcRepo.getTagCommits();
-        System.out.println("serving tagCommits = " + tagCommits);
-        return tagCommits;
+        log.info("Building commit history on server..");
+        final CommitHistory commitHistory = srcRepo.getHeadCommitHistory();
+        log.info("Building commit history on server complete!");
+        System.out.println("Serving commitHistory for [" + seriesKey + "]");
+        return commitHistory;
     }
 
-    @Override public void tagCurrentVersion(SeriesKey seriesKey, String tagName) {
+    @Override
+    public void processCall(ClientOracle clientOracle, String payload, OutputStream stream) throws SerializationException {
+        super.processCall(clientOracle, payload, stream);
+    }
+
+    @Override
+    public CommitHistory tagCommit(SeriesKey seriesKey, String newTagName, CommitId commitId) {
+        log.info("Tagging commit[" + commitId + "] with tag[" + newTagName + "]");
+        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+        SrcRepo srcRepo = seriesRepo.getSrcRepo();
+        final ObjectId objectId = srcRepo.tagCommit(newTagName, commitId);
+        final CommitHistory commitHistory = srcRepo.getCommitHistory(objectId);
+        return commitHistory;
+    }
+
+    public CommitHistory addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag) {
+
         try {
             SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+
             SrcRepo srcRepo = seriesRepo.getSrcRepo();
-            srcRepo.tagCurrentVersion(tagName);
+
+            if (isEmpty(commitMessage)) {
+                commitMessage = System.currentTimeMillis() + "";
+            }
+
+            RevCommit revCommit = srcRepo.addAllAndCommit(commitMessage);
+
+
+            BlinkCheckin.processBlinks(srcRepo.getGitRepo(), revCommit);
+
+            ObjectId newCommitId = revCommit.getId();
+
+            BlinkCheckin.processBlinks(srcRepo.getGitRepo(), revCommit);
+
+            if (notEmpty(tag)) {
+                srcRepo.tagCommit(tag, revCommit);
+            }
+
+            CommitHistory commitHistory = srcRepo.getCommitHistory(newCommitId, true);
+
+            return commitHistory;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            final String msg = "Error in ThreedAdminServlet.addAllAndCommit(" + seriesKey + "," + commitMessage + "," + tag + "). See server log for details.";
+            log.error(msg,e);
+            throw new RuntimeException(msg,e);
         }
+
+    }
+
+    @Override
+    public void purgeRepoCache() {
+        repos.purgeCache();
+    }
+
+    public JsonNode checkinFromTeamSite(HttpServletRequest request) throws Exception {
+        SeriesKey seriesKey = getSeriesKey(request);
+
+        final String commitMessage = request.getParameter("commitMessage");
+        String tag = request.getParameter("edition");
+        if (tag == null) {
+            tag = request.getParameter("tag");
+        }
+
+        final CommitHistory commitHistory = addAllAndCommit(seriesKey, commitMessage, tag);
+
+        ObjectNode o = f.objectNode();
+        o.put("message", "Commit successful");
+        o.put("newCommitId", commitHistory.getCommitId().getName());
+
+        return o;
+
     }
 
 
@@ -674,7 +693,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
 
     @Override protected void doUnexpectedFailure(Throwable e) {
-        log.error("Problem in RPC method",e);
+        log.error("Problem in RPC method", e);
         super.doUnexpectedFailure(e);
     }
 

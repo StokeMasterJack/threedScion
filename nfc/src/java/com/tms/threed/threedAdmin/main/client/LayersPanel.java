@@ -57,7 +57,7 @@ public class LayersPanel extends Composite {
         p.getElement().getStyle().setPaddingBottom(.5, Style.Unit.EM);
 
         ScrollPanel scrollPanel = new ScrollPanel(layerPanel);
-        scrollPanel.setHeight("100%");
+        scrollPanel.setHeight("98%");
 
         p.add(buttonPanel);
         p.add(scrollPanel);

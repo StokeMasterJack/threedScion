@@ -3,14 +3,15 @@ package com.tms.threed.threedAdmin.main.shared;
 import com.google.gwt.rpc.client.RpcService;
 import com.tms.threed.threedFramework.jpgGen.shared.JobId;
 import com.tms.threed.threedFramework.jpgGen.shared.Stats;
+import com.tms.threed.threedFramework.repo.shared.RepoHasNoHeadException;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
+import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.RtConfig;
 import com.tms.threed.threedFramework.repo.shared.SeriesNamesWithYears;
-import com.tms.threed.threedFramework.repo.shared.TagCommit;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface ThreedAdminService2 extends RpcService {
 
@@ -27,10 +28,11 @@ public interface ThreedAdminService2 extends RpcService {
     RtConfig getRepoConfig();
     void saveRtConfig(RtConfig config);
 
+    CommitHistory getCommitHistory(SeriesKey seriesKey) throws RepoHasNoHeadException;
 
-    List<TagCommit> getTagCommits(SeriesKey seriesKey);
+    CommitHistory tagCommit(SeriesKey seriesKey,String  newTagName,CommitId commitId);
 
+    CommitHistory addAllAndCommit(SeriesKey seriesKey,String commitMessage,String tag) throws Exception;
 
-
-    void tagCurrentVersion(SeriesKey seriesKey,String tagName);
+    void purgeRepoCache();
 }

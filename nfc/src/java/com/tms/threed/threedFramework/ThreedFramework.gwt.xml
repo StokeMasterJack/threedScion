@@ -30,11 +30,16 @@
     <source path="previewPane/shared"/>
     <source path="previewPane/client"/>
 
+
+
     <source path="util/gwtUtil/client"/>
     <source path="util/gwtUtil/shared"/>
+
     <source path="util/lang/client"/>
     <source path="util/lang/shared"/>
+
     <source path="util/date/shared"/>
+
     <source path="util/vnode/shared"/>
 
 </module>

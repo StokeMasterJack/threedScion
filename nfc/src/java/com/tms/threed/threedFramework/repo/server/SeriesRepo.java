@@ -9,7 +9,6 @@ import com.tms.threed.threedFramework.imageModel.server.ImVNodeHeaderFilter;
 import com.tms.threed.threedFramework.imageModel.server.ImageModelBuilder;
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
 import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
-import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.shared.RevisionParameter;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
@@ -45,7 +44,6 @@ public class SeriesRepo {
 
     private final ConcurrentMap<RootTreeId, ThreedModel> threedModelCache;
 
-
     private final File repoBaseDir;
     private final SeriesKey seriesKey;
 
@@ -77,9 +75,7 @@ public class SeriesRepo {
                             }
                         });
 
-
     }
-
 
     protected static BufferedImage readImage(InputStream is) {
         try {
@@ -123,6 +119,7 @@ public class SeriesRepo {
 
 
     public SrcRepo getSrcRepo() {
+        srcRepo.initGitDirIfNecessary();
         return srcRepo;
     }
 
@@ -231,7 +228,7 @@ public class SeriesRepo {
         VNode seriesVDir = b.buildVNode();
 
 
-        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, seriesVDir,rtRepo);
+        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, seriesVDir, rtRepo);
         return imNodeBuilder.buildImageModel();
     }
 
@@ -240,7 +237,7 @@ public class SeriesRepo {
         vNodeBuilder.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode vNode = vNodeBuilder.buildVNode();
 
-        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, vNode,rtRepo);
+        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, vNode, rtRepo);
         return imNodeBuilder.buildImageModel();
     }
 

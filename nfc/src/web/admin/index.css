@@ -51,6 +51,13 @@ abbr, acronym {
     cursor: pointer;
 }
 
+.commitPickList td{
+    padding-left: .5em;
+    padding-right: .5em;
+    padding-top: .3em;
+    padding-bottom: .3em;
+}
+
 /*.JpgGenStatusDialog{*/
 
     /*background-color:yellow;*/
@@ -58,3 +65,15 @@ abbr, acronym {
     /*height:80%;*/
 
 /*}*/
+
+.gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-VDragger {
+    background-color: #CCCCCC;
+    cursor: row-resize;
+    background: #CCCCCC url(limages/splitPanelThumb.png) center center no-repeat;
+}
+
+.gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-HDragger {
+    background-color: #CCCCCC;
+    cursor: col-resize;
+    background: #CCCCCC url(limages/splitPanelThumb.png) center center no-repeat;
+}

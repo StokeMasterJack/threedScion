@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="admin exploded">
+  <artifact type="exploded-war" build-on-make="true" name="admin exploded">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/threed-admin</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">

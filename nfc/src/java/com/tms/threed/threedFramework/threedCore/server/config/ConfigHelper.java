@@ -1,5 +1,6 @@
-package com.tms.threed.threedFramework.threedCore.config;
+package com.tms.threed.threedFramework.threedCore.server.config;
 
+import com.tms.threed.threedFramework.util.lang.server.Sys;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -14,7 +15,8 @@ public class ConfigHelper {
     public static final String APP_NAME = "threed_framework";
 
     final private static String CONFIG_DIR_KEY = "configDir";
-    final private static String DEFAULT_CONFIG_DIR = "/temp/tmsConfig";
+    final private static String DEFAULT_CONFIG_DIR_1 = "/temp/tmsConfig";
+    final private static String DEFAULT_CONFIG_DIR_2 = Sys.getUserHome() + "/temp/tmsConfig";
 
     private static ReloadingConfig properties;
 
@@ -31,15 +33,38 @@ public class ConfigHelper {
     }
 
     public static File getConfigDir() {
-        String configDir = System.getProperty(CONFIG_DIR_KEY);
-        if (configDir == null) {
-            configDir = DEFAULT_CONFIG_DIR;
+        File configDir;
+
+        configDir = configDirExists(System.getProperty(CONFIG_DIR_KEY));
+        if (configDir != null) {
+            return configDir;
         }
-        File file = new File(configDir);
 
-        if (!file.exists()) throw new IllegalStateException("ConfigDir[" + configDir + "] does not exist");
+        configDir = configDirExists(DEFAULT_CONFIG_DIR_1);
+        if (configDir != null) {
+            return configDir;
+        }
 
-        return file;
+        configDir = configDirExists(DEFAULT_CONFIG_DIR_2);
+        if (configDir != null) {
+            return configDir;
+        }
+
+
+        throw new IllegalStateException("Could locate configDir. Tried: [System.getProperty(" + CONFIG_DIR_KEY + ")=" + System.getProperty(CONFIG_DIR_KEY) + "], " + DEFAULT_CONFIG_DIR_1 + ", " + DEFAULT_CONFIG_DIR_2);
+
+    }
+
+    private static File configDirExists(String configDir) {
+        if (configDir == null) {
+            return null;
+        }
+        File f = new File(configDir);
+        if (f.exists()) {
+            return f;
+        } else {
+            return null;
+        }
     }
 
     public static File getLog4ConfigDir() {
@@ -64,7 +89,8 @@ public class ConfigHelper {
         private static final long EXPIRE_TIME = 60 * 1000;
         private long lastReadTime;
 
-        @Override public String getProperty(String key) {
+        @Override
+        public String getProperty(String key) {
             checkExpiry();
             return super.getProperty(key);
         }
@@ -125,12 +151,12 @@ public class ConfigHelper {
         System.out.println("Using log4jFile[" + log4jFile + "] for app[" + appName + "]");
 
         if (!log4jFile.exists()) {
-            System.out.println("Log4j file["+ log4jFile + "] for app[" + appName + "]");
+            System.out.println("Log4j file[" + log4jFile + "] for app[" + appName + "]");
             return;
         }
 
         if (!log4jFile.canRead()) {
-            System.out.println("Can't read log4j file["+ log4jFile + "] for app[" + appName + "]");
+            System.out.println("Can't read log4j file[" + log4jFile + "] for app[" + appName + "]");
             return;
         }
 
@@ -139,10 +165,10 @@ public class ConfigHelper {
             //set log4j configuration for this application using ${configDir}/appName/log4j/appName_log4j.properties
 
             PropertyConfigurator.configure(log4jFile.getAbsolutePath());
-            System.out.println("initLogger complete for app["+appName+"] using log4j file[" + log4jFile + "]");
+            System.out.println("initLogger complete for app[" + appName + "] using log4j file[" + log4jFile + "]");
         } catch (Exception e) {
             // if log4j.properties not found, use standard configuration
-            System.err.println("Failed init logger for app["+appName+"] using log4j file["+ log4jFile + "]");
+            System.err.println("Failed init logger for app[" + appName + "] using log4j file[" + log4jFile + "]");
             e.printStackTrace();
             BasicConfigurator.configure();
         }

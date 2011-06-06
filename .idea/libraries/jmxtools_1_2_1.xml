@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="jmxtools-1.2.1">
-    <CLASSES>
-      <root url="jar://$jarRepo$/jmxtools/1.2.1/jmxtools-1.2.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

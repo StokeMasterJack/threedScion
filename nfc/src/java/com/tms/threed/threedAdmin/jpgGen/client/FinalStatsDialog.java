@@ -87,7 +87,7 @@ public class FinalStatsDialog extends MyDialogBox {
             }
 
             @Override public void onSuccess(Stats result) {
-                ctx.hideMessage();
+                ctx.showMessage("Fetching stats complete!");
                 refresh(result);
             }
         });

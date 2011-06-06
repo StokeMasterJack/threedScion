@@ -1,9 +1,12 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.io.InputSupplier;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
 import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.FullSha;
+import com.tms.threed.threedFramework.repo.shared.RepoHasNoHeadException;
 import com.tms.threed.threedFramework.repo.shared.RevisionParameter;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.TagCommit;
@@ -14,10 +17,14 @@ import org.eclipse.jgit.JGitText;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.TagCommand;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.NoMessageException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -25,14 +32,13 @@ import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.storage.file.FileRepository;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,8 +46,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SrcRepo {
 
@@ -66,17 +75,20 @@ public class SrcRepo {
             throw new RepoException("Problems reading srcRepoDir [" + srcRepoDir + "]", e);
         }
 
+        initGitDirIfNecessary();
+
+
+    }
+
+    protected void initGitDirIfNecessary() {
         if (!srcRepoDir.exists()) {
             try {
                 repo.create();
             } catch (IOException e) {
                 throw new RepoException("Problems initializing new srcRepoDir [" + srcRepoDir + "]", e);
             }
+            initConfig();
         }
-
-        initConfig();
-
-
     }
 
     private void initConfig() {
@@ -168,6 +180,8 @@ public class SrcRepo {
      * @return null nothing if nothing has been committed
      */
     public List<TagCommit> getTagCommits() {
+
+
         ArrayList<TagCommit> a = new ArrayList<TagCommit>();
 
         Map<String, Ref> tags = getTags();
@@ -194,11 +208,10 @@ public class SrcRepo {
 
             try {
                 int type = repo.open(commitId).getType();
-                if(type != Constants.OBJ_COMMIT) continue;
+                if (type != Constants.OBJ_COMMIT) continue;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
 
 
             RevCommit revCommit = getRevCommitEager(commitId);
@@ -235,6 +248,146 @@ public class SrcRepo {
 
         return a;
 
+    }
+
+    @Nonnull
+    public CommitHistory getHeadCommitHistory() {
+        ObjectId headId;
+        try {
+            headId = resolveCommitHead();
+        } catch (UnableToResolveRevisionParameterException e) {
+            throw new RepoHasNoHeadException();
+        }
+        return getCommitHistory(headId, true);
+    }
+
+    @Nonnull
+    public CommitHistory getCommitHistory(ObjectId startCommitId) {
+        return getCommitHistory(startCommitId, null);
+    }
+
+    @Nonnull
+    public CommitHistory getCommitHistory(ObjectId startCommitId, @Nullable Boolean isHead) {
+
+        boolean h;
+        if (isHead == null) {
+            h = this.isHead(startCommitId);
+        } else {
+            h = isHead;
+        }
+
+        RevCommit startRevCommit = getRevCommitEager(startCommitId);
+        if (startRevCommit == null) {
+            log.error("Problem retrieving RevCommit for repo[" + seriesKey + "]");
+            throw new RuntimeException("Problem retrieving RevCommit for repo[" + seriesKey + "]  getRevCommitEager returned null");
+        }
+
+        TagMap tagMap = this.getTagMap();
+        RevCommit revCommit = startRevCommit;
+
+        final RootTreeId vtcRootTreeId = VtcService.getVtcRootTreeId(seriesKey, this);
+        CommitHistory commitDetail = this.toCommitDetail(revCommit, tagMap, h, vtcRootTreeId);
+
+        return commitDetail;
+
+    }
+
+
+    public static class TagMapBuilder {
+
+        private Map<ObjectId, Set<String>> map = new HashMap<ObjectId, Set<String>>();
+
+        public void add(ObjectId commitId, String tag) {
+            Set<String> tags = map.get(commitId);
+            if (tags == null) {
+                tags = new HashSet<String>();
+                map.put(commitId, tags);
+            }
+            tags.add(tag);
+        }
+
+        public void add(Map<String, Ref> tags, FileRepository repo) {
+            for (String tagName : tags.keySet()) {
+                Ref ref = tags.get(tagName);
+                Ref leaf = ref.getLeaf();
+                ObjectId commitId = leaf.getObjectId();
+
+                try {
+                    int type = repo.open(commitId).getType();
+                    if (type != Constants.OBJ_COMMIT) continue;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                add(commitId, tagName);
+            }
+        }
+
+        private ImmutableMap<ObjectId, Set<String>> buildInternal() {
+            final ImmutableMap.Builder<ObjectId, Set<String>> builder = ImmutableMap.builder();
+            return builder.putAll(map).build();
+        }
+
+        public TagMap build() {
+            final ImmutableMap<ObjectId, Set<String>> m = buildInternal();
+            return new TagMap(m);
+        }
+
+    }
+
+    public static class TagMap {
+
+        private final ImmutableMap<ObjectId, Set<String>> map;
+
+        public TagMap(ImmutableMap<ObjectId, Set<String>> map) {
+            this.map = map;
+        }
+
+        public Set<String> getTags(ObjectId commitId) {
+            return map.get(commitId);
+        }
+    }
+
+    public TagMap getTagMap() {
+        final Map<String, Ref> tags = getTags();
+        TagMapBuilder tagMapBuilder = new TagMapBuilder();
+        tagMapBuilder.add(tags, repo);
+        return tagMapBuilder.build();
+    }
+
+    private CommitHistory toCommitDetail(RevCommit revCommit, TagMap tagMap, boolean isHead, RootTreeId vtcRootTreeId) {
+
+
+        final RevTree revTree = revCommit.getTree();
+        CommitHistory commitDetail = new CommitHistory(isHead);
+        commitDetail.setCommitId(new CommitId(revCommit.getName()));
+
+
+        commitDetail.setRootTreeId(revTree == null ? null : (new RootTreeId(revTree.getName())));
+        commitDetail.setTags(tagMap.getTags(revCommit));
+        commitDetail.setCommitTime(revCommit.getCommitTime());
+        commitDetail.setShortMessage(revCommit.getShortMessage());
+        commitDetail.setHead(isHead);
+        commitDetail.setCommitter(revCommit.getCommitterIdent().getName());
+
+        if (commitDetail.getRootTreeId().equals(vtcRootTreeId)) {
+            commitDetail.setVtc(true);
+        } else {
+            commitDetail.setVtc(false);
+        }
+
+        final RevCommit[] parentRevCommits = revCommit.getParents();
+        final CommitHistory[] parentCommitDetails = new CommitHistory[parentRevCommits.length];
+
+        for (int i = 0; i < parentRevCommits.length; i++) {
+            RevCommit parentRevCommit = parentRevCommits[i];
+            CommitHistory parentCommitDetail = toCommitDetail(parentRevCommit, tagMap, false, vtcRootTreeId);
+            parentCommitDetails[i] = parentCommitDetail;
+        }
+
+        commitDetail.setParents(parentCommitDetails);
+
+        return commitDetail;
     }
 
 
@@ -274,30 +427,37 @@ public class SrcRepo {
 
     public RevCommit getRevCommit(AnyObjectId commitId) {
         RevWalk revWalk = new RevWalk(repo);
-
         RevCommit revCommit = revWalk.lookupCommit(commitId);
-
         revWalk.release();
-
         return revCommit;
     }
 
-    public RevCommit getRevCommitEager(AnyObjectId commitId) {
+    public RevCommit getRevCommitEager(ObjectId startCommitId) {
+        RevWalk walk = new RevWalk(repo);
+        final RevCommit startRevCommit = walk.lookupCommit(startCommitId);
+
         try {
-            RevWalk walk = new RevWalk(repo);
-
-
-            walk.markStart(walk.lookupCommit(commitId));
-
-            RevCommit revCommit = walk.next();
-
-            walk.release();
-
-            return revCommit;
+            walk.markStart(startRevCommit);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+
+        RevCommit revCommit;
+        while (true) {
+            try {
+                revCommit = walk.next();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (revCommit == null) {
+                break;
+            }
+        }
+
+        walk.release();
+
+        return startRevCommit;
     }
 
 
@@ -315,7 +475,6 @@ public class SrcRepo {
 //    }
 
 
-
     public Ref getRef(String name) {
         try {
             return repo.getRef(Constants.MASTER);
@@ -330,34 +489,34 @@ public class SrcRepo {
         Preconditions.checkArgument(RevCommit.isId(fullSha));
     }
 
-//    public void tagCurrentVersion(String tagName) throws NoHeadException, ConcurrentRefUpdateException, InvalidTagNameException {
-//        Git git = new Git(repo);
-//
-//
-//        TagCommand tag = git.tag();
-//        TagCommand tagCommand = tag.setName(tagName);
-//        tagCommand.call();
-//    }
+    public ObjectId tagCommit(String tag, CommitId commitId) {
+        ObjectId objectId = toGitObjectId(commitId);
+        tagCommit(tag, objectId);
+        return objectId;
+    }
 
-    public void tagCurrentVersion(String tagShortName) {
+    public void tagCommit(String tag, ObjectId commitId) {
         RevWalk revWalk = null;
         try {
 
             //grab commitId of HEAD
-            ObjectId objectId = repo.resolve(Constants.HEAD + "^{commit}");
-            if (objectId == null) {
-                throw new NoHeadException(JGitText.get().tagOnRepoWithoutHEADCurrentlyNotSupported);
-            }
+//            ObjectId objectId = repo.resolve(Constants.HEAD + "^{commit}");
+//            if (objectId == null) {
+//                throw new NoHeadException(JGitText.get().tagOnRepoWithoutHEADCurrentlyNotSupported);
+//            }
 
 
             revWalk = new RevWalk(repo);
 
-            String refName = Constants.R_TAGS + tagShortName;
+            String refName = Constants.R_TAGS + tag;
             RefUpdate tagRef = repo.updateRef(refName);
-            tagRef.setNewObjectId(objectId);
+            tagRef.setNewObjectId(commitId);
             tagRef.setForceUpdate(false);
-            tagRef.setRefLogMessage("tagged " + tagShortName, false);
+            tagRef.setRefLogMessage("tagged " + tag, false);
+
             RefUpdate.Result updateResult = tagRef.update(revWalk);
+
+
             switch (updateResult) {
                 case NEW:
                 case FORCED:
@@ -369,7 +528,7 @@ public class SrcRepo {
                 default:
                     throw new JGitInternalException(MessageFormat.format(
                             JGitText.get().updatingRefFailed, refName,
-                            tagShortName, updateResult));
+                            tag, updateResult));
             }
 
         } catch (Exception e) {
@@ -486,62 +645,57 @@ public class SrcRepo {
 //
 //    }
 
-    private boolean isHead(ObjectId commitId) {
+    public boolean isHead(CommitId commitId) {
+        ObjectId objectId = toGitObjectId(commitId);
+        return isHead(objectId);
+    }
+
+    public boolean isHead(ObjectId commitId) {
         if (commitId == null) return false;
         ObjectId objectId = resolveCommitHead();
         if (objectId == null) return false;
         return commitId.equals(objectId);
     }
 
-    public void addAll() throws Exception {
-        log.info("Adding files to the repository");
+    public void addAll() throws NoFilepatternException {
+        log.info("Adding files to the repository[" + seriesKey + "]");
         Git git = new Git(repo);
         AddCommand addCommand = git.add().addFilepattern(".");
         addCommand.call();
-        log.info("Add complete");
+        log.info("Add complete for [" + seriesKey + "]");
     }
 
-    public RevCommit commitAll(String commitMessage) throws Exception {
-        log.info("Committing to the repository");
+    public void test1() throws Exception {
+        final DirCache dirCache = repo.lockDirCache();
+
+        dirCache.unlock();
+
+    }
+
+    public RevCommit commitAll(String commitMessage) throws UnmergedPathException, NoHeadException, NoMessageException, ConcurrentRefUpdateException, WrongRepositoryStateException {
+        log.info("Committing to the repository[" + seriesKey + "]");
         Git git = new Git(repo);
 
-         CommitCommand commit = git.commit()
+        CommitCommand commit = git.commit()
                 .setMessage(commitMessage)
                 .setAll(true);
 
         RevCommit revCommit = commit.call();
-        log.info("Commit complete");
+        log.info("Commit complete for [" + seriesKey + "] - new commitId[" + revCommit.getName() + "]");
         return revCommit;
     }
 
-    public void tag(String newTagName, RevObject commitId) throws Exception {
-        log.info("Adding files to the repository");
-        Git git = new Git(repo);
-
-
-        log.info("tagging with edition number");
-        TagCommand tag = git.tag()
-                .setName(newTagName)
-                .setObjectId(commitId)
-                .setMessage("Created tag for " + newTagName + ". head version is " + commitId.name());
-
-        RevTag tagCall = tag.call();
-        log.info("Tag added: " + tagCall.getFullMessage());
-
-
-    }
-
-    public RevCommit addAllAndCommit(String commitMessage) throws Exception {
+    public RevCommit addAllAndCommit(String commitMessage) throws NoFilepatternException, NoHeadException, UnmergedPathException, NoMessageException, ConcurrentRefUpdateException, WrongRepositoryStateException {
         addAll();
         return commitAll(commitMessage);
     }
 
-    public RevCommit addAllCommitAndTag(String commitMessage, String newTagName) throws Exception {
-        Preconditions.checkNotNull(newTagName);
-        RevCommit revCommit = addAllAndCommit(commitMessage);
-        tag(newTagName, revCommit);
-        return revCommit;
-    }
+//    public RevCommit addAllCommitAndTag(String commitMessage, String newTagName) throws Exception {
+//        Preconditions.checkNotNull(newTagName);
+//        RevCommit revCommit = addAllAndCommit(commitMessage);
+//        tag(newTagName, revCommit);
+//        return revCommit;
+//    }
 
 
     private static Log log = LogFactory.getLog(SrcRepo.class);
@@ -557,7 +711,8 @@ public class SrcRepo {
 
     public InputSupplier<? extends InputStream> getInputSupplier(final ObjectId objectId) {
         return new InputSupplier<InputStream>() {
-            @Override public InputStream getInput() throws IOException {
+            @Override
+            public InputStream getInput() throws IOException {
                 ObjectLoader loader = getRepoObject(objectId);
                 return loader.openStream();
             }

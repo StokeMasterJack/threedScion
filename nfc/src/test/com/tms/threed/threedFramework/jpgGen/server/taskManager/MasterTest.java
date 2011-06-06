@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.jpgGen.server.taskManager;
 
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 import junit.framework.TestCase;

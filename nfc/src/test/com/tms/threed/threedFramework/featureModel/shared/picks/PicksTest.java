@@ -4,7 +4,7 @@ import com.tms.threed.threedFramework.featureModel.data.SampleFeatureSet;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 //import com.tms.threed.featureModel.shared.ProposePickResponse;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 import junit.framework.TestCase;
 

@@ -121,9 +121,11 @@ public class RtRepo implements BlinkChecker {
 
                 if (emptyPng) {
                     log.debug("ImageUtil.isEmptyPng for[" + fullFileName + "]");
+                    Files.createParentDirs(emptyPngFile);
                     Files.touch(emptyPngFile);
                     return true;
                 } else {
+                    Files.createParentDirs(emptyPngFile);
                     Files.touch(notEmptyPngFile);
                     return false;
                 }

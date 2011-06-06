@@ -1,6 +1,6 @@
 userHome=/Users/dford
 
-cvsRoot=/Users/dford/cvsCheckouts/CVSROOT
+cvsRoot=$userHome/cvsCheckouts/CVSROOT
 
 apps=$cvsRoot/TMS/apps
 frameworks=$cvsRoot/TMS/framework
@@ -10,11 +10,13 @@ repos=$userHome/repos
 repo=$repos/threed
 
 
-src1=/Users/dford/repos/threed/ThreedFramework/src/java
+
 
 echo src1 $src1
 
-src="$src1:$src2"
+src1=$repo/nfc/src/java
+
+src="$src1"
 
 gwtVersion=2.2.0
 gwtHome=$userHome/p-java/gwt-$gwtVersion
@@ -46,7 +48,7 @@ j0="-Xmx512m "
 j1="-DconfigDir=/Users/dford/temp/tmsConfig "
 j2="-Dlog4j.configuration=file:///Users/dford/temp/tmsConfig/log4j/threed_framework_log4j.xml "
 
-libs=$lib1:$lib2:$lib3:$lib4:$lib5:$lib6
+libs=$lib1:$lib2:$lib3:$lib4:$lib5
 cp="$src:$libs"
 
 gwtDevModeParams="$g1 $g3 $g4 $g5 $g6 $modName"
@@ -54,8 +56,9 @@ gwtCompileParams="$g1 $g2 $g6 -style OBF -XdisableCastChecking $modName"
 
 gwtParams=$gwtDevModeParams
 mainClass=com.google.gwt.dev.DevMode
-gwtParams=$gwtCompileParams
-mainClass=com.google.gwt.dev.Compiler
+
+#gwtParams=$gwtCompileParams
+#mainClass=com.google.gwt.dev.Compiler
 
 jvmParams="$j3 $j0 $j1 $j2"
 

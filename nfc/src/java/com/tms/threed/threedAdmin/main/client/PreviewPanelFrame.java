@@ -37,10 +37,11 @@ import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeE
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
+import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.repo.shared.TagCommit;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedCore.shared.Slice;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
@@ -79,7 +80,7 @@ public class PreviewPanelFrame extends FlowPanel {
 
 
     private final ThreedModel threedModel;
-    private TagCommit tagCommit;
+    private CommitHistory commit;
     private RtConfig rtConfig;
 
     private final SeriesKey seriesKey;
@@ -87,15 +88,17 @@ public class PreviewPanelFrame extends FlowPanel {
 
     private final ValueChangeHandlers<Boolean> pngModeChangeHandlers = new ValueChangeHandlers<Boolean>(this);
 
-    private final ValueChangeHandlers<TagCommit> tagCommitChangeHandlers = new ValueChangeHandlers<TagCommit>(this);
+    private final ValueChangeHandlers<CommitHistory> commitChangeHandlers = new ValueChangeHandlers<CommitHistory>(this);
+
+    private Callback callback;
 
 
-    public PreviewPanelFrame(UiContext ctx, final ThreedAdminService1Async service, ThreedModel threedModel, TagCommit tagCommit, RtConfig rtConfig) {
+    public PreviewPanelFrame(UiContext ctx, final ThreedAdminService1Async service, ThreedModel threedModel, CommitHistory commit, RtConfig rtConfig) {
         assert service != null;
         this.ctx = ctx;
         this.service = service;
         this.threedModel = threedModel;
-        this.tagCommit = tagCommit;
+        this.commit = commit;
         this.rtConfig = rtConfig;
         this.seriesKey = threedModel.getSeriesKey();
         this.featureModel = threedModel.getFeatureModel();
@@ -103,7 +106,8 @@ public class PreviewPanelFrame extends FlowPanel {
         jpgWidthListBox = new JpgWidthListBox(rtConfig);
 
         jpgWidthListBox.addJpgWidthChangeHandler(new ValueChangeHandler<JpgWidth>() {
-            @Override public void onValueChange(ValueChangeEvent<JpgWidth> ev) {
+            @Override
+            public void onValueChange(ValueChangeEvent<JpgWidth> ev) {
                 setJpgWidth(ev.getValue());
             }
         });
@@ -123,13 +127,15 @@ public class PreviewPanelFrame extends FlowPanel {
         previewPanelContext = previewPaneContext.getPreviewPanelContext();
 
         previewPanelContext.addViewChangeHandler(new ViewChangeHandler() {
-            @Override public void onChange(ViewChangeEvent e) {
+            @Override
+            public void onChange(ViewChangeEvent e) {
                 footerPanel.refresh();
             }
         });
 
         previewPanelContext.addAngleChangeHandler(new AngleChangeHandler() {
-            @Override public void onChange(AngleChangeEvent e) {
+            @Override
+            public void onChange(AngleChangeEvent e) {
                 footerPanel.refresh();
             }
         });
@@ -150,6 +156,9 @@ public class PreviewPanelFrame extends FlowPanel {
 
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
 
     public HandlerRegistration addPngModeChangeHandler(ValueChangeHandler<Boolean> handler) {
         return pngModeChangeHandlers.addHandler(ValueChangeEvent.getType(), handler);
@@ -159,8 +168,8 @@ public class PreviewPanelFrame extends FlowPanel {
         return jpgWidthListBox.addJpgWidthChangeHandler(handler);
     }
 
-    public HandlerRegistration addTagCommitChangeHandler(ValueChangeHandler<TagCommit> handler) {
-        return tagCommitChangeHandlers.addHandler(ValueChangeEvent.getType(), handler);
+    public HandlerRegistration addTagCommitChangeHandler(ValueChangeHandler<CommitHistory> handler) {
+        return commitChangeHandlers.addHandler(ValueChangeEvent.getType(), handler);
     }
 
 
@@ -229,14 +238,16 @@ public class PreviewPanelFrame extends FlowPanel {
 //            this.setHeight("3em");
 
             jpgModeRadio.addClickHandler(new ClickHandler() {
-                @Override public void onClick(ClickEvent event) {
+                @Override
+                public void onClick(ClickEvent event) {
                     pngMode = false;
                     onPngModeChange();
                 }
             });
 
             pngModeRadio.addClickHandler(new ClickHandler() {
-                @Override public void onClick(ClickEvent event) {
+                @Override
+                public void onClick(ClickEvent event) {
                     pngMode = true;
                     onPngModeChange();
                 }
@@ -311,7 +322,8 @@ public class PreviewPanelFrame extends FlowPanel {
             modeRadioGroup = new ModeRadioGroup();
 
             summaryButton.addClickHandler(new ClickHandler() {
-                @Override public void onClick(ClickEvent event) {
+                @Override
+                public void onClick(ClickEvent event) {
                     openSummaryPanel();
 
                 }
@@ -346,10 +358,20 @@ public class PreviewPanelFrame extends FlowPanel {
         }
     }
 
+    private static class GenerateJpgsButton extends Anchor{
+        private GenerateJpgsButton() {
+            super("Generate JPGs");
+            getElement().getStyle().setPaddingLeft(.8, Style.Unit.EM);
+
+
+        }
+
+    }
 
     private class FooterPanel extends Grid {
 
         InlineLabel sliceLabel = new InlineLabel();
+        GenerateJpgsButton genJpgButton = new GenerateJpgsButton();
         TagCommitButton tagCommitButton = new TagCommitButton();
         VtcButton vtcButton = new VtcButton();
 
@@ -369,25 +391,36 @@ public class PreviewPanelFrame extends FlowPanel {
 //            getElement().getStyle().setPadding(.5, Style.Unit.EM);
 
             tagCommitButton.addClickHandler(new ClickHandler() {
-                @Override public void onClick(ClickEvent event) {
+                @Override
+                public void onClick(ClickEvent event) {
                     tagCommitButtonOnClick();
+                }
+            });
+
+            genJpgButton.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    if(callback!=null){
+                        JpgWidth jw = getCurrentJpgWidth();
+                        callback.generateJpgsButtonClicked(seriesKey,commit,jw);
+                    }
                 }
             });
 
 
             assert jpgWidthListBox != null;
-            setWidget(0, 0, new InlineHTML("&nbsp"));
+            setWidget(0, 0, genJpgButton);
             setWidget(0, 1, tagCommitButton);
             setWidget(0, 2, vtcButton);
 
 
-            tagCommitButton.getElement().getStyle().setMarginLeft(.8, Style.Unit.EM);
+
 
 
             sliceLabel.getElement().getStyle().setMarginRight(1, Style.Unit.EM);
 
-            getCellFormatter().getElement(0, 1).getStyle().setPaddingTop(.3, Style.Unit.EM);
-            getCellFormatter().getElement(0, 1).getStyle().setPaddingBottom(.3, Style.Unit.EM);
+            getCellFormatter().getElement(0, 1).getStyle().setPaddingTop(.2, Style.Unit.EM);
+            getCellFormatter().getElement(0, 1).getStyle().setPaddingBottom(.2, Style.Unit.EM);
 
             getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_LEFT);
             getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_CENTER);
@@ -402,38 +435,35 @@ public class PreviewPanelFrame extends FlowPanel {
         }
 
         private void tagCommitButtonOnClick() {
-            final CreateTagDialog d = new CreateTagDialog();
-            d.center();
-            d.show();
+            final CreateTagDialog createTagDialog = new CreateTagDialog();
+            createTagDialog.center();
+            createTagDialog.show();
 
-            d.addCloseHandler(new CloseHandler<PopupPanel>() {
+            createTagDialog.addCloseHandler(new CloseHandler<PopupPanel>() {
 
-                @Override public void onClose(CloseEvent<PopupPanel> popupPanelCloseEvent) {
-                    if (d.isCanceled()) return;
-                    final String tagName = d.getTagName();
-                    if (isEmpty(tagName)) return;
+                @Override
+                public void onClose(CloseEvent<PopupPanel> popupPanelCloseEvent) {
+                    if (createTagDialog.isCanceled()) return;
+                    final String newTagName = createTagDialog.getTagName();
+                    if (isEmpty(newTagName)) return;
 
-                    ctx.showMessage("Creating tag[" + tagName + "] ...");
+                    ctx.showMessage("Creating tag[" + newTagName + "] ...");
 
+                    final CommitId commitId = commit.getCommitId();
 
-                    service.service2.tagCurrentVersion(seriesKey, tagName, new AsyncCallback<Void>() {
-
-                        @Override public void onFailure(Throwable e) {
+                    service.service2.tagCommit(seriesKey, newTagName, commitId, new AsyncCallback<CommitHistory>() {
+                        @Override
+                        public void onFailure(Throwable e) {
                             ctx.showMessage("Failure creating tag: " + e);
                             e.printStackTrace();
                         }
 
-                        @Override public void onSuccess(Void result) {
-                            ctx.showMessage("Tag[" + tagName + "] created");
-
-                            TagCommit newTagCommit = new TagCommit(tagName, tagCommit.getCommitId(), tagCommit.getRootTreeId(), true);
-
-
-                            if (!newTagCommit.equals(tagCommit)) {
-                                tagCommit = newTagCommit;
-                                tagCommitChangeHandlers.fire(newTagCommit);
-                                footerPanel.refresh();
-                            }
+                        @Override
+                        public void onSuccess(CommitHistory result) {
+                            ctx.showMessage("Tag[" + result.getTag() + "] created");
+                            commit = result;
+                            commitChangeHandlers.fire(commit);
+                            footerPanel.refresh();
                         }
                     });
 
@@ -461,7 +491,7 @@ public class PreviewPanelFrame extends FlowPanel {
         private Label label;
 
         TagCommitButton() {
-            assert tagCommit != null;
+            assert commit != null;
             anchor = new Anchor("Filler");
             label = new Label();
 
@@ -469,20 +499,21 @@ public class PreviewPanelFrame extends FlowPanel {
             add(label);
 
 
+            getElement().getStyle().setMarginLeft(.8, Style.Unit.EM);
+
             refresh();
         }
 
         void refresh() {
-            if (tagCommit.isUntagged()) {
+            if (commit.isTagged()) {
+                anchor.setVisible(false);
+                label.setVisible(true);
+                label.setText("Version: " + commit.getDisplayName());
+            } else {
                 anchor.setVisible(true);
                 label.setVisible(false);
                 anchor.setText("Tag this version");
-            } else {
-                anchor.setVisible(false);
-                label.setVisible(true);
-                label.setText("Version: " + tagCommit.getDisplayName());
             }
-
         }
 
         public void addClickHandler(ClickHandler clickHandler) {
@@ -507,7 +538,8 @@ public class PreviewPanelFrame extends FlowPanel {
 
             Console.log("Fetching vtcRootTreeId..");
             service.service2.getVtcRootTreeId(seriesKey, new AsyncCallback<RootTreeId>() {
-                @Override public void onFailure(Throwable e) {
+                @Override
+                public void onFailure(Throwable e) {
                     String msg = "Problem fetching vtc: " + e + ". Try checking server log.";
                     Console.error(msg);
                     ctx.showMessage(msg);
@@ -515,8 +547,9 @@ public class PreviewPanelFrame extends FlowPanel {
                     refresh();
                 }
 
-                @Override public void onSuccess(RootTreeId vtcRootTreeId) {
-                    RootTreeId rootTreeId = tagCommit.getRootTreeId();
+                @Override
+                public void onSuccess(RootTreeId vtcRootTreeId) {
+                    RootTreeId rootTreeId = commit.getRootTreeId();
                     Console.log("vtcCommitId received: [" + vtcRootTreeId + "]");
                     vtc = rootTreeId.equals(vtcRootTreeId);
                     refresh();
@@ -527,7 +560,8 @@ public class PreviewPanelFrame extends FlowPanel {
             refresh();
 
             anchor.addClickHandler(new ClickHandler() {
-                @Override public void onClick(ClickEvent event) {
+                @Override
+                public void onClick(ClickEvent event) {
                     vtcOnClick();
                 }
             });
@@ -558,14 +592,16 @@ public class PreviewPanelFrame extends FlowPanel {
 
             if (!confirm) return;
 
-            service.service2.setVtcRootTreeId(seriesKey, tagCommit.getRootTreeId(), new AsyncCallback<Void>() {
-                @Override public void onFailure(Throwable e) {
+            service.service2.setVtcRootTreeId(seriesKey, commit.getRootTreeId(), new AsyncCallback<Void>() {
+                @Override
+                public void onFailure(Throwable e) {
                     String msg = "Problem setting vtc: " + e + ". Try checking server log.";
                     Console.error(msg);
                     ctx.showMessage(msg);
                 }
 
-                @Override public void onSuccess(Void result) {
+                @Override
+                public void onSuccess(Void result) {
                     ctx.showMessage("VTC successfully set");
                     vtc = true;
                     refresh();
@@ -634,6 +670,11 @@ public class PreviewPanelFrame extends FlowPanel {
 
     public HandlerRegistration addAngleChangeHandler(AngleChangeHandler handler) {
         return previewPanelContext.addAngleChangeHandler(handler);
+    }
+
+    public static interface Callback{
+        void generateJpgsButtonClicked(SeriesKey seriesKey,CommitHistory commitHistory, JpgWidth jpgWidth);
+        void tagCommitButtonClicked();
     }
 
 

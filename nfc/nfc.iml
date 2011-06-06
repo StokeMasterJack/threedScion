@@ -27,6 +27,17 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="gwt" name="GWT">
+      <configuration>
+        <setting name="compilerMaxHeapSize" value="128" />
+        <setting name="gwtScriptOutputStyle" value="DETAILED" />
+        <setting name="gwtSdkUrl" value="file://$USER_HOME$/p-java/gwt-2.2.0" />
+        <setting name="webFacet" value="admin" />
+        <packaging>
+          <module name="com.tms.threed.previewPaneAdapter.PreviewPaneAdapter" enabled="false" />
+        </packaging>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />

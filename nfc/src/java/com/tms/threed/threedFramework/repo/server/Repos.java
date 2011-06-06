@@ -58,6 +58,10 @@ public class Repos {
 
     }
 
+    public void purgeCache(){
+        seriesRepoCache.clear();
+    }
+
     public SeriesRepo getSeriesRepo(String seriesName, int seriesYear) {
         return getSeriesRepo(new SeriesKey(seriesYear, seriesName));
     }

@@ -3,14 +3,14 @@ package com.tms.threed.threedAdmin.main.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.tms.threed.threedFramework.jpgGen.shared.JobId;
 import com.tms.threed.threedFramework.jpgGen.shared.Stats;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
+import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.RtConfig;
 import com.tms.threed.threedFramework.repo.shared.SeriesNamesWithYears;
-import com.tms.threed.threedFramework.repo.shared.TagCommit;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface ThreedAdminService2Async {
 
@@ -28,7 +28,11 @@ public interface ThreedAdminService2Async {
 
     void getInitData(AsyncCallback<InitData> async);
 
-    void getTagCommits(final SeriesKey seriesKey, AsyncCallback<List<TagCommit>> async);
+    void tagCommit(SeriesKey seriesKey, String newTagName, CommitId commitId, AsyncCallback<CommitHistory> async);
 
-    void tagCurrentVersion(SeriesKey seriesKey, String tagName, AsyncCallback<Void> async);
+    void addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag, AsyncCallback<CommitHistory> async);
+
+    void getCommitHistory(SeriesKey seriesKey, AsyncCallback<CommitHistory> async);
+
+    void purgeRepoCache(AsyncCallback<Void> async);
 }

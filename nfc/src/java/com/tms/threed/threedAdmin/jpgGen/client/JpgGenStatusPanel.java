@@ -15,6 +15,7 @@ import com.tms.threed.threedAdmin.main.client.services.FetchJpgGenStatusCallback
 import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
 import com.tms.threed.threedFramework.threedCore.shared.Slice;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 
@@ -184,7 +185,8 @@ public class JpgGenStatusPanel extends DockLayoutPanel implements TabCloseListen
 
     private void refreshContent() {
         service.fetchJpgGenStatus(seriesId, jpgWidth, new FetchJpgGenStatusCallback() {
-            @Override public void onSuccess(JSONArray jsSlices) {
+            @Override public void onSuccess(@Nonnull JSONArray jsSlices) {
+                assert jsSlices != null;
                 sliceList = rebuildList(jsSlices);
                 table.setRowCount(sliceList.size());
                 table.setRowData(0,sliceList);

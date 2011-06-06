@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="repo exploded">
+  <artifact type="exploded-war" build-on-make="true" name="repo exploded">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/configurator-content</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">

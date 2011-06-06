@@ -2,7 +2,7 @@ package com.tms.threed.threedAdmin.main.server;
 
 import com.tms.threed.threedFramework.servletUtil.http.RequestInterrogator;
 import com.tms.threed.threedFramework.servletUtil.http.headers.CacheUtil;
-import com.tms.threed.threedFramework.threedCore.config.ConfigHelper;
+import com.tms.threed.threedFramework.threedCore.server.config.ConfigHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -17,7 +17,7 @@ import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.server.JpgId;
 import com.tms.threed.threedFramework.repo.server.SeriesRepo;
-import com.tms.threed.threedFramework.threedCore.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedCore.shared.Slice;
 import com.tms.threed.threedFramework.threedCore.shared.ViewKey;

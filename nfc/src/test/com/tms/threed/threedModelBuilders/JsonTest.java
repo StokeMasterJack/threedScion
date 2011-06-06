@@ -1,7 +1,7 @@
 package com.tms.threed.threedModelBuilders;
 
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import com.tms.threed.threedFramework.threedModel.server.JsonMarshallerTm;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;

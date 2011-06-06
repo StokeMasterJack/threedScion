@@ -15,6 +15,7 @@ import com.tms.threed.threedAdmin.featurePicker.client.CurrentUiPicks;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanelFactory;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanelModel;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanel;
+import com.tms.threed.threedAdmin.featurePicker.client.varPanels.RootVarPanel;
 import com.tms.threed.threedAdmin.main.client.tabLabel.TabLabel;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
@@ -30,9 +31,9 @@ import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeE
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
+import com.tms.threed.threedFramework.repo.shared.CommitHistory;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.repo.shared.TagCommit;
 import com.tms.threed.threedAdmin.main.client.services.ThreedAdminService1Async;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
 import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
@@ -65,7 +66,7 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
 
     private final ThreedModel threedModel;
     private final SeriesKey seriesKey;
-    private TagCommit tagCommit;
+    private CommitHistory commit;
     private RtConfig rtConfig;
     private final SeriesId seriesId;
     private final FeatureModel featureModel;
@@ -75,16 +76,18 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
 
     private final String threedModelUrl;
 
-    public SeriesViewPanel(UiContext ctx, final ThreedAdminService1Async service, ThreedModel threedModel, TagCommit tagCommit,String threedModelUrl ,RtConfig rtConfig) {
+    private Callback callback;
+
+    public SeriesViewPanel(UiContext ctx, final ThreedAdminService1Async service, ThreedModel threedModel, CommitHistory commit,String threedModelUrl ,RtConfig rtConfig) {
         assert service != null;
         assert threedModel != null;
-        assert tagCommit != null;
+        assert commit != null;
 
 
         this.threedModel = threedModel;
-        this.tagCommit = tagCommit;
+        this.commit = commit;
         this.seriesKey = threedModel.getSeriesKey();
-        this.seriesId = new SeriesId(seriesKey, tagCommit.getRootTreeId());
+        this.seriesId = new SeriesId(seriesKey, commit.getRootTreeId());
         this.featureModel = threedModel.getFeatureModel();
         this.threedModelUrl = threedModelUrl;
 
@@ -93,11 +96,11 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
         featurePickerPanel = initFeaturePickerPanel();
 
 
-        previewPanelFrame = new PreviewPanelFrame(ctx, service, threedModel, tagCommit,rtConfig);
+        previewPanelFrame = new PreviewPanelFrame(ctx, service, threedModel, commit,rtConfig);
 
-        previewPanelFrame.addTagCommitChangeHandler(new ValueChangeHandler<TagCommit>() {
-            @Override public void onValueChange(ValueChangeEvent<TagCommit> ev) {
-                SeriesViewPanel.this.tagCommit = ev.getValue();
+        previewPanelFrame.addTagCommitChangeHandler(new ValueChangeHandler<CommitHistory>() {
+            @Override public void onValueChange(ValueChangeEvent<CommitHistory> ev) {
+                SeriesViewPanel.this.commit = ev.getValue();
                 tabLabel.setLabel(getTabLabel());
             }
         });
@@ -135,6 +138,8 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
         splitLayoutPanel.addWest(featurePickerPanel, 300);
         splitLayoutPanel.add(layersStack);
         splitLayoutPanel.getElement().getStyle().setMarginRight(1, Style.Unit.EM);
+
+//        splitLayoutPanel.getElement().getStyle().setProperty("borderBottom", "blue thin solid");
 
 
         dock.getElement().getStyle().setMarginTop(.3, Style.Unit.EM);
@@ -187,6 +192,23 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
             }
         });
 
+    }
+
+    public void setCallback(final Callback callback) {
+        this.callback = callback;
+        previewPanelFrame.setCallback(new PreviewPanelFrame.Callback() {
+
+
+            @Override
+            public void generateJpgsButtonClicked(SeriesKey seriesKey, CommitHistory commitHistory, JpgWidth jpgWidth) {
+                callback.generateJpgsButtonClicked(seriesKey, commit,jpgWidth);
+            }
+
+            @Override
+            public void tagCommitButtonClicked() {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
     }
 
     private boolean isPngMode() {
@@ -439,6 +461,10 @@ public class SeriesViewPanel extends ResizeComposite implements TabAware {
     }
 
     public String getTabLabel() {
-        return seriesKey.toStringPretty() + " [" + tagCommit.getDisplayName() + "]";
+        return seriesKey.toStringPretty() + " [" + commit.getDisplayName() + "]";
+    }
+
+    public static interface Callback{
+        void generateJpgsButtonClicked(SeriesKey seriesKey,CommitHistory commitHistory,JpgWidth jpgWidth);
     }
 }

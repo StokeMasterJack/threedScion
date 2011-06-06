@@ -43,6 +43,7 @@ public class StatusPanel extends Composite {
 
 
         t.getElement().getStyle().setMarginLeft(1, Style.Unit.EM);
+        t.getColumnFormatter().setWidth(0,"120");
 
         refresh();
 
@@ -120,7 +121,7 @@ public class StatusPanel extends Composite {
 
 
         String threedModelUrl = model.getThreedModelUrl();
-        t.setWidget(3, 0, new HTML("<b>3D Model URL: </b>"));
+        t.setWidget(3, 0, new HTML("<b>3D Model: </b>"));
         t.setHTML(3, 1, "<a href='" + threedModelUrl + "' target='_blank'>" + threedModelUrl + "</a>");
 //        t.setText(2, 1, jpgUrl.toString());
 

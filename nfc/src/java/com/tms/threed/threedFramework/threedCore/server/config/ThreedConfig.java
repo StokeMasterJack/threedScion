@@ -1,4 +1,4 @@
-package com.tms.threed.threedFramework.threedCore.config;
+package com.tms.threed.threedFramework.threedCore.server.config;
 
 import com.tms.threed.threedFramework.repo.server.RepoUtil;
 import com.tms.threed.threedFramework.repo.server.Repos;

@@ -47,53 +47,6 @@ public class ThreedAdminService1Async {
 
     }
 
-    public void addAllAndCommit(SeriesKey seriesKey, String commitMessage, final AsyncCallback<String> callback) {
-
-        ServiceRequest r = new ServiceRequest();
-        r.command = "addAllAndCommit";
-        r.put(seriesKey);
-        if (notEmpty(commitMessage)) {
-            r.put("commitMessage", commitMessage);
-        }
-
-        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, r.buildFullUrl());
-
-
-        requestBuilder.setCallback(new RequestCallback() {
-            @Override
-            public void onResponseReceived(Request request, Response response) {
-
-
-                String text = response.getText();
-                JSONObject o = JSONParser.parseStrict(text).isObject();
-
-                if (o == null) {
-                    callback.onFailure(new RuntimeException("Commit failed. See server log for details."));
-                }
-
-                String newCommitId = o.get("newCommitId").isString().stringValue();
-
-                callback.onSuccess(newCommitId);
-
-            }
-
-            @Override
-            public void onError(Request request, Throwable e) {
-                callback.onFailure(e);
-            }
-        });
-
-
-        try {
-            requestBuilder.send();
-        } catch (RequestException e) {
-            callback.onFailure(e);
-        }
-
-
-    }
-
-
     public void fetchJpgGenStatus(SeriesId seriesId, JpgWidth jpgWidth, final FetchJpgGenStatusCallback callback) {
         ServiceRequest r = new ServiceRequest();
         r.command = "jpgGenStatus";
@@ -109,10 +62,10 @@ public class ThreedAdminService1Async {
             @Override
             public void onResponseReceived(Request request, Response response) {
 
-                String text = response.getText();
-                JSONArray jsSlices = JSONParser.parseStrict(text).isArray();
+                String jsonText = response.getText();
+                JSONArray jsSlices = JSONParser.parseStrict(jsonText).isArray();
 
-
+                System.out.println("jsonText = " + jsonText);
                 callback.onSuccess(jsSlices);
 
             }
@@ -567,7 +520,6 @@ public class ThreedAdminService1Async {
         r.command = "startJpgJob";
         r.put(seriesId);
         r.put(jpgWidth);
-
 
         String url = r.buildFullUrl();
 
