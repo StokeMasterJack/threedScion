@@ -6,7 +6,7 @@ import com.tms.threed.threedFramework.featureModel.shared.boolExpr.And;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.BoolExpr;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Type;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;

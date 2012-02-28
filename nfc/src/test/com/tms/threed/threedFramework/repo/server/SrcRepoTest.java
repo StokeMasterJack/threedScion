@@ -1,8 +1,8 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.tms.threed.threedFramework.repo.shared.CommitHistory;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;

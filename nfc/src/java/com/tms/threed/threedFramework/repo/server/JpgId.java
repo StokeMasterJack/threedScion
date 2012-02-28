@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.repo.server;
 
 import com.tms.threed.threedFramework.imageModel.server.ImageUtil;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 
 import java.io.File;
 

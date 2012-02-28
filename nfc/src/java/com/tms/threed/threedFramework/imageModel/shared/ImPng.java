@@ -4,7 +4,7 @@ import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.imageModel.shared.slice.FeatureOrPng;
 import com.tms.threed.threedFramework.imageModel.shared.slice.Png;
 import com.tms.threed.threedFramework.imageModel.shared.slice.SimplePicks;
-import com.tms.threed.threedFramework.threedCore.shared.Angle;
+import com.tms.threed.threedFramework.threedModel.shared.Angle;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import java.util.Collection;

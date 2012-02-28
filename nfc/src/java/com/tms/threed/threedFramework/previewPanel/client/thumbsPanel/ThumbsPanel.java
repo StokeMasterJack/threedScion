@@ -7,8 +7,8 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfoBuilder;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfoBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

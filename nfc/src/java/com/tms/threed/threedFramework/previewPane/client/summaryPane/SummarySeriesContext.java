@@ -6,10 +6,10 @@ import com.tms.threed.threedFramework.previewPanel.client.ThreedImagePanel;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeEvent;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.*;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Browser;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 

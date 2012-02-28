@@ -8,7 +8,7 @@ import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Conflict;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Iff;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Imp;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -7,9 +7,7 @@ frameworks=$cvsRoot/TMS/framework
 lib=$cvsRoot/lib
 
 repos=$userHome/repos
-repo=$repos/threed
-
-
+repo=$repos/threedScion
 
 
 echo src1 $src1
@@ -57,8 +55,8 @@ gwtCompileParams="$g1 $g2 $g6 -style OBF -XdisableCastChecking $modName"
 gwtParams=$gwtDevModeParams
 mainClass=com.google.gwt.dev.DevMode
 
-#gwtParams=$gwtCompileParams
-#mainClass=com.google.gwt.dev.Compiler
+gwtParams=$gwtCompileParams
+mainClass=com.google.gwt.dev.Compiler
 
 jvmParams="$j3 $j0 $j1 $j2"
 

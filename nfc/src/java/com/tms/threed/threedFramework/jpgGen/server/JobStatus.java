@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.jpgGen.server;
 
 import com.tms.threed.threedFramework.jpgGen.shared.JobState;
 import com.tms.threed.threedFramework.jpgGen.shared.JpgStateCounts;
-import com.tms.threed.threedFramework.servletUtil.ExceptionRenderer;
+import com.tms.threed.threedFramework.util.servlet.ExceptionRenderer;
 
 import java.io.Serializable;
 

@@ -4,6 +4,8 @@
       <root url="jar://$jarRepo$/Configurator-CommonFramework/1.0.204/Configurator-CommonFramework-1.0.204.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/framework/Configurator-CommonFramework/src/java" />
+    </SOURCES>
   </library>
 </component>

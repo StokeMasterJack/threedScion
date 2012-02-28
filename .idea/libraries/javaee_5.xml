@@ -4,7 +4,7 @@
       <root url="jar://$jarRepo$/javaee/5/javaee.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME$/p-java/daven-repository/javaee/1.5/javadoc" />
+      <root url="file://$daven$/javaee/1.5/javadoc" />
     </JAVADOC>
     <SOURCES>
       <root url="file://$jarRepo$/javaee/5/jetty-src" />

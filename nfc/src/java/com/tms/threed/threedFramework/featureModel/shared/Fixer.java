@@ -4,12 +4,11 @@ import com.tms.threed.threedFramework.featureModel.shared.boolExpr.AssignmentExc
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 
 import java.util.Collection;
-import java.util.Set;
 
 public class Fixer {
 
     public static FixResult fix(FeatureModel fm, Collection<Var> trueVars) {
-        AbstractCsp csp = null;
+        Csp csp = null;
 
         try {
 
@@ -40,11 +39,11 @@ public class Fixer {
 
     }
 
-    private static Csp toCsp(FeatureModel featureModel, Collection<Var> trueVars) {
+    private static CspSimple toCsp(FeatureModel featureModel, Collection<Var> trueVars) {
         assert trueVars != null;
         assert featureModel != null;
 
-        Csp csp = featureModel.createCsp();
+        CspSimple csp = featureModel.createCsp();
 
         for (Var trueVar : trueVars) {
             csp.assignTrue(trueVar);

@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.repo.server;
 
 import com.google.common.base.Preconditions;
 import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.util.vnode.server.Rejection;
 import com.tms.threed.threedFramework.util.vnode.server.VNode;
 import com.tms.threed.threedFramework.util.vnode.server.VNodeBuilder;

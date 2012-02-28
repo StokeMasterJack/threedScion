@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.jpgGen.shared;
 
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
 
 public class JobKey {
 

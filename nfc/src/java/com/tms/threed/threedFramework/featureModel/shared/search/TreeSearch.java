@@ -51,6 +51,8 @@ public class TreeSearch {
 
         if (true) return true;
 
+        boolean canBeExtended;
+
         FindFirstTreeSearch findFirstSearch = new FindFirstTreeSearch();
 
         Assignments before = csp.getAssignments().copy(csp.getOpenVars().copy());
@@ -58,10 +60,13 @@ public class TreeSearch {
 
         if (after == null) {
             System.out.println("Cannot be extended: " + before.getTrueVars());
-            return false;
+            canBeExtended = false;
         } else {
-            return true;
+            canBeExtended = true;
         }
+
+
+        return canBeExtended;
 
 
     }
@@ -125,9 +130,9 @@ public class TreeSearch {
             productHandler.onProduct(completeSolution);
         }
 
-        if (solutionCount % 1000000L == 0) {
-            System.out.println("solutionCount = " + solutionCount);
-        }
+//        if (solutionCount % 1000000L == 0) {
+//            System.out.println("solutionCount = " + solutionCount);
+//        }
 //        Set<Var> product = completeSolution.getTrueOutputVars(varsToSuppressInSolution);
 //        boolean added = uniqueSolutions.add(product.toString());
 

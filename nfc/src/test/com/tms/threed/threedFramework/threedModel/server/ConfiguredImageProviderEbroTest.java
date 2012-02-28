@@ -1,7 +1,6 @@
 package com.tms.threed.threedFramework.threedModel.server;
 
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import junit.framework.TestCase;
 
 /**

@@ -2,9 +2,9 @@ package com.tms.threed.threedFramework.repoClient;
 
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 import org.junit.Test;

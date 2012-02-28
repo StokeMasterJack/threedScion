@@ -1,6 +1,6 @@
 package com.tms.threed.threedFramework.repo.server;
 
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import org.dom4j.Document;
 import org.dom4j.Element;
 

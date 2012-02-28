@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="repo war">
-    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/</output-path>
-    <root id="archive" name="configurator-content.war">
-      <element id="artifact" artifact-name="repo exploded" />
-    </root>
-  </artifact>
-</component>

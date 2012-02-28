@@ -7,7 +7,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.tms.threed.threedFramework.previewPanel.client.buttonBars.AngleButtonPanel;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 
 public class InteriorButtonPanel extends AngleButtonPanel implements InteriorButtonPanelDisplay {
 

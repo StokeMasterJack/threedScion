@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.imageModel.shared.slice;
 
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 
 import java.util.*;
 

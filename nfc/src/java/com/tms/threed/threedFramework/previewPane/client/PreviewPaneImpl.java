@@ -8,16 +8,15 @@ import com.tms.threed.threedFramework.featureModel.shared.Fixer;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeEvent;
 import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedFramework.previewPane.client.externalState.ExternalState;
 import com.tms.threed.threedFramework.previewPane.client.externalState.raw.ExternalStateSnapshot;
-import com.tms.threed.threedFramework.previewPane.client.nonFlashConfig.ExternalState;
 import com.tms.threed.threedFramework.previewPane.client.notification.AccessoryWithFlashOrientationHandler;
 import com.tms.threed.threedFramework.previewPane.client.notification.NotificationCenterBridge;
 import com.tms.threed.threedFramework.previewPane.client.series.PreviewPaneContext;
-import com.tms.threed.threedFramework.previewPane.client.threedServiceClient.ThreedModelServiceJson;
 import com.tms.threed.threedFramework.previewPanel.client.ChatInfo;
 import com.tms.threed.threedFramework.previewPanel.client.PreviewPanelContext;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
 

@@ -9,8 +9,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.tms.threed.threedFramework.previewPanel.client.ThreedImagePanel;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
 
 import static com.tms.threed.threedFramework.util.lang.shared.Strings.getSimpleName;
 

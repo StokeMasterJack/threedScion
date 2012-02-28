@@ -2,8 +2,8 @@ package com.tms.threed.threedFramework.imageModel.server;
 
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
 import org.codehaus.jackson.node.ObjectNode;
 

@@ -14,8 +14,8 @@ import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.server.JpgId;
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 
 import java.io.File;

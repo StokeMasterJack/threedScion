@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.imageModel.shared;
 
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.Angle;
+import com.tms.threed.threedFramework.threedModel.shared.Angle;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;

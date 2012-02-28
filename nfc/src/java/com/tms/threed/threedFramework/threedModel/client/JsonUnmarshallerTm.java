@@ -6,9 +6,9 @@ import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.imageModel.client.JsImageModel;
 import com.tms.threed.threedFramework.imageModel.client.JsonUnmarshallerIm;
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfoBuilder;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.*;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfoBuilder;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
@@ -17,15 +17,29 @@ public class JsonUnmarshallerTm {
     public static ThreedModel createModelFromJsInPage() {
         JsThreedModel jsModelFromJsInPage = getJsModelFromJsInPage();
 
-         if (jsModelFromJsInPage == null) {
+        if (jsModelFromJsInPage == null) {
             throw new IllegalStateException("getJsModelFromJsInPage() returned null. See html comments for more details.");
-        } else{
+        } else {
             Console.log("Pulled jsModelFromJsInPage from jsp page");
         }
 
         ThreedModel threedModel = createModelFromJs(jsModelFromJsInPage);
         threedModel.setRepoBaseUrl(getRepoBaseUrlFromPage());
+
+
+        SubSeries subSeries = getSubSeriesFromPage();
+        threedModel.setSubSeries(subSeries);
         return threedModel;
+    }
+
+    private static SubSeries getSubSeriesFromPage() {
+        JsSubSeries jsSubSeries = getJsSubSeries();
+        if(jsSubSeries==null){
+            return null;
+        }
+        else{
+            return new SubSeries(jsSubSeries.getLabel(),jsSubSeries.getYear());
+        }
     }
 
     public static Path getRepoBaseUrlFromPage() {
@@ -33,7 +47,7 @@ public class JsonUnmarshallerTm {
 
         if (jsRepoBaseUrl == null) {
             throw new IllegalStateException("getJsRepoBaseUrl() returned null. See html comments for more details.");
-        } else{
+        } else {
             Console.log("Pulled repoBaseDir[" + jsRepoBaseUrl + "] from jsp page");
         }
 
@@ -42,16 +56,30 @@ public class JsonUnmarshallerTm {
 
     public static ThreedModel createModelFromJsonText(String jsonText) {
         JsThreedModel jsThreedModel = getJsModelFromJsonText(jsonText);
-        return createModelFromJs(jsThreedModel);
+
+        ThreedModel threedModel = createModelFromJs(jsThreedModel);
+        SubSeries subSeries = getSubSeriesFromPage();
+        threedModel.setSubSeries(subSeries);
+
+        return threedModel;
     }
 
     private static native String getJsRepoBaseUrl() /*-{
         return $wnd.repoBaseUrl;
     }-*/;
 
+    private static native JsSubSeries getJsSubSeries() /*-{
+        if($wnd.subSeries){
+            return $wnd.subSeries;
+        }else{
+            return null;
+        }
+    }-*/;
+
     private static native JsThreedModel getJsModelFromJsInPage() /*-{
         return $wnd.threedModel;
     }-*/;
+
 
     private static native JsThreedModel getJsModelFromJsonText(String jsonText) /*-{
         eval("var xTmp = " + jsonText);

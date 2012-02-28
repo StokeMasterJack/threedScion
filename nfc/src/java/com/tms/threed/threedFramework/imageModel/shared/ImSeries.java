@@ -3,10 +3,10 @@ package com.tms.threed.threedFramework.imageModel.shared;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import java.util.HashSet;

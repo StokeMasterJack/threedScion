@@ -4,6 +4,7 @@
       <w>&quot;cardinality&quot;</w>
       <w>&quot;derived&quot;</w>
       <w>&quot;name&quot;</w>
+      <w>accy</w>
       <w>admininister</w>
       <w>akamai</w>
       <w>anding</w>
@@ -19,13 +20,17 @@
       <w>committer</w>
       <w>committers</w>
       <w>concat</w>
+      <w>configws</w>
       <w>cudd</w>
+      <w>culos</w>
       <w>cvsroot</w>
       <w>deltaa</w>
       <w>deps</w>
+      <w>desde</w>
       <w>dford</w>
       <w>docroot</w>
       <w>dont</w>
+      <w>ebrochure</w>
       <w>enqueue</w>
       <w>enqueued</w>
       <w>errored</w>
@@ -76,6 +81,7 @@
       <w>nullary</w>
       <w>occurrance</w>
       <w>olnd</w>
+      <w>omni</w>
       <w>ompa</w>
       <w>paltrow</w>
       <w>pickable</w>
@@ -93,6 +99,7 @@
       <w>queuer</w>
       <w>recalc</w>
       <w>redir</w>
+      <w>referer</w>
       <w>replacer</w>
       <w>repo</w>
       <w>repos</w>

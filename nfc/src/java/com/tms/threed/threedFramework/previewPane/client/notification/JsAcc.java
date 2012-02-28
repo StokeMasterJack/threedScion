@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.previewPane.client.notification;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 
 public final class JsAcc extends JavaScriptObject {
 

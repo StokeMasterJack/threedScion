@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>repoServlet</servlet-name>
-        <servlet-class>com.tms.threed.repoServlets.web.RepoServlet</servlet-class>
+        <servlet-class>com.tms.threed.threedFramework.repo.web.RepoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

@@ -3,34 +3,15 @@ package com.tms.threed.threedFramework.featureModel.shared;
 //import com.tms.threed.featureModel.server.BoolExprString;
 //import com.tms.threed.featureModel.server.ExprParser;
 
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.And;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.BoolExpr;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Conflict;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.False;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Iff;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Imp;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.MasterConstraint;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Not;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Or;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.True;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.VarsDb;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Xor;
+import com.tms.threed.threedFramework.featureModel.shared.boolExpr.*;
 import com.tms.threed.threedFramework.featureModel.shared.picks.Picks;
 import com.tms.threed.threedFramework.featureModel.shared.picks.PicksContextFm;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SubSeries;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 import com.tms.threed.threedFramework.util.lang.shared.Strings;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static com.tms.threed.threedFramework.util.lang.shared.Strings.isEmpty;
 
@@ -46,6 +27,8 @@ public class FeatureModel implements Vars {
     public static final True TRUE = BoolExpr.TRUE;
 
     private final VarsDb vars;
+
+    private SubSeries subSeries;
 
     public FeatureModel(SeriesKey seriesKey, String displayName) {
         this.seriesKey = seriesKey;
@@ -142,12 +125,20 @@ public class FeatureModel implements Vars {
         return seriesKey;
     }
 
-    public int getYear() {
-        return seriesKey.getYear();
+    public int getDisplayYear() {
+        if (subSeries != null && subSeries.getYear() != null) {
+            return subSeries.getYear();
+        } else {
+            return seriesKey.getYear();
+        }
     }
 
     public String getDisplayName() {
-        return displayName;
+        if (subSeries != null && subSeries.getLabel() != null && subSeries.getLabel().trim().length() != 0) {
+            return subSeries.getLabel();
+        } else {
+            return displayName;
+        }
     }
 
     //    public SeriesId getSeriesId() {
@@ -517,8 +508,8 @@ public class FeatureModel implements Vars {
         return p;
     }
 
-    public Csp createCsp() {
-        return new Csp(this, getConstraint());
+    public CspSimple createCsp() {
+        return new CspSimple(this, getConstraint());
     }
 
     public CspForTreeSearch createCspForTreeSearch(Collection<Var> outputVars) {
@@ -834,7 +825,8 @@ public class FeatureModel implements Vars {
         return a;
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != FeatureModel.class) return false;
 
@@ -850,5 +842,48 @@ public class FeatureModel implements Vars {
 
         return varsEqual && ecEqual;
     }
+
+    public void setSubSeries(SubSeries subSeries) {
+        this.subSeries = subSeries;
+    }
+
+    /**
+     * Invalid var codes are ignored (non-strict)
+     */
+    public Collection<Var> convertCodesToVars(Collection<String> varCodes) {
+        return convertCodesToVars(varCodes, false);
+    }
+
+    /**
+     * @param strict if true, an invalid varCode will trigger an UnknownVarCodeException
+     * @throws UnknownVarCodeException if strict=true and an invalid varCode is passed in
+     */
+    public Collection<Var> convertCodesToVars(Collection<String> varCodes, boolean strict) throws UnknownVarCodeException {
+        Collection<Var> vars = new ArrayList<Var>();
+        for (String varCode : varCodes) {
+            try {
+                Var var = get(varCode);
+                vars.add(var);
+            } catch (UnknownVarCodeException e) {
+                if (strict) {
+                    throw e;
+                } else {
+                    //ignore
+                }
+            }
+        }
+        return vars;
+    }
+
+    public FixResult fix(Collection<Var> trueVars) {
+        return Fixer.fix(this, trueVars);
+    }
+
+    public FixResult fixRaw(Collection<String> trueVarCodes) {
+        Collection<Var> vars = this.convertCodesToVars(trueVarCodes);
+        return Fixer.fix(this, vars);
+    }
+
+
 }
 

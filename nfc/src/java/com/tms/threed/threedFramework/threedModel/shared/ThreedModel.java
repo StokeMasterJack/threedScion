@@ -4,30 +4,16 @@ import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.featureModel.shared.FixResult;
 import com.tms.threed.threedFramework.featureModel.shared.Fixer;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.imageModel.shared.IImageStack;
-import com.tms.threed.threedFramework.imageModel.shared.ImLayer;
-import com.tms.threed.threedFramework.imageModel.shared.ImPng;
-import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
-import com.tms.threed.threedFramework.imageModel.shared.ImView;
+import com.tms.threed.threedFramework.imageModel.shared.*;
 import com.tms.threed.threedFramework.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedFramework.imageModel.shared.slice.Png;
 import com.tms.threed.threedFramework.imageModel.shared.slice.SimplePicks;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class ThreedModel {
@@ -136,6 +122,15 @@ public class ThreedModel {
 
         ImView view = imageModel.getView(slice.getViewName());
         return view.getImageStack(picks, slice.getAngle(), jpgWidth);
+    }
+
+    public IImageStack getImageStack(Slice slice, Collection<String> rawPicks, JpgWidth jpgWidth) {
+        assert slice != null;
+        assert rawPicks != null;
+        FixResult fixResult = getFeatureModel().fixRaw(rawPicks);
+
+        ImView view = imageModel.getView(slice.getViewName());
+        return view.getImageStack(fixResult, slice.getAngle(), jpgWidth);
     }
 
 //    public IImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
@@ -348,5 +343,9 @@ public class ThreedModel {
         System.out.println(imPng.toString());
 
 
+    }
+
+    public void setSubSeries(SubSeries subSeries) {
+        featureModel.setSubSeries(subSeries);
     }
 }

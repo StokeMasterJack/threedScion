@@ -336,32 +336,53 @@ public class MasterConstraint {
         else return constraints.length;
     }
 
-
     public void print() {
+        print("");
 
-        System.err.println("\t hash: " + this.hashCode());
+    }
 
-        Or longestOr = getLongestOr();
-        int longestOrCount = longestOr == null ? 0 : longestOr.getExprCount();
-        System.err.println("\t LongestOr: " + longestOrCount + ":" + longestOr);
-        System.err.println("\t Unit-clause count [" + getUnitClauseCount() + "]");
-
-        System.err.println("\t Top-level clauses:" + getExpressionCount() + ":");
-
+    public void print(String prefix) {
 
         if (isConstant()) {
-            System.err.println("Constraint expression: " + constantConstraint);
+            System.err.println(prefix + "Constraint: " + constantConstraint);
 
         } else {
-            System.err.println("Constraint expression: ");
+            System.out.println(prefix + "Constraint: ");
             for (int i = 0; i < constraints.length; i++) {
                 BoolExpr e = constraints[i];
-                System.err.println("\t\t " + e);
+                System.err.println(prefix + "\t " + e);
             }
         }
 
 
     }
+
+
+//    public void print() {
+//
+//        System.err.println("\t hash: " + this.hashCode());
+//
+//        Or longestOr = getLongestOr();
+//        int longestOrCount = longestOr == null ? 0 : longestOr.getExprCount();
+//        System.err.println("\t LongestOr: " + longestOrCount + ":" + longestOr);
+//        System.err.println("\t Unit-clause count [" + getUnitClauseCount() + "]");
+//
+//        System.err.println("\t Top-level clauses:" + getExpressionCount() + ":");
+//
+//
+//        if (isConstant()) {
+//            System.err.println("Constraint expression: " + constantConstraint);
+//
+//        } else {
+//            System.err.println("Constraint expression: ");
+//            for (int i = 0; i < constraints.length; i++) {
+//                BoolExpr e = constraints[i];
+//                System.err.println("\t\t " + e);
+//            }
+//        }
+//
+//
+//    }
 
 
     public int getUnitClauseCount() {

@@ -1,6 +1,6 @@
 package com.tms.threed.threedFramework.previewPanel.client.thumbsPanel;
 
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 
 public interface ThumbDisplay  {
 

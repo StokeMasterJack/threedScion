@@ -6,12 +6,15 @@
 package com.tms.threed.threedFramework.threedModel.server;
 
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
 import junit.framework.TestCase;
 
 public class EBrochureRequestTest extends TestCase {
 
     Repos repos = ThreedConfig.getRepos();
+
+    public void test1() throws Exception{
+
+    }
 
 //    public void test_getPackageCodes() throws Exception {
 //        EBrochureRequest r = new EBrochureRequest(repos);

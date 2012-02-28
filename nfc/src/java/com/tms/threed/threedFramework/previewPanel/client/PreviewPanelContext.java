@@ -2,7 +2,6 @@ package com.tms.threed.threedFramework.previewPanel.client;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Command;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.previewPanel.client.buttonBars.exterior.ExteriorButtonHandler;
 import com.tms.threed.threedFramework.previewPanel.client.buttonBars.exterior.ExteriorButtonPanel;
@@ -23,12 +22,12 @@ import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeH
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewStates;
+import com.tms.threed.threedFramework.threedModel.shared.*;
 import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
@@ -81,7 +80,7 @@ public class PreviewPanelContext {
 
 
         chatPanel = new ChatPanel(featureModel.getDisplayName());
-        headerPanel = new HeaderPanel(chatPanel,featureModel.getYear(),featureModel.getDisplayName());
+        headerPanel = new HeaderPanel(chatPanel,featureModel.getDisplayYear(),featureModel.getDisplayName());
 
         angleButtonHandler = new DefaultAngleButtonHandler();
         thumbClickHandler = new DefaultThumbClickHandler();

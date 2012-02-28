@@ -5,8 +5,8 @@ import com.tms.threed.threedFramework.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedFramework.imageModel.shared.slice.Layer;
 import com.tms.threed.threedFramework.imageModel.shared.slice.SimplePicks;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

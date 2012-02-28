@@ -12,18 +12,19 @@ import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.imageModel.shared.ImView;
 import com.tms.threed.threedFramework.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedFramework.imageModel.shared.slice.Jpg;
+import com.tms.threed.threedFramework.repo.server.JpgId;
 import com.tms.threed.threedFramework.repo.server.Repos;
+import com.tms.threed.threedFramework.repo.server.SeriesRepo;
 import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.server.JpgId;
-import com.tms.threed.threedFramework.repo.server.SeriesRepo;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.*;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 import junit.framework.TestCase;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -128,21 +129,55 @@ public class TreeSearchTest extends TestCase {
     public void testCamry2011() throws Exception {
 
         Camry2011 fm = new Camry2011();
-        Set<Var> outputVars = fm.getOutputVars();
         CspForTreeSearch csp = fm.createCspForTreeSearch();
-//        CspForTreeSearch csp = fm.createCspForTreeSearch(outputVars);
-
-//        csp.flattenTopLevelConflicts();
-//        csp.flattenTopLevelImplications();
-//        csp.propagateSimplify();
-
 
         TreeSearch treeSearch = new TreeSearch();
         treeSearch.start(csp);
-        treeSearch.printCounts();
+
+        System.out.println("satCount = " + treeSearch.getSolutionCount());
 
 
     }
+
+
+    public void test_Reduce_ComplexVehicle() throws Exception {
+        CspForTreeSearch csp = buildCspComplexVehicle();
+        csp = reduce(csp, null);
+        csp = reduce(csp, "LE");
+        csp = reduce(csp, "V6");
+        csp = reduce(csp, "040");
+        csp = reduce(csp, "Ash");
+        csp = reduce(csp, "QA");
+        csp = reduce(csp, "2Q");
+    }
+
+
+
+
+    /**
+     *
+     * @param cspIn
+     * @param varCode null means that no reduction occurs, cspIn is returned
+     * @return if varCode !=null, reduce the cspIn by assigning the varCode=true and return the reduced csp, else (if varCode==null) simple return cspIn
+     */
+    private CspForTreeSearch reduce(CspForTreeSearch cspIn, @Nullable String varCode) {
+        if (varCode == null) {
+            System.err.println("*** Nothing Picked ***");
+            cspIn.print();
+            System.err.println("satCount: " + cspIn.satCount());
+            System.err.println();
+            return cspIn;
+        } else {
+            System.err.println("*** Pick " + varCode + " ***");
+            CspForTreeSearch reduced = cspIn.reduce(varCode);
+
+            reduced.print();
+            System.err.println("satCount: " + reduced.satCount());
+            System.err.println();
+            return reduced;
+        }
+    }
+
 
 
     public void testTundraJpgs() throws Exception {
@@ -477,6 +512,12 @@ public class TreeSearchTest extends TestCase {
 
     public ThreedModel getTacoma() {
         return repos.getThreedModel("tacoma", 2011);
+    }
+
+    private CspForTreeSearch buildCspComplexVehicle() {
+        Camry2011 fm = new Camry2011();
+        CspForTreeSearch csp = fm.createCspForTreeSearch();
+        return csp;
     }
 
 }

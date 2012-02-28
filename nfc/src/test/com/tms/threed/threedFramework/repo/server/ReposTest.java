@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.tms.threed.threedFramework.imageModel.server.ImageUtil;
-import com.tms.threed.threedFramework.threedCore.server.config.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
 import org.eclipse.jgit.revwalk.RevCommit;

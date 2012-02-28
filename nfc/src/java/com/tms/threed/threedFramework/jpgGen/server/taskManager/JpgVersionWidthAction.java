@@ -2,13 +2,12 @@ package com.tms.threed.threedFramework.jpgGen.server.taskManager;
 
 import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.CommitId;
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.server.SeriesRepo;
 import com.tms.threed.threedFramework.repo.server.SrcRepo;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesId;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 
 public class JpgVersionWidthAction {

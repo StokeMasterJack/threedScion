@@ -18,6 +18,9 @@ import com.tms.threed.threedFramework.previewPanel.client.PreviewPanelStyles;
 import com.tms.threed.threedFramework.previewPanel.client.buttonBars.AngleButtonPanel;
 import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
 
+/**
+ *     < drag to spin >
+ */
 public class ExteriorButtonPanel extends AngleButtonPanel implements ExteriorButtonPanelDisplay{
 
     private static final int WIDTH_PX = 263;

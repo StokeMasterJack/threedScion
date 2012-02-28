@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.previewPane.client;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 
 import java.util.Date;
 

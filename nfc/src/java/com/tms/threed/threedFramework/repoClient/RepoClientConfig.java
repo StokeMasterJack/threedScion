@@ -1,6 +1,6 @@
 package com.tms.threed.threedFramework.repoClient;
 
-import com.tms.threed.threedFramework.threedCore.server.config.ConfigHelper;
+import com.tms.threed.threedFramework.util.config.ConfigHelper;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import static com.tms.threed.threedFramework.util.lang.shared.Strings.isEmpty;

@@ -14,12 +14,8 @@ public class FooterPanel extends AbsolutePanel {
 
 
     public FooterPanel(final InteriorButtonPanel interiorButtonPanel, final ExteriorButtonPanel exteriorButtonPanel) {
-
         addButtonPanel(exteriorButtonPanel);
         addButtonPanel(interiorButtonPanel);
-
-
-
     }
 
     private void addButtonPanel(AngleButtonPanel angleButtonPanel) {

@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.previewPanel.shared.viewModel;
 
 import com.tms.threed.threedFramework.previewPanel.client.ViewState;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 
 public class ViewStateByPanel implements ViewState {
 

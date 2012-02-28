@@ -1,9 +1,8 @@
 package com.tms.threed.threedFramework.previewPane.client;
 
 import com.tms.threed.threedFramework.imageModel.shared.IImageStack;
-import com.tms.threed.threedFramework.previewPane.client.previewPanelModel.ImageUrlProvider;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewStates;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 
 import java.util.ArrayList;

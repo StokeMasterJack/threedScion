@@ -5,11 +5,8 @@ import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.imageModel.shared.IImageStack;
 import com.tms.threed.threedFramework.imageModel.shared.IPng;
-import com.tms.threed.threedFramework.previewPane.client.PrefetchStrategy;
-import com.tms.threed.threedFramework.previewPane.client.PrefetchStrategy2;
-import com.tms.threed.threedFramework.previewPane.client.Prefetcher;
-import com.tms.threed.threedFramework.previewPane.client.SimplePicks2;
-import com.tms.threed.threedFramework.previewPane.client.previewPanelModel.ImageUrlProvider;
+import com.tms.threed.threedFramework.previewPane.client.*;
+import com.tms.threed.threedFramework.previewPane.client.ImageUrlProvider;
 import com.tms.threed.threedFramework.previewPanel.client.ChatInfo;
 import com.tms.threed.threedFramework.previewPanel.client.PreviewPanel;
 import com.tms.threed.threedFramework.previewPanel.client.PreviewPanelContext;
@@ -22,10 +19,10 @@ import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeH
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.*;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Browser;
 import com.tms.threed.threedFramework.util.lang.shared.Path;
 

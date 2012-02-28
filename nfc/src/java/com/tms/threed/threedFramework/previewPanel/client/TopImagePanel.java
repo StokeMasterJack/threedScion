@@ -11,30 +11,36 @@ import static com.tms.threed.threedFramework.util.lang.shared.Strings.getSimpleN
 public class TopImagePanel extends AbsolutePanel {
 
     public ImageSize mainImageSize;
-    private ThreedImagePanel mainImagePanel;
 
+    private final HeaderPanel headerPanel;
+    private final ThreedImagePanel mainImagePanel;
     private final FooterPanel footerPanel;
 
+    private final BlinkOverlay blinkOverlay;
+    private final DragToSpin<ClearGif> dragToSpin;
+
     public TopImagePanel(ImageSize mainImageSize, ThreedImagePanel mainImagePanel, BlinkOverlay blinkOverlay, DragToSpin<ClearGif> dragToSpin, HeaderPanel headerPanel, FooterPanel footerPanel) {
-        this.footerPanel = footerPanel;
-        this.mainImagePanel = mainImagePanel;
         this.mainImageSize = mainImageSize;
+
+        this.headerPanel = headerPanel;
+        this.mainImagePanel = mainImagePanel;
+        this.footerPanel = footerPanel;
+        this.blinkOverlay = blinkOverlay;
+        this.dragToSpin = dragToSpin;
 
         setPixelSize(mainImageSize.getWidth(), mainImageSize.getHeight());
 
         ClearGif dragDiv = new ClearGif(mainImageSize);
 
-
         footerPanel.setPixelSize(mainImageSize.getWidth(), footerPanel.getPreferredHeightPx());
 
-
         add(this.mainImagePanel, 0, 0);
-        add(blinkOverlay, 0, 0);
-        add(headerPanel, 0, 0);
+        add(this.blinkOverlay, 0, 0);
+        add(this.headerPanel, 0, 0);
         add(dragDiv, 0, 0);
 
 
-        add(footerPanel, 0, getFooterPanelTop());
+        add(this.footerPanel, 0, getFooterPanelTop());
 
 //        image.addLoadHandler(new LoadHandler() {
 //            @Override public void onLoad(LoadEvent event) {

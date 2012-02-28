@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/Configurator-ToyotaApp/Configurator-ToyotaApp.iml" filepath="$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/Configurator-ToyotaApp/Configurator-ToyotaApp.iml" />
-      <module fileurl="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/framework/Configurator-ToyotaFramework/Configurator-ToyotaFramework.iml" filepath="$USER_HOME$/cvsCheckouts/CVSROOT/TMS/framework/Configurator-ToyotaFramework/Configurator-ToyotaFramework.iml" />
-      <module fileurl="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/htdocs/configurator_toyota/configurator_toyota.iml" filepath="$USER_HOME$/cvsCheckouts/CVSROOT/TMS/htdocs/configurator_toyota/configurator_toyota.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
     </modules>
   </component>

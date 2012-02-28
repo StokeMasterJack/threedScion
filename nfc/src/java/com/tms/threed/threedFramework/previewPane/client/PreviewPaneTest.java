@@ -7,10 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.tms.threed.threedFramework.previewPane.client.externalState.raw.ExternalStateSnapshot;
-import com.tms.threed.threedFramework.previewPane.client.threedServiceClient.ThreedModelServiceJson;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.client.JsonUnmarshallerTm;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 
 import java.util.HashMap;
 import java.util.Map;

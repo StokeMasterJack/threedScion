@@ -1,9 +1,9 @@
 package com.tms.threed.threedFramework.previewPanel.shared.viewModel;
 
 import com.tms.threed.threedFramework.previewPanel.client.ViewState;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
-import com.tms.threed.threedFramework.threedCore.shared.ViewKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
 
 public class ViewStates {
 

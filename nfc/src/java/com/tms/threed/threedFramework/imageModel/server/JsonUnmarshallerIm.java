@@ -9,7 +9,7 @@ import com.tms.threed.threedFramework.imageModel.shared.ImPng;
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
 import com.tms.threed.threedFramework.imageModel.shared.ImView;
 import com.tms.threed.threedFramework.imageModel.shared.PngShortSha;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
 import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
 import org.codehaus.jackson.JsonNode;
 

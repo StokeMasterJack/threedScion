@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.google.common.io.Files;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 
 import java.io.File;
 import java.io.IOException;

@@ -10,8 +10,8 @@ import com.tms.threed.threedFramework.repo.server.JpgId;
 import com.tms.threed.threedFramework.repo.server.RepoUtil;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.lib.ObjectId;
@@ -125,7 +125,7 @@ public class RtRepo implements BlinkChecker {
                     Files.touch(emptyPngFile);
                     return true;
                 } else {
-                    Files.createParentDirs(emptyPngFile);
+                    Files.createParentDirs(notEmptyPngFile);
                     Files.touch(notEmptyPngFile);
                     return false;
                 }

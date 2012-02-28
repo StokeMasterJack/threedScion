@@ -10,7 +10,7 @@ import com.tms.threed.threedFramework.repo.shared.RepoHasNoHeadException;
 import com.tms.threed.threedFramework.repo.shared.RevisionParameter;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
 import com.tms.threed.threedFramework.repo.shared.TagCommit;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.JGitText;

@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.featureModel.server;
 
 import com.google.common.io.Resources;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import org.junit.Test;
 
 import java.net.URL;

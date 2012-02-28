@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class CspForTreeSearch extends AbstractCsp<AssignmentsForTreeSearch, CspForTreeSearch> {
+public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSearch> {
 
     private final AssignmentsForTreeSearch assignments;
     private final OpenVars openVars;
@@ -158,6 +158,8 @@ public class CspForTreeSearch extends AbstractCsp<AssignmentsForTreeSearch, CspF
 
         return maxVar;
     }
+
+
 
 
     public class VarComparator implements Comparator<Var> {

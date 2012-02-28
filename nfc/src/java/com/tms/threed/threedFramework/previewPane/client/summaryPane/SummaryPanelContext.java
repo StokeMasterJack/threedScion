@@ -17,9 +17,9 @@ import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEv
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
 import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewStates;
 import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedCore.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedCore.shared.Slice;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedFramework.threedModel.shared.Slice;
 
 public class SummaryPanelContext {
 

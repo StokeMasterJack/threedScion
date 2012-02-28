@@ -2,10 +2,10 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title></title>
+    <title>3D Web Service</title>
     <script type="text/javascript">
         function toggleDetails(optionLetter) {
-            var detailElement = document.getElementById('aOptionDetails');
+            var detailElement = document.getElementById(optionLetter + 'OptionDetails');
             var currentDisplay = detailElement.style.display;
             if (currentDisplay == "block") {
                 detailElement.style.display = 'none'
@@ -20,18 +20,10 @@
 
 <h1>Threed Web Service</h1>
 
-<h3>Option A - Non-fingerprint JPG URL:</h3>
-<a href="/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg">/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg</a>
+<h2>Option A - Simple</h2>
 
-<br/>
-<br/>
-<a href="javascript:toggleDetails('a')">Details</a>
-
-<br/>
-<br/>
-
-<ul id="aOptionDetails" style="display:none;">
-    <li>Simple, minimal caching</li>
+<ul id="aOptionDetails" >
+    <li><b>Simple, minimal caching</b></li>
     <li>Simplest for 3rd party vendors to consume</li>
     <li>Requires no special client-side software</li>
     <li>No fingerprinting: URL's cannot be cached forever.</li>
@@ -48,8 +40,69 @@
 
 </ul>
 
+<h4>Option A - API</h4>
 
-<h3>Option B - Fully Fingerprinted URL's (used internally by NFC): </h3>
+Option A has the simplest API. A single URL:<br/><br/>
+
+<a href="/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg">/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg</a>
+
+<h2>Option B - Fully Fingerprinted URL's (used by BYT and eBrochure): </h2>
+
+<ul id="bOptionDetails" >
+    <li><b>Richest, fastest, most scalable</b></li>
+    <li  style="color: red">Requires Smart Client Library (coming soon)</li>
+
+    <li>It is not currently set up as a general purpose web service, because it requires some complex client-side processing.
+        <p style="color: red">Note: This is about to change.
+        We are extracting the client-side processing into a Smart Client Library (for Scion),
+        with a very simple JavaScript API. This give the best of all worlds. Simplicity for front-end developers plus great performance, scalability, etc.</li>
+    <li>This option provides the best performance, and smallest server load.</li>
+    <li>This is the web service used internally for eBrochure and BYT.</li>
+    <li>Usage:
+        <ol>
+            <li>Client downloads the series feature model <i>once</i>, at the start of a session.
+                <ul>
+                    <li>This is a fingerprinted json file.</li>
+                    <li>It contains <i>rules</i> for mapping user selections (features) to 3D images (technically, <i>fingerprints</i>)
+                    </li>
+                </ul>
+
+            </li>
+            <li>Client downloads many 3D images, by fingerprint, as the user makes selections, changes views or spins
+                the vehicle.
+            </li>
+        </ol>
+    </li>
+
+
+    <li>Both the feature model json and the images are fingerprinted, so almost everything will be loaded from cache.
+    <li>Performance will be better</li>
+    <li>Server load should be minimal</li>
+    <li>The client app must know which series version is currently "visible to consumer" (i.e. it must know the series version - or
+        fingerprint). This can accessed thru the vtc service (see below).
+    </li>
+
+    <li>Processing the feature model
+
+        <ul>
+
+            <li>the client will need to process the feature model, and translate that into the appropriate 3D image
+                fingerprints
+            </li>
+            <li>This is non-trivial - and the reason that Option A and C were created.</li>
+            <li>Future project: create a simple, stand-alone JavaScript library, that would allow clients to
+                consume 3D images the same way that NFC does. <span style="color:red">This is moving forward now that the 3D engine
+                will be consumed by both Toyota and Scion.</span>
+            </li>
+
+        </ul>
+
+    </li>
+
+</ul>
+
+
+<h4>Option B - API</h4>
 
 <table border="1" cellpadding="5" style="margin-top:1em">
     <!--<tr><th colspan="2" align="left">URL's:</th></tr>-->
@@ -71,72 +124,10 @@
 </table>
 
 
-<br/>
-<a href="javascript:toggleDetails('b')">Details</a>
-<br/>
-<br/>
+<h2>Option C - Series-fingerprinted JPG URL:</h2>
 
-<ul id="bOptionDetails" style="display:none;">
-    <li>Richest, fastest, most scalable</li>
-    <li>This is web service used internally for eBrochure and Non-flash configurator.</li>
-    <li>It is not currently set up as a general purpose web service.</li>
-    <li>This option provides the best performance, and smallest server load.</li>
-    <li>Usage:
-        <ol>
-            <li>Client downloads the series feature model <i>once</i>, at the start of a session.
-                <ul>
-                    <li>This is a fingerprinted json file.</li>
-                    <li>It contains <i>rules</i> for mapping user selections (features) to 3D images (technically, <i>fingerprints</i>)
-                    </li>
-                </ul>
-
-            </li>
-            <li>Client downloads many 3D images, by fingerprint, as the user makes selections, changes views or spins
-                the vehicle.
-            </li>
-        </ol>
-    </li>
-
-
-    <li>Both the feature model json and the images are fingerprinted, so almost everything will be loaded from cache.
-    <li>Performance will be better</li>
-    <li>Server load should be minimal</li>
-    <li>The client app must know which series version is currently "visible to consumer" (i.e. it must know the series
-        fingerprint). This can accessed thru the
-    </li>
-
-    <li>Processing the feature model
-
-        <ul>
-            <li>the client will need to process the feature model, and translating that into the appropriate 3D image
-                fingerprints
-            </li>
-            <li>This is non-trivial - and the reason the Option A was created.</li>
-            <li>A potential future project: create a simple, stand-alone JavaScript library, that would allow clients to
-                consume 3D images the same way that NFC does.
-            </li>
-
-        </ul>
-
-        <br/>
-
-    </li>
-
-</ul>
-
-<br/>
-
-<h3>Option C - Series-fingerprinted JPG URL:</h3>
-<a href="/configurator-content/avalon/2011/1a35cadec60eae8321ae0ed5595193d578fa9f99/exterior-2/wStd/3544/070/LH02/seriesfp.jpg">/configurator-content/avalon/2011/1a35cadec60eae8321ae0ed5595193d578fa9f99/exterior-2/wStd/3544/070/LH02/seriesfp.jpg</a>
-
-
-<br/>
-<br/>
-<a href="javascript:toggleDetails('b')">Details</a>
-<br/>
-<br/>
-
-<ul  id="cOptionDetails" style="display:none;">
+<ul  id="cOptionDetails">
+    <li>This is a compromise between A and B</li>
     <li>Simple, better caching, higher Akamai costs</li>
     <li>Same as Option A, except the series fingerprint is prepended to the JPG URL</li>
     <li>This option combines cache-forever with the simplicity</li>
@@ -150,14 +141,18 @@
 
 </ul>
 
-<br/>
+
+<h4>Option C - API</h4>
+
+<a href="/configurator-content/avalon/2011/1a35cadec60eae8321ae0ed5595193d578fa9f99/exterior-2/wStd/3544/070/LH02/seriesfp.jpg">/configurator-content/avalon/2011/1a35cadec60eae8321ae0ed5595193d578fa9f99/exterior-2/wStd/3544/070/LH02/seriesfp.jpg</a>
 
 
-<h3>Current (VTC) Series Fingerprint</h3>
 
-Options B and C both require the client to know the series-fingerprint:
+<h2>VTC (Current Version)</h2>
 
-<br/>
+Options B and C both require the client to know the current version (for the series).
+
+<h4>VTC - API</h4>
 <a href="/configurator-content/avalon/2011/vtc.txt">/configurator-content/avalon/2011/vtc.txt</a>
 
 
