@@ -1,0 +1,55 @@
+todo make sure pre-fetch still works
+todo make sure blink still works
+
+get current version mechanism
+
+.gitattributes  and .gitignore files
+
+TwoThirty8 jpg names
+
+
+Make local checkout faster byt using propper .gitattributes  and .gitignore files
+
+need to make ThreedModel thread - safe, preferrably immutable with a builder
+    reasons:
+        it is held in a cache in repos and repos is a public facing, shared var
+        If ThreedModel is not thread-safe then Repos is not thread safe
+
+
+last-Modified:Thu, 01 Jan 1970 00:00:00 GMT
+        is messed up for json model servlet:
+        http://127.0.0.1:8080/configurator-content/avalon/2011/3d/models/5c97a58444dcf98cf49602302c37fbc113942d00.json
+
+repoUrl no longer is in threedModel
+        i fixed testHarness to get the repoUrl another way
+        must do the same for eBro and nfc
+
+make sure gwt app is being cached, especially all of the style-sheets and images, pulling down menu is sluggish
+
+try gpu with more threads
+
+pick series sort-order is f' up
+
+
+
+Caused by: java.io.IOException: Cannot lock /www_share/nfc_image_repo/tacoma/2011/.git/index
+at org.eclipse.jgit.dircache.DirCache.lock(DirCache.java:187)
+at org.eclipse.jgit.lib.Repository.lockDirCache(Repository.java:932)
+at org.eclipse.jgit.api.AddCommand.call(AddCommand.java:136)
+
+
+minify and compress threed-mode.json
+    camry.json: 610kb
+    tundra-raw-json-3.txt: 254kb
+    tundra-raw-json-4.txt: 197kb - angle to a, shortSha to id
+    tundra-raw-json-5.txt: 147kb - made png an array
+    tundra-raw-json-6.txt: 143kb - shorted var attribute names
+    tundra-raw-json-7.txt: 139kb - shorted var attribute names
+
+Load and marshaller threedModel Delta:
+    1196
+      60
+
+Make sure NFC,eBro and PreviewPaneAdapter are good to go
+
+Avoid DoS attacks in the on-the-fly model
