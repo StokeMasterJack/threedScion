@@ -7,7 +7,7 @@
 
     <filter>
         <filter-name>threedAdminFilter</filter-name>
-        <filter-class>com.tms.threed.threedFramework.threedAdmin.main.server.ThreedAdminFilter</filter-class>
+        <filter-class>com.tms.threed.threedAdmin.main.server.ThreedAdminFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>threedAdminService</servlet-name>
-        <servlet-class>com.tms.threed.threedFramework.threedAdmin.main.server.ThreedAdminServlet</servlet-class>
+        <servlet-class>com.tms.threed.threedAdmin.main.server.ThreedAdminServlet</servlet-class>
     </servlet>
 
 
