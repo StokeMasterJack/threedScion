@@ -1,20 +1,20 @@
 package com.tms.threedToyota.byt.client.externalState.picks;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.AssignmentException;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.picks.Picks;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksContextFm;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksSnapshot;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksSnapshotImpl;
-import com.tms.threed.threedFramework.threedModel.client.RawPicksSnapshot;
-import com.tms.threed.threedFramework.threedModel.client.VarPicksSnapshot;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.gwtUtil.client.MvcModel;
-import com.tms.threed.threedFramework.util.lang.shared.Objects;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.AssignmentException;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.Picks;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksContextFm;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshot;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshotImpl;
+import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
+import com.tms.threed.threedCore.threedModel.client.VarPicksSnapshot;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.MvcModel;
+import com.tms.threed.util.lang.shared.Objects;
 
 import java.util.Set;
 

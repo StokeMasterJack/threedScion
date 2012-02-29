@@ -4,8 +4,8 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
 //import com.tms.threed.featureModel.shared.picks.PicksChangeEvent;
 //import com.tms.threed.featureModel.shared.picks.PicksChangeHandler;
 

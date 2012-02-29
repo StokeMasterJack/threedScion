@@ -25,32 +25,30 @@ import com.tms.threed.threedAdmin.main.shared.ThreedAdminServiceAsync;
 import com.tms.threed.threedAdmin.main.client.toMove.PreviewPaneContext;
 import com.tms.threed.threedAdmin.main.client.toMove.SummarySeriesContext;
 import com.tms.threed.threedAdmin.featurePicker.client.CurrentUiPicks;
-import com.tms.threed.threedAdmin.jpgGen.client.CreateTagDialog;
-import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedFramework.previewPanel.client.main.PreviewPanelMainContext;
-import com.tms.threed.threedFramework.previewPanel.client.summary.PreviewPanelSummaryContext;
-import com.tms.threed.threedFramework.previewPanel.client.main.PreviewPanelMain;
-import com.tms.threed.threedFramework.previewPanel.client.summary.PreviewPanelSummary;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeEvent;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeHandler;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeEvent;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.ViewChangeHandler;
-import com.tms.threed.threedFramework.repo.shared.CommitHistory;
-import com.tms.threed.threedFramework.repo.shared.CommitId;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.Slice;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.gwtUtil.client.events2.ValueChangeHandlers;
-import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
-import com.tms.threed.threedFramework.util.lang.shared.Strings;
+import com.tms.threed.jpgGen.client.CreateTagDialog;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
+import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMain;
+import com.tms.threed.previewPanel.client.summary.PreviewPanelSummary;
+import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
+import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
+import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
+import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
+import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.repo.shared.CommitId;
+import com.tms.threed.threedCore.threedModel.shared.*;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.repo.shared.RtConfig;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
+import com.tms.threed.util.gwtUtil.client.events2.ValueChangeHandlers;
+import com.tms.threed.util.lang.shared.ImageSize;
+import com.tms.threed.util.lang.shared.Strings;
 
-import static com.tms.threed.threedFramework.util.date.shared.StringUtil.isEmpty;
+import static com.tms.threed.util.date.shared.StringUtil.isEmpty;
 
 public class PreviewPanelFrame extends FlowPanel {
 
@@ -447,20 +445,20 @@ public class PreviewPanelFrame extends FlowPanel {
                     final String newTagName = createTagDialog.getTagName();
                     if (isEmpty(newTagName)) return;
 
-                    ctx.showMessage("Creating tag[" + newTagName + "] ...");
+                    ctx.log("Creating tag[" + newTagName + "] ...");
 
                     final CommitId commitId = commit.getCommitId();
 
                     service.tagCommit(seriesKey, newTagName, commitId, new AsyncCallback<CommitHistory>() {
                         @Override
                         public void onFailure(Throwable e) {
-                            ctx.showMessage("Failure creating tag: " + e);
+                            ctx.log("Failure creating tag: " + e);
                             e.printStackTrace();
                         }
 
                         @Override
                         public void onSuccess(CommitHistory result) {
-                            ctx.showMessage("Tag[" + result.getTag() + "] created");
+                            ctx.log("Tag[" + result.getTag() + "] created");
                             commit = result;
                             commitChangeHandlers.fire(commit);
                             footerPanel.refresh();
@@ -542,7 +540,7 @@ public class PreviewPanelFrame extends FlowPanel {
                 public void onFailure(Throwable e) {
                     String msg = "Problem fetching vtc: " + e + ". Try checking server log.";
                     Console.error(msg);
-                    ctx.showMessage(msg);
+                    ctx.log(msg);
                     vtc = null;
                     refresh();
                 }
@@ -597,12 +595,12 @@ public class PreviewPanelFrame extends FlowPanel {
                 public void onFailure(Throwable e) {
                     String msg = "Problem setting vtc: " + e + ". Try checking server log.";
                     Console.error(msg);
-                    ctx.showMessage(msg);
+                    ctx.log(msg);
                 }
 
                 @Override
                 public void onSuccess(Void result) {
-                    ctx.showMessage("VTC successfully set");
+                    ctx.log("VTC successfully set");
                     vtc = true;
                     refresh();
                 }

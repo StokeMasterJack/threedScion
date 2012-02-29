@@ -9,7 +9,11 @@
     <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
     <inherits name="com.google.gwt.rpc.RPC"/>
 
-    <inherits name='com.tms.threed.threedFramework.ThreedFramework'/>
+    <inherits name="com.tms.threed.util.Util"/>
+    <inherits name="com.tms.threed.threedCore.ThreedCore"/>
+    <inherits name="com.tms.threed.previewPanel.PreviewPanel"/>
+    <inherits name="com.tms.threed.jpgGen.JpgGen"/>
+    <inherits name="com.tms.threed.repo.Repo"/>
 
     <stylesheet src="../index.css" />
 
@@ -17,7 +21,6 @@
     <entry-point class='com.tms.threed.threedAdmin.main.client.MainEntryPoint'/>
 
     <source path="featurePicker/client"/>
-    <source path="jpgGen/client"/>
 
     <source path="main/client"/>
     <source path="main/shared"/>

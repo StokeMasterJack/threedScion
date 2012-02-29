@@ -1,14 +1,14 @@
 package com.tms.threed.threedAdmin.featurePicker.client;
 
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.tms.threed.threedFramework.threedModel.client.SimplePicks2;
-import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.featureModel.shared.FixResult;
-import com.tms.threed.threedFramework.featureModel.shared.Fixer;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.picks.UiPicksChangeEvent;
-import com.tms.threed.threedFramework.featureModel.shared.picks.UiPicksChangeHandler;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
+import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.featureModel.shared.Fixer;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 
 import java.util.Collections;
 import java.util.HashSet;

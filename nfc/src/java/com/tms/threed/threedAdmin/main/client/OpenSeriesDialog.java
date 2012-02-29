@@ -3,9 +3,10 @@ package com.tms.threed.threedAdmin.main.client;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.tms.threed.threedAdmin.jpgGen.client.CommitPickList;
-import com.tms.threed.threedFramework.repo.shared.CommitHistory;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.jpgGen.client.CommitPickList;
+import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
 
 
 public class OpenSeriesDialog extends MyDialogBox {

@@ -14,9 +14,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.tms.threed.threedFramework.imageModel.shared.ILayer;
-import com.tms.threed.threedFramework.imageModel.shared.IPng;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.threedCore.imageModel.shared.ILayer;
+import com.tms.threed.threedCore.imageModel.shared.IPng;
+import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
+import com.tms.threed.util.lang.shared.Path;
 
 import java.util.Collections;
 import java.util.Comparator;

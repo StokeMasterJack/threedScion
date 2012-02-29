@@ -3,7 +3,7 @@ package com.tms.threed.threedAdmin.featurePicker.client.varPanels;
 import com.google.gwt.user.client.ui.HTML;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanel;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanelModel;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 
 import javax.annotation.Nonnull;
 

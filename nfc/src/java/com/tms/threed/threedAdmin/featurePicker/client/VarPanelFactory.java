@@ -1,6 +1,6 @@
 package com.tms.threed.threedAdmin.featurePicker.client;
 
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedAdmin.featurePicker.client.varPanels.L1Group;
 import com.tms.threed.threedAdmin.featurePicker.client.varPanels.L2Group;
 import com.tms.threed.threedAdmin.featurePicker.client.varPanels.MandatoryLeaf;

@@ -1,9 +1,9 @@
 package com.tms.threed.threedAdmin.main.client.services;
 
 import com.google.gwt.json.client.JSONObject;
-import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 public class JsonHelper {
 

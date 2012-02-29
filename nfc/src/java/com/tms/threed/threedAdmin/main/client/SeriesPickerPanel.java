@@ -9,12 +9,10 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.util.gwtUtil.client.events2.SelectionHandlers;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.util.gwtUtil.client.events2.SelectionHandlers;
 
-import java.util.SortedSet;
-
-import static com.tms.threed.threedFramework.util.lang.shared.Strings.getSimpleName;
+import static com.tms.threed.util.lang.shared.Strings.getSimpleName;
 
 public class SeriesPickerPanel extends Composite {
 

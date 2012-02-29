@@ -1,12 +1,12 @@
 package com.tms.threedToyota.ebro;
 
-import com.tms.threed.threedFramework.featureModel.shared.FixResult;
-import com.tms.threed.threedFramework.imageModel.shared.IImageStack;
-import com.tms.threed.threedFramework.repoClient.RepoClient;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.ViewKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.tms.threed.smartClients.jvm.RepoClient;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ViewKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

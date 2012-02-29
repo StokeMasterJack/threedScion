@@ -2,11 +2,11 @@ package com.tms.threedToyota.byt.client;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 import java.util.Date;
 
-import static com.tms.threed.threedFramework.util.lang.shared.Strings.isEmpty;
+import static com.tms.threed.util.lang.shared.Strings.isEmpty;
 
 public class UrlParameters {
 

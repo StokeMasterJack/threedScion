@@ -1,8 +1,8 @@
 package com.tms.threed.threedAdmin.main.shared;
 
-import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.repo.shared.SeriesNamesWithYears;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.repo.shared.RtConfig;
+import com.tms.threed.repo.shared.SeriesNamesWithYears;
+import com.tms.threed.util.lang.shared.Path;
 
 import java.io.Serializable;
 import java.util.ArrayList;

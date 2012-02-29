@@ -29,7 +29,6 @@ lib5=$gwtHome/validation-api-1.0.0.GA.jar
 lib6=$gwtHome/validation-api-1.0.0.GA-sources.jar
 lib7=$lib/jsr305/1.0/jsr305.jar
 
-
 modName=com.tms.threed.threedAdmin.ThreedAdmin
 startupUrl="http://localhost:8080/threed-admin/index.html"
 

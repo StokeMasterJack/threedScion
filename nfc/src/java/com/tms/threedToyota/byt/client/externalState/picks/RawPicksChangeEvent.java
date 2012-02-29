@@ -1,14 +1,14 @@
 package com.tms.threedToyota.byt.client.externalState.picks;
 
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksSnapshot;
-import com.tms.threed.threedFramework.threedModel.client.VarPicksSnapshot;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshot;
+import com.tms.threed.threedCore.threedModel.client.VarPicksSnapshot;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-import static com.tms.threed.threedFramework.util.lang.shared.Strings.getSimpleName;
+import static com.tms.threed.util.lang.shared.Strings.getSimpleName;
 
 public class RawPicksChangeEvent {
 

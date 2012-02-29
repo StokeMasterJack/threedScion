@@ -10,15 +10,15 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.tms.threed.threedAdmin.main.client.UiContext;
 import com.tms.threed.threedAdmin.main.shared.ThreedAdminServiceAsync;
-import com.tms.threed.threedFramework.jpgGen.shared.ExecutorStatus;
-import com.tms.threed.threedFramework.jpgGen.shared.JobId;
-import com.tms.threed.threedFramework.jpgGen.shared.Stats;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.jpgGen.shared.ExecutorStatus;
+import com.tms.threed.jpgGen.shared.JobId;
+import com.tms.threed.jpgGen.shared.Stats;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.lang.shared.Path;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -303,13 +303,13 @@ public class JpgGenServiceAsync {
             public void onResponseReceived(Request request, Response response) {
                 JSONValue jsonValue = JSONParser.parseStrict(response.getText());
                 if (jsonValue.isObject() != null && jsonValue.isObject().get("message").isString() != null) {
-                    ctx.showMessage("Jpg job started");
+                    ctx.log("Jpg job started");
                 }
             }
 
             @Override
             public void onError(Request request, Throwable e) {
-                ctx.showMessage("Problem starting JPG job: " + e.toString() + ". See server log for more info.");
+                ctx.log("Problem starting JPG job: " + e.toString() + ". See server log for more info.");
                 e.printStackTrace();
             }
         });

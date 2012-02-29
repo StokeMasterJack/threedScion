@@ -5,10 +5,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.imageModel.shared.ILayer;
-import com.tms.threed.threedFramework.imageModel.shared.IPng;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.imageModel.shared.ILayer;
+import com.tms.threed.threedCore.imageModel.shared.IPng;
+import com.tms.threed.util.lang.shared.Path;
 
 import java.util.Set;
 

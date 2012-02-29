@@ -1,7 +1,7 @@
 package com.tms.threed.threedAdmin.featurePicker.client;
 
-import com.tms.threed.threedFramework.featureModel.shared.FixResult;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 
 public interface UiPicks {
 

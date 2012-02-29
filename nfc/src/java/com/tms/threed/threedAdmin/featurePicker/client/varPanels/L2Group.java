@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanel;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanelModel;
 
 import javax.annotation.Nonnull;

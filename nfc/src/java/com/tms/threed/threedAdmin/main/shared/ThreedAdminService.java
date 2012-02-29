@@ -1,12 +1,11 @@
 package com.tms.threed.threedAdmin.main.shared;
 
 import com.google.gwt.rpc.client.RpcService;
-import com.tms.threed.threedFramework.jpgGen.shared.JobId;
-import com.tms.threed.threedFramework.jpgGen.shared.Stats;
-import com.tms.threed.threedFramework.repo.shared.*;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-
-import java.util.ArrayList;
+import com.tms.threed.jpgGen.shared.JobId;
+import com.tms.threed.jpgGen.shared.Stats;
+import com.tms.threed.repo.shared.*;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 /**
  * These are the ThreedAdminService remote calls that use gwt-rpc

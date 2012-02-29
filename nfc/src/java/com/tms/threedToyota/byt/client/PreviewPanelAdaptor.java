@@ -6,7 +6,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.tms.threedToyota.byt.client.main.PreviewPaneMain;
 import com.tms.threedToyota.byt.client.summary.PreviewPaneSummary;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.Console;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.

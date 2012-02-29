@@ -2,7 +2,7 @@ package com.tms.threed.threedAdmin.main.client.messageLog;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedFramework.util.gwtUtil.client.events2.ValueChangeHandlers;
+import com.tms.threed.util.gwtUtil.client.events2.ValueChangeHandlers;
 
 import java.util.ArrayList;
 import java.util.Iterator;

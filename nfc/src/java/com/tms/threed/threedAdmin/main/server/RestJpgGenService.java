@@ -1,19 +1,19 @@
 package com.tms.threed.threedAdmin.main.server;
 
 import com.google.common.collect.ImmutableList;
-import com.tms.threed.threedFramework.jpgGen.server.JobStatus;
-import com.tms.threed.threedFramework.jpgGen.server.taskManager.EquivalentJobAlreadyRunningException;
-import com.tms.threed.threedFramework.jpgGen.server.taskManager.JpgGeneratorService;
-import com.tms.threed.threedFramework.jpgGen.server.taskManager.Master;
-import com.tms.threed.threedFramework.jpgGen.shared.ExecutorStatus;
-import com.tms.threed.threedFramework.jpgGen.shared.JobId;
-import com.tms.threed.threedFramework.jpgGen.shared.JobState;
-import com.tms.threed.threedFramework.jpgGen.shared.Stats;
-import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.jpgGen.server.JobStatus;
+import com.tms.threed.jpgGen.server.taskManager.EquivalentJobAlreadyRunningException;
+import com.tms.threed.jpgGen.server.taskManager.JpgGeneratorService;
+import com.tms.threed.jpgGen.server.taskManager.Master;
+import com.tms.threed.jpgGen.shared.ExecutorStatus;
+import com.tms.threed.jpgGen.shared.JobId;
+import com.tms.threed.jpgGen.shared.JobState;
+import com.tms.threed.jpgGen.shared.Stats;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonNode;
@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
-import static com.tms.threed.threedFramework.util.date.shared.StringUtil.isEmpty;
+import static com.tms.threed.util.date.shared.StringUtil.isEmpty;
 
 /**
  * <repo-base>/threed-admin/threedAdminService.json?command=<command>&param1=value1&param2=value2

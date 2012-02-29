@@ -5,13 +5,14 @@ import com.google.gwt.rpc.server.RpcServlet;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.tms.threed.threedAdmin.main.shared.InitData;
 import com.tms.threed.threedAdmin.main.shared.ThreedAdminService;
-import com.tms.threed.threedFramework.jpgGen.shared.JobId;
-import com.tms.threed.threedFramework.jpgGen.shared.Stats;
-import com.tms.threed.threedFramework.repo.server.*;
-import com.tms.threed.threedFramework.repo.shared.*;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.jpgGen.shared.JobId;
+import com.tms.threed.jpgGen.shared.Stats;
+import com.tms.threed.repo.server.*;
+import com.tms.threed.repo.shared.*;
+import com.tms.threed.threedCore.threedModel.server.ThreedConfig;
+import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.lib.ObjectId;
@@ -26,8 +27,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static com.tms.threed.threedFramework.util.date.shared.StringUtil.isEmpty;
-import static com.tms.threed.threedFramework.util.lang.server.StringUtil.notEmpty;
+import static com.tms.threed.util.date.shared.StringUtil.isEmpty;
+import static com.tms.threed.util.lang.server.StringUtil.notEmpty;
 
 
 /**

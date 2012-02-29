@@ -67,11 +67,11 @@ abbr, acronym {
 .gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-VDragger {
     background-color: #CCCCCC;
     cursor: row-resize;
-    background: #CCCCCC url(limages/splitPanelThumb.png) center center no-repeat;
+    /*background: #CCCCCC url(images/splitPanelThumb.png) center center no-repeat;*/
 }
 
 .gwt-SplitLayoutPanel .gwt-SplitLayoutPanel-HDragger {
     background-color: #CCCCCC;
     cursor: col-resize;
-    background: #CCCCCC url(limages/splitPanelThumb.png) center center no-repeat;
+    /*background: #CCCCCC url(images/splitPanelThumb.png) center center no-repeat;*/
 }

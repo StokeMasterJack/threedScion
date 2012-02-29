@@ -3,28 +3,28 @@ package com.tms.threedToyota.byt.client.main;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.tms.threed.threedAdmin.main.client.toMove.PreviewPaneContext;
-import com.tms.threed.threedFramework.threedModel.client.ThreedModelServiceJson;
-import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.featureModel.shared.FixResult;
-import com.tms.threed.threedFramework.featureModel.shared.Fixer;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.featureModel.shared.Fixer;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threedToyota.byt.client.PreviewPane;
 import com.tms.threedToyota.byt.client.externalState.ExternalState;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threedToyota.byt.client.notification.AccessoryWithFlashOrientationHandler;
 import com.tms.threedToyota.byt.client.notification.NotificationCenterBridge;
-import com.tms.threed.threedFramework.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedFramework.previewPanel.client.main.PreviewPanelMainContext;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.util.gwtUtil.client.Console;
 
 import java.util.Set;
 
-import static com.tms.threed.threedFramework.util.date.shared.StringUtil.isEmpty;
+import static com.tms.threed.util.date.shared.StringUtil.isEmpty;
 
 public class PreviewPaneMain extends PreviewPane {
 

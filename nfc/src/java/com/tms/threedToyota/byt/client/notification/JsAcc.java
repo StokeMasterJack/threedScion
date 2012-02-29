@@ -1,7 +1,7 @@
 package com.tms.threedToyota.byt.client.notification;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 public final class JsAcc extends JavaScriptObject {
 

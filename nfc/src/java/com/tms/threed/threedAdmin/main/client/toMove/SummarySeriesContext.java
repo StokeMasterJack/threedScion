@@ -1,18 +1,18 @@
 package com.tms.threed.threedAdmin.main.client.toMove;
 
-import com.tms.threed.threedFramework.threedModel.client.SimplePicks2;
-import com.tms.threed.threedFramework.imageModel.shared.IImageStack;
-import com.tms.threed.threedFramework.previewPanel.client.ThreedImagePanel;
-import com.tms.threed.threedFramework.previewPanel.client.summary.PreviewPanelSummaryContext;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeEvent;
-import com.tms.threed.threedFramework.previewPanel.shared.viewModel.AngleChangeHandler;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
-import com.tms.threed.threedFramework.threedModel.shared.*;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.Slice;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Browser;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
+import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.tms.threed.previewPanel.client.ThreedImagePanel;
+import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
+import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
+import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedCore.threedModel.shared.*;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.Slice;
+import com.tms.threed.util.gwtUtil.client.Browser;
+import com.tms.threed.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.List;

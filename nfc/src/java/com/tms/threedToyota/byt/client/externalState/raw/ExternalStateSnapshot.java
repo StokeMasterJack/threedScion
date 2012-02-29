@@ -1,11 +1,11 @@
 package com.tms.threedToyota.byt.client.externalState.raw;
 
-import com.tms.threed.threedFramework.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedFramework.threedModel.client.RawPicksSnapshot;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.lang.shared.Objects;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
-import com.tms.threed.threedFramework.util.lang.shared.Strings;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
+import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.lang.shared.Objects;
+import com.tms.threed.util.lang.shared.Path;
+import com.tms.threed.util.lang.shared.Strings;
 
 import javax.annotation.Nonnull;
 

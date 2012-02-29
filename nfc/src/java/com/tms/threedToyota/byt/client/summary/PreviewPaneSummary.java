@@ -1,21 +1,21 @@
 package com.tms.threedToyota.byt.client.summary;
 
 import com.tms.threed.threedAdmin.main.client.toMove.SummarySeriesContext;
-import com.tms.threed.threedFramework.threedModel.client.ThreedModelServiceJson;
-import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
-import com.tms.threed.threedFramework.featureModel.shared.FixResult;
-import com.tms.threed.threedFramework.featureModel.shared.Fixer;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.featureModel.shared.Fixer;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
 import com.tms.threedToyota.byt.client.PreviewPane;
 import com.tms.threedToyota.byt.client.externalState.ExternalState;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
-import com.tms.threed.threedFramework.previewPanel.client.summary.PreviewPanelSummary;
-import com.tms.threed.threedFramework.previewPanel.client.summary.PreviewPanelSummaryContext;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
+import com.tms.threed.previewPanel.client.summary.PreviewPanelSummary;
+import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.util.gwtUtil.client.Console;
 
 import java.util.Set;
 

@@ -3,16 +3,16 @@ package com.tms.threedToyota.byt.client.externalState;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedFramework.threedModel.client.ThreedModelServiceJson;
-import com.tms.threed.threedFramework.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
 import com.tms.threedToyota.byt.client.externalState.picks.PicksChangeHandlers;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateChangeEvent;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
-import com.tms.threed.threedFramework.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedFramework.threedModel.client.RawPicksSnapshot;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.gwtUtil.client.events2.ValueChangeHandlers;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
+import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.events2.ValueChangeHandlers;
 
 public class ExternalState {
 

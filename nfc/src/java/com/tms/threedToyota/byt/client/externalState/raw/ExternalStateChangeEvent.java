@@ -1,8 +1,8 @@
 package com.tms.threedToyota.byt.client.externalState.raw;
 
-import com.tms.threed.threedFramework.util.lang.shared.Objects;
+import com.tms.threed.util.lang.shared.Objects;
 
-import static com.tms.threed.threedFramework.util.lang.shared.Objects.ne;
+import static com.tms.threed.util.lang.shared.Objects.ne;
 
 public class ExternalStateChangeEvent {
 

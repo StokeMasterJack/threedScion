@@ -1,7 +1,7 @@
 package com.tms.threed.threedAdmin.featurePicker.client;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 
 import javax.annotation.Nonnull;
 import java.util.List;

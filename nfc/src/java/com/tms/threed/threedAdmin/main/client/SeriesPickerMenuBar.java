@@ -3,8 +3,8 @@ package com.tms.threed.threedAdmin.main.client;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
-import com.tms.threed.threedFramework.repo.shared.SeriesNamesWithYears;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
+import com.tms.threed.repo.shared.SeriesNamesWithYears;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 import java.util.ArrayList;
 import java.util.Collections;

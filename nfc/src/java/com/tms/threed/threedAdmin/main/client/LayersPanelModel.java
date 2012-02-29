@@ -1,7 +1,7 @@
 package com.tms.threed.threedAdmin.main.client;
 
-import com.tms.threed.threedFramework.imageModel.shared.ILayer;
-import com.tms.threed.threedFramework.imageModel.shared.IPng;
+import com.tms.threed.threedCore.imageModel.shared.ILayer;
+import com.tms.threed.threedCore.imageModel.shared.IPng;
 
 import java.util.List;
 

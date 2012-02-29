@@ -12,9 +12,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.*;
-import com.tms.threed.threedAdmin.jpgGen.client.CommitPickList;
-import com.tms.threed.threedAdmin.jpgGen.client.JpgQueueMasterPanel;
-import com.tms.threed.threedAdmin.jpgGen.client.TabCloseListener;
+import com.tms.threed.jpgGen.client.CommitPickList;
+import com.tms.threed.jpgGen.client.JpgQueueMasterPanel;
+import com.tms.threed.jpgGen.client.TabCloseListener;
 import com.tms.threed.threedAdmin.main.client.messageLog.MessageLog;
 import com.tms.threed.threedAdmin.main.client.messageLog.MessageLogView;
 import com.tms.threed.threedAdmin.main.client.services.JpgGenServiceAsync;
@@ -22,22 +22,25 @@ import com.tms.threed.threedAdmin.main.shared.ThreedAdminServiceAsync;
 import com.tms.threed.threedAdmin.main.client.tabLabel.TabLabel;
 import com.tms.threed.threedAdmin.main.shared.InitData;
 import com.tms.threed.threedAdmin.main.shared.ThreedAdminService;
-import com.tms.threed.threedFramework.repo.shared.CommitHistory;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RepoHasNoHeadException;
-import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.threedModel.client.ThreedModelServiceJson;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
-import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
-import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.lang.shared.Path;
+import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.repo.shared.RepoHasNoHeadException;
+import com.tms.threed.repo.shared.RtConfig;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.TabCreator;
+import com.tms.threed.util.gwtUtil.client.UiLog;
+import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
+import com.tms.threed.util.lang.shared.Path;
 
 import java.util.List;
 
-import static com.tms.threed.threedFramework.util.lang.shared.Strings.isEmpty;
+import static com.tms.threed.util.lang.shared.Strings.isEmpty;
 
-public class MainEntryPoint implements EntryPoint, UiContext {
+public class MainEntryPoint implements EntryPoint, TabCreator,UiLog,UiContext {
 
     private final TabLayoutPanel tab = new TabLayoutPanel(2, Style.Unit.EM);
 
@@ -557,7 +560,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
             if (i != -1) {
                 tab.selectTab(i);
             } else {
-                JpgQueueMasterPanel d = new JpgQueueMasterPanel(jpgGenService, MainEntryPoint.this);
+                JpgQueueMasterPanel d = new JpgQueueMasterPanel(jpgGenService, MainEntryPoint.this, MainEntryPoint.this);
                 addTab(d, "Jpg Queue Status");
             }
         }
@@ -615,5 +618,10 @@ public class MainEntryPoint implements EntryPoint, UiContext {
         ThreedAdminServiceAsync service = GWT.create(ThreedAdminService.class);
         ((ServiceDefTarget) service).setServiceEntryPoint(baseUrl);
         return service;
+    }
+
+    @Override
+    public void log(String msg) {
+        messageLog.log(msg);
     }
 }

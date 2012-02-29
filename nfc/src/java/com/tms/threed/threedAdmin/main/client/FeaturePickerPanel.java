@@ -3,7 +3,7 @@ package com.tms.threed.threedAdmin.main.client;
 import com.google.gwt.user.client.ui.Composite;
 import com.tms.threed.threedAdmin.featurePicker.client.VarPanel;
 
-import static com.tms.threed.threedFramework.util.lang.shared.Strings.getSimpleName;
+import static com.tms.threed.util.lang.shared.Strings.getSimpleName;
 
 public class FeaturePickerPanel extends Composite {
 

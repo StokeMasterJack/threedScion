@@ -6,10 +6,10 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.ListBox;
-import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.repo.shared.RtConfig;
-import com.tms.threed.threedFramework.util.gwtUtil.client.Console;
-import com.tms.threed.threedFramework.util.gwtUtil.client.events2.ValueChangeHandlers;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.repo.shared.RtConfig;
+import com.tms.threed.util.gwtUtil.client.Console;
+import com.tms.threed.util.gwtUtil.client.events2.ValueChangeHandlers;
 
 public class JpgWidthListBox extends ListBox {
 
