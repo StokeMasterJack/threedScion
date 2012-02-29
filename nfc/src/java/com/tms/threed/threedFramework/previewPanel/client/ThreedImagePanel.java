@@ -30,6 +30,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Displays multiple images vertically stacked.
+ * Collects the LoadEvent's and ErrorEvent's into a single event
+ */
 public class ThreedImagePanel extends Composite {
 
     private final SimpleEventBus loadingCompleteHandlers = new SimpleEventBus();
@@ -53,6 +57,10 @@ public class ThreedImagePanel extends Composite {
         initWidget(absPanel);
 
         getElement().setId("gwt-debug-ThreedImagePanel");
+    }
+
+    public int getPanelIndex() {
+        return panelIndex;
     }
 
     public HandlerRegistration addLoadingCompleteHandler(LoadingCompleteHandler handler) {

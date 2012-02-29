@@ -4,7 +4,7 @@ import com.tms.threed.threedFramework.featureModel.data.SampleFeatureSet;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 //import com.tms.threed.featureModel.shared.ProposePickResponse;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
 
@@ -15,7 +15,7 @@ import junit.framework.TestCase;
  */
 public class PicksTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
      public void testFixupVenza() throws Exception {
 

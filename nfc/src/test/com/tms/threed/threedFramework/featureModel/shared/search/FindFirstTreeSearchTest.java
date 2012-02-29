@@ -3,7 +3,7 @@ package com.tms.threed.threedFramework.featureModel.shared.search;
 import com.tms.threed.threedFramework.featureModel.shared.CspForTreeSearch;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
 
@@ -24,7 +24,7 @@ public class FindFirstTreeSearchTest extends TestCase {
 
 
     public ThreedModel getVenza() {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         return repos.getThreedModel("venza",2011);
     }
 }

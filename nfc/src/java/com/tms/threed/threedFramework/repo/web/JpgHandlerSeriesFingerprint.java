@@ -12,7 +12,6 @@ import com.tms.threed.threedFramework.imageModel.shared.ImageStack;
 import com.tms.threed.threedFramework.jpgGen.server.singleJpg.JpgGeneratorPureJava;
 import com.tms.threed.threedFramework.jpgGen.shared.Stats;
 import com.tms.threed.threedFramework.repo.server.JpgId;
-import com.tms.threed.threedFramework.repo.server.RepoHttp;
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.util.servlet.http.headers.CacheUtil;
 import com.tms.threed.threedFramework.util.servlet.http.headers.LastModified;
@@ -43,7 +42,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
             throw new IllegalArgumentException("Bad JpgWidth: " + r.getJpgWidth());
         }
 
-        ThreedModel threedModel = RepoHttp.getThreedModel(application, r.getSeriesId());
+        ThreedModel threedModel = Repos.get().getThreedModel(r.getSeriesId());
 
         final FeatureModel featureModel = threedModel.getFeatureModel();
 

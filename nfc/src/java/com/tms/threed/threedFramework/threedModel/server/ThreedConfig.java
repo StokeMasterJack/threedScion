@@ -71,10 +71,6 @@ public class ThreedConfig extends ConfigHelper {
         return f;
     }
 
-    public static Repos getRepos() {
-        return new Repos(getRepoBaseDir());
-    }
-
     private static Log log = LogFactory.getLog(ThreedConfig.class);
 
 }

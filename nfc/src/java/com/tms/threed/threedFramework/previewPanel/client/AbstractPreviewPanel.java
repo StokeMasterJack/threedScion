@@ -8,5 +8,4 @@ public abstract class AbstractPreviewPanel extends Composite {
 
     public abstract int getPreferredHeightPx();
 
-//    abstract public void setMainImageSize(ImageSize jpgSize);
 }

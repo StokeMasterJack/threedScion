@@ -3,7 +3,7 @@ package com.tms.threed.threedFramework.imageModel.shared.slice;
 import com.tms.threed.threedFramework.featureModel.shared.FeatureModel;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
@@ -13,7 +13,7 @@ import java.util.Collection;
 public class Test extends TestCase {
 
     public void test() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         String seriesName = "tundra";
         Integer seriesYear = 2011;
         ThreedModel threedModel = repos.getThreedModel(seriesName,seriesYear);
@@ -36,7 +36,7 @@ public class Test extends TestCase {
     }
 
      public void test2() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         String seriesName = "tundra";
         ThreedModel threedModel = repos.getThreedModel(seriesName,2011);
         ImSeries im = threedModel.getImageModel();

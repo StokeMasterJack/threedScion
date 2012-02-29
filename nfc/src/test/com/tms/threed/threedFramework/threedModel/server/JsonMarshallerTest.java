@@ -10,7 +10,7 @@ import java.util.List;
 
 public class JsonMarshallerTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
     public void test_generateJsonForAllSeriesKeys() throws Exception {
         generateJsonForAllSeriesKeys();

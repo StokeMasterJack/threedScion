@@ -17,7 +17,7 @@ import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.server.SeriesRepo;
 import com.tms.threed.threedFramework.repo.server.rt.RtRepo;
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedModel.shared.*;
 import com.tms.threed.threedFramework.threedModel.shared.Slice;
@@ -27,7 +27,6 @@ import junit.framework.TestCase;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -37,7 +36,7 @@ public class TreeSearchTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        repos = ThreedConfig.getRepos();
+        repos = TestHelper.getRepos();
     }
 
     public void testTrim() throws Exception {
@@ -197,15 +196,7 @@ public class TreeSearchTest extends TestCase {
         jpgCounter(threedModel);
     }
 
-    public void testAll() {
-        List<String> seriesNames = repos.getRepoNames();
-        for (String seriesName : seriesNames) {
-//            System.err.println("Processing " + seriesName);
-            SeriesRepo seriesRepo = repos.getSeriesRepo(new SeriesKey(2011, seriesName));
-            ThreedModel threedModel = seriesRepo.getThreedModelHead();
-            jpgCounter(threedModel);
-        }
-    }
+
 
     public void jpgCounter(ThreedModel threedModel) {
         long totalJpgCount = 0;

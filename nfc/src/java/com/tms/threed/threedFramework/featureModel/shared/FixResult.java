@@ -1,9 +1,9 @@
 package com.tms.threed.threedFramework.featureModel.shared;
 
+import com.tms.threed.threedFramework.threedModel.client.SimplePicks2;
 import com.tms.threed.threedFramework.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedFramework.previewPane.client.SimplePicks2;
 
-public class FixResult implements SimplePicks2{
+public class FixResult implements SimplePicks2 {
 
     private final Assignments assignments;
     private final String errorMessage;

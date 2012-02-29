@@ -19,18 +19,30 @@ import org.apache.commons.logging.LogFactory;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class Repos {
 
-    private final File repoBaseDir;
 
+    private static Repos INSTANCE;
+    private static File staticRepoBaseDir;
+
+    public static void setRepoBaseDir(File repoBaseDir) {
+        Repos.staticRepoBaseDir = repoBaseDir;
+    }
+
+    public static Repos get() {
+        if (staticRepoBaseDir == null) {
+            throw new IllegalStateException("Must call setRepoBaseDir(..) before calling get()");
+        }
+        if (INSTANCE == null) {
+            INSTANCE = new Repos(staticRepoBaseDir);
+        }
+        return INSTANCE;
+    }
+
+    private File repoBaseDir;
     private final ConcurrentMap<SeriesKey, SeriesRepo> seriesRepoCache;
-
     private final RtConfigHelper rtConfigHelper;
 
     public Repos(final File repoBaseDir) {
@@ -56,7 +68,7 @@ public class Repos {
 
     }
 
-    public void purgeCache(){
+    public void purgeCache() {
         seriesRepoCache.clear();
     }
 
@@ -80,7 +92,7 @@ public class Repos {
         return rtConfigHelper;
     }
 
-    public RtConfig getRtConfig(){
+    public RtConfig getRtConfig() {
         return rtConfigHelper.read();
     }
 
@@ -108,46 +120,8 @@ public class Repos {
         return getThreedModelForHead(seriesKey).getFeatureModel();
     }
 
-    public void resetCache() {
-        seriesRepoCache.clear();
-    }
-
     public File getRepoBaseDir() {
         return repoBaseDir;
-    }
-
-    public List<String> getRepoNames() {
-        Set<String> seriesNames = new HashSet<String>();
-        List<SeriesKey> seriesKeys = getSeriesKeys();
-
-        for (SeriesKey seriesKey : seriesKeys) {
-            seriesNames.add(seriesKey.getName());
-        }
-
-
-        ArrayList<String> a = new ArrayList<String>();
-
-        a.addAll(seriesNames);
-
-        Collections.sort(a);
-
-        return a;
-    }
-
-    public List<Integer> getYearsForSeries(String seriesName) {
-        ArrayList<Integer> a = new ArrayList<Integer>();
-
-
-        List<SeriesKey> seriesKeys = getSeriesKeys();
-        for (SeriesKey seriesKey : seriesKeys) {
-            if (seriesKey.getName().equalsIgnoreCase(seriesName)) {
-                a.add(seriesKey.getYear());
-            }
-        }
-
-        Collections.sort(a);
-
-        return a;
     }
 
     public ArrayList<SeriesNamesWithYears> getSeriesNamesWithYears() {
@@ -190,38 +164,6 @@ public class Repos {
 
     private static Log log = LogFactory.getLog(Repos.class);
 
-    public List<SeriesKey> getSeriesKeys() {
-        File repoBaseDir = getRepoBaseDir();
-        if (repoBaseDir == null) throw new IllegalStateException();
-        File[] yearDirs = repoBaseDir.listFiles(seriesDirFilter);
-
-        if (yearDirs == null) {
-            throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] which is defined in web.xml contains no child directories. ");
-        }
-
-
-        List<SeriesKey> seriesKeys = new ArrayList<SeriesKey>();
-        for (File yearDir : yearDirs) {
-
-            File[] seriesDirs = yearDir.listFiles(seriesDirFilter);
-
-            for (File seriesDir : seriesDirs) {
-                String seriesRepoName = seriesDir.getName();
-
-
-                String seriesName = seriesDir.getName();
-                String seriesYear = yearDir.getName();
-
-                SeriesKey seriesKey = new SeriesKey(seriesYear, seriesName);
-
-                seriesKeys.add(seriesKey);
-            }
-
-
-        }
-        return seriesKeys;
-    }
-
     private static FileFilter seriesDirFilter = new FileFilter() {
         @Override
         public boolean accept(File f) {
@@ -240,29 +182,6 @@ public class Repos {
         RtRepo genRepo = seriesRepo.getRtRepo();
         return genRepo.getJpgFileName(jpgId);
     }
-
-
-//    public ObjectLoader getLoaderForPng(SeriesKey seriesKey, String shortSha) {
-//        SeriesRepo seriesRepo = getSeriesRepo(seriesKey);
-//        RevisionParameter revisionParameter = new RevisionParameter(shortSha);
-//
-//
-//
-//        return seriesRepo.getSrcRepo().getRepoObject(revisionParameter);
-//    }
-
-//    public ObjectLoader getLoaderForPng(String seriesName, int seriesYear, String shortSha) {
-//        SeriesKey seriesKey = new SeriesKey(seriesName, seriesName);
-//        return getLoaderForPng(seriesKey, shortSha);
-//    }
-
-//    public ObjectLoader getLoaderForPng(ImPng png) {
-//        ImView imView = png.getView();
-//        ImSeries series = imView.getSeries();
-//        SeriesKey seriesKey = series.getSeriesInfo().getSeriesKey();
-//        String shortSha = png.getShortSha();
-//        return getLoaderForPng(seriesKey, shortSha);
-//    }
 
     public SeriesId getHead(SeriesKey seriesKey) {
         SeriesRepo seriesRepo = getSeriesRepo(seriesKey);
@@ -283,5 +202,12 @@ public class Repos {
 
     public boolean isValidJpgWidth(JpgWidth width) {
         return width.isStandard() || getRtConfig().getJpgWidths().contains(width);
+    }
+
+    public ThreedModel getVtcThreedModel(SeriesKey seriesKey) {
+        VtcService vtcService = new VtcService(this);
+        RootTreeId vtcRootTreeId = vtcService.getVtcRootTreeId(seriesKey);
+        SeriesId seriesId = new SeriesId(seriesKey, vtcRootTreeId);
+        return getThreedModel(seriesId);
     }
 }

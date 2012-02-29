@@ -1,65 +1,89 @@
 package com.tms.threed.threedFramework.previewPanel.client;
 
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.tms.threed.threedFramework.previewPanel.client.thumbsPanel.ThumbsPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.tms.threed.threedFramework.previewPanel.client.buttonBars.exterior.ExteriorButtonHandler;
+import com.tms.threed.threedFramework.previewPanel.client.dragToSpin.ClearGif;
+import com.tms.threed.threedFramework.previewPanel.client.dragToSpin.DragToSpin;
 import com.tms.threed.threedFramework.util.lang.shared.ImageSize;
+import com.tms.threed.threedFramework.util.lang.shared.Path;
 
-public class PreviewPanel extends AbstractPreviewPanel {
+import javax.annotation.Nonnull;
+import java.util.List;
 
-    public int preferredWidthPx;
-    public int preferredHeightPx;
-
-    private TopImagePanel topImagePanel;
-    private BottomPanel bottomPanel;
-
-    private ImageSize mainImageSize;
-
-    public PreviewPanel(ImageSize mainImageSize, TopImagePanel topImagePanel, BottomPanel bottomPanel) {
-//        assert previewPanelModel != null;
-
-        this.mainImageSize = mainImageSize;
+public class PreviewPanel extends AbsolutePanel {
 
 
-        DockLayoutPanel dock = new DockLayoutPanel(Style.Unit.PX);
-        dock.setPixelSize(preferredWidthPx, preferredHeightPx);
+    private final ThreedImagePanel threedImagePanel;
+    private final DragToSpin<ClearGif> dragToSpin;
+    private final ClearGif dragDiv;
+    private final BlinkOverlay blinkOverlay;
 
-        bottomPanel.setSize("100%", "100%");
-        topImagePanel.setSize("100%", "100%");
 
-        this.bottomPanel = bottomPanel;
-        dock.addSouth(this.bottomPanel, ThumbsPanel.PREFERRED_HEIGHT_PX);
-        this.topImagePanel = topImagePanel;
-        dock.add(this.topImagePanel);
+    public PreviewPanel(int panelIndex, ImageSize imageSize) {
+        this(panelIndex, imageSize, false);
+    }
 
-        initWidget(dock);
+    public PreviewPanel(int panelIndex, ImageSize imageSize, boolean dragEnabled) {
 
-        PreviewPanelStyles.set(this);
+        this.threedImagePanel = new ThreedImagePanel(panelIndex, imageSize);
+        add(this.threedImagePanel, 0, 0);
 
-        setPixelSize(getPreferredWidthPx(), getPreferredHeightPx());
+        this.blinkOverlay = new BlinkOverlay();
+        add(this.blinkOverlay, 0, 0);
 
-//        getElement().getStyle().setProperty("border","solid thick blue");
+        this.dragDiv = new ClearGif(imageSize);
+        this.dragToSpin = new DragToSpin<ClearGif>();
+
+        add(this.dragDiv, 0, 0);
+
+        setImageSize(imageSize);
+
+        this.dragToSpin.attachToTarget(dragDiv);
+
+        setDragEnabled(dragEnabled);
 
     }
 
-    @Override public int getPreferredWidthPx() {
-        return mainImageSize.getWidth();
+    public int getPanelIndex() {
+        return threedImagePanel.getPanelIndex();
     }
 
-    @Override public int getPreferredHeightPx() {
-        return mainImageSize.getHeight() + ThumbsPanel.PREFERRED_HEIGHT_PX;
+    public void setImageSize(ImageSize imageSize) {
+        setPixelSize(imageSize.getWidth(), imageSize.getHeight());
+
+        if (blinkOverlay != null) {
+            blinkOverlay.setPixelSize(imageSize.getWidth(), imageSize.getHeight());
+        }
+        if (dragDiv != null) {
+            dragDiv.setImageSize(imageSize);
+        }
+
+        threedImagePanel.setImageSize(imageSize);
     }
 
-//    @Override public void setMainImageSize(ImageSize mainImageSize) {
-//        this.mainImageSize = mainImageSize;
-//        topImagePanel.setMainImageSize(mainImageSize);
-//
-//    }
+    public void setExteriorButtonHandler(ExteriorButtonHandler angleButtonHandler) {
+        dragToSpin.setExteriorButtonHandler(angleButtonHandler);
+    }
 
+    public void setDragEnabled(boolean dragEnabled) {
+        dragToSpin.setEnabled(dragEnabled);
+    }
 
-    public void setMainImageSize(ImageSize mainImageSize) {
-        this.mainImageSize = mainImageSize;
-        setPixelSize(getPreferredWidthPx(), getPreferredHeightPx());
-        topImagePanel.setMainImageSize(mainImageSize);
+    public void doFeatureBlink(Path pngToBlink) {
+        blinkOverlay.doFeatureBlink(pngToBlink);
+    }
+
+    public void addLoadingCompleteHandler(ThreedImagePanel.LoadingCompleteHandler loadingCompleteHandler) {
+        threedImagePanel.addLoadingCompleteHandler(loadingCompleteHandler);
+    }
+
+    public void showMessage(String shortMessage, final String longMessage, String color) {
+        threedImagePanel.showMessage(shortMessage, longMessage, color);
+    }
+
+    public void setImageUrls(@Nonnull List<Path> urls) {
+
+        threedImagePanel.setImageUrls(urls);
     }
 }
+

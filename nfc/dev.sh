@@ -16,7 +16,7 @@ src1=$repo/nfc/src/java
 
 src="$src1"
 
-gwtVersion=2.2.0
+gwtVersion=2.4.0
 gwtHome=$userHome/p-java/gwt-$gwtVersion
 
 
@@ -25,7 +25,9 @@ lib1=$gwtHome/gwt-dev.jar
 lib2=$gwtHome/gwt-user.jar
 lib3=$gwtHome/gwt-servlet.jar
 lib4=$gwtHome/gwt-servlet-deps.jar
-lib5=$lib/jsr305/1.0/jsr305.jar
+lib5=$gwtHome/validation-api-1.0.0.GA.jar
+lib6=$gwtHome/validation-api-1.0.0.GA-sources.jar
+lib7=$lib/jsr305/1.0/jsr305.jar
 
 
 modName=com.tms.threed.threedAdmin.ThreedAdmin
@@ -46,11 +48,11 @@ j0="-Xmx512m "
 j1="-DconfigDir=/Users/dford/temp/tmsConfig "
 j2="-Dlog4j.configuration=file:///Users/dford/temp/tmsConfig/log4j/threed_framework_log4j.xml "
 
-libs=$lib1:$lib2:$lib3:$lib4:$lib5
+libs=$lib1:$lib2:$lib3:$lib4:$lib5:$lib6:$lib7
 cp="$src:$libs"
 
 gwtDevModeParams="$g1 $g3 $g4 $g5 $g6 $modName"
-gwtCompileParams="$g1 $g2 $g6 -style OBF -XdisableCastChecking $modName"
+gwtCompileParams="$g1 $g2 $g6 -draftCompile -localWorkers 2 -style OBF -XdisableCastChecking $modName"
 
 gwtParams=$gwtDevModeParams
 mainClass=com.google.gwt.dev.DevMode

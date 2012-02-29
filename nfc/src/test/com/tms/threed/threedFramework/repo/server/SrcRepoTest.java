@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.tms.threed.threedFramework.repo.shared.CommitHistory;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
 import org.eclipse.jgit.lib.ObjectId;
@@ -12,21 +12,21 @@ import org.eclipse.jgit.revwalk.RevFlag;
 public class SrcRepoTest extends TestCase {
 
     public void test_checkin_Camry() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.CAMRY_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Commit Comment");
     }
 
     public void test_addAllAndCommit2() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.TUNDRA_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Poop");
     }
 
     public void test_getCommitHistory() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
 
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
@@ -40,7 +40,7 @@ public class SrcRepoTest extends TestCase {
 
 
     public void test_getRevCommitEager() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
 
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();

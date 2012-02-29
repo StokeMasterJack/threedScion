@@ -1,0 +1,31 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.4//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.4/distro-source/core/src/gwt-module.dtd">
+
+
+<module>
+
+    <inherits name="com.google.gwt.core.Core"/>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+    <inherits name="com.google.gwt.rpc.RPC"/>
+
+    <inherits name='com.tms.threed.threedFramework.ThreedFramework'/>
+
+    <stylesheet src="../index.css" />
+
+
+    <entry-point class='com.tms.threed.threedAdmin.main.client.MainEntryPoint'/>
+
+    <source path="featurePicker/client"/>
+    <source path="jpgGen/client"/>
+
+    <source path="main/client"/>
+    <source path="main/shared"/>
+
+    <public path="main/public"/>
+
+
+
+    <collapse-all-properties />
+
+</module>

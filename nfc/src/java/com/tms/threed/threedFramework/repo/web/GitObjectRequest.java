@@ -47,11 +47,11 @@ public class GitObjectRequest extends SeriesBasedRepoRequest {
         String s = a[a.length - 1]; //1cd92595b34f8f2d814402a6282a9a0be76623a1.png
 
 
-        a = s.split("\\.");
-        if (a == null || a.length != 2)
-            throw new NotFoundException(msg + " Be sure that uri has an extension for mime type deduction. GIT objects do not know their mime/type.");
+//        a = s.split("\\.");
+//        if (a == null || a.length != 2)
+//            throw new NotFoundException(msg + " Be sure that uri has an extension for mime type deduction. GIT objects do not know their mime/type.");
 
-        this.revisionParameter = new RevisionParameter(a[0]);
+        this.revisionParameter = new RevisionParameter(s);
     }
 
     public RevisionParameter getRevisionParameter() {

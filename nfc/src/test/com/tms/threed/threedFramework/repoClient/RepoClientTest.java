@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.repoClient;
 
 import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.shared.RootTreeId;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
@@ -34,7 +34,7 @@ public class RepoClientTest {
         ThreedModel threedModel1 = u.createModelFromJs(SeriesKey.AVALON_2011, url);
 
         //read from local repo using XML file - just to have something to compare against
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         ThreedModel threedModel2 = repos.getThreedModel("avalon", 2011);
 
         assertEquals(threedModel1, threedModel2);

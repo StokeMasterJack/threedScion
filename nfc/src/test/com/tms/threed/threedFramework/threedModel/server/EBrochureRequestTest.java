@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 public class EBrochureRequestTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
     public void test1() throws Exception{
 

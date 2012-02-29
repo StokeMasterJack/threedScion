@@ -1,7 +1,7 @@
 package com.tms.threed.threedFramework.repo.server;
 
 import com.tms.threed.threedFramework.imageModel.server.ImageUtil;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -9,7 +9,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 public class ReposTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
     public void test0() throws Exception {
         final SeriesRepo seriesRepo = repos.getSeriesRepo("avalon", 2011);

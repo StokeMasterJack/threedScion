@@ -2,7 +2,7 @@ package com.tms.threed.threedFramework.jpgGen.server.taskManager;
 
 import com.tms.threed.threedFramework.repo.shared.JpgWidth;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesId;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
@@ -15,7 +15,7 @@ import java.util.TimerTask;
 public class MasterTest extends TestCase {
 
     public void test1() throws Exception {
-        Repos repos = ThreedConfig.getRepos();
+        Repos repos = TestHelper.getRepos();
         SeriesKey seriesKey = SeriesKey.CAMRY_2011;
         SeriesId seriesId = repos.getHead(seriesKey);
         final Master master = new Master(repos, seriesId, JpgWidth.W_STD,5);

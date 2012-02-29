@@ -4,6 +4,7 @@ import com.tms.threed.threedFramework.repo.server.Repos;
 import com.tms.threed.threedFramework.repo.server.SeriesRepo;
 import com.tms.threed.threedFramework.repo.server.SrcRepo;
 import com.tms.threed.threedFramework.repo.shared.RevisionParameter;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 
@@ -15,14 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * <repo-url-base>/configurator-content/sienna/2011/objects/
  *
- *
- * http://smartsoftdev.net/configurator-content/avalon/objects/1cd92595b34f8f2d814402a6282a9a0be76623a1.png
- * http://smartsoftdev.net/configurator-content/tundra/objects/3e498f384239a35def5bf7942aabb89ad32c9bbd.png
- *
- * <repo-url-base>/<repo-name>/objects/<revisionParameter>.png|jpg|json
- *
- * Turns a revisionParameter into an object
+ *      HEAD
+ *      789fd31617fac2ec2ffa482792b7fe2db63eef00
+ *      789fd31617fac2ec2ffa482792b7fe2db63eef00:model.xml
+ *      HEAD:model.xml
+ *      HEAD:cargo/08_zAcc-DVD/DVD/LTD/Gray/vr_1_01.png
+ *      5605596
  *
  * A revisionParameter - an extended SHA1 object name.
  *
@@ -41,12 +42,10 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
         super(repos, application);
     }
 
-    @Override public void handle(GitObjectRequest repoRequest) {
+    @Override
+    public void handle(GitObjectRequest repoRequest) {
         SeriesRepo seriesRepo = getSeriesRepo(repoRequest);
 
-        String contentType = contentTypes.get(repoRequest.getExtension());
-        if (contentType == null)
-            throw new NotFoundException("Unsupported extension: [" + repoRequest.getExtension() + "]");
 
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
 
@@ -56,13 +55,48 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
         ObjectLoader loader = srcRepo.getRepoObject(objectId);
 
         HttpServletResponse response = repoRequest.getResponse();
-        response.setContentType(contentType);
+
+
+        int type = loader.getType();
+        String typeString = Constants.typeString(type);
+        System.out.println("typeString = " + typeString);
+
+        String contentType;
+        if (type == Constants.OBJ_TREE) {
+            System.out.println("OBJ_TREE");
+            contentType = "text/plain";
+            contentType = null;
+        } else if (type == Constants.OBJ_COMMIT) {
+            System.out.println("OBJ_COMMIT");
+            contentType = "text/plain";
+        } else if (type == Constants.OBJ_BLOB) {
+            System.out.println("OBJ_BLOB");
+            String extension = repoRequest.getExtension();
+            if (extension != null) {
+                contentType = contentTypes.get(extension);
+            } else {
+                contentType = null;
+            }
+        } else {
+            contentType = null;
+        }
+
+        System.out.println("contentType = " + contentType);
+
+        if (contentType != null) {
+            response.setContentType(contentType);
+        }
+
+
+//        response.setHeader("Content-Encoding", "gzip");
+//                response.setContentLength(retVal.length);
 
         //TODO: ADD CACHE FOREVER STUFF
 
         try {
             ServletOutputStream os = response.getOutputStream();
             loader.copyTo(os);
+            os.flush();
         } catch (IOException e) {
             throw new NotFoundException("Problem streaming git object to client", e);
         }
@@ -74,7 +108,9 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
         Map<String, String> m = new HashMap<String, String>();
         m.put("png", "image/png");
         m.put("jpg", "image/jpg");
-        m.put("json", "text/json");
+        m.put("json", "application/json");
+        m.put("txt", "text/plain");
+        m.put("xml", "application/xml");
         return m;
     }
 

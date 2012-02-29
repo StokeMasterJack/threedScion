@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  */
 public class ConfiguredImageProviderEbroTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
     public void testCamry2011() throws Exception {
         //"2513", "040", "13", "CF", "WB");

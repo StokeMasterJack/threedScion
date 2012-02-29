@@ -1,5 +1,6 @@
 package com.tms.threed.threedFramework.previewPanel.client;
 
+import com.tms.threed.threedFramework.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesInfo;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesInfoBuilder;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;

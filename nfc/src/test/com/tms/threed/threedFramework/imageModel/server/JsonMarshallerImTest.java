@@ -2,14 +2,14 @@ package com.tms.threed.threedFramework.imageModel.server;
 
 import com.tms.threed.threedFramework.imageModel.shared.ImSeries;
 import com.tms.threed.threedFramework.repo.server.Repos;
-import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
+import com.tms.threed.threedFramework.threedModel.server.TestHelper;
 import com.tms.threed.threedFramework.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;
 import org.codehaus.jackson.node.ObjectNode;
 
 public class JsonMarshallerImTest extends TestCase {
 
-    Repos repos = ThreedConfig.getRepos();
+    Repos repos = TestHelper.getRepos();
 
     public void test() throws Exception {
 

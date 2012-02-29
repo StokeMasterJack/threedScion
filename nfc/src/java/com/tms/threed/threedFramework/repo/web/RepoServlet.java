@@ -1,8 +1,8 @@
 package com.tms.threed.threedFramework.repo.web;
 
 import com.google.common.io.ByteStreams;
-import com.tms.threed.threedFramework.repo.server.RepoHttp;
 import com.tms.threed.threedFramework.repo.server.Repos;
+import com.tms.threed.threedFramework.threedModel.server.ThreedConfig;
 import com.tms.threed.threedFramework.util.config.ConfigHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,10 +13,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ *
+ * [repo-base]/configurator-content/
+ *      /index.html
+ *      /sienna/2011/3d/models/[root tree sha].json
+ *      /sienna/2011/3d/jpgs/wStd/[png-shas].json
+ *      /sienna/2011/3d/pngs/[sha].json
+ *      /sienna/2011/3d/blink/[png-sha].json
+ *      /avalon/2011/vtc.txt
+ *      /avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg
+ *      /avalon/2011/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d/exterior-2/wStd/3544/070/LH02/seriesfp.jpg
+ *      /sienna/2011/objects/5605596
  *
  * This servlet serves up 5 things:
  *
@@ -25,8 +37,6 @@ import java.io.InputStream;
  * 3.   blink pngs
  * 4.   threed-model.json
  * 5.   Any git source object (backdoor)
- *
-
  */
 public class RepoServlet extends HttpServlet {
 
@@ -41,7 +51,7 @@ public class RepoServlet extends HttpServlet {
 
     private PngHandler pngHandler;
     private VtcHandler vtcHandler;
-    private JpgHandlerFingerprint jpgHandler;
+    private JpgHandler jpgHandler;
     private JpgHandlerSeriesFingerprint jpgHandlerSeriesFingerprint;
     private JpgHandlerNoFingerprint jpgHandlerNoFingerprint;
     private BlinkHandler blinkHandler;
@@ -51,13 +61,17 @@ public class RepoServlet extends HttpServlet {
     private ServletContext application;
 
 
-    @Override public void init(ServletConfig config) throws ServletException {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
         application = config.getServletContext();
 
 
         try {
-            this.repos = RepoHttp.getRepos(application);
+            File repoBaseDir = ThreedConfig.getRepoBaseDir();
+            Repos.setRepoBaseDir(repoBaseDir);
+
+            this.repos = Repos.get();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
@@ -66,7 +80,7 @@ public class RepoServlet extends HttpServlet {
 
         pngHandler = new PngHandler(repos, application);
         vtcHandler = new VtcHandler(repos, application);
-        jpgHandler = new JpgHandlerFingerprint(repos, application);
+        jpgHandler = new JpgHandler(repos, application);
         jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(repos, application);
         jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(repos, application);
         blinkHandler = new BlinkHandler(repos, application);
@@ -77,13 +91,15 @@ public class RepoServlet extends HttpServlet {
     }
 
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
         log.info("Shutting down ThreedReposWebApp..");
         super.destroy();
         log.info("ThreedAdmin shutdown complete");
     }
 
-    @Override protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
 
@@ -106,7 +122,7 @@ public class RepoServlet extends HttpServlet {
                 pngHandler.handle(new PngRequest(request, response));
             } else if (isJpgRequest(request)) {
                 log.debug("isJpgRequest");
-                jpgHandler.handle(new JpgRequestFingerprint(request, response));
+                jpgHandler.handle(new JpgRequest(request, response));
             } else if (isBlinkRequest(request)) {
                 log.debug("isBlinkRequest");
                 blinkHandler.handle(new SeriesBasedRepoRequest(request, response));

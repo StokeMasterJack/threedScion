@@ -27,13 +27,15 @@ public class RepoRequest {
 
 
         int lastDot = uri.lastIndexOf('.');
-        if (lastDot == -1) throw new NotFoundException(baseErrorMessage + "No extension.");
-
-        String ext = uri.substring(lastDot + 1);
-        if (ext == null || ext.length() == 0) {
-            throw new NotFoundException(baseErrorMessage + "No extension.");
+        if (lastDot == -1) {
+            extension = null;
         } else {
-            this.extension = ext;
+            String ext = uri.substring(lastDot + 1);
+            if (ext == null || ext.length() == 0) {
+                this.extension = null;
+            } else {
+                this.extension = ext;
+            }
         }
 
 
