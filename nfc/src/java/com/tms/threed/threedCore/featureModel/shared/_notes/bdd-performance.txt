@@ -1,0 +1,31 @@
+Thing to try in order to improve the speed and memory of bdd
+
+
+1.  check initial variable count
+2.  createSmallBdd
+        Eliminate all non-leaf vars except for a single root var
+        Eliminate all tree constraints except for:
+            1.  every node implies root
+            2.  turn PickOneGroup's into xors
+3.  Try creating xors directly in bdd layer (instead of fm layer) for better efficiency
+4.  variable ordering
+5.  try to fix Safari's "Maximum call stack size exceeded" problem
+
+6.  try "and'ing" instead of "restricting" to represent a var assignment
+
+7.  instead of doing a satCount (actually: 2 sat counts) for every
+    unassigned var. Try doing isSat instead
+
+8.  Use complemnted arces
+9.  use smarted and/or functions
+10. For the computedNode cache (i.e. computed table) use
+    "sets" {n1,n2} for the hashkey rather than nonSets (n1,n2)
+    for ops where order does or matter.
+        Order does *not* matter:
+            and,or,iff,conflict,xor
+        Order *does* not matter:
+            implies
+
+
+
+
