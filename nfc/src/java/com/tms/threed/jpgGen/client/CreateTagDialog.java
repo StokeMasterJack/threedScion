@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
+import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 
 
 public class CreateTagDialog extends MyDialogBox {

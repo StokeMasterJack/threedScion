@@ -7,9 +7,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -19,22 +16,21 @@ import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.tms.threed.util.gwtUtil.client.TabCreator;
-import com.tms.threed.util.gwtUtil.client.UiLog;
-import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
-import com.tms.threed.threedAdmin.main.client.services.*;
 import com.tms.threed.jpgGen.shared.JobId;
 import com.tms.threed.jpgGen.shared.JobState;
+import com.tms.threed.jpgGen.shared.JobStatus;
+import com.tms.threed.jpgGen.shared.JobStatusItem;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import smartsoft.util.gwt.client.rpc.Req;
+import smartsoft.util.gwt.client.rpc.SuccessCallback;
+import smartsoft.util.gwt.client.rpc.UiLog;
+import smartsoft.util.gwt.client.TabCreator;
+import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import static com.tms.threed.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.lang.shared.Strings.notEmpty;
 
 
 public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseListener {
@@ -42,7 +38,7 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
     private static final DateTimeFormat FORMAT = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_MEDIUM);
 
 
-    private final JpgGenServiceAsync service;
+    private final JpgGenClient service;
 
     CellTable<MasterJobStatus> table1 = new CellTable<MasterJobStatus>();
 
@@ -50,10 +46,10 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
 
     private final UiLog ctx;
-    private  final TabCreator tabCreator;
+    private final TabCreator tabCreator;
     private final Timer timer;
 
-    public JpgQueueMasterPanel(final JpgGenServiceAsync service, final UiLog ctx,final TabCreator tabCreator) {
+    public JpgQueueMasterPanel(final JpgGenClient service, final UiLog ctx, final TabCreator tabCreator) {
         super(Style.Unit.EM);
         this.ctx = ctx;
         this.tabCreator = tabCreator;
@@ -116,11 +112,11 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
         statusColumn.setFieldUpdater(new FieldUpdater<MasterJobStatus, String>() {
 
-            @Override public void update(int index, final MasterJobStatus o, String value) {
+            @Override
+            public void update(int index, final MasterJobStatus o, String value) {
 
 
-
-                if (notEmpty(o.exception)){
+                if (notEmpty(o.exception)) {
 
                     MyDialogBox d = new MyDialogBox("Jpg Gen Exception");
                     d.setWidget(new HTML("<pre>" + o.exception + "</pre>"));
@@ -197,7 +193,8 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
         cancelRemoveCountColumn.setFieldUpdater(new FieldUpdater<MasterJobStatus, String>() {
 
-            @Override public void update(int index, final MasterJobStatus o, String value) {
+            @Override
+            public void update(int index, final MasterJobStatus o, String value) {
 
 
                 if (o.isTerminal()) {
@@ -208,18 +205,11 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
                     table1.setRowData(0, masterRowData);
                     table1.redraw();
 
-                    service.removeJob(o.jobId, new JpgGenServiceAsync.RemoveJobCallBack() {
-                        @Override public void onSuccess() {
-                            ctx.log("Job[" + o.jobId + "] removed");
-                        }
-                    });
+                    service.removeJob(o.jobId);
+
                 } else {
-                    ctx.log("Canceling job[" + o.jobId + "]");
-                    service.cancelJob(o.jobId, new JpgGenServiceAsync.CancelJobCallBack() {
-                        @Override public void onSuccess() {
-                            ctx.log("Job[" + o.jobId + "] canceled");
-                        }
-                    });
+                    ctx.log("Canceling job[" + o.jobId + "] ...");
+                    service.cancelJob(o.jobId);
                 }
             }
         });
@@ -234,7 +224,8 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
 
         detailButtonColumn.setFieldUpdater(new FieldUpdater<MasterJobStatus, String>() {
-            @Override public void update(int index, MasterJobStatus o, String value) {
+            @Override
+            public void update(int index, MasterJobStatus o, String value) {
                 JpgQueueDetailPanel widget = new JpgQueueDetailPanel(service, ctx, o.jobId);
                 tabCreator.addTab(widget, "Job Detail");
             }
@@ -250,8 +241,9 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
 
         statsButtonColumn.setFieldUpdater(new FieldUpdater<MasterJobStatus, String>() {
-            @Override public void update(int index, MasterJobStatus o, String value) {
-                JobId jobId = new JobId(o.jobId);
+            @Override
+            public void update(int index, MasterJobStatus o, String value) {
+                JobId jobId = o.jobId;
                 FinalStatsDialog finalStatsDialog = new FinalStatsDialog(ctx, service, jobId);
                 finalStatsDialog.center();
                 finalStatsDialog.show();
@@ -299,7 +291,8 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
 
         timer = new Timer() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 refreshContent();
             }
         };
@@ -314,12 +307,9 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
         Button button = new Button("Remove all terminal jobs");
         p.add(button);
         button.addClickHandler(new ClickHandler() {
-            @Override public void onClick(ClickEvent event) {
-                service.removeTerminal(new JpgGenServiceAsync.RemoveJobCallBack() {
-                    @Override public void onSuccess() {
-                        ctx.log("Terminal jobs removed!");
-                    }
-                });
+            @Override
+            public void onClick(ClickEvent event) {
+                service.removeTerminal();
             }
         });
         return p;
@@ -327,73 +317,47 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
 
     private void refreshContent() {
-        service.fetchJpgQueueStatus(new JpgGenServiceAsync.FetchJpgStatusCallback() {
-            @Override public void onSuccess(JSONArray jsonArray) {
 
+        Req<ArrayList<JobStatusItem>> request = service.getQueueStatus();
+
+        request.onSuccess = new SuccessCallback<ArrayList<JobStatusItem>>() {
+
+            @Override
+            public void call(Req<ArrayList<JobStatusItem>> r) {
+                ArrayList<JobStatusItem> jobs = r.result;
                 masterRowData.clear();
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    JSONObject o = jsonArray.get(i).isObject();
+
+                for (int i = 0; i < jobs.size(); i++) {
+
+                    JobStatusItem job = jobs.get(i);
 
                     MasterJobStatus s = new MasterJobStatus();
-                    s.startTime = new Date((long) o.get("startTime").isNumber().doubleValue());
-                    s.seriesId = JsonHelper.getSeriesId(o);
-                    s.jobId = o.get("jobId").isString().stringValue();
 
-                    JSONValue jpgCount = o.get("jpgCount");
-                    if (jpgCount == null) {
-                        s.jpgCount = null;
-                    } else {
-                        s.jpgCount = (int) jpgCount.isNumber().doubleValue();
-                    }
+                    s.startTime = job.getStartTime();
+                    s.seriesId = job.getJobSpec().getSeriesId();
+                    s.jobId = job.getJobId();
 
-                    JSONValue sliceCount = o.get("sliceCount");
-                    if (sliceCount != null) {
-                        s.sliceCount = (int) sliceCount.isNumber().doubleValue();
-                    } else {
-                        s.sliceCount = null;
-                    }
+                    JobStatus status = job.getStatus();
+                    s.jpgCount = status.getJpgCount();
+                    s.sliceCount = status.getSliceCount();
+                    s.slicesComplete = status.getSlicesComplete();
 
 
-                    JSONValue slicesComplete = o.get("slicesComplete");
-                    if (slicesComplete != null) {
-                        s.slicesComplete = (int) slicesComplete.isNumber().doubleValue();
-                    } else {
-                        s.slicesComplete = null;
-                    }
+                    s.jpgsComplete = status.getJpgsComplete();
 
+                    s.state = status.getState().name();
 
-                    JSONValue jpgsComplete = o.get("jpgsComplete");
-                    if (jpgsComplete != null) {
-                        s.jpgsComplete = (int) jpgsComplete.isNumber().doubleValue();
-                    } else {
-                        s.jpgsComplete = null;
-                    }
+                    s.jpgWidth = job.getJobSpec().getJpgWidth();
 
-
-                    s.state = o.get("state").isString().stringValue();
-
-                    JSONValue tag = o.get("tag");
-                    if (tag != null) {
-                        String tagName = tag.isString().stringValue();
-                        s.tag = tagName;
-                    }
-
-
-                    s.jpgWidth = new JpgWidth(o.get("jpgWidth").isString().stringValue());
-
-
-                    JSONValue jsException = o.get("exception");
-                    if (jsException != null) {
-                        String exception = jsException.isString().stringValue();
-                        s.exception = exception;
-                    }
+                    s.exception = job.getStatus().getSerializedStackTrace();
 
 
                     masterRowData.add(s);
                 }
 
                 Collections.sort(masterRowData, new Comparator<MasterJobStatus>() {
-                    @Override public int compare(MasterJobStatus o1, MasterJobStatus o2) {
+                    @Override
+                    public int compare(MasterJobStatus o1, MasterJobStatus o2) {
                         return o1.startTime.compareTo(o2.startTime);
                     }
                 });
@@ -405,21 +369,14 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
 
                 table1.redraw();
             }
+        };
 
-            @Override public void onError(int statusCode, String statusText, String responseText) {
-                ctx.log("Error returned from server: " + statusCode + " " + statusText + " " + responseText);
-                System.err.println("statusCode = " + statusCode);
-                System.err.println("statusText = " + statusText);
-                System.err.println("responseText = " + responseText);
-                System.err.println();
-            }
-        });
     }
 
 
     class MasterJobStatus {
 
-        String jobId;
+        JobId jobId;
         Date startTime;
         SeriesId seriesId;
         Integer jpgCount;
@@ -494,7 +451,8 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabCloseList
         }
     }
 
-    @Override public void afterClose() {
+    @Override
+    public void afterClose() {
         if (timer != null) {
             timer.cancel();
         }

@@ -3,7 +3,7 @@ package com.tms.threedToyota.byt.client.series;
 import com.google.gwt.event.shared.GwtEvent;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
-import static com.tms.threed.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class SeriesChangeEvent extends GwtEvent<SeriesChangeHandler> {
 

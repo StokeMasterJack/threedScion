@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static com.tms.threed.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 /**
  * Translates picks from http request to feature codes, the format required for feature model and threed

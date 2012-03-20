@@ -6,7 +6,7 @@ import com.tms.threed.smartClients.jvm.RepoClient;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import com.tms.threed.util.lang.shared.Path;
+import smartsoft.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

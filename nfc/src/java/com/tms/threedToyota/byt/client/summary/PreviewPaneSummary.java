@@ -1,7 +1,7 @@
 package com.tms.threedToyota.byt.client.summary;
 
-import com.tms.threed.threedAdmin.main.client.toMove.SummarySeriesContext;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedAdmin.client.toMove.SummarySeriesContext;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;
@@ -15,7 +15,7 @@ import com.tms.threed.previewPanel.client.summary.PreviewPanelSummary;
 import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import com.tms.threed.util.gwtUtil.client.Console;
+import smartsoft.util.gwt.client.Console;
 
 import java.util.Set;
 
@@ -28,7 +28,7 @@ public class PreviewPaneSummary extends PreviewPane {
 
     public PreviewPaneSummary() {
 
-        externalState = new ExternalState(new ThreedModelServiceJson());
+        externalState = new ExternalState(new ThreedModelClient());
 
         threedModel = externalState.getThreedModel();
         featureModel = externalState.getThreedModel().getFeatureModel();

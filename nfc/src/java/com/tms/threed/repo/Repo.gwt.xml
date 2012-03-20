@@ -6,7 +6,7 @@
 
     <inherits name='com.google.gwt.user.User'/>
 
-    <inherits name="com.tms.threed.util.Util"/>
+    <inherits name="smartsoft.util.Util"/>
     <inherits name="com.tms.threed.threedCore.ThreedCore"/>
 
     <source path="shared"/>

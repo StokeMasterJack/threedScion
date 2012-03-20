@@ -9,7 +9,8 @@
 
     <source path="client"/>
 
-    <inherits name='com.tms.threed.threedFramework.ThreedFramework'/>
+    <inherits name='com.tms.threed.threedCore.ThreedCore'/>
+    <inherits name="com.tms.threed.threedAdmin.ThreedAdmin"/>
 
     <entry-point class="com.tms.threedToyota.byt.client.PreviewPanelAdaptor"/>
 

@@ -1,6 +1,6 @@
 package com.tms.threedToyota.byt.client.notification;
 
-import com.tms.threed.util.gwtUtil.client.Console;
+import smartsoft.util.gwt.client.Console;
 
 /**
  * This class receives events from various parts of the system and

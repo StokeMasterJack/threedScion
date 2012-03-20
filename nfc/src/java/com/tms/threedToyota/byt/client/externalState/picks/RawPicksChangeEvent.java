@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-import static com.tms.threed.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class RawPicksChangeEvent {
 

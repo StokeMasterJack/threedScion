@@ -9,7 +9,7 @@
     <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
     <inherits name="com.google.gwt.rpc.RPC"/>
 
-    <inherits name="com.tms.threed.util.Util"/>
+    <inherits name="smartsoft.util.Util"/>
     <inherits name="com.tms.threed.threedCore.ThreedCore"/>
     <inherits name="com.tms.threed.previewPanel.PreviewPanel"/>
     <inherits name="com.tms.threed.jpgGen.JpgGen"/>
@@ -18,14 +18,12 @@
     <stylesheet src="../index.css" />
 
 
-    <entry-point class='com.tms.threed.threedAdmin.main.client.MainEntryPoint'/>
+    <entry-point class='com.tms.threed.threedAdmin.client.MainEntryPoint'/>
 
-    <source path="featurePicker/client"/>
+    <source path="client"/>
+    <source path="shared"/>
 
-    <source path="main/client"/>
-    <source path="main/shared"/>
-
-    <public path="main/public"/>
+    <public path="public"/>
 
 
 

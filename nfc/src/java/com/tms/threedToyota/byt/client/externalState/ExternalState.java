@@ -3,7 +3,7 @@ package com.tms.threedToyota.byt.client.externalState;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
 import com.tms.threedToyota.byt.client.externalState.picks.PicksChangeHandlers;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateChangeEvent;
@@ -11,8 +11,8 @@ import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import com.tms.threed.util.gwtUtil.client.Console;
-import com.tms.threed.util.gwtUtil.client.events2.ValueChangeHandlers;
+import smartsoft.util.gwt.client.Console;
+import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 
 public class ExternalState {
 
@@ -24,7 +24,7 @@ public class ExternalState {
 
     private ExternalStateSnapshot currentState;
 
-    public ExternalState(ThreedModelServiceJson threedModelService) {
+    public ExternalState(ThreedModelClient threedModelService) {
         threedModel = threedModelService.fetchThreedModelFromPage();
         if (threedModel == null) {
             throw new IllegalStateException("fetchThreedModelFromPage() returned null. See html comments for more details.");

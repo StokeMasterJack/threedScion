@@ -2,8 +2,8 @@ package com.tms.threedToyota.byt.client.main;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.tms.threed.threedAdmin.main.client.toMove.PreviewPaneContext;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelServiceJson;
+import com.tms.threed.threedAdmin.client.toMove.PreviewPaneContext;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;
@@ -20,11 +20,11 @@ import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import com.tms.threed.util.gwtUtil.client.Console;
+import smartsoft.util.gwt.client.Console;
 
 import java.util.Set;
 
-import static com.tms.threed.util.date.shared.StringUtil.isEmpty;
+import static smartsoft.util.date.shared.StringUtil.isEmpty;
 
 public class PreviewPaneMain extends PreviewPane {
 
@@ -34,7 +34,7 @@ public class PreviewPaneMain extends PreviewPane {
 
     public PreviewPaneMain() {
 
-        externalState = new ExternalState(new ThreedModelServiceJson());
+        externalState = new ExternalState(new ThreedModelClient(null));
 
         final ThreedModel threedModel = externalState.getThreedModel();
         final FeatureModel featureModel = threedModel.getFeatureModel();

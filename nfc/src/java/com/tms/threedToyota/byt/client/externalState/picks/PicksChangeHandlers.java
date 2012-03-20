@@ -12,9 +12,9 @@ import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshot;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshotImpl;
 import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
 import com.tms.threed.threedCore.threedModel.client.VarPicksSnapshot;
-import com.tms.threed.util.gwtUtil.client.Console;
-import com.tms.threed.util.gwtUtil.client.MvcModel;
-import com.tms.threed.util.lang.shared.Objects;
+import smartsoft.util.gwt.client.Console;
+import smartsoft.util.gwt.client.MvcModel;
+import smartsoft.util.lang.shared.Objects;
 
 import java.util.Set;
 

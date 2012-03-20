@@ -6,14 +6,9 @@
 
     <inherits name='com.google.gwt.user.User'/>
 
-    <inherits name="com.google.gwt.json.JSON"/>
-
     <inherits name="smartsoft.util.Util"/>
     <inherits name="com.tms.threed.threedCore.ThreedCore"/>
-    <inherits name="com.tms.threed.smartClients.gwt.SmartClient"/>
 
-
-    <source path="shared"/>
     <source path="client"/>
 
 </module>

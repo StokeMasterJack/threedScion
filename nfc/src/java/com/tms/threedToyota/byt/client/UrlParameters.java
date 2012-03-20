@@ -6,7 +6,7 @@ import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 import java.util.Date;
 
-import static com.tms.threed.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 public class UrlParameters {
 

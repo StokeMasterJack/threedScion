@@ -3,23 +3,24 @@ package com.tms.threed.jpgGen.client;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.tms.threed.util.gwtUtil.client.UiLog;
-import com.tms.threed.util.gwtUtil.client.dialogs.MyDialogBox;
-import com.tms.threed.threedAdmin.main.client.services.JpgGenServiceAsync;
 import com.tms.threed.jpgGen.shared.JobId;
 import com.tms.threed.jpgGen.shared.Stats;
+import smartsoft.util.gwt.client.rpc.SuccessCallback;
+import smartsoft.util.gwt.client.rpc.Req;
+import smartsoft.util.gwt.client.rpc.UiLog;
+import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 
 import java.util.Date;
 
 public class FinalStatsDialog extends MyDialogBox {
 
     private final FlexTable t = new FlexTable();
-    private final JpgGenServiceAsync service;
-    public FinalStatsDialog(final UiLog ctx, final JpgGenServiceAsync service, JobId jobId) {
+    private final JpgGenClient service;
+
+    public FinalStatsDialog(final UiLog ctx, final JpgGenClient service, JobId jobId) {
         super("Final Stats");
         this.service = service;
 
@@ -69,17 +70,16 @@ public class FinalStatsDialog extends MyDialogBox {
         setWidget(fp);
 
         ctx.log("Fetching stats...");
-        this.service.getJpgGenFinalStats(jobId, new AsyncCallback<Stats>() {
-            @Override public void onFailure(Throwable e) {
-                ctx.log("Error fetching jpg gen final stats: " + e);
-                e.printStackTrace();
-            }
 
-            @Override public void onSuccess(Stats result) {
+        Req<Stats> request = service.getJpgGenFinalStats(jobId);
+        request.onSuccess = new SuccessCallback<Stats>() {
+
+            @Override
+            public void call(Req<Stats> r) {
                 ctx.log("Fetching stats complete!");
-                refresh(result);
+                refresh(r.result);
             }
-        });
+        };
 
 
     }

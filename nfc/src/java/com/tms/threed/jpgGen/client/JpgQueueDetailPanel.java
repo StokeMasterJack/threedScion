@@ -6,37 +6,41 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.tms.threed.threedAdmin.main.client.UiContext;
-import com.tms.threed.threedAdmin.main.client.services.JpgGenServiceAsync;
 import com.tms.threed.jpgGen.shared.ExecutorStatus;
-import com.tms.threed.util.gwtUtil.client.UiLog;
+import com.tms.threed.jpgGen.shared.JobId;
+import smartsoft.util.gwt.client.rpc.FailureCallback;
+import smartsoft.util.gwt.client.rpc.Req;
+import smartsoft.util.gwt.client.rpc.SuccessCallback;
+import smartsoft.util.gwt.client.rpc.UiLog;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class JpgQueueDetailPanel extends DockLayoutPanel implements TabCloseListener {
 
 
-    private final JpgGenServiceAsync service;
+    private final JpgGenClient service;
 
-    CellTable<ExecutorStatus> table2 = buildTable2();
+    CellTable<ExecutorStatus> table;
 
     private final UiLog ctx;
     private final Timer timer;
 
-    private final String jobId;
+    private final JobId jobId;
 
-    public JpgQueueDetailPanel(final JpgGenServiceAsync service,final UiLog ctx, String jobId) {
+    public JpgQueueDetailPanel(final JpgGenClient service, final UiLog ctx, JobId jobId) {
         super(Style.Unit.EM);
         this.ctx = ctx;
         this.jobId = jobId;
         this.service = service;
 
+        table = buildTable();
+
         final FlowPanel fp = new FlowPanel();
 
-        fp.add(table2);
+        fp.add(table);
 
-        table2.getElement().getStyle().setMarginTop(2, Style.Unit.EM);
+        table.getElement().getStyle().setMarginTop(2, Style.Unit.EM);
 
         refreshContent();
 
@@ -47,7 +51,8 @@ public class JpgQueueDetailPanel extends DockLayoutPanel implements TabCloseList
 
 
         timer = new Timer() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 refreshContent();
             }
         };
@@ -58,7 +63,7 @@ public class JpgQueueDetailPanel extends DockLayoutPanel implements TabCloseList
     }
 
 
-    private CellTable<ExecutorStatus> buildTable2() {
+    private CellTable<ExecutorStatus> buildTable() {
 
         TextColumn<ExecutorStatus> queueNameCountColumn = new TextColumn<ExecutorStatus>() {
             @Override
@@ -119,34 +124,41 @@ public class JpgQueueDetailPanel extends DockLayoutPanel implements TabCloseList
     }
 
     private void refreshContent() {
+        if (jobId == null) {
+            throw new IllegalStateException("jobId must be non-null before calling refreshContent()");
+        }
 
-        service.fetchJpgQueueDetails(jobId, new JpgGenServiceAsync.FetchQueueDetailsCallback() {
-            @Override public void onSuccess(List<ExecutorStatus> queueDetails) {
+        Req<ArrayList<ExecutorStatus>> request = service.getQueueDetails(jobId);
 
+        request.onSuccess = new SuccessCallback<ArrayList<ExecutorStatus>>() {
 
-                table2.setRowCount(queueDetails.size());
-                table2.setRowData(0, queueDetails);
-                table2.redraw();
-                table2.setVisible(true);
+            @Override
+            public void call(Req<ArrayList<ExecutorStatus>> r) {
+                ArrayList<ExecutorStatus> result = r.result;
+                if (result == null || result.size() == 0) {
+                    ctx.log("Job no longer valid");
+                    afterClose();
+                } else {
+                    table.setRowCount(result.size());
+                    table.setRowData(0, result);
+                    table.redraw();
+                    table.setVisible(true);
+                }
             }
+        };
 
-            @Override public void onError(String text) {
-                System.err.println(text);
+        request.onFailure = new FailureCallback<ArrayList<ExecutorStatus>>() {
+            @Override
+            public void call(Req<ArrayList<ExecutorStatus>> r) {
                 afterClose();
-                ctx.log("Error calling fetchJpgQueueDetails: " + text);
             }
-
-            @Override public void badJobId() {
-                afterClose();
-                ctx.log("Job no longer valid");
-            }
-        });
-
+        };
 
     }
 
 
-    @Override public void afterClose() {
+    @Override
+    public void afterClose() {
         if (timer != null) {
             timer.cancel();
         }
