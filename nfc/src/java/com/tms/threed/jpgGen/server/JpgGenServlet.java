@@ -5,8 +5,8 @@ import com.tms.threed.jpgGen.server.taskManager.EquivalentJobAlreadyRunningExcep
 import com.tms.threed.jpgGen.server.taskManager.JpgGeneratorService;
 import com.tms.threed.jpgGen.server.taskManager.Master;
 import com.tms.threed.jpgGen.shared.*;
-import com.tms.threed.repoService.server.Repos;
-import com.tms.threed.repoService.server.ThreedConfig;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.server.ThreedConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -12,10 +12,10 @@ import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImView;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedCore.imageModel.shared.slice.Jpg;
-import com.tms.threed.repoService.server.JpgKey;
-import com.tms.threed.repoService.server.Repos;
-import com.tms.threed.repoService.server.SeriesRepo;
-import com.tms.threed.repoService.server.rt.RtRepo;
+import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.server.SeriesRepo;
+import com.tms.threed.repo.server.rt.RtRepo;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;

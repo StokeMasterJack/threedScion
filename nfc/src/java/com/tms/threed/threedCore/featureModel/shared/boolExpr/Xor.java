@@ -246,12 +246,26 @@ public class Xor extends Junction {
         throw new UnsupportedOperationException("Xor.autoAssignFalse[" + ctx + "]");
     }
 
+    public void logAutoAssignTrue(int depth) {
+        if (logAutoAssignments) {
+            log(depth, "AutoAssign " + this + " true");
+        }
+    }
+
+    public void logAutoAssignFalse(int depth) {
+        if (logAutoAssignments) {
+            log(depth, "AutoAssign " + this + " false");
+            log(depth + 1, "Xor expressions: " + expressions);
+        }
+    }
+
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
+    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws MoreThanOneTrueTermXorAssignmentException {
         logAutoAssignTrue(depth);
         int L = expressions.size();
         if (expressions.size() == 0) throw new IllegalStateException();
 
+        XorTermsStates s = new XorTermsStates(this);
 
         int trueCount = 0;
         int falseCount = 0;
@@ -262,15 +276,18 @@ public class Xor extends Junction {
             Tri v = expr.simplify(ctx);
             if (v.isTrue()) {
                 trueCount++;
-                if (trueCount > 1) {
-                    throw new MoreThanOneTrueTermXorAssignmentException(expr);
-                }
+                s.pushTrueTerm(expr);
             } else if (v.isFalse()) {
+                s.pushFalseTerm(expr);
                 falseCount++;
             } else { //open
+                s.pushOpenTerm(expr);
                 a.add(expr);
             }
         }
+
+        assert falseCount == s.getFalseCount();
+        assert a.size() == s.getOpenCount();
 
         int openCount = a.size();
         assert falseCount + trueCount + openCount == L;

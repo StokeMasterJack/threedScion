@@ -26,6 +26,7 @@ public class Fixer {
             return new FixResult(copy);
 
         } catch (AssignmentException e) {
+            e.printStackTrace();
             String errorMessage;
             if (csp == null) {
                 errorMessage = e.getMessage();

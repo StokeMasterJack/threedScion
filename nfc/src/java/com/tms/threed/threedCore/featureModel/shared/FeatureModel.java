@@ -809,21 +809,13 @@ public class FeatureModel implements Vars {
     public Set<Var> getInitiallyTruePickableVars() {
         HashSet<Var> a = new HashSet<Var>();
         for (Var var : getPickableVars()) {
-            boolean firstXorChild = var.isFirstPickOneChild();
-            Boolean defaultValue = var.getDefaultValue();
-
-            boolean defaultsToTrue = defaultValue != null && defaultValue;
-
-            if (defaultsToTrue) {
-                a.add(var);
-            } else if (firstXorChild) {
+            if (var.isInitiallyPicked()) {
                 a.add(var);
             }
-
-
         }
         return a;
     }
+
 
     @Override
     public boolean equals(Object obj) {

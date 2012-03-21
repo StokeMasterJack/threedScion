@@ -282,7 +282,13 @@ public class ThreedModel {
         }
         Assignments assignments = picks.getAssignments();
         Var displayName = getFeatureModel().getVarOrNull("displayName");
+        if (displayName == null) {
+            return getFeatureModel().getDisplayName();
+        }
         List<Var> childVars = displayName.getChildVars();
+        if (childVars == null) {
+            return getFeatureModel().getDisplayName();
+        }
         for (Var childVar : childVars) {
             if (assignments.isTrue(childVar)) {
                 return childVar.getName();

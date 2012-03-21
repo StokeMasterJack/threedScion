@@ -2,7 +2,7 @@
 
 #import('dart:io');
 
-var devMode = true;
+var devMode = false;
 
 var modName = 'com.tms.threed.threedAdmin.ThreedAdmin';
 
@@ -44,7 +44,7 @@ void main(){
 
     var gwtParamsCommon = {
          'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/threed-admin/',
-//         'logLevel':        'DEBUG',
+         'logLevel':        'DEBUG',
          'extra':           '$userHome/temp/gwt/extra',
          'gen':             '$userHome/temp/gwt/gen',
          'workDir':         '$userHome/temp/gwt/workDir'

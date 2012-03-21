@@ -56,7 +56,14 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     }
 
     public static SeriesKey parse(String yearSpaceName) {
-        String[] a = yearSpaceName.split(" ");
+        String[] a;
+        if (yearSpaceName.indexOf(' ') != -1) {
+            a = yearSpaceName.split(" ");
+        } else if (yearSpaceName.indexOf('-') != -1) {
+            a = yearSpaceName.split("-");
+        } else {
+            throw new IllegalArgumentException();
+        }
         try {
             return new SeriesKey(a[0], a[1]);
         } catch (Exception e) {

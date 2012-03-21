@@ -1,10 +1,10 @@
 package com.tms.threed.jpgGen.server.taskManager;
 
-import com.tms.threed.repoService.server.rt.RtRepo;
+import com.tms.threed.repo.server.rt.RtRepo;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.repoService.server.Repos;
-import com.tms.threed.repoService.server.SeriesRepo;
-import com.tms.threed.repoService.server.SrcRepo;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.server.SeriesRepo;
+import com.tms.threed.repo.server.SrcRepo;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
 
 public class JpgVersionWidthAction {

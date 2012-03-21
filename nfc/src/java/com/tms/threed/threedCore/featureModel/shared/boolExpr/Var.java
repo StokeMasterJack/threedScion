@@ -1,25 +1,10 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
-import com.tms.threed.threedCore.featureModel.shared.Assignments;
-import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
-import com.tms.threed.threedCore.featureModel.shared.Cardinality;
-import com.tms.threed.threedCore.featureModel.shared.EvalContext;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.featureModel.shared.IVarGuesser;
-import com.tms.threed.threedCore.featureModel.shared.PngVarFilter;
-import com.tms.threed.threedCore.featureModel.shared.Tri;
-import com.tms.threed.threedCore.featureModel.shared.UnknownVarCodeException;
+import com.tms.threed.threedCore.featureModel.shared.*;
 import com.tms.threed.threedCore.featureModel.shared.picks.Picks;
 import smartsoft.util.lang.shared.Strings;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static smartsoft.util.lang.shared.Strings.notEmpty;
 
@@ -32,7 +17,6 @@ public class Var extends NonConstant {
     private final String name;
 
 
-
     private final String code;
     private final Var parent;
     private List<Var> childVars;
@@ -40,9 +24,6 @@ public class Var extends NonConstant {
     private Boolean mandatory;
     private Boolean derived;
     private Boolean defaultValue;
-
-
-
 
 
     private Integer leafRelationCount;
@@ -60,6 +41,14 @@ public class Var extends NonConstant {
         this.name = name;
 
         hash = 31 * TYPE.id + index;
+    }
+
+    public boolean isInitiallyPicked() {
+        if (isFirstPickOneChild() && !anySiblingsDefaultedToTrue()) {
+            return true;
+        }
+        Boolean defaultValue = getDefaultValue();
+        return defaultValue != null && defaultValue;
     }
 
     public Type getType() {
@@ -177,10 +166,9 @@ public class Var extends NonConstant {
     }
 
     public String getDisplayName() {
-        if (notEmpty(name)){
+        if (notEmpty(name)) {
             return name;
-        }
-        else{
+        } else {
             return code;
         }
     }
@@ -598,6 +586,17 @@ public class Var extends NonConstant {
         return isXorChild() && isFirstChild();
     }
 
+    public boolean anySiblingsDefaultedToTrue() {
+        List<Var> siblings = getSiblings();
+        for (Var sibling : siblings) {
+            Boolean defaultValue = sibling.getDefaultValue();
+            if (defaultValue != null && defaultValue) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isFirstChild() {
         return parent.childVars.indexOf(this) == 0;
     }
@@ -766,7 +765,6 @@ public class Var extends NonConstant {
 
     @Override
     public BoolExpr simplify(AutoAssignContext ctx) {
-
 
         BoolExpr retVal;
         Tri v = ctx.getValue(this);

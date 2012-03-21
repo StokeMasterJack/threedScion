@@ -1,6 +1,6 @@
 package com.tms.threed.smartClients.jvm;
 
-import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
 
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;

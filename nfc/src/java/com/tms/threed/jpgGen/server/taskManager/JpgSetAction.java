@@ -11,8 +11,8 @@ import com.tms.threed.threedCore.featureModel.shared.search.TreeSearch;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedCore.imageModel.shared.slice.Jpg;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.repoService.server.JpgKey;
-import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.tms.threedToyota.ebro;
 
-import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repo.server.Repos;
 import junit.framework.TestCase;
 
 /**
