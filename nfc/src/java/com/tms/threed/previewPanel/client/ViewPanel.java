@@ -1,5 +1,6 @@
 package com.tms.threed.previewPanel.client;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.tms.threed.previewPanel.client.buttonBars.exterior.ExteriorButtonHandler;
 import com.tms.threed.previewPanel.client.dragToSpin.ClearGif;
@@ -8,22 +9,19 @@ import smartsoft.util.lang.shared.ImageSize;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
-public class PreviewPanel extends AbsolutePanel {
-
+public class ViewPanel extends AbsolutePanel {
 
     private final ThreedImagePanel threedImagePanel;
     private final DragToSpin<ClearGif> dragToSpin;
     private final ClearGif dragDiv;
     private final BlinkOverlay blinkOverlay;
 
-
-    public PreviewPanel(int panelIndex, ImageSize imageSize) {
+    public ViewPanel(int panelIndex, ImageSize imageSize) {
         this(panelIndex, imageSize, false);
     }
 
-    public PreviewPanel(int panelIndex, ImageSize imageSize, boolean dragEnabled) {
+    public ViewPanel(int panelIndex, ImageSize imageSize, boolean dragEnabled) {
 
         this.threedImagePanel = new ThreedImagePanel(panelIndex, imageSize);
         add(this.threedImagePanel, 0, 0);
@@ -81,8 +79,7 @@ public class PreviewPanel extends AbsolutePanel {
         threedImagePanel.showMessage(shortMessage, longMessage, color);
     }
 
-    public void setImageUrls(@Nonnull List<Path> urls) {
-
+    public void setImageUrls(@Nonnull ImmutableList<Path> urls) {
         threedImagePanel.setImageUrls(urls);
     }
 }
