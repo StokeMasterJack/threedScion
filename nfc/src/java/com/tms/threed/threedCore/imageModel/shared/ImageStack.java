@@ -1,10 +1,10 @@
 package com.tms.threed.threedCore.imageModel.shared;
 
+import com.google.common.collect.ImmutableList;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import smartsoft.util.lang.shared.Path;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class represents a stack of images such that:
@@ -12,152 +12,95 @@ import java.util.List;
  * 1.  Each image in the stack has the same x,y,width,height but different zIndex
  * 2.  The bottom image is always a JPG all others are PNGs
  */
-public class ImageStack implements IImageStack {
+public class ImageStack {
 
-    private final ImView view;
-    private final List<ImPng> basePngs;
-    private final List<ImPng> zPngs;
+    private final ImView imView;
+    private final ImmutableList<ImPng> pngs;
 
-    private transient final List<IPng> allPngs;
-    private transient final List<ImPng> allPngs2;
-    private transient final List<ImPng> blinkPngs;
-    private transient final ImJpg jpg;
-    private transient final ImJpg fullJpg;
-
-
-    public ImageStack(List<ImPng> basePngs, List<ImPng> zPngs, ImView view, int angle, JpgWidth jpgWidth) {
-        this.basePngs = basePngs;
-        this.zPngs = zPngs;
-        this.view = view;
-        this.allPngs = initAllPngs();
-        this.allPngs2 = initAllPngs2();
-        this.blinkPngs = initBlinkPngs();
-        this.jpg = new ImJpg(view, basePngs, angle, jpgWidth);
-
-        this.fullJpg = new ImJpg(view, allPngs2, angle, jpgWidth);
+    public ImageStack(ImView imView, ImmutableList<ImPng> pngs) {
+        this.imView = imView;
+        this.pngs = pngs;
     }
 
-    private List<IPng> initAllPngs() {
-        ArrayList<IPng> a = new ArrayList<IPng>(basePngs);
-        a.addAll(zPngs);
-        return a;
+    public ImmutableList<Path> getUrlListSmart(JpgWidth jpgWidth) {
+        return getUrlListSmart(jpgWidth, true);
     }
 
-    private List<ImPng> initAllPngs2() {
-        ArrayList<ImPng> a = new ArrayList<ImPng>(basePngs);
-        a.addAll(zPngs);
-        return a;
-    }
+    public ImJpg getJpg(JpgWidth jpgWidth) {
+        ImmutableList.Builder<ImPng> jpgPngs = ImmutableList.builder();
 
-    private List<ImPng> initBlinkPngs() {
-//        System.out.println("ImageStack.initBlinkPngList");
-        ArrayList a = new ArrayList();
-        for (IPng png : allPngs) {
-            if (png.isBlink()) {
-//                System.out.println("IsBlink: " + png.toString());
-                a.add(png);
-            } else {
-//                System.out.println("NOT Blink: " + png.toString());
+        for (ImPng png : pngs) {
+            if (png.isPartOfJpg()) {
+                jpgPngs.add(png);
             }
         }
-        return a;
+
+        return new ImJpg(imView, pngs, jpgWidth);
     }
 
-    public ImView getView() {
-        return view;
+    public String getJpgFingerprint() {
+        return imView.getJpgFingerprint(pngs);
     }
 
-    public List<ImPng> getBasePngs() {
-        return basePngs;
-    }
+    public ImmutableList<Path> getUrlListSmart(JpgWidth jpgWidth, boolean includeZPngs) {
+        ImmutableList.Builder<ImPng> jpgPngs = ImmutableList.builder();
+        ImmutableList.Builder<Path> urls = ImmutableList.builder();
 
-    public List<ImPng> getZPngs() {
-        return zPngs;
-    }
+        for (ImPng png : pngs) {
+            if (png.isPartOfJpg()) {
+                jpgPngs.add(png);
+            }
+        }
 
-    public List<IPng> getAllPngs() {
-        return allPngs;
-    }
+        ImmutableList<ImPng> jpgPngList = jpgPngs.build();
+        Path jpgUrl = imView.getJpgUrl(jpgPngList, jpgWidth);
 
-    public List<ImPng> getBlinkPngs() {
-        return blinkPngs;
-    }
-
-
-    public ImJpg getJpg() {
-        return jpg;
-    }
-
-    public ImJpg getFullJpg() {
-        return fullJpg;
-    }
-
-    @Override
-    public Path getImageBase() {
-        return view.getSeries().getThreedBaseUrl();
-    }
-
-    @Override
-    public Path getJpgUrl() {
-        return jpg.getUrl();
-    }
-
-    @Override
-    public List<Path> getUrlsJpgMode(boolean includeZPngs) {
-
-        ArrayList<Path> list = new ArrayList<Path>();
-        list.add(jpg.getUrl());
+        urls.add(jpgUrl);
 
         if (includeZPngs) {
-            for (int i = 0; i < zPngs.size(); i++) {
-                ImPng png = zPngs.get(i);
-                list.add(png.getUrl());
+            for (ImPng png : pngs) {
+                if (png.isZLayer()) {
+                    Path pngUrl = png.getUrl();
+                    urls.add(pngUrl);
+                }
             }
         }
 
-        return list;
+        return urls.build();
     }
 
-    @Override
-    public List<Path> getUrlsJpgMode() {
-        return getUrlsJpgMode(true);
-    }
-
-    @Override
-    public List<Path> getUrlsPngMode() {
-        ArrayList<Path> list = new ArrayList<Path>();
-
-        List<ImPng> jPngs = jpg.getPngs();
-        for (ImPng png : jPngs) {
-            list.add(png.getUrl());
+    public ImmutableList<Path> getUrlListExploded(JpgWidth jpgWidth) {
+        ImmutableList.Builder<Path> urls = ImmutableList.builder();
+        for (ImPng png : pngs) {
+            urls.add(png.getUrl());
         }
-
-        for (ImPng zPng : zPngs) {
-            list.add(zPng.getUrl());
-        }
-
-        return list;
+        return urls.build();
     }
 
-//    public List<Path> getUrls(boolean pngMode) {
-//        if (pngMode) return getUrlsPngMode();
-//        else return getUrlsJpgMode();
-//    }
+    public ImmutableList<ImPng> getBlinkPngs() {
+        ImmutableList.Builder<ImPng> blinkPngs = ImmutableList.builder();
+        for (ImPng png : pngs) {
+            blinkPngs.add(png);
+        }
+        return blinkPngs.build();
+    }
+
+    public ImmutableList<ImPng> getPngs() {
+        return pngs;
+    }
 
     public void print() {
         System.out.println("ImageStack:");
-        System.out.println("\t jpg:");
-        System.out.println("\t\t" + jpg);
         System.out.println("\t pngs: ");
-        for (ImPng png : zPngs) {
+        for (ImPng png : pngs) {
             System.out.println("\t\t" + png);
         }
         System.out.println();
     }
 
-    public void purgeZLayers() {
-        zPngs.clear();
+    public JpgKey getJpgKey(JpgWidth jpgWidth) {
+        String jpgFingerprint = getJpgFingerprint();
+        SeriesKey seriesKey = imView.getSeries().getSeriesKey();
+        return new JpgKey(seriesKey, jpgWidth, jpgFingerprint);
     }
-
-
 }

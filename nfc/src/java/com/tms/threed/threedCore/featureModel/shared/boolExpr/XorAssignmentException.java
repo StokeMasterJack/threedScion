@@ -1,8 +1,10 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
-abstract public class XorAssignmentException extends AssignmentException{
+import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
 
-    public XorAssignmentException(BoolExpr expr) {
-        super(expr, true); //Xor only support autoAssignTrue
+abstract public class XorAssignmentException extends AssignmentException {
+
+    public XorAssignmentException(BoolExpr expr, AutoAssignContext context) {
+        super(expr, true, context); //Xor only support autoAssignTrue
     }
 }

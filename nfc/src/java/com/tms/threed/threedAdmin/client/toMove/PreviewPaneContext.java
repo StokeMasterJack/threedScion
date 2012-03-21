@@ -1,7 +1,8 @@
 package com.tms.threed.threedAdmin.client.toMove;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gwt.core.client.Scheduler;
-import com.tms.threed.previewPanel.client.PreviewPanel;
+import com.tms.threed.previewPanel.client.ViewPanel;
 import com.tms.threed.previewPanel.client.main.PreviewPanelMain;
 import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
 import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
@@ -13,15 +14,14 @@ import com.tms.threed.smartClients.gwt.client.Prefetcher;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
-import com.tms.threed.threedCore.imageModel.shared.IPng;
+import com.tms.threed.threedCore.imageModel.shared.ImPng;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
 import com.tms.threed.threedCore.threedModel.client.ImageUrlProvider;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.gwt.client.Browser;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 //import com.tms.threed.imageModel.shared.slice.ImgStack;
@@ -40,7 +40,7 @@ public class PreviewPaneContext {
     private Prefetcher prefetcher;
 
     private JpgWidth jpgWidth;
-    private FixResult picks;
+    private FixResult fixResult;
     private Var maybeBlinkVar;
     private boolean pngMode = false;
 
@@ -81,10 +81,10 @@ public class PreviewPaneContext {
     }
 
 
-    public void setPicks(FixResult picks) {
-        assert picks != null;
-        this.picks = picks;
-        String displayName = threedModel.getDisplayName(picks);
+    public void setFixResult(FixResult fixResult) {
+        assert fixResult != null;
+        this.fixResult = fixResult;
+        String displayName = threedModel.getDisplayName(fixResult);
         this.previewPanelContext.setDisplayName(displayName);
 
     }
@@ -95,7 +95,11 @@ public class PreviewPaneContext {
 
     public void setJpgWidth(JpgWidth jpgWidth) {
         this.jpgWidth = jpgWidth;
-        assert picks != null;
+        assert fixResult != null;
+    }
+
+    public JpgWidth getJpgWidth() {
+        return jpgWidth;
     }
 
     public ThreedModel getThreedModel() {
@@ -112,7 +116,7 @@ public class PreviewPaneContext {
 
     private ImageUrlProvider imageUrlProvider = new ImageUrlProvider() {
         @Override
-        public IImageStack getImageUrl(Slice viewState) {
+        public ImageStack getImageUrl(Slice viewState) {
             return getImageStack(viewState);
         }
     };
@@ -132,7 +136,7 @@ public class PreviewPaneContext {
 
     public PrefetchStrategy getPrefetchStrategy() {
         if (prefetchStrategy == null) {
-            prefetchStrategy = new PrefetchStrategy2(imageUrlProvider, previewPanelContext.getViewStatesCopy());
+            prefetchStrategy = new PrefetchStrategy2(jpgWidth, imageUrlProvider, previewPanelContext.getViewStatesCopy());
         }
         return prefetchStrategy;
     }
@@ -160,7 +164,7 @@ public class PreviewPaneContext {
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
-                prefetch();
+//                prefetch();   todo df messed up
                 refreshThumbImages();
             }
         });
@@ -191,7 +195,12 @@ public class PreviewPaneContext {
         }
 
         Slice slice = previewPanelContext.getSlice();
-        Path blinkPngUrl = threedModel.getBlinkPngUrl(slice, picks, maybeBlinkVar);
+
+        if (fixResult.isInvalidBuild()) {
+            return;
+        }
+
+        Path blinkPngUrl = threedModel.getBlinkPngUrl(slice, fixResult.getAssignments(), maybeBlinkVar);
 
         //null blinkPngUrl means that accessory is not visible at the current angle
         if (blinkPngUrl == null || picksError()) {
@@ -211,12 +220,12 @@ public class PreviewPaneContext {
         previewPanelContext.setMsrp(msrp);
     }
 
-    private void refreshImagePanel(PreviewPanel threedImagePanel, int panelIndex) {
+    private void refreshImagePanel(ViewPanel threedImagePanel, int panelIndex) {
         Slice slice = previewPanelContext.getSliceForPanel(panelIndex);
         if (picksError()) {
             refreshImagePanelBadPicks(threedImagePanel);
         } else {
-            IImageStack imageStack = getImageStack(slice);
+            ImageStack imageStack = getImageStack(slice);
             if (pngMode) {
                 refreshImagePanelPngMode(threedImagePanel, imageStack);
             } else {
@@ -226,42 +235,40 @@ public class PreviewPaneContext {
     }
 
     private boolean picksError() {
-        return picks.isInvalidBuild();
+        return fixResult.isInvalidBuild();
     }
 
     private boolean picksValid() {
-        return picks.isValidBuild();
+        return fixResult.isValidBuild();
     }
 
-    private void refreshImagePanelBadPicks(PreviewPanel threedImagePanel) {
-        threedImagePanel.showMessage("Invalid Build", picks.getErrorMessage(), "#CCCCCC");
+    private void refreshImagePanelBadPicks(ViewPanel threedImagePanel) {
+        threedImagePanel.showMessage("Invalid Build", fixResult.getErrorMessage(), "#CCCCCC");
         previewPanelContext.hideButtonPanels();
     }
 
-    private void refreshImagePanelPngMode(PreviewPanel threedImagePanel, IImageStack imageStack) {
-        Path imageBase = imageStack.getImageBase();
+    private void refreshImagePanelPngMode(ViewPanel threedImagePanel, ImageStack imageStack) {
+        ImmutableList<ImPng> pngs = imageStack.getPngs();
 
-        ArrayList<Path> a = new ArrayList<Path>();
-        for (IPng png : imageStack.getAllPngs()) {
-
+        ImmutableList.Builder<Path> builder = ImmutableList.builder();
+        for (ImPng png : pngs) {
             if (!png.isVisible() || !png.getLayer().isVisible()) continue;
-
-
-            Path url = png.getUrl(imageBase);
-            a.add(url);
+            Path url = png.getUrl();
+            builder.add(url);
         }
 
-        threedImagePanel.setImageUrls(a);
+        threedImagePanel.setImageUrls(builder.build());
     }
 
-    private void refreshImagePanelJpgMode(PreviewPanel threedImagePanel, IImageStack imageStack) {
+    private void refreshImagePanelJpgMode(ViewPanel threedImagePanel, ImageStack imageStack) {
         boolean includeZPngs = !Browser.isIe6();
-        List<Path> urls = imageStack.getUrlsJpgMode(includeZPngs);
+        ImmutableList<Path> urls = imageStack.getUrlListSmart(jpgWidth, includeZPngs);
+        System.out.println("urls = " + urls);
         threedImagePanel.setImageUrls(urls);
     }
 
     private void refreshMainImage() {
-        PreviewPanel mainImagePanel = previewPanelContext.getPreviewPanel();
+        ViewPanel mainImagePanel = previewPanelContext.getPreviewPanel();
         refreshImagePanel(mainImagePanel, 0);
     }
 
@@ -269,15 +276,15 @@ public class PreviewPaneContext {
         List<ThumbPanel> thumbPanels = previewPanelContext.getThumbPanels();
         for (ThumbPanel p : thumbPanels) {
             int panelIndex = p.getPanelIndex();
-            PreviewPanel threedImagePanel = p.getThreedImagePanel();
+            ViewPanel threedImagePanel = p.getThreedImagePanel();
             refreshImagePanel(threedImagePanel, panelIndex);
         }
     }
 
 
-    public IImageStack getImageStack(Slice slice) {
-        assert picks != null;
-        IImageStack imageStack = threedModel.getImageStack(slice, picks, jpgWidth);
+    public ImageStack getImageStack(Slice slice) {
+        assert fixResult != null;
+        ImageStack imageStack = threedModel.getImageStack(slice, fixResult.getAssignments());
         return imageStack;
     }
 
@@ -288,7 +295,6 @@ public class PreviewPaneContext {
 
         if (picksValid()) {
             Prefetcher prefetcher1 = getPrefetcher();
-            prefetcher1.prefetch();
             prefetcher1.prefetch();
         }
     }

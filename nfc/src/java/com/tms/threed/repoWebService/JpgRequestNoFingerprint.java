@@ -1,14 +1,14 @@
 package com.tms.threed.repoWebService;
 
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
@@ -26,8 +26,7 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
     private final SeriesKey seriesKey;
     private final Slice slice;
     private final JpgWidth jpgWidth;
-    private final List<String> varCodes = new ArrayList<String>();
-
+    private final ImmutableSet<String> varCodes;
 
     public JpgRequestNoFingerprint(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
@@ -48,10 +47,14 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
         slice = new Slice(a[4]);
         jpgWidth = new JpgWidth(a[5]);
 
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
 
-        for (int i = 6; i < a.length-1; i++) {
-            varCodes.add(a[i]);
+        for (int i = 6; i < a.length - 1; i++) {
+            String varCode = a[i];
+            builder.add(varCode);
         }
+
+        this.varCodes = builder.build();
 
     }
 
@@ -67,7 +70,7 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
         return jpgWidth;
     }
 
-    public List<String> getVarCodes() {
+    public ImmutableSet<String> getVarCodes() {
         return varCodes;
     }
 }

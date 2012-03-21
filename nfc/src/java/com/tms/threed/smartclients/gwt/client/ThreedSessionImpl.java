@@ -1,20 +1,18 @@
 package com.tms.threed.smartClients.gwt.client;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
-import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.Fixer;
-import com.tms.threed.threedCore.featureModel.shared.UnknownVarCodeException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImageStack;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 import smartsoft.util.lang.shared.Path;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,8 +30,8 @@ public class ThreedSessionImpl {
     private SeriesInfo seriesInfo;
     private ViewStates viewStates;
 
-    private Collection<String> picks;
-    private Collection<Var> vars;
+    private ImmutableSet<String> picksRaw;
+    private ImmutableSet<Var> picks;
     private FixResult fixResult;
 
     private Slice slice;
@@ -76,47 +74,42 @@ public class ThreedSessionImpl {
         this.slice = slice;
     }
 
-    public Collection<String> getPicks() {
-        return picks;
+    public Collection<String> getPicksRaw() {
+        return picksRaw;
     }
 
-    public void setPicks(Collection<String> newPicks) {
+    public void setPicksRaw(ImmutableSet<String> newPicksRaw) {
+        if (Objects.equal(newPicksRaw, this.picksRaw)) {
+            return;
+        }
+
+        ImmutableSet<Var> newPicks = threedModel.fixRaw(newPicksRaw);
+
         if (Objects.equal(newPicks, this.picks)) {
             return;
         }
+
         this.picks = newPicks;
 
-
-        Collection<Var> newVars = new ArrayList<Var>();
-        for (String varCode : newPicks) {
-            try {
-                Var var = threedModel.getFeatureModel().get(varCode);
-                newVars.add(var);
-            } catch (UnknownVarCodeException e) {
-                //ignore
-            }
-        }
-
-        if (Objects.equal(newVars, this.vars)) {
+        FixResult newFixResult = threedModel.fixup(newPicks);
+        if (Objects.equal(newFixResult, this.fixResult)) {
             return;
         }
-        this.vars = newVars;
 
+        this.fixResult = newFixResult;
 
-        fixResult = Fixer.fix(threedModel.getFeatureModel(), newVars);
+        ImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
 
-        ImageStack imageStack = (ImageStack) threedModel.getImageStack(viewName, angle, fixResult, jpgWidth);
-
-        List<Path> newUrls = imageStack.getUrlsJpgMode();
+        ImmutableList<Path> newUrls = imageStack.getUrlListExploded(jpgWidth);
 
         if (Objects.equal(newUrls, this.urls)) {
             return;
         }
+
         this.urls = newUrls;
         fireUrlChangeEvent();
 
     }
-
 
 
     private void fireUrlChangeEvent() {

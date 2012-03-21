@@ -1,9 +1,9 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.*;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
@@ -58,49 +58,36 @@ public class ThreedModel {
         return imageModel;
     }
 
-    public FixResult fixupPicks1(Set<Var> picksRaw) {
-        return Fixer.fix(featureModel, picksRaw);
+    public FixResult fixupRaw(ImmutableSet<String> picksRaw) {
+        return featureModel.fixupRaw(picksRaw);
     }
 
-    public FixResult fixupPicks2(Set<String> picksRaw) {
-        HashSet<Var> varSet = new HashSet<Var>();
-        for (String varCode : picksRaw) {
-            Var var = featureModel.getVarOrNull(varCode);
-            if (var == null) {
-                continue;
-            }
-            varSet.add(var);
-        }
-        return fixupPicks1(varSet);
+    public FixResult fixup(ImmutableSet<Var> picks) {
+        return featureModel.fixup(picks);
     }
 
-    public IImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
+    public ImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
         assert viewName != null;
         assert picks != null;
-        return getImageStack(viewName, angle, picks, JpgWidth.W_STD);
+        ImView view = imageModel.getView(viewName);
+        return view.getImageStack(picks, angle);
     }
 
-    public IImageStack getImageStack(String viewName, int angle, SimplePicks picks, JpgWidth jpgWidth) {
-        assert viewName != null;
-        assert picks != null;
-        return imageModel.getView(viewName).getImageStack(picks, angle, jpgWidth);
-    }
 
-    public IImageStack getImageStack(Slice slice, SimplePicks picks, JpgWidth jpgWidth) {
+    public ImageStack getImageStack(Slice slice, SimplePicks picks) {
         assert slice != null;
         assert picks != null;
 
         ImView view = imageModel.getView(slice.getViewName());
-        return view.getImageStack(picks, slice.getAngle(), jpgWidth);
+        return view.getImageStack(picks, slice.getAngle());
     }
 
-    public IImageStack getImageStack(Slice slice, Collection<String> rawPicks, JpgWidth jpgWidth) {
+    public ImageStack getImageStack(Slice slice, ImmutableSet<String> rawPicks) {
         assert slice != null;
         assert rawPicks != null;
-        FixResult fixResult = getFeatureModel().fixRaw(rawPicks);
-
         ImView view = imageModel.getView(slice.getViewName());
-        return view.getImageStack(fixResult, slice.getAngle(), jpgWidth);
+        Assignments assignments = featureModel.fixRaw(rawPicks);
+        return view.getImageStack(assignments, slice.getAngle());
     }
 
     @Nullable
@@ -134,8 +121,7 @@ public class ThreedModel {
         return imageModel.getView(viewName);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    public boolean equalsHeavy(Object obj) {
 
         if (this == obj) return true;
         if (obj == null) return false;
@@ -271,11 +257,6 @@ public class ThreedModel {
         featureModel.setSubSeries(subSeries);
     }
 
-    public List<Path> getImageUrls(Slice slice, Collection<String> rawPicks, JpgWidth jpgWidth) {
-        ImageStack imageStack = (ImageStack) getImageStack(slice, rawPicks, jpgWidth);
-        return imageStack.getUrlsJpgMode();
-    }
-
     public String getDisplayName(FixResult picks) {
         if (picks == null) {
             return getFeatureModel().getDisplayName();
@@ -295,5 +276,9 @@ public class ThreedModel {
             }
         }
         return getFeatureModel().getDisplayName();
+    }
+
+    public ImmutableSet<Var> fixRaw(ImmutableSet<String> picksRaw) {
+        return featureModel.rawToPicks(picksRaw);
     }
 }

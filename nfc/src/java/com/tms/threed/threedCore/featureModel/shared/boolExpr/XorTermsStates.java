@@ -4,22 +4,12 @@ import java.util.ArrayList;
 
 public class XorTermsStates {
 
-    private final Xor xor;
-
     private final ArrayList<BoolExpr> trueTerms = new ArrayList<BoolExpr>();
     private final ArrayList<BoolExpr> falseTerms = new ArrayList<BoolExpr>();
     private final ArrayList<BoolExpr> openTerms = new ArrayList<BoolExpr>();
 
-    public XorTermsStates(Xor xor) {
-        this.xor = xor;
-    }
-
-    public void pushTrueTerm(BoolExpr term) throws MoreThanOneTrueTermXorAssignmentException {
+    public void pushTrueTerm(BoolExpr term) {
         trueTerms.add(term);
-
-        if (trueTerms.size() > 1) {
-            throw new MoreThanOneTrueTermXorAssignmentException(xor, term, this);
-        }
     }
 
     public void pushFalseTerm(BoolExpr term) {

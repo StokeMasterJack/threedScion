@@ -1,12 +1,14 @@
 package com.tms.threed.repoWebService;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Files;
-import com.tms.threed.threedCore.imageModel.shared.ImJpg;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.threedCore.imageModel.shared.ImageStack;
-import com.tms.threed.repo.server.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
+import smartsoft.util.lang.shared.Path;
 import smartsoft.util.servlet.http.headers.LastModified;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import org.apache.commons.logging.Log;
@@ -16,7 +18,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.List;
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 
@@ -33,13 +34,14 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
         ThreedModel threedModel = Repos.get().getVtcThreedModel(r.getSeriesKey());
 
         Slice slice = r.getSlice();
-        List<String> picks = r.getVarCodes();
+        ImmutableSet<String> picks = r.getVarCodes();
         JpgWidth jpgWidth = r.getJpgWidth();
-        ImageStack imageStack = (ImageStack) threedModel.getImageStack(slice, picks, jpgWidth);
+        ImageStack imageStack = threedModel.getImageStack(slice, picks);
 
-        ImJpg jpg = imageStack.getFullJpg();
+        ImmutableList<Path> urlListSmart = imageStack.getUrlListSmart(jpgWidth);
 
-        JpgKey jpgKey = new JpgKey(r.getSeriesKey(), r.getJpgWidth(), jpg.getFingerprint());
+
+        JpgKey jpgKey = imageStack.getJpgKey(jpgWidth);
 
         File jpgFile = repos.getFileForJpg(jpgKey);
 

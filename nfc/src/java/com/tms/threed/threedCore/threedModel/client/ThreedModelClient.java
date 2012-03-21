@@ -6,6 +6,7 @@ import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.gwt.client.rpc.UiLog;
+import smartsoft.util.gwt.client.rpc2.Future;
 import smartsoft.util.lang.shared.Path;
 
 /**
@@ -93,24 +94,23 @@ public class ThreedModelClient {
         return new Path(url);
     }
 
-    public Req<VtcMap> getVtcMap() {
-        final Req<VtcMap> vtcMapReq = new Req<VtcMap>("fetchVtcMap");
+    public Future<VtcMap> getVtcMap() {
+        final Future<VtcMap> f = new Future<VtcMap>();
         Path vtcMapUrl = getVtcMapUrl();
 
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
         requestBuilder.setCallback(new RequestCallback() {
 
             @Override
-            public void onResponseReceived(Request request, Response response) {
+            public void onResponseReceived(Request request, final Response response) {
                 if (response.getStatusCode() != 200) {
-                    vtcMapReq.onFailure(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
+                    f.setException(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
                 } else {
-                    VtcMap vtcMap = null;
                     try {
-                        vtcMap = VtcMap.parse(response.getText());
-                        vtcMapReq.onSuccess(vtcMap);
+                        final VtcMap vtcMap = VtcMap.parse(response.getText());
+                        f.setResult(vtcMap);
                     } catch (Exception e) {
-                        vtcMapReq.onFailure(new RuntimeException("Problem parsing vtcMap[" + response.getText() + "]",e));
+                        f.setException(new RuntimeException("Problem parsing vtcMap[" + response.getText() + "]", e));
                     }
 
                 }
@@ -118,7 +118,7 @@ public class ThreedModelClient {
 
             @Override
             public void onError(Request request, Throwable exception) {
-                vtcMapReq.onFailure(exception);
+                f.setException(exception);
             }
 
         });
@@ -127,10 +127,10 @@ public class ThreedModelClient {
             requestBuilder.send();
         } catch (RequestException e) {
             e.printStackTrace();
-            vtcMapReq.onFailure(e);
+            f.setException(e);
         }
 
-        return vtcMapReq;
+        return f;
 
     }
 

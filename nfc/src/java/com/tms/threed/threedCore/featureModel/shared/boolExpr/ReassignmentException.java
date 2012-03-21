@@ -1,5 +1,7 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
+import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
+
 public class ReassignmentException extends AssignmentException {
 
     /**
@@ -8,8 +10,8 @@ public class ReassignmentException extends AssignmentException {
      *              If true, then autoAssignTrue was called
      *              If false, then autoAssignFalse was called
      */
-    public ReassignmentException(BoolExpr expr, boolean value) {
-        super(expr, value);
+    public ReassignmentException(BoolExpr expr, boolean value,AutoAssignContext context) {
+        super(expr, value,context);
     }
 
 }

@@ -15,15 +15,15 @@ public class AssignmentsForTreeSearch extends AbstractAssignments<AssignmentsFor
         this.openVars = openVars;
     }
 
-    public AssignmentsForTreeSearch(AssignmentsForTreeSearch that,OpenVars newOpenVarsPointer) {
+    public AssignmentsForTreeSearch(AssignmentsForTreeSearch that, OpenVars newOpenVarsPointer) {
         super(that);
 
         //shallow-copy, csp does the deep copy
         this.openVars = newOpenVarsPointer;
     }
 
-    public AssignmentsForTreeSearch copy(OpenVars newOpenVarsPointer){
-        return new AssignmentsForTreeSearch(this,newOpenVarsPointer);
+    public AssignmentsForTreeSearch copy(OpenVars newOpenVarsPointer) {
+        return new AssignmentsForTreeSearch(this, newOpenVarsPointer);
     }
 
     public List<Var> getVars1() {
@@ -89,5 +89,10 @@ public class AssignmentsForTreeSearch extends AbstractAssignments<AssignmentsFor
 
     public OpenVars getOpenVars() {
         return openVars;
+    }
+
+    @Override
+    public AutoAssignContext copy() {
+        return new AssignmentsForTreeSearch(this, this.openVars);
     }
 }

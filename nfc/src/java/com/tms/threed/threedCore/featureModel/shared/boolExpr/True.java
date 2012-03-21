@@ -34,7 +34,7 @@ public class True extends Constant {
 
     @Override
     public void autoAssignFalse(AutoAssignContext ctx,int depth) throws AssignmentException {
-        throw new AssignmentException(this,false);
+        throw new AssignmentException(this,false,ctx);
     }
 
     @Override

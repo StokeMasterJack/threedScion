@@ -1,5 +1,6 @@
 package com.tms.threedToyota.byt.client.externalState.picks;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.AssignmentException;
@@ -99,7 +100,7 @@ public class PicksChangeHandlers extends MvcModel {
 
         RawPicksChangeEvent rawPicksEvent = new RawPicksChangeEvent(oldVarPicks, newVarPicks, oldFixedPicks, newFixedPicks);
 
-        Set<Var> currentTrueUiVars = newVarPicks.toVarSet();
+        ImmutableSet<Var> currentTrueUiVars = newVarPicks.toVarSet();
 
         Var blinkAccessory = rawPicksEvent.getBlinkAccessory();
         PicksChangeEvent picksChangeEvent = new PicksChangeEvent(currentTrueUiVars, blinkAccessory);

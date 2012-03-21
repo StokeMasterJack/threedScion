@@ -58,7 +58,7 @@ public interface Assignments<A extends Assignments> extends EvalContext, AutoAss
 
     Set<Var> getTrueVars();
 
-    void fillInDefaultValues();
+    void fillInInitialPicks();
 
     Set<Var> getFalseVars();
 

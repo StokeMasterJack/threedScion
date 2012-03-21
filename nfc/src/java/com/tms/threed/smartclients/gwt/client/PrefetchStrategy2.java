@@ -1,8 +1,10 @@
 package com.tms.threed.smartClients.gwt.client;
 
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.google.common.collect.ImmutableList;
 import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
 import com.tms.threed.threedCore.threedModel.client.ImageUrlProvider;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 import com.tms.threed.threedCore.threedModel.shared.ViewKey;
@@ -15,8 +17,10 @@ public class PrefetchStrategy2 implements PrefetchStrategy {
 
     private final ImageUrlProvider imageUrlProvider;
     private final SeriesInfo seriesInfo;
+    private final JpgWidth jpgWidth;
 
-    public PrefetchStrategy2(ImageUrlProvider imageUrlProvider, ViewStates viewStates) {
+    public PrefetchStrategy2(JpgWidth jpgWidth, ImageUrlProvider imageUrlProvider, ViewStates viewStates) {
+        this.jpgWidth = jpgWidth;
         this.imageUrlProvider = imageUrlProvider;
         this.seriesInfo = viewStates.getSeriesInfo();
     }
@@ -37,10 +41,9 @@ public class PrefetchStrategy2 implements PrefetchStrategy {
                 ViewKey viewsKey = viewsKeys[i];
                 for (int angle = 1; angle <= viewsKey.getAngleCount(); angle++) {
                     Slice viewSnap = new Slice(viewsKey.getName(), angle);
-                    IImageStack imageStack = imageUrlProvider.getImageUrl(viewSnap);
-
-                    Path jpgUrl = imageStack.getJpgUrl();
-                    this.urls.add(jpgUrl);
+                    ImageStack imageStack = imageUrlProvider.getImageUrl(viewSnap);
+                    ImmutableList<Path> urls = imageStack.getUrlListExploded(jpgWidth);
+                    this.urls.addAll(urls);
                 }
             }
 

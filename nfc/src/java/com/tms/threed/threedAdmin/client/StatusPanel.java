@@ -18,7 +18,8 @@ import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Tri;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 import smartsoft.util.lang.shared.Path;
 
@@ -102,7 +103,7 @@ public class StatusPanel extends Composite {
         t.setText(1, 1, model.getFixedPicks() + "");
 
 
-        IImageStack imageStack = model.getImageStack();
+        ImageStack imageStack = model.getImageStack();
 
 //        Path jpgUrl = imageStack.getUrlsJpgMode().get(0);
 
@@ -134,13 +135,16 @@ public class StatusPanel extends Composite {
 
     }
 
-    Widget createImageStackWidget(IImageStack imageStack, boolean pngMode) {
+    Widget createImageStackWidget(ImageStack imageStack, boolean pngMode) {
         FlexTable t = new FlexTable();
         List<Path> urls;
+
+        JpgWidth jpgWidth = model.getCurrentJpgWidth();
+
         if (pngMode) {
-            urls = imageStack.getUrlsPngMode();
+            urls = imageStack.getUrlListExploded(jpgWidth);
         } else {
-            urls = imageStack.getUrlsJpgMode();
+            urls = imageStack.getUrlListSmart(jpgWidth);
         }
         for (final Path path : urls) {
             int r = t.getRowCount();

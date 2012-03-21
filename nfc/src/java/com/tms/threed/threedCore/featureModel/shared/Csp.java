@@ -279,8 +279,8 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
 //        }
 //    }
 
-    public void fillInDefaultValues() {
-        getAssignments().fillInDefaultValues();
+    public void fillInInitialPicks() {
+        getAssignments().fillInInitialPicks();
     }
 
     public boolean isSolved() {

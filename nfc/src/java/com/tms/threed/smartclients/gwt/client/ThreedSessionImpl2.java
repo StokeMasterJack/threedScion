@@ -8,34 +8,35 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
+import com.tms.threed.threedCore.threedModel.client.ThreadModelLoaders;
 import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
-import smartsoft.util.gwt.client.rpc.FailureCallback;
-import smartsoft.util.gwt.client.rpc.Req;
-import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.rpc.UiLog;
+import smartsoft.util.gwt.client.rpc2.Future;
+import smartsoft.util.gwt.client.rpc2.SuccessCb;
 import smartsoft.util.lang.shared.Path;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ThreedSessionImpl2 implements ThreedSession {
+
+    private final ArrayList<Future<ViewStates>> viewStatesFutures = new ArrayList<Future<ViewStates>>();
 
     private final ValueChangeHandlers<List<Path>> urlChangeHandlers;
     private final ValueChangeHandlers<String> displayNameChangeHandlers;
     private final ThreedModelClient threedModelClient;
 
-
-    private VtcMap vtcMap;
-
-    private final Map<SeriesId, ThreedModel> threedModelCache = new HashMap<SeriesId, ThreedModel>();
+    private ThreadModelLoaders threedModelLoaders;
 
     private SeriesKey seriesKey;
     private ThreedModel threedModel;
     private ViewStates viewStates;
 
-    //    private Slice slice;
-    private ImmutableSet<String> picks;
+    private ImmutableSet<String> picksRaw = ImmutableSet.of();
 
     private JpgWidth jpgWidth = JpgWidth.W_STD;
 
@@ -51,6 +52,10 @@ public class ThreedSessionImpl2 implements ThreedSession {
         threedModelClient = new ThreedModelClient(uiLog, repoBaseUrl);
         urlChangeHandlers = new ValueChangeHandlers<List<Path>>(this);
         displayNameChangeHandlers = new ValueChangeHandlers<String>(this);
+
+        threedModelLoaders = new ThreadModelLoaders(threedModelClient);
+
+
     }
 
     private static UiLog uiLog = new UiLog() {
@@ -73,46 +78,33 @@ public class ThreedSessionImpl2 implements ThreedSession {
 
         this.seriesKey = newSeriesKey;
 
-        Req<VtcMap> vtcMapRequest = loadVtcMapIfNeeded();
-        vtcMapRequest.onSuccess = new SuccessCallback<VtcMap>() {
+        final Future<ThreedModel> f = threedModelLoaders.ensureLoaded(seriesKey);
+        f.success(new SuccessCb() {
             @Override
-            public void call(Req<VtcMap> request) {
-                if (request.result == null) throw new IllegalStateException();
-                vtcMap = request.result;
-
-                RootTreeId vtcVersion = vtcMap.getVtcVersion(newSeriesKey);
-                if (vtcVersion == null) throw new IllegalStateException();
-
-                final SeriesId seriesId = new SeriesId(newSeriesKey, vtcVersion);
-                threedModel = threedModelCache.get(seriesId);
-                if (threedModel == null) {
-                    Req<ThreedModel> threedModelReq = threedModelClient.fetchThreedModel(seriesId);
-                    threedModelReq.onSuccess = new SuccessCallback<ThreedModel>() {
-                        @Override
-                        public void call(Req<ThreedModel> request) {
-                            if (request.result == null) throw new IllegalStateException();
-                            threedModelCache.put(seriesId, request.result);
-                            threedModel = request.result;
-//                            slice = threedModel.getInitialSlice();
-                            viewStates = new ViewStates(threedModel.getSeriesInfo());
-                            refreshUrls();
-                        }
-                    };
-                } else {
-                    refreshUrls();
-                }
+            public void call() {
+                setThreedModel(f.getResult());
             }
-        };
-
-        vtcMapRequest.onFailure = new FailureCallback<VtcMap>() {
-            @Override
-            public void call(Req<VtcMap> request) {
-                System.out.println(request.exception);
-            }
-        };
+        });
 
 
     }
+
+
+    private void setThreedModel(ThreedModel newThreedModel) {
+        if (!Objects.equal(this.threedModel, newThreedModel)) {
+            this.threedModel = newThreedModel;
+            refreshUrls();
+            refreshDisplayName();
+            viewStates = new ViewStates(threedModel.getSeriesInfo());
+
+            while (viewStatesFutures.size() > 0) {
+                Future<ViewStates> f = viewStatesFutures.remove(0);
+                f.setResult(viewStates);
+            }
+
+        }
+    }
+
 
     @Override
     public List<ViewKey> getViewKeys() {
@@ -124,9 +116,9 @@ public class ThreedSessionImpl2 implements ThreedSession {
     }
 
     private void refreshUrls() {
-        List<Path> urls;
+        ImmutableList<Path> urls;
 
-        if (seriesKey == null || threedModel == null || picks == null || picks.isEmpty()) {
+        if (seriesKey == null || threedModel == null || picksRaw == null || picksRaw.isEmpty()) {
             urls = ImmutableList.of();
         } else {
 
@@ -135,7 +127,8 @@ public class ThreedSessionImpl2 implements ThreedSession {
             }
 
             Slice currentSlice = viewStates.getCurrentSlice();
-            urls = threedModel.getImageUrls(currentSlice, picks, jpgWidth);
+            ImageStack imageStack = threedModel.getImageStack(currentSlice, picksRaw);
+            urls = imageStack.getUrlListSmart(jpgWidth);
 
         }
 
@@ -153,31 +146,6 @@ public class ThreedSessionImpl2 implements ThreedSession {
         urlChangeHandlers.fire(this.urls);
     }
 
-    private Req<VtcMap> loadVtcMapIfNeeded() {
-        final Req<VtcMap> r = new Req<VtcMap>("loadVtcMapIfNeeded");
-        if (vtcMap != null) {
-            r.onSuccess(vtcMap);
-        } else {
-            Req<VtcMap> vtcMapReq = threedModelClient.getVtcMap();
-            vtcMapReq.onSuccess = new SuccessCallback<VtcMap>() {
-                @Override
-                public void call(Req<VtcMap> request) {
-                    if (request.result == null) throw new IllegalStateException();
-                    r.onSuccess(request.result);
-                }
-            };
-
-            vtcMapReq.onFailure = new FailureCallback<VtcMap>() {
-                @Override
-                public void call(Req<VtcMap> request) {
-                    request.exception.printStackTrace();
-                    r.onFailure(request.exception);
-                }
-            };
-        }
-
-        return r;
-    }
 
     public List<Path> getUrls() {
         return urls;
@@ -193,14 +161,26 @@ public class ThreedSessionImpl2 implements ThreedSession {
         }
     }
 
-    @Override
-    public void setView(String viewName) {
-        if (viewStates != null) {
-            viewStates.setCurrentView(viewName);
-            refreshUrls();
+    private Future<ViewStates> ensureViewStates() {
+        Future<ViewStates> f = new Future<ViewStates>();
+        if (viewStates == null) {
+            viewStatesFutures.add(f);
         } else {
-            throw new IllegalStateException();
+            f.setResult(viewStates);
         }
+        return f;
+    }
+
+    @Override
+    public void setView(final String viewName) {
+        Future<ViewStates> f = ensureViewStates();
+        f.success(new SuccessCb() {
+            @Override
+            public void call() {
+                viewStates.setCurrentView(viewName);
+                refreshUrls();
+            }
+        });
     }
 
     @Override
@@ -213,13 +193,15 @@ public class ThreedSessionImpl2 implements ThreedSession {
     }
 
     @Override
-    public void setAngle(int angle) {
-        if (viewStates != null) {
-            viewStates.setCurrentAngle(angle);
-            refreshUrls();
-        } else {
-            throw new IllegalStateException();
-        }
+    public void setAngle(final int angle) {
+        Future<ViewStates> f = ensureViewStates();
+        f.success(new SuccessCb() {
+            @Override
+            public void call() {
+                viewStates.setCurrentAngle(angle);
+                refreshUrls();
+            }
+        });
     }
 
     @Override
@@ -232,36 +214,42 @@ public class ThreedSessionImpl2 implements ThreedSession {
     }
 
     public void nextAngle() {
-        System.out.println("ThreedSessionImpl2.nextAngle");
-        if (viewStates != null) {
-            viewStates.nextAngle();
-            refreshUrls();
-        } else {
-            throw new IllegalStateException();
-        }
+        Future<ViewStates> f = ensureViewStates();
+        f.success(new SuccessCb() {
+            @Override
+            public void call() {
+                viewStates.nextAngle();
+                refreshUrls();
+            }
+        });
     }
 
     public void previousAngle() {
-        if (viewStates != null) {
-            viewStates.previousAngle();
-            refreshUrls();
-        } else {
-            throw new IllegalStateException();
-        }
+        Future<ViewStates> f = ensureViewStates();
+        f.success(new SuccessCb() {
+            @Override
+            public void call() {
+                viewStates.previousAngle();
+                refreshUrls();
+            }
+        });
     }
 
-    public void setPicks(Set<String> picks) {
-        Preconditions.checkNotNull(picks);
-        if (!picks.equals(this.picks)) {
-            if (picks instanceof ImmutableSet) {
-                this.picks = (ImmutableSet<String>) picks;
+    public void setPicksRaw(ImmutableSet<String> newPicks) {
+        Preconditions.checkNotNull(newPicks);
+
+        if (!Objects.equal(newPicks, this.picksRaw)) {
+            this.picksRaw = newPicks;
+            if (threedModel == null) {
+                this.fixResult = null;
             } else {
-                this.picks = ImmutableSet.copyOf(picks);
+                this.fixResult = threedModel.fixupRaw(newPicks);
+                refreshUrls();
+                refreshDisplayName();
             }
-            fixResult = threedModel.fixupPicks2(this.picks);
-            refreshUrls();
-            refreshDisplayName();
+
         }
+
 
     }
 

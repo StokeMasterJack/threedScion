@@ -1,15 +1,13 @@
 package com.tms.threed.repoWebService;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Files;
-import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.UnknownVarCodeException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.imageModel.shared.ImJpg;
 import com.tms.threed.threedCore.imageModel.shared.ImageStack;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import org.apache.commons.logging.Log;
@@ -50,17 +48,16 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
             }
         }
 
-        ImmutableList<Var> picks = new ImmutableList.Builder<Var>().addAll(vars).build();
+        ImmutableSet<Var> picks = new ImmutableSet.Builder<Var>().addAll(vars).build();
 
-        FixResult fixResult = Fixer.fix(featureModel, picks);
+        FixResult fixResult = featureModel.fixup(picks);
 
-        ImageStack imageStack = (ImageStack) threedModel.getImageStack(r.getSlice(), fixResult, r.getJpgWidth());
+        ImageStack imageStack = threedModel.getImageStack(r.getSlice(), fixResult);
 
 
         //added support for single, full jpg that includes all zLayers built-int
-        ImJpg jpg = imageStack.getFullJpg();
 
-        JpgKey jpgKey = new JpgKey(r.getSeriesId().getSeriesKey(), r.getJpgWidth(), jpg.getFingerprint());
+        JpgKey jpgKey = imageStack.getJpgKey(r.getJpgWidth());
 
         File jpgFile = repos.getFileForJpg(jpgKey);
 

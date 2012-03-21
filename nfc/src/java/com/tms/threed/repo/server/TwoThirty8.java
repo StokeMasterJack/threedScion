@@ -1,5 +1,7 @@
 package com.tms.threed.repo.server;
 
+import com.tms.threed.threedCore.imageModel.server.ImageUtil;
+
 import java.io.File;
 
 public class TwoThirty8 {
@@ -25,10 +27,19 @@ public class TwoThirty8 {
         return new File(twoFile, thirty8 + ".jpg");
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "TwoThirty8{" +
                 "two='" + two + '\'' +
                 ", thirty8='" + thirty8 + '\'' +
                 '}';
+    }
+
+    public static TwoThirty8 getTwoThirty8(String jpgFingerprint) {
+        String shortFingerprint = ImageUtil.getFingerprint(jpgFingerprint);
+        String two = shortFingerprint.substring(0, 2);
+        String thirty8 = shortFingerprint.substring(2);
+        TwoThirty8 twoThirty8 = new TwoThirty8(two, thirty8);
+        return twoThirty8;
     }
 }

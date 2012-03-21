@@ -1,5 +1,6 @@
 package com.tms.threed.threedCore.featureModel.shared.picks;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.shared.GwtEvent;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
@@ -10,10 +11,10 @@ import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
 
-    private final Set<Var> currentTrueUiVars;
+    private final ImmutableSet<Var> currentTrueUiVars;
     private final Var mostRecentSinglePick;
 
-    public PicksChangeEvent(Set<Var> currentTrueUiVars, Var mostRecentSinglePick) {
+    public PicksChangeEvent(ImmutableSet<Var> currentTrueUiVars, Var mostRecentSinglePick) {
         this.currentTrueUiVars = currentTrueUiVars;
         this.mostRecentSinglePick = mostRecentSinglePick;
     }
@@ -53,7 +54,7 @@ public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
         handler.onPicksChange(this);
     }
 
-    public Set<Var> getCurrentTrueUiVars() {
+    public ImmutableSet<Var> getCurrentTrueUiVars() {
         return currentTrueUiVars;
     }
 

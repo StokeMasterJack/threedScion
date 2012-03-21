@@ -5,38 +5,25 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
-
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.ResizeComposite;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.StackLayoutPanel;
-import com.tms.threed.threedCore.threedModel.client.SeriesNotSetException;
-import com.tms.threed.threedAdmin.client.featurePicker.CurrentUiPicks;
-import com.tms.threed.threedAdmin.client.featurePicker.VarPanelFactory;
-import com.tms.threed.threedAdmin.client.featurePicker.VarPanelModel;
-import com.tms.threed.threedAdmin.client.featurePicker.VarPanel;
-import com.tms.threed.threedAdmin.client.tabLabel.TabLabel;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeEvent;
-import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeHandler;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
-import com.tms.threed.threedCore.imageModel.shared.ILayer;
-import com.tms.threed.threedCore.imageModel.shared.IPng;
-import com.tms.threed.threedCore.imageModel.shared.ImLayer;
-import com.tms.threed.threedCore.imageModel.shared.ImView;
+import com.google.gwt.user.client.ui.*;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
 import com.tms.threed.repo.shared.CommitHistory;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.repo.shared.Settings;
-import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedAdmin.client.featurePicker.CurrentUiPicks;
+import com.tms.threed.threedAdmin.client.featurePicker.VarPanel;
+import com.tms.threed.threedAdmin.client.featurePicker.VarPanelFactory;
+import com.tms.threed.threedAdmin.client.featurePicker.VarPanelModel;
+import com.tms.threed.threedAdmin.client.tabLabel.TabLabel;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeEvent;
+import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeHandler;
+import com.tms.threed.threedCore.imageModel.shared.*;
+import com.tms.threed.threedCore.threedModel.client.SeriesNotSetException;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.gwt.client.rpc.UiContext;
 import smartsoft.util.lang.shared.Path;
 
@@ -99,7 +86,8 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         previewPanelFrame = new PreviewPanelFrame(ctx, threedAdminClient, threedModel, commit, settings);
 
         previewPanelFrame.addTagCommitChangeHandler(new ValueChangeHandler<CommitHistory>() {
-            @Override public void onValueChange(ValueChangeEvent<CommitHistory> ev) {
+            @Override
+            public void onValueChange(ValueChangeEvent<CommitHistory> ev) {
                 SeriesPanel.this.commit = ev.getValue();
                 tabLabel.setLabel(getTabLabel());
             }
@@ -107,7 +95,8 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
 
 
         previewPanelFrame.addPngModeChangeHandler(new ValueChangeHandler<Boolean>() {
-            @Override public void onValueChange(ValueChangeEvent<Boolean> booleanValueChangeEvent) {
+            @Override
+            public void onValueChange(ValueChangeEvent<Boolean> booleanValueChangeEvent) {
                 layersStack.setVisible(isPngMode());
                 layersPanel.refresh();
                 statusPanel.refresh();
@@ -115,7 +104,8 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         });
 
         previewPanelFrame.addJpgWidthChangeHandler(new ValueChangeHandler<JpgWidth>() {
-            @Override public void onValueChange(ValueChangeEvent<JpgWidth> ev) {
+            @Override
+            public void onValueChange(ValueChangeEvent<JpgWidth> ev) {
                 layersStack.setVisible(isPngMode());
                 layersPanel.refresh();
                 statusPanel.refresh();
@@ -171,7 +161,6 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
                 layersPanel.refresh();
 
 
-
                 previewPanelFrame.setPicks(currentUiPicks);
 
 
@@ -179,14 +168,16 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         });
 
         previewPanelFrame.addAngleChangeHandler(new AngleChangeHandler() {
-            @Override public void onChange(AngleChangeEvent e) {
+            @Override
+            public void onChange(AngleChangeEvent e) {
                 layersPanel.refresh();
                 statusPanel.refresh();
             }
         });
 
         previewPanelFrame.addViewChangeHandler(new ViewChangeHandler() {
-            @Override public void onChange(ViewChangeEvent e) {
+            @Override
+            public void onChange(ViewChangeEvent e) {
                 layersPanel.refresh();
                 statusPanel.refresh();
             }
@@ -198,10 +189,9 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         this.callback = callback;
         previewPanelFrame.setCallback(new PreviewPanelFrame.Callback() {
 
-
             @Override
             public void generateJpgsButtonClicked(SeriesKey seriesKey, CommitHistory commitHistory, JpgWidth jpgWidth) {
-                callback.generateJpgsButtonClicked(seriesKey, commit,jpgWidth);
+                callback.generateJpgsButtonClicked(seriesKey, commit, jpgWidth);
             }
 
             @Override
@@ -352,6 +342,11 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
     private StatusPanelModel statusPanelModel = new StatusPanelModel() {
 
         @Override
+        public JpgWidth getCurrentJpgWidth() {
+            return previewPanelFrame.getCurrentJpgWidth();
+        }
+
+        @Override
         public String getUserPicks() {
             if (currentUiPicks == null) return "";
             else return currentUiPicks.getCurrentTrueUiVars() + "";
@@ -368,30 +363,34 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
             }
         }
 
-        @Override public IImageStack getImageStack() {
+        @Override
+        public ImageStack getImageStack() {
             Slice currentSlice = getCurrentSlice();
             if (currentUiPicks.isValidBuild()) {
-                JpgWidth currentJpgWidth = previewPanelFrame.getCurrentJpgWidth();
-                return threedModel.getImageStack(currentSlice, currentUiPicks, currentJpgWidth);
+                return threedModel.getImageStack(currentSlice, currentUiPicks);
             } else {
                 return null;
             }
 
         }
 
-        @Override public CurrentUiPicks getCurrentUiPicks() {
+        @Override
+        public CurrentUiPicks getCurrentUiPicks() {
             return currentUiPicks;
         }
 
-        @Override public FeatureModel getFeatureModel() {
+        @Override
+        public FeatureModel getFeatureModel() {
             return featureModel;
         }
 
-        @Override public boolean isPngMode() {
+        @Override
+        public boolean isPngMode() {
             return SeriesPanel.this.isPngMode();
         }
 
-        @Override public String getThreedModelUrl() {
+        @Override
+        public String getThreedModelUrl() {
             return threedModelUrl.toString();
         }
     };
@@ -427,7 +426,8 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
                 return currentUiPicks;
             }
 
-            @Override public String getRadioGroupPrefix() {
+            @Override
+            public String getRadioGroupPrefix() {
                 return seriesViewId + "";
             }
         }
@@ -455,7 +455,8 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
     }
 
 
-    @Override public void setTabLabel(TabLabel tabLabel) {
+    @Override
+    public void setTabLabel(TabLabel tabLabel) {
         this.tabLabel = tabLabel;
 
     }
@@ -464,7 +465,7 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         return seriesKey.toStringPretty() + " [" + commit.getDisplayName() + "]";
     }
 
-    public static interface Callback{
-        void generateJpgsButtonClicked(SeriesKey seriesKey,CommitHistory commitHistory,JpgWidth jpgWidth);
+    public static interface Callback {
+        void generateJpgsButtonClicked(SeriesKey seriesKey, CommitHistory commitHistory, JpgWidth jpgWidth);
     }
 }

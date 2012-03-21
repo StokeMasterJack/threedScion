@@ -1,5 +1,6 @@
 package com.tms.threed.smartClients.gwt.client;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
@@ -8,7 +9,6 @@ import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import smartsoft.util.lang.shared.Path;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ThreedSession {
 
@@ -19,16 +19,18 @@ public interface ThreedSession {
     void setSlice(Slice slice);
 
     void setView(String viewName);
+
     String getView();
 
     void setAngle(int angle);
+
     int getAngle();
 
     void nextAngle();
 
     void previousAngle();
 
-    void setPicks(Set<String> picks);
+    void setPicksRaw(ImmutableSet<String> picks);
 
     List<Path> getUrls();
 

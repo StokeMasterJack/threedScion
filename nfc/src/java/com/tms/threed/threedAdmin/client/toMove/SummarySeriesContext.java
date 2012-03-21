@@ -1,21 +1,17 @@
 package com.tms.threed.threedAdmin.client.toMove;
 
-import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.google.common.collect.ImmutableList;
 import com.tms.threed.previewPanel.client.ThreedImagePanel;
 import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
+import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.gwt.client.Browser;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class SummarySeriesContext {
 
@@ -35,7 +31,8 @@ public class SummarySeriesContext {
         this.previewPanel.setSeriesInfo(threedModel.getSeriesInfo());
 
         previewPanel.addAngleChangeHandler(new AngleChangeHandler() {
-            @Override public void onChange(AngleChangeEvent e) {
+            @Override
+            public void onChange(AngleChangeEvent e) {
                 refreshExteriorImage();
             }
         });
@@ -76,12 +73,9 @@ public class SummarySeriesContext {
 
     private void refreshImagePanel(ThreedImagePanel threedImagePanel, int panelIndex) {
         Slice viewState = previewPanel.getViewSnapForPanel(panelIndex);
-        IImageStack imageStack = getImageStack(viewState);
-
+        ImageStack imageStack = getImageStack(viewState);
         boolean includeZPngs = !Browser.isIe6();
-
-        List<Path> urls = imageStack.getUrlsJpgMode(includeZPngs);
-
+        ImmutableList<Path> urls = imageStack.getUrlListSmart(JpgWidth.W_STD, includeZPngs);
         threedImagePanel.setImageUrls(urls);
     }
 
@@ -93,8 +87,8 @@ public class SummarySeriesContext {
         refreshImagePanel(previewPanel.getInteriorThreedImagePanel(), 1);
     }
 
-    public IImageStack getImageStack(Slice viewState) {
-        return threedModel.getImageStack(viewState, picks, JpgWidth.W_STD);
+    public ImageStack getImageStack(Slice viewState) {
+        return threedModel.getImageStack(viewState, picks);
     }
 
     public void close() {

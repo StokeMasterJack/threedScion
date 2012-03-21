@@ -1,5 +1,6 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
+import com.google.common.base.Preconditions;
 import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
 
 /**
@@ -9,6 +10,7 @@ public class AssignmentException extends RuntimeException {
 
     private final BoolExpr expr;
     private final boolean value;
+    private final AutoAssignContext context;
 
     /**
      * @param expr  the expression on which autoAssign was called
@@ -16,10 +18,17 @@ public class AssignmentException extends RuntimeException {
      *              If true, then autoAssignTrue was called
      *              If false, then autoAssignFalse was called
      */
-    public AssignmentException(BoolExpr expr, boolean value) {
+    public AssignmentException(BoolExpr expr, boolean value, AutoAssignContext context) {
+        Preconditions.checkNotNull(expr);
+        Preconditions.checkNotNull(context);
         this.expr = expr;
         this.value = value;
+        this.context = context.copy();
     }
+
+//    public AssignmentException(BoolExpr expr, boolean value) {
+//        this(expr, value, null);
+//    }
 
     public BoolExpr getExpr() {
         return expr;
@@ -31,11 +40,16 @@ public class AssignmentException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Expression " + expr + " could not be auto-assigned " + value;
+        if (context == null) {
+            return "Expression " + expr + " could not be auto-assigned " + value;
+        } else {
+            return getMessage(context);
+        }
     }
 
 
     public String getMessage(AutoAssignContext ctx) {
         return "Expression " + expr + " [which evaluates to " + expr.simplify(ctx) + "] could not be auto-assigned " + value;
     }
+
 }

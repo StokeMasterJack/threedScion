@@ -7,7 +7,7 @@ import com.tms.threed.jpgGen.shared.JobStatus;
 import com.tms.threed.jpgGen.shared.JobStatusItem;
 import com.tms.threed.jpgGen.server.singleJpg.JpgGeneratorPureJava;
 import com.tms.threed.jpgGen.shared.*;
-import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import com.tms.threed.repo.server.SeriesRepo;
 import com.tms.threed.repo.server.rt.RtRepo;

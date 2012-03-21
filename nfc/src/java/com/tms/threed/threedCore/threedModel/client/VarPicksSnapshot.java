@@ -1,5 +1,6 @@
 package com.tms.threed.threedCore.threedModel.client;
 
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.UnknownVarCodeException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
@@ -8,19 +9,23 @@ import smartsoft.util.gwt.client.Console;
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 public class VarPicksSnapshot {
 
-    @Nonnull public final Var modelCode;
-    @Nonnull public final Var exteriorColor;
-    @Nonnull public final Var interiorColor;
+    @Nonnull
+    public final Var modelCode;
+    @Nonnull
+    public final Var exteriorColor;
+    @Nonnull
+    public final Var interiorColor;
 
-    @Nonnull public final Set<Var> packageVars;
-    @Nonnull public final Set<Var> accessoryVars;
+    @Nonnull
+    public final Set<Var> packageVars;
+    @Nonnull
+    public final Set<Var> accessoryVars;
 
     public final int packageCount;
     public final int accessoryCount;
@@ -58,18 +63,14 @@ public class VarPicksSnapshot {
     }
 
 
-    public Set<Var> toVarSet() {
-        LinkedHashSet<Var> vars = new LinkedHashSet<Var>();
+    public ImmutableSet<Var> toVarSet() {
+        ImmutableSet.Builder<Var> vars = ImmutableSet.builder();
         vars.add(modelCode);
         vars.add(exteriorColor);
         vars.add(interiorColor);
-        for (Var code : packageVars) {
-            vars.add(code);
-        }
-        for (Var code : accessoryVars) {
-            vars.add(code);
-        }
-        return vars;
+        vars.addAll(packageVars);
+        vars.addAll(accessoryVars);
+        return vars.build();
     }
 
 
@@ -84,7 +85,8 @@ public class VarPicksSnapshot {
 //    }
 
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "modelCode[" + modelCode + "]  exteriorColor[" + exteriorColor + "]  interiorColor[" + interiorColor + "]  packageCodes[" + packageVars + "]  accessoryCodes[" + accessoryVars + "]";
     }
 
@@ -158,7 +160,8 @@ public class VarPicksSnapshot {
             return varCodeType;
         }
 
-        @Override public String getMessage() {
+        @Override
+        public String getMessage() {
             return varCodeType + " " + super.getMessage();
         }
     }

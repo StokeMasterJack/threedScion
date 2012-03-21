@@ -277,7 +277,7 @@ public class ImPng extends ImChildBase implements ImFeatureOrPng, IsLeaf, IPng {
     }
 
     public boolean isPartOfJpg() {
-        return getLayer().isPartOfJpg();
+        return !isZLayer();
     }
 
     public boolean isAccessory() {
@@ -322,7 +322,8 @@ public class ImPng extends ImChildBase implements ImFeatureOrPng, IsLeaf, IPng {
     }
 
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != ImPng.class) return false;
         ImPng that = (ImPng) obj;
@@ -330,7 +331,8 @@ public class ImPng extends ImChildBase implements ImFeatureOrPng, IsLeaf, IPng {
         return shortSha.equals(that.shortSha);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return shortSha.hashCode();
     }
 

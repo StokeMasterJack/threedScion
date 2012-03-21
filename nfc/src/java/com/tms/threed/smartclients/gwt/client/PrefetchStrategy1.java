@@ -1,8 +1,10 @@
 package com.tms.threed.smartClients.gwt.client;
 
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.google.common.collect.ImmutableList;
 import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
 import com.tms.threed.threedCore.threedModel.client.ImageUrlProvider;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.lang.shared.Path;
 
@@ -13,8 +15,10 @@ public class PrefetchStrategy1 implements PrefetchStrategy {
 
     private final ImageUrlProvider imageUrlProvider;
     private final ViewStates viewStates;
+    private final JpgWidth jpgWidth;
 
-    public PrefetchStrategy1(ImageUrlProvider imageUrlProvider, ViewStates viewStates) {
+    public PrefetchStrategy1(JpgWidth jpgWidth, ImageUrlProvider imageUrlProvider, ViewStates viewStates) {
+        this.jpgWidth = jpgWidth;
         this.imageUrlProvider = imageUrlProvider;
         this.viewStates = viewStates;
     }
@@ -61,15 +65,12 @@ public class PrefetchStrategy1 implements PrefetchStrategy {
 
         private void addUrl() {
             Slice state = viewStatesCopy.getCurrentSlice();
-            IImageStack IImageStack = imageUrlProvider.getImageUrl(state);
-
-            List<Path> urls = IImageStack.getUrlsJpgMode();
-
+            ImageStack imageStack = imageUrlProvider.getImageUrl(state);
+            ImmutableList<Path> urls = imageStack.getUrlListExploded(jpgWidth);
             for (int i = 0; i < urls.size(); i++) {
                 Path url = urls.get(i);
                 this.urls.add(url);
             }
-
         }
 
 

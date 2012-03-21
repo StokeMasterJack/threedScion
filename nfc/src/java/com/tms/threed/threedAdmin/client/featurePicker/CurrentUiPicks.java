@@ -1,17 +1,18 @@
 package com.tms.threed.threedAdmin.client.featurePicker;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.Fixer;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.AssignmentException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeEvent;
 import com.tms.threed.threedCore.featureModel.shared.picks.UiPicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,27 +67,34 @@ public class CurrentUiPicks implements UiPicks, SimplePicks2 {
 
     @Override
     public FixResult proposePickRadio(Var var) {
-        assert uiVars.contains(var) : "var[" + var + "] is not a uiVar";
-        assert var.isXorChild();
+        Preconditions.checkArgument(uiVars.contains(var), "var[" + var + "] is not a uiVar");
+        Preconditions.checkArgument(var.isXorChild());
 
-        Set<Var> copy = new HashSet<Var>(currentTrueUiVars);
-        copy.removeAll(var.getParent().getChildVars());
-        copy.add(var);
+        ImmutableSet<Var> siblings = var.getSiblings();
+        ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
 
+        for (Var v : currentTrueUiVars) {
+            if (!siblings.contains(v)) {
+                builder.add(var);
+            }
+        }
 
-        FixResult fixResult = Fixer.fix(featureModel, copy);
+        builder.add(var);
 
+        ImmutableSet<Var> copy = builder.build();
 
-        return fixResult;
+        return featureModel.fixup(copy);
     }
 
-    @Override public FixResult proposePickRadio(String varCode) {
+    @Override
+    public FixResult proposePickRadio(String varCode) {
         Var var = featureModel.getVarOrNull(varCode);
         assert var != null;
         return proposePickRadio(var);
     }
 
-    @Override public FixResult proposeToggleCheckBox(String varCode) {
+    @Override
+    public FixResult proposeToggleCheckBox(String varCode) {
         Var var = featureModel.getVarOrNull(varCode);
         assert var != null;
         return proposeToggleCheckBox(var);
@@ -96,16 +104,23 @@ public class CurrentUiPicks implements UiPicks, SimplePicks2 {
     public FixResult proposeToggleCheckBox(Var var) {
         assert !var.isXorChild();
 
-        Set<Var> copy = new HashSet<Var>(currentTrueUiVars);
-
-        if (copy.contains(var)) {
-            copy.remove(var);
+        ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
+        ImmutableSet<Var> copy;
+        if (currentTrueUiVars.contains(var)) {
+            for (Var v : currentTrueUiVars) {
+                if (!v.equals(var)) {
+                    builder.add(var);
+                }
+            }
         } else {
-            copy.add(var);
+            builder.addAll(currentTrueUiVars);
+            builder.add(var);
+            copy = builder.build();
         }
 
-        return Fixer.fix(featureModel, copy);
+        copy = builder.build();
 
+        return featureModel.fixup(copy);
     }
 
     @Override
@@ -164,7 +179,8 @@ public class CurrentUiPicks implements UiPicks, SimplePicks2 {
 
 
     public void fix() {
-        this.fixResult = Fixer.fix(featureModel, currentTrueUiVars);
+        ImmutableSet<Var> picks = ImmutableSet.copyOf(currentTrueUiVars);
+        this.fixResult = featureModel.fixup(picks);
     }
 
 
@@ -183,12 +199,17 @@ public class CurrentUiPicks implements UiPicks, SimplePicks2 {
         return fixResult.getErrorMessage();
     }
 
+    @Override
+    public AssignmentException getException() {
+        return fixResult.getException();
+    }
+
     public void print() {
         System.err.println("Current UI Picks: ");
         System.err.println("\t Picks: \t" + currentTrueUiVars);
 
         if (isInvalidBuild()) {
-            System.err.println("\t Error: \t" + this.getErrorMessage());
+            System.err.println("\t Error: \t" + this.getException().getMessage());
         } else {
             System.err.println("\t Fixed: \t" + getFixedPicks());
         }
@@ -221,4 +242,6 @@ public class CurrentUiPicks implements UiPicks, SimplePicks2 {
     public Var getPotentialBlinkVar() {
         return potentialBlinkVar;
     }
+
+
 }

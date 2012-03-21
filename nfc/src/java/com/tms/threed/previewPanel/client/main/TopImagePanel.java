@@ -1,7 +1,7 @@
 package com.tms.threed.previewPanel.client.main;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.tms.threed.previewPanel.client.PreviewPanel;
+import com.tms.threed.previewPanel.client.ViewPanel;
 import com.tms.threed.previewPanel.client.PreviewPanelStyles;
 import smartsoft.util.lang.shared.ImageSize;
 
@@ -10,10 +10,10 @@ public class TopImagePanel extends AbsolutePanel {
     public ImageSize mainImageSize;
 
     private final HeaderPanel headerPanel;
-    private final PreviewPanel previewPanel;
+    private final ViewPanel previewPanel;
     private final FooterPanel footerPanel;
 
-    public TopImagePanel(ImageSize mainImageSize, PreviewPanel previewPanel, HeaderPanel headerPanel, FooterPanel footerPanel) {
+    public TopImagePanel(ImageSize mainImageSize, ViewPanel previewPanel, HeaderPanel headerPanel, FooterPanel footerPanel) {
         this.mainImageSize = mainImageSize;
 
         this.headerPanel = headerPanel;

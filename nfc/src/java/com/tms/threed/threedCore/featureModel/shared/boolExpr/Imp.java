@@ -75,7 +75,7 @@ public class Imp extends Pair {
 
             e1.autoAssignFalse(ctx,depth+1);
         } else if (val1.isTrue() && val2.isFalse()) {
-            throw new ImpAutoAssignTrueException(this);
+            throw new ImpAutoAssignTrueException(this,ctx);
         }
     }
 

@@ -167,7 +167,7 @@ public class Or extends Junction {
         assert falseCount + trueCount + openCount == expressions.size();
 
         if (falseCount == expressions.size()) {
-            throw new AllTermsFalseOrAutoAssignTrueException(this);
+            throw new AllTermsFalseOrAutoAssignTrueException(this,ctx);
         }
 
         if (openCount == 1 && trueCount == 0) {
@@ -183,7 +183,7 @@ public class Or extends Junction {
         for (BoolExpr expr : expressions) {
             Tri value = expr.eval(ctx);
             if (value.isTrue()) {
-                throw new FoundTrueTermOrAutoAssignFalseExceptionImpl(this);
+                throw new FoundTrueTermOrAutoAssignFalseExceptionImpl(this,ctx);
             } else if (value.isFalse()) {
                 //cool;
             } else { //open

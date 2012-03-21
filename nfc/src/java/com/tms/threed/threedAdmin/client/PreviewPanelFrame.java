@@ -164,7 +164,7 @@ public class PreviewPanelFrame extends FlowPanel {
 
     public void setPicks(CurrentUiPicks currentUiPicks) {
         this.currentUiPicks = currentUiPicks;
-        previewPaneContext.setPicks(currentUiPicks.getFixResult());
+        previewPaneContext.setFixResult(currentUiPicks.getFixResult());
 
         Var potentialBlinkVar = currentUiPicks.getPotentialBlinkVar();
         previewPaneContext.setMaybeBlinkVar(potentialBlinkVar);
@@ -604,7 +604,7 @@ public class PreviewPanelFrame extends FlowPanel {
 
         final PreviewPaneContext previewPaneContext = new PreviewPaneContext(previewPanelContext, threedModel);
 
-        previewPaneContext.setPicks(currentUiPicks.getFixResult());
+        previewPaneContext.setFixResult(currentUiPicks.getFixResult());
         previewPaneContext.setJpgWidth(getCurrentJpgWidth());
 
         previewPaneContext.setMsrp(msrp);

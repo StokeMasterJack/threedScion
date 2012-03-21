@@ -2,7 +2,8 @@ package com.tms.threed.threedAdmin.client;
 
 import com.tms.threed.threedAdmin.client.featurePicker.CurrentUiPicks;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 
 public interface StatusPanelModel {
 
@@ -11,12 +12,14 @@ public interface StatusPanelModel {
     String getFixedPicks();
     String getThreedModelUrl();
 
-    IImageStack getImageStack();
+    ImageStack getImageStack();
 
     CurrentUiPicks getCurrentUiPicks();
 
     FeatureModel getFeatureModel();
 
     boolean isPngMode();
+
+    JpgWidth getCurrentJpgWidth();
 
 }

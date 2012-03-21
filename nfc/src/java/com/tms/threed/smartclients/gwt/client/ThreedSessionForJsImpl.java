@@ -5,6 +5,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.Window;
+import com.tms.threed.threedCore.threedModel.client.JsSeriesId;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 import com.tms.threed.threedCore.threedModel.shared.ViewKey;
@@ -38,7 +40,7 @@ public class ThreedSessionForJsImpl implements ThreedSessionForJs {
             String s = picks.get(i);
             builder.add(s);
         }
-        threedSession.setPicks(builder.build());
+        threedSession.setPicksRaw(builder.build());
     }
 
     @Override
@@ -125,6 +127,11 @@ public class ThreedSessionForJsImpl implements ThreedSessionForJs {
         }-*/;
 
 
+    }
+
+    public void setSeriesIdDude(JsSeriesId jsSeriesId) {
+        String name = jsSeriesId.getName();
+        Window.alert("hello same: " + name);
     }
 
 

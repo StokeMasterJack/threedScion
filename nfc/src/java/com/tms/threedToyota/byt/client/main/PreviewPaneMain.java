@@ -5,10 +5,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
 import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.threedAdmin.client.toMove.PreviewPaneContext;
-import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
@@ -22,9 +20,6 @@ import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threedToyota.byt.client.notification.AccessoryWithFlashOrientationHandler;
 import com.tms.threedToyota.byt.client.notification.NotificationCenterBridge;
 import smartsoft.util.gwt.client.Console;
-
-import java.util.List;
-import java.util.Set;
 
 import static smartsoft.util.date.shared.StringUtil.isEmpty;
 
@@ -53,11 +48,10 @@ public class PreviewPaneMain extends PreviewPane {
                     Var blinkVar = e.getBlinkAccessory();
 
 
-                    Set<Var> currentTrueUiVars = e.getCurrentTrueUiVars();
-                    FixResult fixResult = Fixer.fix(featureModel, currentTrueUiVars);
+                    FixResult fixResult = featureModel.fixup(e.getCurrentTrueUiVars());
 
 
-                    previewPaneContext.setPicks(fixResult);
+                    previewPaneContext.setFixResult(fixResult);
                     previewPaneContext.setMaybeBlinkVar(blinkVar);
                     previewPaneContext.setJpgWidth(JpgWidth.W_STD);
                     previewPaneContext.setPngMode(false);

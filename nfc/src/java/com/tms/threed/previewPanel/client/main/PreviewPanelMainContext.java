@@ -2,8 +2,8 @@ package com.tms.threed.previewPanel.client.main;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.previewPanel.client.*;
+import com.tms.threed.previewPanel.client.ThreedImagePanel;
+import com.tms.threed.previewPanel.client.ViewPanel;
 import com.tms.threed.previewPanel.client.buttonBars.exterior.ExteriorButtonHandler;
 import com.tms.threed.previewPanel.client.buttonBars.exterior.ExteriorButtonPanel;
 import com.tms.threed.previewPanel.client.buttonBars.interior.InteriorButtonHandler;
@@ -14,19 +14,10 @@ import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbClickEvent;
 import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbClickHandler;
 import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbPanel;
 import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbsPanel;
-import com.tms.threed.previewPanel.shared.viewModel.AngleAndViewChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.AngleAndViewChangeHandler;
-import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
-import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
-import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
+import com.tms.threed.previewPanel.shared.viewModel.*;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.lang.shared.ImageSize;
-import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.Slice;
-import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
@@ -36,7 +27,7 @@ public class PreviewPanelMainContext {
 
     private final HandlerManager bus = new HandlerManager(this);
 
-    private final PreviewPanel previewPanel;
+    private final ViewPanel previewPanel;
     private final TopImagePanel topImagePanel;
     private final FooterPanel footerPanel;
     private final ChatPanel chatPanel;
@@ -75,9 +66,8 @@ public class PreviewPanelMainContext {
         assert assertNonNullSeries();
 
 
-
         chatPanel = new ChatPanel(featureModel.getDisplayName());
-        headerPanel = new HeaderPanel(chatPanel,featureModel.getDisplayYear(),featureModel.getDisplayName());
+        headerPanel = new HeaderPanel(chatPanel, featureModel.getDisplayYear(), featureModel.getDisplayName());
 
         angleButtonHandler = new DefaultAngleButtonHandler();
         thumbClickHandler = new DefaultThumbClickHandler();
@@ -90,8 +80,7 @@ public class PreviewPanelMainContext {
 
         footerPanel = new FooterPanel(interiorButtonPanel, exteriorButtonPanel);
 
-        previewPanel = new PreviewPanel(0,ImageSize.STD_PNG,true);
-
+        previewPanel = new ViewPanel(0, ImageSize.STD_PNG, true);
 
 
         topImagePanel = new TopImagePanel(ImageSize.STD_PNG, previewPanel, headerPanel, footerPanel);
@@ -111,10 +100,10 @@ public class PreviewPanelMainContext {
         previewPanel.setExteriorButtonHandler(angleButtonHandler);
 
 
-        previewPanel.addLoadingCompleteHandler(new ThreedImagePanel.LoadingCompleteHandler() {
+        previewPanel.setThreedImagePanelListener(new ThreedImagePanel.ThreedImagePanelListener() {
             @Override
-            public void onLoadingComplete(ThreedImagePanel.LoadingCompleteEvent e) {
-                if (e.isFatal()) {
+            public void allImagesComplete(List<Path> errors, boolean fatal) {
+                if (fatal) {
                     hideButtonPanels();
                 } else {
                     refreshButtonPanels();
@@ -168,7 +157,7 @@ public class PreviewPanelMainContext {
     }
 
     @Nonnull
-    public PreviewPanel getPreviewPanel() {
+    public ViewPanel getPreviewPanel() {
         assert previewPanel != null;
         return previewPanel;
     }
@@ -272,19 +261,22 @@ public class PreviewPanelMainContext {
     }
 
     private class DefaultAngleButtonHandler implements ExteriorButtonHandler, InteriorButtonHandler {
-        @Override public void onPrevious() {
+        @Override
+        public void onPrevious() {
             if (viewStates == null) return;
             viewStates.previousAngle();
             fireAngleChangeEvent(viewStates.getCurrentAngle());
         }
 
-        @Override public void onNext() {
+        @Override
+        public void onNext() {
             if (viewStates == null) return;
             viewStates.nextAngle();
             fireAngleChangeEvent(viewStates.getCurrentAngle());
         }
 
-        @Override public void onSelection(int clickedAngle) {
+        @Override
+        public void onSelection(int clickedAngle) {
             if (viewStates == null) return;
             if (clickedAngle == viewStates.getCurrentAngle()) return;
             viewStates.setCurrentAngle(clickedAngle);
@@ -293,7 +285,8 @@ public class PreviewPanelMainContext {
     }
 
     private class DefaultThumbClickHandler implements ThumbClickHandler {
-        @Override public void onThumbClick(ThumbClickEvent event) {
+        @Override
+        public void onThumbClick(ThumbClickEvent event) {
             if (viewStates == null) return;
             int thumbIndex = event.getThumbIndex();
             viewStates.thumbClicked(thumbIndex);

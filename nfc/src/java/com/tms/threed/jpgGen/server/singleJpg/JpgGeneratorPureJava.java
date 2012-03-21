@@ -4,7 +4,7 @@ package com.tms.threed.jpgGen.server.singleJpg;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.tms.threed.jpgGen.shared.Stats;
-import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import com.tms.threed.repo.server.SeriesRepo;
 import com.tms.threed.repo.server.rt.RtRepo;

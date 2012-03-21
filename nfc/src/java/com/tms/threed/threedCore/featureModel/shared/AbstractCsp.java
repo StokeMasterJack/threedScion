@@ -269,7 +269,7 @@ abstract public class AbstractCsp<A extends Assignments, C extends AbstractCsp> 
 //    }
 
     public void fillInDefaultValues() {
-        getAssignments().fillInDefaultValues();
+        getAssignments().fillInInitialPicks();
     }
 
     public boolean isSolved() {

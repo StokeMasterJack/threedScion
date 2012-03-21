@@ -1,40 +1,59 @@
 package com.tms.threed.threedCore.featureModel.shared;
 
-import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.tms.threed.threedCore.featureModel.shared.boolExpr.AssignmentException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
 
-public class FixResult implements SimplePicks2 {
+public class FixResult implements SimplePicks2{
+
+    private final ImmutableSet<String> pickRaw;
+    private final ImmutableSet<Var> picks;
 
     private final Assignments assignments;
-    private final String errorMessage;
+    private final AssignmentException exception;
 
-    public FixResult(Assignments assignments) {
+    public FixResult(ImmutableSet<String> pickRaw, ImmutableSet<Var> picks, Assignments assignments, AssignmentException exception) {
+        Preconditions.checkArgument((assignments == null && exception != null) ||
+                (assignments != null && exception == null));
+
+        this.pickRaw = pickRaw;
+        this.picks = picks;
         this.assignments = assignments;
-        errorMessage = null;
+        this.exception = exception;
     }
 
-    public FixResult(String errorMessage) {
-        this.assignments = null;
-        this.errorMessage = errorMessage;
+
+    public FixResult(Assignments assignments) {
+        this(null, null, assignments, null);
+    }
+
+    public FixResult(AssignmentException exception) {
+        this(null, null, null, exception);
     }
 
     public FixResult(FixResult that) {
-        if (that.isInvalidBuild()) {
-            this.assignments = null;
-            this.errorMessage = that.errorMessage;
-        }else{
-            this.errorMessage = null;
-            this.assignments = new AssignmentsSimple((AssignmentsSimple) that.assignments);
-        }
-
+        this.pickRaw = that.pickRaw;
+        this.picks = that.picks;
+        this.assignments = that.assignments;
+        this.exception = that.exception;
     }
 
     public Assignments getAssignments() {
         return assignments;
     }
 
+    public AssignmentException getException() {
+        return exception;
+    }
+
     public String getErrorMessage() {
-        return errorMessage;
+        if (exception == null) {
+            return null;
+        } else {
+            return exception.getMessage();
+        }
     }
 
     public boolean isPicked(Var var) {
@@ -43,9 +62,9 @@ public class FixResult implements SimplePicks2 {
     }
 
     public boolean isValidBuild() {
-        if (errorMessage == null && assignments != null) {
+        if (exception == null && assignments != null) {
             return true;
-        } else if (errorMessage != null && assignments == null) {
+        } else if (exception != null && assignments == null) {
             return false;
         } else {
             throw new IllegalStateException();
@@ -56,13 +75,26 @@ public class FixResult implements SimplePicks2 {
         return !isValidBuild();
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         if (isValidBuild()) return "Valid build";
-        else return "Invalid build: " + errorMessage;
+        else return "Invalid build: " + exception;
     }
 
     public String toStringLong() {
         if (isValidBuild()) return "Valid build: " + assignments.getTrueVars();
-        else return "Invalid build: " + errorMessage;
+        else return "Invalid build: " + exception;
     }
+
+    public ImmutableSet<String> getPickRaw() {
+        return pickRaw;
+    }
+
+    public ImmutableSet<Var> getPicks() {
+        return picks;
+    }
+
+
+
+
 }

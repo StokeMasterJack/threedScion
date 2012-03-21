@@ -1,7 +1,7 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.io.Files;
-import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

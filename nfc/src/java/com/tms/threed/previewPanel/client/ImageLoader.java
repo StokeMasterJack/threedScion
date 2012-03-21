@@ -1,56 +1,77 @@
 package com.tms.threed.previewPanel.client;
 
+import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Image;
-import smartsoft.util.gwt.client.rpc2.CompleteCb;
+import smartsoft.util.lang.shared.ImageSize;
 import smartsoft.util.lang.shared.Path;
-
-import java.util.ArrayList;
 
 public class ImageLoader {
 
-    private static enum Status {NotStarted, Loading, CompleteSuccess, CompleteError, Open}
+    private static enum Status {
+        NotStarted,
+        Loading,
+        CompleteSuccess,
+        CompleteError;
 
-    private final Path url;
-    private final CompleteCb callback;
+        boolean isNotStarted() {
+            return this.equals(NotStarted);
+        }
+
+        boolean isComplete() {
+            return isCompleteSuccess() || isCompleteError();
+        }
+
+        boolean isCompleteSuccess() {
+            return this.equals(CompleteSuccess);
+        }
+
+        boolean isCompleteError() {
+            return this.equals(CompleteError);
+        }
+    }
+
 
     private final Image image = new Image();
+
+    private final int index;
+    private final Path url;
     private final HandlerRegistration loadReg;
     private final HandlerRegistration errorReg;
-    private Status status = Status.Open;
+    private Status status = Status.NotStarted;
 
-    private ArrayList<Path> errors;
+    private FinalOutcome finalOutcome;
 
-    public ImageLoader(Path url, CompleteCb callback) {
+    public ImageLoader(final int index, final Path url, ImageSize imageSize, final CompleteCallback callback) {
+        this.index = index;
         this.url = url;
-        this.callback = callback;
 
+        image.setPixelSize(imageSize.getWidth(), imageSize.getHeight());
         image.setVisible(false);
 
         loadReg = image.addLoadHandler(new LoadHandler() {
             @Override
             public void onLoad(LoadEvent event) {
-                Image img = (Image) event.getSource();
+                status = Status.CompleteSuccess;
+                finalOutcome = new FinalOutcome(index, url, true);
+                callback.call(finalOutcome);
                 loadReg.removeHandler();
                 errorReg.removeHandler();
-                status = Status.CompleteSuccess;
-                threedImagePanel.maybeFire(this);
             }
         });
+
         errorReg = image.addErrorHandler(new ErrorHandler() {
             @Override
             public void onError(ErrorEvent event) {
-                Image img = (Image) event.getSource();
-                img.setVisible(true);
+                status = Status.CompleteError;
+                finalOutcome = new FinalOutcome(index, url, false);
+                callback.call(finalOutcome);
                 loadReg.removeHandler();
                 errorReg.removeHandler();
-                status = Status.CompleteError;
-                threedImagePanel.errors.add(url);
-                threedImagePanel.maybeFire(this);
             }
         });
 
@@ -58,21 +79,25 @@ public class ImageLoader {
 
     }
 
-
-    boolean isTerminal() {
-        return !isOpen();
+    public Image getImage() {
+        return image;
     }
 
-    boolean isOpen() {
-        return status.equals(Status.Open);
+    public int getIndex() {
+        return index;
     }
 
-    public boolean isError() {
-        return status.equals(Status.CompleteError);
+
+    boolean isComplete() {
+        return status.isComplete();
     }
 
-    public boolean isLoaded() {
-        return status.equals(Status.CompleteSuccess);
+    public boolean isCompleteError() {
+        return status.isCompleteError();
+    }
+
+    public boolean isCompleteSuccess() {
+        return status.isCompleteSuccess();
     }
 
     public Path getUrl() {
@@ -106,4 +131,64 @@ public class ImageLoader {
         }
         return this.url.equals(url);
     }
+
+    public static class FinalOutcome {
+
+        private final int index;
+        private final Path url;
+        private final boolean success;
+
+        public FinalOutcome(int index, Path url, boolean success) {
+            this.index = index;
+            this.url = url;
+            this.success = success;
+        }
+
+        public Path getUrl() {
+            return url;
+        }
+
+        public boolean isCompleteError() {
+            return !success;
+        }
+
+        public boolean isCompleteSuccess() {
+            return success;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public boolean isBase() {
+            return index == 0;
+        }
+
+        @Override
+        public String toString() {
+            return url + " " + success;
+        }
+    }
+
+    public static interface CompleteCallback {
+        void call(FinalOutcome finalOutcome);
+    }
+
+    public void setVisible() {
+        image.setVisible(true);
+    }
+
+    @Override
+    public String toString() {
+        return url + "  status[" + status + "]";
+    }
+
+    private static native void daveTest(ImageElement img, String url)/*-{
+        img.src = url;
+        img.addEventListener("load", function (e) {
+            console.log(e);
+            console.log(img);
+        });
+
+    }-*/;
 }

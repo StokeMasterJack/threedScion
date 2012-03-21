@@ -20,4 +20,9 @@ public class AssignmentsSimple extends AbstractAssignments<AssignmentsSimple> {
         return true;
     }
 
+    @Override
+    public AutoAssignContext copy() {
+        return new AssignmentsSimple(this);
+    }
+
 }

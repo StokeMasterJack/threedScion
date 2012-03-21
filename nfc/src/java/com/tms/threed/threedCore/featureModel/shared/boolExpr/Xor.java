@@ -265,7 +265,7 @@ public class Xor extends Junction {
         int L = expressions.size();
         if (expressions.size() == 0) throw new IllegalStateException();
 
-        XorTermsStates s = new XorTermsStates(this);
+        XorTermsStates s = new XorTermsStates();
 
         int trueCount = 0;
         int falseCount = 0;
@@ -277,6 +277,9 @@ public class Xor extends Junction {
             if (v.isTrue()) {
                 trueCount++;
                 s.pushTrueTerm(expr);
+                if (trueCount > 1) {
+                    throw new MoreThanOneTrueTermXorAssignmentException(this, expr, s, ctx);
+                }
             } else if (v.isFalse()) {
                 s.pushFalseTerm(expr);
                 falseCount++;
@@ -300,7 +303,7 @@ public class Xor extends Junction {
         if (trueCount == 0) {
             if (openCount == 0) { //all false
                 assert allFalse;
-                throw new AllTermsAreFalseXorAssignmentException(this);
+                throw new AllTermsAreFalseXorAssignmentException(this, ctx);
             } else if (openCount == 1) { //all false - one open
                 a.iterator().next().autoAssignTrue(ctx, depth + 1);
             } else if (openCount > 1) {

@@ -1,5 +1,6 @@
 package com.tms.threed.threedCore.featureModel.shared.search;
 
+import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.threedCore.featureModel.data.Camry2011;
 import com.tms.threed.threedCore.featureModel.data.Trim;
 import com.tms.threed.threedCore.featureModel.data.TrimColor;
@@ -12,7 +13,6 @@ import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImView;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedCore.imageModel.shared.slice.Jpg;
-import com.tms.threed.repo.server.JpgKey;
 import com.tms.threed.repo.server.Repos;
 import com.tms.threed.repo.server.SeriesRepo;
 import com.tms.threed.repo.server.rt.RtRepo;
@@ -403,7 +403,7 @@ public class TreeSearchTest extends TestCase {
 
 
         if (!csp.isSolved1()) {
-            csp.fillInDefaultValues();
+            csp.fillInInitialPicks();
         }
 
         System.out.println("Picks Fix: " + csp.getAssignments().getTrueOutputVars());

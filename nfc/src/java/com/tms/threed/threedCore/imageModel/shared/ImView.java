@@ -1,5 +1,7 @@
 package com.tms.threed.threedCore.imageModel.shared;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedCore.imageModel.shared.slice.Layer;
@@ -7,13 +9,10 @@ import com.tms.threed.threedCore.imageModel.shared.slice.SimplePicks;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 import com.tms.threed.threedCore.threedModel.shared.ViewKey;
+import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ImView extends ImChildBase implements IsParent<ImLayer> {
 
@@ -84,25 +83,18 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return a;
     }
 
-    public ImageStack getImageStack(SimplePicks picks, int angle, JpgWidth jpgWidth) {
-        assert picks != null;
-        assert angle > 0 && angle <= getAngleCount();
+    public ImageStack getImageStack(SimplePicks picks, int angle) {
+        Preconditions.checkNotNull(picks);
+        Preconditions.checkArgument(angle > 0 && angle <= getAngleCount());
 
-        ArrayList<ImPng> jPngs = new ArrayList<ImPng>();
-        ArrayList<ImPng> zPngs = new ArrayList<ImPng>();
-
+        ImmutableList.Builder<ImPng> pngs = ImmutableList.builder();
         for (ImLayer layer : layers) {
             ImPng png = layer.getPng(picks, angle);
             if (png != null) {
-                if (layer.isZLayer()) {
-                    zPngs.add(png);
-                } else {
-                    jPngs.add(png);
-                }
+                pngs.add(png);
             }
         }
-
-        return new ImageStack(jPngs, zPngs, this, angle, jpgWidth);
+        return new ImageStack(this, pngs.build());
     }
 
     public boolean is(ViewKey viewKey) {
@@ -140,8 +132,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         assert picks != null;
         assert accessory != null;
 
-        ImageStack imageStack = this.getImageStack(picks, angle, JpgWidth.W_STD);
-
+        ImageStack imageStack = getImageStack(picks, angle);
 
         List<ImPng> blinkPngs = imageStack.getBlinkPngs();
 
@@ -253,10 +244,6 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return getSeries().getName();
     }
 
-    public ImJpg getJpg(SimplePicks picks, int angle, JpgWidth jpgWidth) {
-        return getImageStack(picks, angle, jpgWidth).getJpg();
-    }
-
     public ImageSlice createSlice(int angle) {
         ArrayList<Layer> layers = new ArrayList<Layer>();
         for (ImLayer layer : this.layers) {
@@ -278,7 +265,8 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return new Slice(viewKey.getName(), angle);
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != ImView.class) return false;
 
@@ -289,5 +277,15 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         boolean layersEq = (layers.equals(that.layers));
 
         return vkEq && layersEq;
+    }
+
+    public String getJpgFingerprint(ImmutableList<ImPng> pngs) {
+        return ImJpg.getFingerprint(pngs);
+    }
+
+    public Path getJpgUrl(ImmutableList<ImPng> pngs, JpgWidth jpgWidth) {
+        String fp = getJpgFingerprint(pngs);
+        Path threedBaseJpgUrl = getSeries().getThreedBaseJpgUrl(jpgWidth);
+        return threedBaseJpgUrl.append(fp).appendName(".jpg");
     }
 }

@@ -1,13 +1,14 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
-public class MoreThanOneTrueTermXorAssignmentException extends XorAssignmentException {
+import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
 
+public class MoreThanOneTrueTermXorAssignmentException extends XorAssignmentException {
 
     private final BoolExpr secondTrueTerm;
     private final XorTermsStates statesOfAllTerms;
 
-    public MoreThanOneTrueTermXorAssignmentException(Xor xor, BoolExpr secondTrueTerm, XorTermsStates statesOfAllTerms) {
-        super(xor);
+    public MoreThanOneTrueTermXorAssignmentException(Xor xor, BoolExpr secondTrueTerm, XorTermsStates statesOfAllTerms, AutoAssignContext context) {
+        super(xor, context);
         this.secondTrueTerm = secondTrueTerm;
         this.statesOfAllTerms = statesOfAllTerms;
     }

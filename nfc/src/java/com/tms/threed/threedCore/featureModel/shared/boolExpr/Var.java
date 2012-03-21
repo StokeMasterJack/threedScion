@@ -1,5 +1,6 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.featureModel.shared.*;
 import com.tms.threed.threedCore.featureModel.shared.picks.Picks;
 import smartsoft.util.lang.shared.Strings;
@@ -587,7 +588,7 @@ public class Var extends NonConstant {
     }
 
     public boolean anySiblingsDefaultedToTrue() {
-        List<Var> siblings = getSiblings();
+        ImmutableSet<Var> siblings = getSiblings();
         for (Var sibling : siblings) {
             Boolean defaultValue = sibling.getDefaultValue();
             if (defaultValue != null && defaultValue) {
@@ -658,21 +659,20 @@ public class Var extends NonConstant {
         parent.childVars.remove(this);
     }
 
-    public List<Var> getSiblings() {
+    public ImmutableSet<Var> getSiblings() {
         if (isRoot()) throw new IllegalStateException("Root has no siblings");
 
         Var parent = getParent();
         List<Var> allChildren = parent.getChildVars();
 
-        int siblingCount = allChildren.size() - 1;
-
-        List<Var> siblings = new ArrayList<Var>(siblingCount);
+        ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
 
         for (Var child : allChildren) {
             if (child == this) continue; //i am not my own sibling
-            siblings.add(child);
+            builder.add(child);
         }
-        return siblings;
+
+        return builder.build();
     }
 
     public final Not compliment = new Not(this);

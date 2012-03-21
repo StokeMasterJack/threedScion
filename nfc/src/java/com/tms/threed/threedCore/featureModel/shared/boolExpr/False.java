@@ -40,7 +40,7 @@ public class False extends Constant {
 
     @Override
     public void autoAssignTrue(AutoAssignContext ctx,int depth) throws AssignmentException {
-        throw new ReassignmentException(this,true);
+        throw new ReassignmentException(this,true,ctx);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.tms.threed.threedCore.featureModel.shared;
 //import com.tms.threed.featureModel.server.BoolExprString;
 //import com.tms.threed.featureModel.server.ExprParser;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.*;
 import com.tms.threed.threedCore.featureModel.shared.picks.Picks;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksContextFm;
@@ -508,17 +510,6 @@ public class FeatureModel implements Vars {
         return p;
     }
 
-    public CspSimple createCsp() {
-        return new CspSimple(this, getConstraint());
-    }
-
-    public CspForTreeSearch createCspForTreeSearch(Collection<Var> outputVars) {
-        return new CspForTreeSearch(this, getConstraint(), outputVars);
-    }
-
-    public CspForTreeSearch createCspForTreeSearch() {
-        return new CspForTreeSearch(this, getConstraint());
-    }
 
     public Set<Var> getInitialVisiblePicksForTestHarness() {
 //        System.out.println("Picks.initVisibleDefaults [map.length: " + map.length + "]");
@@ -839,41 +830,76 @@ public class FeatureModel implements Vars {
         this.subSeries = subSeries;
     }
 
-    /**
-     * Invalid var codes are ignored (non-strict)
-     */
-    public Collection<Var> convertCodesToVars(Collection<String> varCodes) {
-        return convertCodesToVars(varCodes, false);
-    }
-
-    /**
-     * @param strict if true, an invalid varCode will trigger an UnknownVarCodeException
-     * @throws UnknownVarCodeException if strict=true and an invalid varCode is passed in
-     */
-    public Collection<Var> convertCodesToVars(Collection<String> varCodes, boolean strict) throws UnknownVarCodeException {
-        Collection<Var> vars = new ArrayList<Var>();
-        for (String varCode : varCodes) {
-            try {
-                Var var = get(varCode);
-                vars.add(var);
-            } catch (UnknownVarCodeException e) {
-                if (strict) {
-                    throw e;
-                } else {
-                    //ignore
-                }
+    public ImmutableSet<Var> rawToPicks(ImmutableSet<String> picksRaw) {
+        ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
+        for (String varCode : picksRaw) {
+            Var var = getVarOrNull(varCode);
+            if (var != null) {
+                builder.add(var);
             }
         }
-        return vars;
+        return builder.build();
     }
 
-    public FixResult fix(Collection<Var> trueVars) {
-        return Fixer.fix(this, trueVars);
+    public Assignments fixRaw(ImmutableSet<String> picksRaw) throws AssignmentException {
+        ImmutableSet<Var> picks = rawToPicks(picksRaw);
+        return fix(picks);
     }
 
-    public FixResult fixRaw(Collection<String> trueVarCodes) {
-        Collection<Var> vars = this.convertCodesToVars(trueVarCodes);
-        return Fixer.fix(this, vars);
+    public Assignments fix(ImmutableSet<Var> picks) throws AssignmentException {
+        Csp csp = createCsp(picks);
+        csp.propagate();
+        if (!csp.isSolved()) {
+            csp.fillInInitialPicks();
+        }
+        AssignmentsSimple assignments = (AssignmentsSimple) csp.getAssignments();
+        AssignmentsSimple copy = new AssignmentsSimple(assignments);
+        return copy;
+    }
+
+    public FixResult fixup(ImmutableSet<Var> picks) {
+        try {
+            Assignments assignments = this.fix(picks);
+            return new FixResult(null, picks, assignments, null);
+        } catch (AssignmentException e) {
+            return new FixResult(null, picks, null, e);
+        }
+    }
+
+    public FixResult fixupRaw(ImmutableSet<String> picksRaw) {
+        ImmutableSet<Var> picks = rawToPicks(picksRaw);
+        try {
+            Assignments assignments = fix(picks);
+            return new FixResult(picksRaw, picks, assignments, null);
+        } catch (AssignmentException e) {
+            return new FixResult(picksRaw, picks, null, e);
+        }
+    }
+
+    public CspSimple createCsp(ImmutableSet<Var> trueVars) {
+
+        Preconditions.checkNotNull(trueVars);
+
+        CspSimple csp = createCsp();
+
+        for (Var trueVar : trueVars) {
+            csp.assignTrue(trueVar);
+        }
+
+        return csp;
+
+    }
+
+    public CspSimple createCsp() {
+        return new CspSimple(this, getConstraint());
+    }
+
+    public CspForTreeSearch createCspForTreeSearch(Collection<Var> outputVars) {
+        return new CspForTreeSearch(this, getConstraint(), outputVars);
+    }
+
+    public CspForTreeSearch createCspForTreeSearch() {
+        return new CspForTreeSearch(this, getConstraint());
     }
 
 

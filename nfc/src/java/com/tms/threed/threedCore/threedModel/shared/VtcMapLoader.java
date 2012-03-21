@@ -1,56 +1,24 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
-import com.google.common.collect.ImmutableMap;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
+import smartsoft.util.gwt.client.rpc2.Future;
+import smartsoft.util.gwt.client.rpc2.SuccessCb;
 
-import java.util.Map;
+public class VtcMapLoader extends Future<VtcMap> {
 
-public class VtcMapLoader {
+    public VtcMapLoader(final ThreedModelClient client) {
+        final Future<VtcMap> futureInternal = client.getVtcMap();
 
-    private final ImmutableMap<SeriesKey, RootTreeId> map;
-
-    public VtcMapLoader(ImmutableMap<SeriesKey, RootTreeId> map) {
-        this.map = map;
-    }
-
-    public VtcMapLoader() {
-        ImmutableMap.Builder<SeriesKey, RootTreeId> builder = ImmutableMap.builder();
-        builder.put(SeriesKey.AVALON_2011, new RootTreeId("da9f24132588c5c4f488af60b77ab1c2271669cc"));
-        map = builder.build();
-    }
-
-    public RootTreeId getVtcVersion(SeriesKey seriesKey) {
-        return map.get(seriesKey);
-    }
-
-    public Map<SeriesKey, RootTreeId> toMap() {
-        return map;
-    }
-
-    public String serialize() {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<SeriesKey, RootTreeId> entry : map.entrySet()) {
-            SeriesKey key = entry.getKey();
-            RootTreeId value = entry.getValue();
-            sb.append(key.toString());
-            sb.append(":");
-            sb.append(value.stringValue());
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
-    public static VtcMapLoader parse(String serial) {
-        String[] lines = serial.split("\n");
-        ImmutableMap.Builder<SeriesKey, RootTreeId> builder = ImmutableMap.builder();
-        for (String line : lines) {
-            if (line != null && line.trim().length() != 0) {
-                String[] a = line.split(":");
-                SeriesKey seriesKey = SeriesKey.parse(a[0]);
-                RootTreeId treeId = new RootTreeId(a[1]);
-                builder.put(seriesKey, treeId);
+        futureInternal.success(new SuccessCb() {
+            @Override
+            public void call() {
+                setResult(futureInternal.result);
             }
-        }
-        return new VtcMapLoader(builder.build());
+        });
+    }
+
+    public VtcMap getVtcMap() {
+        return result;
     }
 
 }

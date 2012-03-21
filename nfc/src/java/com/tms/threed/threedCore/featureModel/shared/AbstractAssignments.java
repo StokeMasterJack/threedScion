@@ -5,6 +5,7 @@ import com.tms.threed.threedCore.featureModel.shared.boolExpr.ReassignmentExcept
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import smartsoft.util.lang.shared.Strings;
 
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -31,7 +32,6 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
         }
 
     }
-
 
     /**
      * This is the *copy* in our Copying-based branch-and-prune tree search
@@ -192,7 +192,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     @Override
     public void assignTrue(Var var, int depth) throws AssignmentException {
         if (isFalse(var)) {
-            throw new ReassignmentException(var, true);
+            throw new ReassignmentException(var, true, this);
         } else if (isTrue(var)) {
             //no action
         } else if (isOpen(var)) {
@@ -212,7 +212,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     @Override
     public void assignFalse(Var var, int depth) throws AssignmentException {
         if (isTrue(var)) {
-            throw new ReassignmentException(var, false);
+            throw new ReassignmentException(var, false, this);
         } else if (isFalse(var)) {
             //no action
         } else if (isOpen(var)) {
@@ -292,21 +292,15 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     }
 
     @Override
-    public void fillInDefaultValues() {
+    public void fillInInitialPicks() {
         for (int i = 0; i < allVars.size(); i++) {
-
             if (assignments[i].isOpen()) {
                 Var var = allVars.get(i);
-                Boolean defaultValue = var.getDefaultValue();
-                if (defaultValue != null) {
-                    if (defaultValue) assignTrue(var);
-                    else assignFalse(var);
+
+                if (var.isInitiallyPicked()) {
+                    assignTrue(var);
                 } else {
-                    if (var.isFirstPickOneChild()) {
-                        assignTrue(var);
-                    } else {
-                        assignFalse(var);
-                    }
+                    assignFalse(var);
                 }
             }
         }

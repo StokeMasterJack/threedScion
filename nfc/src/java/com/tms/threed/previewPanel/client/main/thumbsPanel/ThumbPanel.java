@@ -8,7 +8,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.tms.threed.previewPanel.client.PreviewPanel;
+import com.tms.threed.previewPanel.client.ViewPanel;
 import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import smartsoft.util.lang.shared.ImageSize;
 
@@ -16,7 +16,7 @@ import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class ThumbPanel extends FlowPanel implements ThumbDisplay, HasClickHandlers {
 
-    private final PreviewPanel threedImagePanel;
+    private final ViewPanel threedImagePanel;
     private final Label captionLabel;
     private final int panelIndex;
 
@@ -42,7 +42,7 @@ public class ThumbPanel extends FlowPanel implements ThumbDisplay, HasClickHandl
 //        getElement().getStyle().setBackgroundColor("green");
         getElement().getStyle().setZIndex(2000);
 
-        threedImagePanel = new PreviewPanel(panelIndex, THUMB_IMAGE_SIZE,false);
+        threedImagePanel = new ViewPanel(panelIndex, THUMB_IMAGE_SIZE,false);
 
         captionLabel = new Label("Thumb " + thumbIndex);
         captionLabel.setHeight(LABEL_HEIGHT_PX + "px");
@@ -72,7 +72,7 @@ public class ThumbPanel extends FlowPanel implements ThumbDisplay, HasClickHandl
 
     }
 
-    public PreviewPanel getThreedImagePanel() {
+    public ViewPanel getThreedImagePanel() {
         return threedImagePanel;
     }
 

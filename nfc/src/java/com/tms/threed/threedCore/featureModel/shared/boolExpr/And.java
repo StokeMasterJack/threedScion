@@ -139,7 +139,7 @@ public class And extends Junction {
         boolean oneOpenRestTrue = openCount == 1;
 
         if (allTrue) {
-            throw new AllTermsTrueAndAutoAssignFalseExceptionImpl(this);
+            throw new AllTermsTrueAndAutoAssignFalseExceptionImpl(this,ctx);
         }
 
         if (oneOpenRestTrue) {

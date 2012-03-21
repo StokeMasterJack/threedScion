@@ -59,6 +59,10 @@ public class Adapter {
             return s.@com.tms.threed.smartClients.gwt.client.ThreedSessionForJs::getAngle()();
         };
 
+        o.setSeriesIdDude = function(jsSeriesId){
+            s.@com.tms.threed.smartClients.gwt.client.ThreedSessionForJs::setSeriesIdDude(Lcom/tms/threed/threedCore/threedModel/client/JsSeriesId;)(jsSeriesId);
+        };
+
         if ($wnd.initThreedSession) {
             $wnd.initThreedSession(o);
         }

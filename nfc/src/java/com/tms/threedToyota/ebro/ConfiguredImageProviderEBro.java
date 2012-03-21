@@ -1,14 +1,17 @@
 package com.tms.threedToyota.ebro;
 
-import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.imageModel.shared.IImageStack;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.tms.threed.smartClients.jvm.RepoClient;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
+import com.tms.threed.threedCore.imageModel.shared.ImageStack;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import smartsoft.util.lang.shared.Path;
+import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import smartsoft.util.lang.shared.Path;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,7 +35,13 @@ public class ConfiguredImageProviderEBro {
         this.threedModel = repoClient.getCachedVtcThreedModel(seriesKey);
 
         log.debug("User picks (featureSet) before fixUp: [" + rawPicks + "]");
-        fixResult = this.threedModel.fixupPicks2(rawPicks);
+        ImmutableSet<String> iRawPicks;
+        if (rawPicks instanceof ImmutableSet) {
+            iRawPicks = (ImmutableSet<String>) rawPicks;
+        } else {
+            iRawPicks = ImmutableSet.copyOf(rawPicks);
+        }
+        fixResult = this.threedModel.fixupRaw(iRawPicks);
 
         log.debug("User picks (featureSet) after fixUp: [" + fixResult + "]");
 
@@ -51,8 +60,10 @@ public class ConfiguredImageProviderEBro {
     }
 
     public List<URL> getConfiguredImages(String viewName, int angle) {
-        IImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
-        List<Path> urlsJpgMode = imageStack.getUrlsJpgMode();
+        ImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
+
+        ImmutableList<Path> urlsJpgMode = imageStack.getUrlListSmart(JpgWidth.W_STD);
+
         ArrayList<URL> urls = new ArrayList<URL>();
         for (Path path : urlsJpgMode) {
             urls.add(pathToUrl(path));

@@ -600,4 +600,8 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
         return picks;
     }
 
+    @Override
+    public AutoAssignContext copy() {
+        throw new UnsupportedOperationException();
+    }
 }

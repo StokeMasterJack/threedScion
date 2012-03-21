@@ -1,9 +1,11 @@
 package com.tms.threed.threedCore.featureModel.shared.boolExpr;
 
-abstract public class AndAutoAssignFalseException extends AssignmentException{
+import com.tms.threed.threedCore.featureModel.shared.AutoAssignContext;
 
-    public AndAutoAssignFalseException(And expr) {
-        super(expr, false);
+abstract public class AndAutoAssignFalseException extends AssignmentException {
+
+    public AndAutoAssignFalseException(And expr, AutoAssignContext context) {
+        super(expr, false, context);
     }
 
 }

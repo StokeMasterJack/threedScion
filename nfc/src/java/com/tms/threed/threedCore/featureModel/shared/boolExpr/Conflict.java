@@ -47,7 +47,7 @@ public class Conflict extends Pair {
         } else if (v1.isOpen() && v2.isTrue()) {
             e1.autoAssignFalse(ctx,depth+1);
         } else if (v1.isTrue() && v2.isTrue()) {
-            throw new ConflictAutoAssignTrueException(this);
+            throw new ConflictAutoAssignTrueException(this,ctx);
         }
 
     }

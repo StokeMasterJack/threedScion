@@ -11,5 +11,7 @@ public interface AssignContext {
     void assignFalse(Var var) throws AssignmentException;
     void assignFalse(Var var,int depth) throws AssignmentException;
 
+    AssignContext copy();
+
 
 }

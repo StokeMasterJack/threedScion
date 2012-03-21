@@ -71,8 +71,8 @@ public class ViewPanel extends AbsolutePanel {
         blinkOverlay.doFeatureBlink(pngToBlink);
     }
 
-    public void addLoadingCompleteHandler(ThreedImagePanel.LoadingCompleteHandler loadingCompleteHandler) {
-        threedImagePanel.addLoadingCompleteHandler(loadingCompleteHandler);
+    public void setThreedImagePanelListener(ThreedImagePanel.ThreedImagePanelListener threedImagePanelListener) {
+        threedImagePanel.setListener(threedImagePanelListener);
     }
 
     public void showMessage(String shortMessage, final String longMessage, String color) {

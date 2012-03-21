@@ -17,5 +17,6 @@ public interface AutoAssignContext extends EvalContext, AssignContext {
     @Override
     void assignFalse(Var var,int depth) throws AssignmentException;
 
+    AutoAssignContext copy();
 
 }
