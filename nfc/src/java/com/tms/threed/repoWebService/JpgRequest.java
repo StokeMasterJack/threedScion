@@ -1,7 +1,7 @@
 package com.tms.threed.repoWebService;
 
 
-import com.tms.threed.repoService.server.JpgKey;
+import com.tms.threed.repo.server.JpgKey;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 
 import javax.servlet.http.HttpServletRequest;

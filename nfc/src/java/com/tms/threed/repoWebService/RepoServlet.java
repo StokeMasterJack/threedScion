@@ -1,8 +1,8 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.io.ByteStreams;
-import com.tms.threed.repoService.server.Repos;
-import com.tms.threed.repoService.server.ThreedConfig;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.server.ThreedConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import smartsoft.util.config.ConfigHelper;

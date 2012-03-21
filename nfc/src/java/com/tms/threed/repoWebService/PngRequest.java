@@ -1,6 +1,6 @@
 package com.tms.threed.repoWebService;
 
-import com.tms.threed.repoService.shared.RevisionParameter;
+import com.tms.threed.repo.shared.RevisionParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

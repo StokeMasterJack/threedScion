@@ -1,8 +1,8 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.base.Strings;
-import com.tms.threed.repoService.server.Repos;
-import com.tms.threed.repoService.server.SeriesRepo;
+import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.server.SeriesRepo;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

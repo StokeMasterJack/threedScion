@@ -2,8 +2,8 @@ package com.tms.threed.repoWebService;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
-import com.tms.threed.repoService.server.JpgKey;
-import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repo.server.JpgKey;
+import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;

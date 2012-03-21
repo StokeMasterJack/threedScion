@@ -1,6 +1,6 @@
 package com.tms.threed.repoWebService;
 
-import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repo.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.VtcMap;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
