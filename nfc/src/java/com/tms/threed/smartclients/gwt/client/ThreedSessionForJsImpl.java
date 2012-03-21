@@ -1,5 +1,6 @@
 package com.tms.threed.smartClients.gwt.client;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
@@ -99,7 +100,7 @@ public class ThreedSessionForJsImpl implements ThreedSessionForJs {
         threedSession.previousAngle();
     }
 
-    class MyHandler implements ValueChangeHandler<List<Path>> {
+    class MyHandler implements ValueChangeHandler<ImmutableList<Path>> {
 
         JavaScriptObject jsFunction;
 
@@ -108,7 +109,7 @@ public class ThreedSessionForJsImpl implements ThreedSessionForJs {
         }
 
         @Override
-        public void onValueChange(ValueChangeEvent<List<Path>> event) {
+        public void onValueChange(ValueChangeEvent<ImmutableList<Path>> event) {
             apply(jsFunction, this);
         }
 
@@ -128,11 +129,5 @@ public class ThreedSessionForJsImpl implements ThreedSessionForJs {
 
 
     }
-
-    public void setSeriesIdDude(JsSeriesId jsSeriesId) {
-        String name = jsSeriesId.getName();
-        Window.alert("hello same: " + name);
-    }
-
 
 }

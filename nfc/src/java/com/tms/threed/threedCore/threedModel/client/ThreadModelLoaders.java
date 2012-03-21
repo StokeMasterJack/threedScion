@@ -27,7 +27,7 @@ public class ThreadModelLoaders {
 
     }
 
-    public void setVtcMap(VtcMap vtcMap) {
+    private void setVtcMap(VtcMap vtcMap) {
         Map<SeriesKey, RootTreeId> m = vtcMap.toMap();
         for (Map.Entry<SeriesKey, RootTreeId> entry : m.entrySet()) {
             SeriesKey seriesKey = entry.getKey();

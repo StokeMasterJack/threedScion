@@ -1,5 +1,6 @@
 package com.tms.threed.smartClients.gwt.client;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -32,9 +33,9 @@ public interface ThreedSession {
 
     void setPicksRaw(ImmutableSet<String> picks);
 
-    List<Path> getUrls();
+    ImmutableList<Path> getUrls();
 
-    HandlerRegistration addUrlChangeHandler(ValueChangeHandler<List<Path>> handler);
+    HandlerRegistration addUrlChangeHandler(ValueChangeHandler<ImmutableList<Path>> handler);
 
 
 }
