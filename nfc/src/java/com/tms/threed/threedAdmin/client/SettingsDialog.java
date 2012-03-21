@@ -6,7 +6,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
-import com.tms.threed.repoService.shared.Settings;
+import com.tms.threed.repo.shared.Settings;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 import smartsoft.util.gwt.client.rpc.UiLog;

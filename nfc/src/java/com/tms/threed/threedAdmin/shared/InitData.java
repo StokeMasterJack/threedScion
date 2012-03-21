@@ -1,7 +1,7 @@
 package com.tms.threed.threedAdmin.shared;
 
-import com.tms.threed.repoService.shared.Series;
-import com.tms.threed.repoService.shared.Settings;
+import com.tms.threed.repo.shared.Series;
+import com.tms.threed.repo.shared.Settings;
 import com.tms.threed.threedAdmin.client.SeriesPickList;
 
 import java.io.Serializable;

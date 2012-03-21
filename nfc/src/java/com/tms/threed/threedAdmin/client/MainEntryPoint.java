@@ -5,22 +5,26 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.tms.threed.jpgGen.client.JpgGenClient;
 import com.tms.threed.jpgGen.client.JpgQueueMasterPanel;
 import com.tms.threed.jpgGen.client.TabCloseListener;
 import com.tms.threed.jpgGen.shared.JobSpec;
-import com.tms.threed.repoService.shared.CommitHistory;
-import com.tms.threed.repoService.shared.RepoHasNoHeadException;
-import com.tms.threed.repoService.shared.SeriesCommit;
-import com.tms.threed.repoService.shared.Settings;
+import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.repo.shared.RepoHasNoHeadException;
+import com.tms.threed.repo.shared.SeriesCommit;
+import com.tms.threed.repo.shared.Settings;
 import com.tms.threed.threedAdmin.client.messageLog.MessageLog;
 import com.tms.threed.threedAdmin.client.messageLog.MessageLogView;
 import com.tms.threed.threedAdmin.client.tabLabel.TabLabel;
 import com.tms.threed.threedAdmin.shared.InitData;
 import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
-import com.tms.threed.threedCore.threedModel.shared.*;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.SeriesId;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.TabCreator;
 import smartsoft.util.gwt.client.rpc.*;
@@ -70,7 +74,23 @@ public class MainEntryPoint implements EntryPoint, TabCreator, UiLog, UiContext 
 
         buildMainWindow();
 
+        Place place = Place.createFromToken(History.getToken());
+        gotoToInitialPlace(place);
+
+
     }
+
+    private void gotoToInitialPlace(Place place) {
+        gotoPlace(place);
+    }
+
+    private void gotoPlace(Place place) {
+        final SeriesKey sk = place.getSeriesKey();
+        if (sk != null) {
+            openSeries(sk);
+        }
+    }
+
 
     private void openSeriesCommitDialog(final SeriesKey seriesKey) {
 
@@ -148,6 +168,17 @@ public class MainEntryPoint implements EntryPoint, TabCreator, UiLog, UiContext 
         mainMenuBar.setSeriesPickList(seriesPickList);
     }
 
+    private void openSeries(final SeriesKey seriesKey) {
+        Req<CommitHistory> r1 = threedAdminClient.getCommitHistory(seriesKey);
+        r1.onSuccess = new SuccessCallback<CommitHistory>() {
+            @Override
+            public void call(Req<CommitHistory> request) {
+                CommitHistory commitHistory = request.result;
+                SeriesCommit seriesCommit = new SeriesCommit(seriesKey, commitHistory);
+                openSeries(seriesCommit);
+            }
+        };
+    }
 
     private void openSeries(final SeriesCommit seriesCommit) {
         assert seriesCommit != null;

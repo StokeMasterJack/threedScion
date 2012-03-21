@@ -1,6 +1,6 @@
 package com.tms.threed.threedAdmin.client;
 
-import com.tms.threed.repoService.shared.Series;
+import com.tms.threed.repo.shared.Series;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,10 @@
 package com.tms.threed.threedAdmin.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.tms.threed.repoService.shared.CommitHistory;
-import com.tms.threed.repoService.shared.CommitId;
+import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.repo.shared.CommitId;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
-import com.tms.threed.repoService.shared.Settings;
+import com.tms.threed.repo.shared.Settings;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 
 public interface ThreedAdminServiceAsync {

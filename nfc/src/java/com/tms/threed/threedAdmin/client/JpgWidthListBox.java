@@ -7,7 +7,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.ListBox;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.repoService.shared.Settings;
+import com.tms.threed.repo.shared.Settings;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 
