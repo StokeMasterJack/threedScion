@@ -4,7 +4,7 @@ import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImSeries;
 
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
 

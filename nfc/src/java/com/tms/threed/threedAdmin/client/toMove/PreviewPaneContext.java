@@ -1,30 +1,22 @@
 package com.tms.threed.threedAdmin.client.toMove;
 
 import com.google.gwt.core.client.Scheduler;
+import com.tms.threed.previewPanel.client.PreviewPanel;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMain;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
+import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbPanel;
+import com.tms.threed.previewPanel.shared.viewModel.*;
 import com.tms.threed.smartClients.gwt.client.PrefetchStrategy;
 import com.tms.threed.smartClients.gwt.client.PrefetchStrategy2;
 import com.tms.threed.smartClients.gwt.client.Prefetcher;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
+import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.IImageStack;
 import com.tms.threed.threedCore.imageModel.shared.IPng;
-import com.tms.threed.previewPanel.client.PreviewPanel;
-import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.previewPanel.client.main.PreviewPanelMain;
-import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
-import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbPanel;
-import com.tms.threed.previewPanel.shared.viewModel.AngleAndViewChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.AngleAndViewChangeHandler;
-import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
-import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
-import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.threedCore.threedModel.client.*;
-import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
+import com.tms.threed.threedCore.threedModel.client.ImageUrlProvider;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.gwt.client.Browser;
 import smartsoft.util.lang.shared.Path;
 
@@ -48,7 +40,7 @@ public class PreviewPaneContext {
     private Prefetcher prefetcher;
 
     private JpgWidth jpgWidth;
-    private SimplePicks2 picks;
+    private FixResult picks;
     private Var maybeBlinkVar;
     private boolean pngMode = false;
 
@@ -89,9 +81,12 @@ public class PreviewPaneContext {
     }
 
 
-    public void setPicks(SimplePicks2 picks) {
+    public void setPicks(FixResult picks) {
         assert picks != null;
         this.picks = picks;
+        String displayName = threedModel.getDisplayName(picks);
+        this.previewPanelContext.setDisplayName(displayName);
+
     }
 
     public void setMaybeBlinkVar(Var maybeBlinkVar) {
@@ -155,14 +150,16 @@ public class PreviewPaneContext {
         refreshMainImage();
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override public void execute() {
+            @Override
+            public void execute() {
                 maybeBlink();
             }
         });
 
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override public void execute() {
+            @Override
+            public void execute() {
                 prefetch();
                 refreshThumbImages();
             }
@@ -317,4 +314,6 @@ public class PreviewPaneContext {
     public PreviewPanelMainContext getPreviewPanelContext() {
         return previewPanelContext;
     }
+
+
 }

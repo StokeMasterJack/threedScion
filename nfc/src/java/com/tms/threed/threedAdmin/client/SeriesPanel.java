@@ -30,14 +30,15 @@ import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
-import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.repoService.shared.CommitHistory;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.repo.shared.Settings;
+import com.tms.threed.repoService.shared.Settings;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.gwt.client.rpc.UiContext;
+import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +74,11 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
     private final CurrentUiPicks currentUiPicks;
     private TabLabel tabLabel;
 
-    private final String threedModelUrl;
+    private final Path threedModelUrl;
 
     private Callback callback;
 
-    public SeriesPanel(UiContext ctx, final ThreedAdminClient threedAdminClient, ThreedModel threedModel, CommitHistory commit, String threedModelUrl, Settings settings) {
+    public SeriesPanel(UiContext ctx, final ThreedAdminClient threedAdminClient, ThreedModel threedModel, CommitHistory commit, Path threedModelUrl, Settings settings) {
         assert threedAdminClient != null;
         assert threedModel != null;
         assert commit != null;
@@ -391,7 +392,7 @@ public class SeriesPanel extends ResizeComposite implements TabAware {
         }
 
         @Override public String getThreedModelUrl() {
-            return threedModelUrl;
+            return threedModelUrl.toString();
         }
     };
 

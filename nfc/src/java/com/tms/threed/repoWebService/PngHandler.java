@@ -1,8 +1,8 @@
 package com.tms.threed.repoWebService;
 
-import com.tms.threed.repo.server.Repos;
-import com.tms.threed.repo.server.SeriesRepo;
-import com.tms.threed.repo.shared.RevisionParameter;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repoService.server.SeriesRepo;
+import com.tms.threed.repoService.shared.RevisionParameter;
 import smartsoft.util.date.Date;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
@@ -33,7 +33,7 @@ public class PngHandler extends RepoHandler<PngRequest> {
 
         log.debug("Received request for [" + repoRequest.getRequest().getRequestURI() + "]");
 
-        SeriesRepo seriesRepo = getSeriesRepo(repoRequest);
+        SeriesRepo seriesRepo = repoRequest.getSeriesRepo();
         RevisionParameter shortSha = repoRequest.getShortSha();
 
         ObjectLoader loader = seriesRepo.getPngByShortSha(shortSha.stringValue());

@@ -1,12 +1,12 @@
 package com.tms.threed.repoWebService;
 
-import com.tms.threed.repo.server.SeriesRepo;
+import com.tms.threed.repoService.server.SeriesRepo;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 
 import javax.servlet.ServletContext;
 
-public abstract class RepoHandler<T extends SeriesBasedRepoRequest> extends ReposHandler<T> {
+public abstract class RepoHandler<T extends RepoRequest> extends ReposHandler<T> {
 
     protected RepoHandler(Repos repos, ServletContext application) {
         super(repos, application);
@@ -14,10 +14,10 @@ public abstract class RepoHandler<T extends SeriesBasedRepoRequest> extends Repo
 
     public abstract void handle(T repoRequest);
 
-    protected SeriesRepo getSeriesRepo(T repoRequest) {
-        SeriesKey seriesKey = repoRequest.getSeriesKey();
-        return repos.getSeriesRepo(seriesKey);
-    }
+//    protected SeriesRepo getSeriesRepo(T repoRequest) {
+//        SeriesKey seriesKey = repoRequest.getSeriesKey();
+//        return repos.getSeriesRepo(seriesKey);
+//    }
 
 
 

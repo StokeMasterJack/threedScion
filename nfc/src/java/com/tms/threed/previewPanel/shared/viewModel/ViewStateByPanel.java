@@ -7,44 +7,38 @@ public class ViewStateByPanel implements ViewState {
 
     private final int panelIndex;
 
-    private final ViewStates viewStates;
+    private final ViewStates parent;
 
-    public ViewStateByPanel(int panelIndex, ViewStates viewStates) {
+    public ViewStateByPanel(int panelIndex, ViewStates parent) {
         this.panelIndex = panelIndex;
-        this.viewStates = viewStates;
+        this.parent = parent;
     }
 
-    @Override public void setCurrentView() {
-        ViewKey currentView = getCurrentView();
-        viewStates.setCurrentView(currentView);
+    @Override
+    public ViewKey getCurrentView() {
+        return parent.getCurrentViewForPanel(panelIndex);
     }
 
-    @Override public ViewKey getCurrentView() {
-        return viewStates.getCurrentViewForPanel(panelIndex);
+    @Override
+    public void previousAngle() {
+        parent.previousAngle(getCurrentView());
     }
 
-    @Override public void previousAngle() {
-        viewStates.previousAngle(getCurrentView());
+    @Override
+    public void nextAngle() {
+        parent.nextAngle(getCurrentView());
     }
 
-    @Override public void nextAngle() {
-        viewStates.nextAngle(getCurrentView());
+    @Override
+    public void setCurrentAngle(int newAngle) {
+        parent.setCurrentAngle(getCurrentView(), newAngle);
     }
 
-    @Override public void setCurrentAngle(int newAngle) {
-        viewStates.setCurrentAngle(getCurrentView(), newAngle);
+    @Override
+    public int getCurrentAngle() {
+        return parent.getCurrentAngle(getCurrentView());
     }
 
-    @Override public int getCurrentAngle() {
-        return viewStates.getCurrentAngle(getCurrentView());
-    }
 
-    @Override public boolean isActive() {
-        return panelIndex == 0;
-    }
-
-    public int getPanelIndex() {
-        return panelIndex;
-    }
 }
 

@@ -2,11 +2,7 @@ package com.tms.threed.previewPanel.client.main;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.layout.client.Layout;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import com.tms.threed.previewPanel.client.PreviewPanelStyles;
 import com.tms.threed.previewPanel.client.main.chatPanel.ChatPanel;
 
@@ -22,7 +18,7 @@ public class HeaderPanel extends LayoutPanel {
 
     private final ChatPanel chatPanel;
     private final int year;
-    private final String displayName;
+    private String displayName;
 
     public HeaderPanel(ChatPanel chatPanel, int year, String displayName) {
         assert chatPanel != null;
@@ -55,6 +51,11 @@ public class HeaderPanel extends LayoutPanel {
         chatPanel.getElement().getStyle().setZIndex(100000);
 
 
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+        yearSeriesLabel.refreshText();
     }
 
     private class HeaderTextBox extends FlowPanel {
@@ -95,9 +96,17 @@ public class HeaderPanel extends LayoutPanel {
             assert year != 0;
             assert displayName != null;
 
-            String s = "your " + year + " " + displayName;
+            String s = getTheText();
             this.setText(s);
             this.setVisible(true);
+        }
+
+        private String getTheText() {
+            return "your " + year + " " + displayName;
+        }
+
+        public void refreshText() {
+            this.setText(getTheText());
         }
     }
 

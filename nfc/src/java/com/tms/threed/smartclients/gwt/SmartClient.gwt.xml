@@ -9,6 +9,8 @@
     <inherits name="smartsoft.util.Util"/>
     <inherits name="com.tms.threed.threedCore.ThreedCore"/>
 
+    <inherits name="com.google.common.collect.Collect"/>
+
     <source path="client"/>
 
 </module>

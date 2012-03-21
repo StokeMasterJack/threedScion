@@ -1,27 +1,28 @@
 package com.tms.threed.smartClients.jvm;
 
-import com.google.common.base.Function;
-import com.google.common.collect.MapMaker;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.io.Resources;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import smartsoft.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import smartsoft.util.lang.shared.Path;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class RepoClient {
 
-    private final ConcurrentMap<SeriesId, ThreedModel> threedModelCache;
-    private final ConcurrentMap<SeriesKey, RootTreeId> vtcCache;
+    private final LoadingCache<SeriesId, ThreedModel> threedModelCache;
+    private final LoadingCache<SeriesKey, RootTreeId> vtcCache;
 
     private final Path repoBaseUrlReverseProxy;
 
@@ -38,14 +39,15 @@ public class RepoClient {
         this.repoBaseUrlReverseProxy = repoBaseUrlReverseProxy;
 
 
-        threedModelCache = new MapMaker()
+        threedModelCache = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000)
-                .makeComputingMap(
-                        new Function<SeriesId, ThreedModel>() {
-                            public ThreedModel apply(SeriesId seriesid) {
+                .build(
+                        new CacheLoader<SeriesId, ThreedModel>() {
+                            @Override
+                            public ThreedModel load(SeriesId seriesId) throws Exception {
                                 try {
-                                    return getThreedModel(seriesid);
+                                    return getThreedModel(seriesId);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -53,13 +55,13 @@ public class RepoClient {
                         });
 
 
-        vtcCache = new MapMaker()
+        vtcCache = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000)
                 .expireAfterWrite(24, TimeUnit.HOURS)
-                .makeComputingMap(
-                        new Function<SeriesKey, RootTreeId>() {
-                            public RootTreeId apply(SeriesKey seriesKey) {
+                .build(
+                        new CacheLoader<SeriesKey, RootTreeId>() {
+                            public RootTreeId load(SeriesKey seriesKey) throws Exception {
                                 try {
                                     return getVtc(seriesKey);
                                 } catch (IOException e) {
@@ -140,19 +142,27 @@ public class RepoClient {
     }
 
     public ThreedModel getCachedThreedModel(SeriesId seriesId) {
-        return threedModelCache.get(seriesId);
+        try {
+            return threedModelCache.get(seriesId);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public RootTreeId getCachedVtc(SeriesKey seriesKey) {
-        return vtcCache.get(seriesKey);
+        try {
+            return vtcCache.get(seriesKey);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void clearThreedModelCache() {
-        threedModelCache.clear();
+        threedModelCache.invalidateAll();
     }
 
     public void clearVtcCache() {
-        vtcCache.clear();
+        vtcCache.invalidateAll();
     }
 
     public ThreedModel getCachedVtcThreedModel(SeriesKey seriesKey) {
@@ -160,7 +170,6 @@ public class RepoClient {
         SeriesId seriesId = new SeriesId(seriesKey, cachedVtc);
         return getCachedThreedModel(seriesId);
     }
-
 
 
     private static Log log = LogFactory.getLog(RepoClient.class);

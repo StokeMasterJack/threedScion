@@ -1,6 +1,8 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.base.Strings;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repoService.server.SeriesRepo;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,18 +33,22 @@ public class SeriesBasedRepoRequest extends RepoRequest {
         if (a == null || a.length < 2) throw new NotFoundException(baseErrorMessage);
 
 
-
         String seriesName = a[0];
         String seriesYear = a[1];
 
 
         try {
-            this.seriesKey = new SeriesKey(seriesYear,seriesName);
+            this.seriesKey = new SeriesKey(seriesYear, seriesName);
         } catch (Exception e) {
-            throw new NotFoundException(baseErrorMessage + e.toString(),e);
+            throw new NotFoundException(baseErrorMessage + e.toString(), e);
         }
 
 
+    }
+
+    protected SeriesRepo getSeriesRepo() {
+        SeriesKey seriesKey = getSeriesKey();
+        return Repos.get().getSeriesRepo(seriesKey);
     }
 
     public String getSeriesName() {
@@ -58,7 +64,6 @@ public class SeriesBasedRepoRequest extends RepoRequest {
     }
 
     private static Log log = LogFactory.getLog(SeriesBasedRepoRequest.class);
-
 
 
 }

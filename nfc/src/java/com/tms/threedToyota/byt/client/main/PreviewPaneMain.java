@@ -2,26 +2,28 @@ package com.tms.threedToyota.byt.client.main;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
+import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.threedAdmin.client.toMove.PreviewPaneContext;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
+import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
+import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import com.tms.threedToyota.byt.client.PreviewPane;
 import com.tms.threedToyota.byt.client.externalState.ExternalState;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threedToyota.byt.client.notification.AccessoryWithFlashOrientationHandler;
 import com.tms.threedToyota.byt.client.notification.NotificationCenterBridge;
-import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import smartsoft.util.gwt.client.Console;
 
+import java.util.List;
 import java.util.Set;
 
 import static smartsoft.util.date.shared.StringUtil.isEmpty;
@@ -44,7 +46,8 @@ public class PreviewPaneMain extends PreviewPane {
         previewPaneContext = new PreviewPaneContext(previewPanelContext, threedModel);
 
         externalState.addPicksChangeHandler(new PicksChangeHandler() {
-            @Override public void onPicksChange(PicksChangeEvent e) {
+            @Override
+            public void onPicksChange(PicksChangeEvent e) {
                 try {
 
                     Var blinkVar = e.getBlinkAccessory();
@@ -52,6 +55,7 @@ public class PreviewPaneMain extends PreviewPane {
 
                     Set<Var> currentTrueUiVars = e.getCurrentTrueUiVars();
                     FixResult fixResult = Fixer.fix(featureModel, currentTrueUiVars);
+
 
                     previewPaneContext.setPicks(fixResult);
                     previewPaneContext.setMaybeBlinkVar(blinkVar);
@@ -75,20 +79,23 @@ public class PreviewPaneMain extends PreviewPane {
         });
 
         externalState.addChatInfoChangeHandler(new ValueChangeHandler<ChatInfo>() {
-            @Override public void onValueChange(ValueChangeEvent<ChatInfo> event) {
+            @Override
+            public void onValueChange(ValueChangeEvent<ChatInfo> event) {
                 ChatInfo chatInfo = event.getValue();
                 previewPaneContext.setChatInfo(chatInfo);
             }
         });
 
         externalState.addMsrpChangeHandler(new ValueChangeHandler<String>() {
-            @Override public void onValueChange(ValueChangeEvent<String> event) {
+            @Override
+            public void onValueChange(ValueChangeEvent<String> event) {
                 previewPaneContext.setMsrp(event.getValue());
             }
         });
 
         NotificationCenterBridge.addAccessoryWithFlashOrientationHandler(new AccessoryWithFlashOrientationHandler() {
-            @Override public void handleEvent(int orientation) {
+            @Override
+            public void handleEvent(int orientation) {
                 if (previewPaneContext == null) return;
                 previewPaneContext.setViewAndAngle(orientation);
             }
@@ -129,6 +136,7 @@ public class PreviewPaneMain extends PreviewPane {
     public void updateImage2(ExternalStateSnapshot externalStateSnapshot) {
         externalState.updateExternalState(externalStateSnapshot);
     }
+
 
 
 }

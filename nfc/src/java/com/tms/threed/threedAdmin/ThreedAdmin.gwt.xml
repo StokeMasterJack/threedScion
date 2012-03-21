@@ -13,7 +13,7 @@
     <inherits name="com.tms.threed.threedCore.ThreedCore"/>
     <inherits name="com.tms.threed.previewPanel.PreviewPanel"/>
     <inherits name="com.tms.threed.jpgGen.JpgGen"/>
-    <inherits name="com.tms.threed.repo.Repo"/>
+    <inherits name="com.tms.threed.repoService.Repo"/>
 
     <stylesheet src="../index.css" />
 

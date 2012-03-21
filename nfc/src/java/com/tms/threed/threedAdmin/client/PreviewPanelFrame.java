@@ -24,9 +24,9 @@ import com.tms.threed.previewPanel.shared.viewModel.AngleChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.AngleChangeHandler;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeEvent;
 import com.tms.threed.previewPanel.shared.viewModel.ViewChangeHandler;
-import com.tms.threed.repo.shared.CommitHistory;
-import com.tms.threed.repo.shared.CommitId;
-import com.tms.threed.repo.shared.Settings;
+import com.tms.threed.repoService.shared.CommitHistory;
+import com.tms.threed.repoService.shared.CommitId;
+import com.tms.threed.repoService.shared.Settings;
 import com.tms.threed.threedAdmin.client.toMove.PreviewPaneContext;
 import com.tms.threed.threedAdmin.client.toMove.SummarySeriesContext;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
@@ -164,7 +164,7 @@ public class PreviewPanelFrame extends FlowPanel {
 
     public void setPicks(CurrentUiPicks currentUiPicks) {
         this.currentUiPicks = currentUiPicks;
-        previewPaneContext.setPicks(currentUiPicks);
+        previewPaneContext.setPicks(currentUiPicks.getFixResult());
 
         Var potentialBlinkVar = currentUiPicks.getPotentialBlinkVar();
         previewPaneContext.setMaybeBlinkVar(potentialBlinkVar);
@@ -604,7 +604,7 @@ public class PreviewPanelFrame extends FlowPanel {
 
         final PreviewPaneContext previewPaneContext = new PreviewPaneContext(previewPanelContext, threedModel);
 
-        previewPaneContext.setPicks(currentUiPicks);
+        previewPaneContext.setPicks(currentUiPicks.getFixResult());
         previewPaneContext.setJpgWidth(getCurrentJpgWidth());
 
         previewPaneContext.setMsrp(msrp);

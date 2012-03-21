@@ -1,12 +1,12 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
+import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.*;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
-import com.tms.threed.threedCore.imageModel.shared.slice.Png;
 import com.tms.threed.threedCore.imageModel.shared.slice.SimplePicks;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Path;
@@ -44,25 +44,6 @@ public class ThreedModel {
 
         heroSlice = new Slice(exteriorViewKey.getName(), 2);
 
-        //create imageSlice map
-//        for (ImView imView : imageModel.getViews()) {
-//            String viewName = imView.getName();
-//            int angleCount = imView.getAngleCount();
-//            for (int angle = 1; angle <= angleCount; angle++) {
-//
-//                Slice slice = new Slice(imView.getViewKey(), angle);
-//                ImageSlice imageSlice = imageModel.createImageSlice(slice);
-////                System.out.println(imView.getName() + "\t angle: " + angle + ":\t" + imageSlice.getJpgVars());
-//
-//
-////                if (viewName.equalsIgnoreCase("exterior") && angle == 6) {
-////                    imageSlice.print();
-////                }
-//
-//                imageSliceMap.put(slice, imageSlice);
-//            }
-//        }
-
     }
 
     public SeriesInfo getSeriesInfo() {
@@ -93,16 +74,6 @@ public class ThreedModel {
         return fixupPicks1(varSet);
     }
 
-//    public Path getJpg(ViewKey viewKey, Angle angle, Set<String> rawPicks) {
-//        Picks picks = fixupPicks(rawPicks);
-//        return imageModel.getJpg(viewKey, angle, picks);
-//    }
-//
-//    public Path getJpg(ViewKey viewKey, Angle angle, VarPicksSnapshot picksRaw) {
-//        Picks picks = fixupPicks(picksRaw.getFeatureSet());
-//        return imageModel.getJpg(viewKey, angle, picks);
-//    }
-
     public IImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
         assert viewName != null;
         assert picks != null;
@@ -131,25 +102,6 @@ public class ThreedModel {
         ImView view = imageModel.getView(slice.getViewName());
         return view.getImageStack(fixResult, slice.getAngle(), jpgWidth);
     }
-
-//    public IImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
-//        assert viewName != null;
-//        assert picks != null;
-//
-//        Slice slice = this.getSlice(viewName, angle);
-//
-//        return getImageStack(slice, picks);
-//    }
-//
-//    public IImageStack getImageStack(Slice slice, SimplePicks picks) {
-//        assert slice != null;
-//        assert picks != null;
-//
-//        ImageSlice imageSlice = imageSliceMap.get(slice);
-//        Path threedBaseUrl = imageModel.getThreedBaseUrl();
-//        return imageSlice.computeImgStack(picks, threedBaseUrl);
-//    }
-
 
     @Nullable
     public Path getBlinkPngUrl(Slice slice, SimplePicks picks, Var blinkFeature) {
@@ -184,7 +136,7 @@ public class ThreedModel {
 
     @Override
     public boolean equals(Object obj) {
-//        throw new UnsupportedOperationException();
+
         if (this == obj) return true;
         if (obj == null) return false;
         if (obj.getClass() != ThreedModel.class) return false;
@@ -203,12 +155,6 @@ public class ThreedModel {
     public SeriesKey getSeriesKey() {
         return seriesKey;
     }
-
-
-//    public Jpg getJpg(Slice state, SimplePicks picks) {
-//        IImageStack imageStack = getImageStack(state.getViewName(), state.getAngle(), picks);
-//        return imageStack.getJpg();
-//    }
 
     public void print() {
 
@@ -239,29 +185,6 @@ public class ThreedModel {
         }
         return imageSlice;
     }
-
-
-    private void showPngsWithNephews() {
-        ViewKey[] viewKeys = imageModel.getSeriesInfo().getViewKeys();
-        for (ViewKey viewKey : viewKeys) {
-            int[] angles = viewKey.getAngleValues();
-            for (int angle : angles) {
-                ImageSlice im = getImageSlice(viewKey.getName(), angle);
-
-                for (Png uncle : im.getNonZPngsWithNephews()) {
-                    System.out.println("Uncle: " + uncle + "  Rule: " + uncle.getImplicant());
-                    Collection<Png> nephews = uncle.getNephews();
-                    for (Png nephew : nephews) {
-                        System.out.println("Nephu: " + nephew + "  Rule: " + nephew.getImplicant());
-                    }
-                    System.out.println();
-                    System.out.println();
-                }
-
-            }
-        }
-    }
-
 
     public Slice getFirstSlice() {
         return getImageModel().getFirstSlice();
@@ -346,5 +269,25 @@ public class ThreedModel {
 
     public void setSubSeries(SubSeries subSeries) {
         featureModel.setSubSeries(subSeries);
+    }
+
+    public List<Path> getImageUrls(Slice slice, Collection<String> rawPicks, JpgWidth jpgWidth) {
+        ImageStack imageStack = (ImageStack) getImageStack(slice, rawPicks, jpgWidth);
+        return imageStack.getUrlsJpgMode();
+    }
+
+    public String getDisplayName(FixResult picks) {
+        if (picks == null) {
+            return getFeatureModel().getDisplayName();
+        }
+        Assignments assignments = picks.getAssignments();
+        Var displayName = getFeatureModel().getVarOrNull("displayName");
+        List<Var> childVars = displayName.getChildVars();
+        for (Var childVar : childVars) {
+            if (assignments.isTrue(childVar)) {
+                return childVar.getName();
+            }
+        }
+        return getFeatureModel().getDisplayName();
     }
 }

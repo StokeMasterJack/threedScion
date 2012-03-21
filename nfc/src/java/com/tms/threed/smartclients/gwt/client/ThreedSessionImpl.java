@@ -3,19 +3,14 @@ package com.tms.threed.smartClients.gwt.client;
 import com.google.common.base.Objects;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
+import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
+import com.tms.threed.threedCore.featureModel.shared.Assignments;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.Fixer;
 import com.tms.threed.threedCore.featureModel.shared.UnknownVarCodeException;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImageStack;
-import com.tms.threed.previewPanel.shared.viewModel.ViewStates;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
-import com.tms.threed.threedCore.threedModel.shared.SeriesInfo;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 import smartsoft.util.lang.shared.Path;
 
@@ -24,8 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class ThreedSessionImpl {
-
-
 
     private final ValueChangeHandlers<List<Path>> urlChangeHandlers;
 
@@ -123,6 +116,8 @@ public class ThreedSessionImpl {
         fireUrlChangeEvent();
 
     }
+
+
 
     private void fireUrlChangeEvent() {
         urlChangeHandlers.fire(urls);

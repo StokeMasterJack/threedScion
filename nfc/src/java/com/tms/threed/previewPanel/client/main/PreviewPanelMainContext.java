@@ -267,6 +267,10 @@ public class PreviewPanelMainContext {
         previewPanel.doFeatureBlink(png);
     }
 
+    public void setDisplayName(String displayName) {
+        headerPanel.setDisplayName(displayName);
+    }
+
     private class DefaultAngleButtonHandler implements ExteriorButtonHandler, InteriorButtonHandler {
         @Override public void onPrevious() {
             if (viewStates == null) return;

@@ -1,11 +1,11 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.io.ByteStreams;
-import com.tms.threed.repo.server.Repos;
-import com.tms.threed.repo.server.ThreedConfig;
-import smartsoft.util.config.ConfigHelper;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repoService.server.ThreedConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import smartsoft.util.config.ConfigHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -51,6 +51,7 @@ public class RepoServlet extends HttpServlet {
 
     private PngHandler pngHandler;
     private VtcHandler vtcHandler;
+    private VtcMapHandler vtcMapHandler;
     private JpgHandler jpgHandler;
     private JpgHandlerSeriesFingerprint jpgHandlerSeriesFingerprint;
     private JpgHandlerNoFingerprint jpgHandlerNoFingerprint;
@@ -80,6 +81,7 @@ public class RepoServlet extends HttpServlet {
 
         pngHandler = new PngHandler(repos, application);
         vtcHandler = new VtcHandler(repos, application);
+        vtcMapHandler = new VtcMapHandler(repos, application);
         jpgHandler = new JpgHandler(repos, application);
         jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(repos, application);
         jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(repos, application);
@@ -111,6 +113,9 @@ public class RepoServlet extends HttpServlet {
             } else if (isVtcRequest(request)) {
                 log.debug("isVtcRequest");
                 vtcHandler.handle(new SeriesBasedRepoRequest(request, response));
+            } else if (isVtcMapRequest(request)) {
+                log.debug("isVtcMapRequest");
+                vtcMapHandler.handle(new RepoRequest(request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
                 log.debug("isJpgRequestSeriesFingerprintRequest");
                 jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(request, response));
@@ -157,6 +162,11 @@ public class RepoServlet extends HttpServlet {
     private boolean isVtcRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
         return uri.endsWith("vtc.txt");
+    }
+
+    private boolean isVtcMapRequest(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.endsWith("/vtcMap.txt");
     }
 
 

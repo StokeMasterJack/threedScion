@@ -55,6 +55,15 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
         return Integer.parseInt(modelYear);
     }
 
+    public static SeriesKey parse(String yearSpaceName) {
+        String[] a = yearSpaceName.split(" ");
+        try {
+            return new SeriesKey(a[0], a[1]);
+        } catch (Exception e) {
+            throw new RuntimeException("Problems parsing[" + yearSpaceName + "]");
+        }
+    }
+
     private static String getKeyAsString(int year, String name) {
         return year + "-" + name.toLowerCase();
     }
@@ -67,7 +76,8 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
         return name;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return year + " " + name;
     }
 
@@ -204,7 +214,8 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
         return name.equalsIgnoreCase(seriesName);
     }
 
-    @Override public int compareTo(SeriesKey that) {
+    @Override
+    public int compareTo(SeriesKey that) {
         if (this.getYear() != that.getYear()) {
             Integer thisYear = new Integer(this.getYear());
             Integer thatYear = new Integer(that.getYear());

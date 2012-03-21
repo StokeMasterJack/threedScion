@@ -5,14 +5,11 @@ import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 
 public class ViewStateByViewKey implements ViewState {
 
-    //    private final ViewStates viewStates;
     private final ViewKey viewKey;
-    private final ViewStates viewStates;
 
     private int currentAngle;
 
-    public ViewStateByViewKey(ViewStates viewStates, ViewKey viewKey) {
-        this.viewStates = viewStates;
+    public ViewStateByViewKey(ViewKey viewKey) {
         this.viewKey = viewKey;
         this.currentAngle = viewKey.getInitialAngle();
     }
@@ -21,7 +18,6 @@ public class ViewStateByViewKey implements ViewState {
      * copy
      */
     ViewStateByViewKey(ViewStateByViewKey source) {
-        this.viewStates = source.viewStates;
         this.viewKey = source.viewKey;
         this.currentAngle = source.currentAngle;
     }
@@ -46,15 +42,4 @@ public class ViewStateByViewKey implements ViewState {
         this.currentAngle = viewKey.getNext(currentAngle);
     }
 
-    @Override public void setCurrentView() {
-        System.out.println("ViewStateByViewKey.setCurrentView(..)");
-    }
-
-    @Override public boolean isActive() {
-        return viewStates.getCurrentView() == this.getCurrentView();
-    }
-
-    @Override public int getPanelIndex() {
-        return viewStates.getCurrentPanelForView(viewKey);
-    }
 }

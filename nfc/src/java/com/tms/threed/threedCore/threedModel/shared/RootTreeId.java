@@ -21,5 +21,10 @@ public class RootTreeId extends FullSha implements Serializable {
     protected RootTreeId() {
     }
 
+    @Override
+    public String toString() {
+        return stringValue();
+    }
+
 
 }

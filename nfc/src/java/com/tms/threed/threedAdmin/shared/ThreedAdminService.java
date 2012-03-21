@@ -1,7 +1,7 @@
 package com.tms.threed.threedAdmin.shared;
 
 import com.google.gwt.rpc.client.RpcService;
-import com.tms.threed.repo.shared.*;
+import com.tms.threed.repoService.shared.*;
 import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 

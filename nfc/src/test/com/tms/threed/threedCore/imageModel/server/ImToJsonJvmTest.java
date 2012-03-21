@@ -1,7 +1,7 @@
 package com.tms.threed.threedCore.imageModel.server;
 
 import com.tms.threed.threedCore.imageModel.shared.ImSeries;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;

@@ -7,7 +7,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.*;
-import com.tms.threed.repo.shared.CommitHistory;
+import com.tms.threed.repoService.shared.CommitHistory;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 

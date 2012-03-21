@@ -1,10 +1,7 @@
 package com.tms.threed.threedCore.threedModel.client;
 
 import com.google.gwt.http.client.*;
-import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
-import com.tms.threed.threedCore.threedModel.shared.SeriesId;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
@@ -31,7 +28,6 @@ public class ThreedModelClient {
 
     private final RequestContext requestContext;
 
-    private String url;
 
     public ThreedModelClient() {
         this(null);
@@ -74,16 +70,18 @@ public class ThreedModelClient {
         return threedModel;
     }
 
-
-    public String getThreedModelUrl() {
-        return url;
-    }
-
-    public String getThreedModelUrl(final SeriesId seriesId) {
+    public Path getThreedModelUrl(final SeriesId seriesId) {
         return getThreedModelUrl(seriesId.getSeriesKey(), seriesId.getRootTreeId());
     }
 
-    public String getThreedModelUrl(final SeriesKey seriesKey, RootTreeId rootTreeId) {
+    public Path getVtcMapUrl() {
+        if (repoBaseUrl == null) {
+            throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
+        }
+        return repoBaseUrl.append("vtcMap.txt");
+    }
+
+    public Path getThreedModelUrl(final SeriesKey seriesKey, RootTreeId rootTreeId) {
         if (repoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
         }
@@ -92,17 +90,59 @@ public class ThreedModelClient {
         url = url.replace("${rootTreeId}", rootTreeId.getName());
         url = url.replace("${repoBase.url}", repoBaseUrl.toString());
 
-        return url;
+        return new Path(url);
     }
+
+    public Req<VtcMap> getVtcMap() {
+        final Req<VtcMap> vtcMapReq = new Req<VtcMap>("fetchVtcMap");
+        Path vtcMapUrl = getVtcMapUrl();
+
+        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
+        requestBuilder.setCallback(new RequestCallback() {
+
+            @Override
+            public void onResponseReceived(Request request, Response response) {
+                if (response.getStatusCode() != 200) {
+                    vtcMapReq.onFailure(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
+                } else {
+                    VtcMap vtcMap = null;
+                    try {
+                        vtcMap = VtcMap.parse(response.getText());
+                        vtcMapReq.onSuccess(vtcMap);
+                    } catch (Exception e) {
+                        vtcMapReq.onFailure(new RuntimeException("Problem parsing vtcMap[" + response.getText() + "]",e));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Request request, Throwable exception) {
+                vtcMapReq.onFailure(exception);
+            }
+
+        });
+
+        try {
+            requestBuilder.send();
+        } catch (RequestException e) {
+            e.printStackTrace();
+            vtcMapReq.onFailure(e);
+        }
+
+        return vtcMapReq;
+
+    }
+
 
     public Req<ThreedModel> fetchThreedModel(final SeriesId seriesId) {
 
         final Req<ThreedModel> r = newRequest("fetchThreedModel");
 
-        url = getThreedModelUrl(seriesId);
+        Path url = getThreedModelUrl(seriesId);
         Console.log("Requesting threedModel: " + url);
 
-        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url);
+        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url.toString());
 
         requestBuilder.setCallback(new RequestCallback() {
 
@@ -137,17 +177,18 @@ public class ThreedModelClient {
         return r;
     }
 
-    public String fetchThreedModel2(final SeriesId seriesId, final Callback callback) {
+
+    public Path fetchThreedModel2(final SeriesId seriesId, final Callback callback) {
         return fetchThreedModel2(seriesId.getSeriesKey(), seriesId.getRootTreeId(), callback);
     }
 
-    public String fetchThreedModel2(final SeriesKey seriesKey, RootTreeId rootTreeId, final Callback callback) {
+    public Path fetchThreedModel2(final SeriesKey seriesKey, RootTreeId rootTreeId, final Callback callback) {
         assert callback != null;
 
-        String url = getThreedModelUrl(seriesKey, rootTreeId);
+        Path url = getThreedModelUrl(seriesKey, rootTreeId);
         Console.log("Requesting threedModel: " + url);
 
-        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url);
+        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url.toString());
 
         requestBuilder.setCallback(new RequestCallback() {
             @Override

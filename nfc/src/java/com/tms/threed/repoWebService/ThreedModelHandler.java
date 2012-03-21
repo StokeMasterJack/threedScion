@@ -1,8 +1,11 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.base.Function;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.MapMaker;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
 import com.tms.threed.threedCore.threedModel.server.TmToJsonJvm;
@@ -17,22 +20,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.zip.GZIPOutputStream;
 
 public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
 
-    private final ConcurrentMap<SeriesId, byte[]> jsonMap;
+    private final LoadingCache<SeriesId, byte[]> jsonMap;
 
     public ThreedModelHandler(Repos repos, ServletContext application) {
         super(repos, application);
 
 
-        jsonMap = new MapMaker()
+        jsonMap = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000)
-                .makeComputingMap(
-                        new Function<SeriesId, byte[]>() {
-                            public byte[] apply(SeriesId seriesId) {
+                .build(
+                        new CacheLoader<SeriesId, byte[]>() {
+                            public byte[] load(SeriesId seriesId) {
                                 return createGzippedJson(seriesId);
                             }
                         });
@@ -45,7 +49,12 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
         SeriesId seriesId = repoRequest.getSeriesId();
 
         log.debug("Received request for ThreedModel[" + seriesId.toString() + "]");
-        byte[] retVal = jsonMap.get(seriesId);
+        byte[] retVal = new byte[0];
+        try {
+            retVal = jsonMap.get(seriesId);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
 
 
         HttpServletResponse response = repoRequest.getResponse();

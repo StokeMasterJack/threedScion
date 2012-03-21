@@ -11,10 +11,10 @@ import com.tms.threed.jpgGen.client.JpgGenClient;
 import com.tms.threed.jpgGen.client.JpgQueueMasterPanel;
 import com.tms.threed.jpgGen.client.TabCloseListener;
 import com.tms.threed.jpgGen.shared.JobSpec;
-import com.tms.threed.repo.shared.CommitHistory;
-import com.tms.threed.repo.shared.RepoHasNoHeadException;
-import com.tms.threed.repo.shared.SeriesCommit;
-import com.tms.threed.repo.shared.Settings;
+import com.tms.threed.repoService.shared.CommitHistory;
+import com.tms.threed.repoService.shared.RepoHasNoHeadException;
+import com.tms.threed.repoService.shared.SeriesCommit;
+import com.tms.threed.repoService.shared.Settings;
 import com.tms.threed.threedAdmin.client.messageLog.MessageLog;
 import com.tms.threed.threedAdmin.client.messageLog.MessageLogView;
 import com.tms.threed.threedAdmin.client.tabLabel.TabLabel;
@@ -153,8 +153,9 @@ public class MainEntryPoint implements EntryPoint, TabCreator, UiLog, UiContext 
         assert seriesCommit != null;
         assert threedAdminClient != null;
 
+        final Path threedModelUrl = threedModelClient.getThreedModelUrl(seriesCommit.getSeriesId());
         Req<ThreedModel> r = threedModelClient.fetchThreedModel(seriesCommit.getSeriesId());
-        final String threedModelUrl = threedModelClient.getThreedModelUrl();
+
         r.onSuccess = new SuccessCallback<ThreedModel>() {
             @Override
             public void call(Req<ThreedModel> r) {

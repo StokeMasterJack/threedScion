@@ -2,9 +2,9 @@ package com.tms.threed.repoWebService;
 
 import com.google.common.io.Files;
 import com.tms.threed.threedCore.imageModel.shared.PngShortSha;
-import com.tms.threed.repo.server.Repos;
-import com.tms.threed.repo.server.SeriesRepo;
-import com.tms.threed.repo.server.rt.RtRepo;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repoService.server.SeriesRepo;
+import com.tms.threed.repoService.server.rt.RtRepo;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
@@ -13,7 +13,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
-public class BlinkHandler extends RepoHandler {
+public class BlinkHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
     public BlinkHandler(Repos repos, ServletContext application) {
         super(repos, application);

@@ -103,11 +103,6 @@ public final class ViewKey {
         return angles[angles.length - 1];
     }
 
-    public boolean isLast(int angleValue) {
-        Angle angle = getByAngleValue(angleValue);
-        return isLast(angle);
-    }
-
     public boolean isLast(Angle angle) {
         return lastAngle == angle;
     }
@@ -145,15 +140,6 @@ public final class ViewKey {
 
     public boolean isFirst(Angle angle) {
         return firstAngle == angle;
-    }
-
-    public Angle[] getAngles() {
-        return angles;
-    }
-
-
-    public int[] getAngleValues() {
-        return angleValues;
     }
 
     public ViewType getType() {
@@ -226,53 +212,14 @@ public final class ViewKey {
         return name.equals(INTERIOR);
     }
 
-    public boolean isCargo() {
-        return name.equals(CARGO);
-    }
-
-    public boolean isUndercarriage() {
-        return name.equals(UNDERCARRIAGE);
-    }
-
-    public static boolean isHero(ViewKey viewKey, int angle) {
-        return viewKey.getName().equals(EXTERIOR) && angle == HERO_ANGLE;
-    }
-
     public int getAngleCount() {
         if (angles == null) return 0;
         return angles.length;
     }
 
-    public boolean isAngleValid(Angle angle) {
-        Angle a = angles[angle.displayIndex];
-        assert a == angle;
-        return true;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public Angle getSideAngle() {
-        if (index != 1) throw new IllegalStateException();
-        return angles[SIDE_ANGLE];
-    }
-
-    public Angle getHeroAngle() {
-        if (index != 0) throw new IllegalStateException();
-        return getByAngleValue(HERO_ANGLE);
-    }
-
     @Override
     public String toString() {
         return name;
-    }
-
-    public static boolean isValidViewName(String viewName) {
-        for (String vn : ALL_VIEW_NAMES) {
-            if (vn.equals(viewName)) return true;
-        }
-        return false;
     }
 
     public static enum ViewType {

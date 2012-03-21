@@ -2,7 +2,7 @@ package com.tms.threed.threedCore.featureModel.shared.search;
 
 import com.tms.threed.threedCore.featureModel.shared.CspForTreeSearch;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;

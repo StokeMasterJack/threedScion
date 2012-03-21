@@ -14,7 +14,6 @@ public class ViewStates {
     private SeriesInfo seriesInfo;
     private ViewKey currentView;
 
-
     public ViewStates(SeriesInfo seriesInfo) {
         this.seriesInfo = seriesInfo;
 
@@ -23,7 +22,7 @@ public class ViewStates {
 
         viewStates = new ViewStateByViewKey[viewKeys.length];
         for (int i = 0; i < viewKeys.length; i++) {
-            viewStates[i] = new ViewStateByViewKey(this, viewKeys[i]);
+            viewStates[i] = new ViewStateByViewKey(viewKeys[i]);
         }
 
         panelStates = new ViewState[viewKeys.length];
@@ -46,12 +45,11 @@ public class ViewStates {
         this.viewStates = new ViewStateByViewKey[L];
         for (int i = 0; i < L; i++) {
             ViewKey vk = seriesInfo.getViewKey(i);
-            viewStates[i] = new ViewStateByViewKey(this, vk);
+            viewStates[i] = new ViewStateByViewKey(vk);
         }
 
         this.panelStates = new ViewStateByPanel[L];
         for (int i = 0; i < L; i++) {
-            ViewKey vk = seriesInfo.getViewKey(i);
             panelStates[i] = new ViewStateByPanel(i, this);
         }
     }
@@ -68,6 +66,13 @@ public class ViewStates {
     public void setCurrentView(ViewKey newViewKey) {
         this.currentView = newViewKey;
     }
+
+    public void setCurrentView(String newViewName) {
+        ViewKey newViewKey = seriesInfo.getViewKeyByName(newViewName);
+        this.currentView = newViewKey;
+        setCurrentView(newViewKey);
+    }
+
 
     public void thumbClicked(int panelIndex) {
         ViewKey vk = getCurrentViewForPanel(panelIndex);
@@ -130,20 +135,6 @@ public class ViewStates {
         return seriesInfo.getViewKey(panelViewIndex);
     }
 
-    public ViewState getExteriorViewState() {
-        ViewKey viewKey = seriesInfo.getExterior();
-        return viewStates[viewKey.index];
-    }
-
-    public ViewState getInteriorViewState() {
-        ViewKey viewKey = seriesInfo.getInterior();
-        return viewStates[viewKey.index];
-    }
-
-    public ViewState getViewStateForViewKey(ViewKey viewKey) {
-        return viewStates[viewKey.index];
-    }
-
     public ViewState getViewStateForPanel(int panelIndex) {
         return panelStates[panelIndex];
     }
@@ -181,7 +172,12 @@ public class ViewStates {
         return getCurrentView().isInterior();
     }
 
-    public void setCurrentViewAndAngle(ViewKey viewKey,int angle) {
+    public void setCurrentViewAndAngle(String viewName, int angle) {
+        ViewKey viewKey = seriesInfo.getViewKeyByName(viewName);
+        setCurrentViewAndAngle(viewKey, angle);
+    }
+
+    public void setCurrentViewAndAngle(ViewKey viewKey, int angle) {
         setCurrentView(viewKey);
         setCurrentAngle(angle);
     }

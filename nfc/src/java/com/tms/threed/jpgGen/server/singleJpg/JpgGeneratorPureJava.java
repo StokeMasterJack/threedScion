@@ -4,10 +4,10 @@ package com.tms.threed.jpgGen.server.singleJpg;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.tms.threed.jpgGen.shared.Stats;
-import com.tms.threed.repo.server.JpgKey;
-import com.tms.threed.repo.server.Repos;
-import com.tms.threed.repo.server.SeriesRepo;
-import com.tms.threed.repo.server.rt.RtRepo;
+import com.tms.threed.repoService.server.JpgKey;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.repoService.server.SeriesRepo;
+import com.tms.threed.repoService.server.rt.RtRepo;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,23 +31,20 @@ import java.util.List;
  */
 public class JpgGeneratorPureJava {
 
+    public static final float QUALITY = 75F * .01F;
 
     private final JpgKey jpgKey;
 
     private final SeriesRepo seriesRepo;
     private final RtRepo genRepo;
-    private final GenDetails genDetails;
     private final String jpgFingerprint;
     private final File jpgOutputFile;
 
     public JpgGeneratorPureJava(Repos repos, JpgKey jpgKey) {
-
         this.jpgKey = jpgKey;
         this.seriesRepo = repos.getSeriesRepo(jpgKey.getSeriesKey());
         this.genRepo = seriesRepo.getRtRepo();
-        this.genDetails = new GenDetails(jpgKey.getWidth());
         this.jpgFingerprint = jpgKey.getFingerprint();
-
         this.jpgOutputFile = getJpgOutputFile();
     }
 
@@ -165,9 +162,8 @@ public class JpgGeneratorPureJava {
 
         iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 
-        float q = (float) genDetails.getQuality() * .01F;
 
-        iwp.setCompressionQuality(q);
+        iwp.setCompressionQuality(QUALITY);
 
         FileImageOutputStream output = null;
         try {

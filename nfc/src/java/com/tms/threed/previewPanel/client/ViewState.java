@@ -4,8 +4,6 @@ import com.tms.threed.threedCore.threedModel.shared.ViewKey;
 
 public interface ViewState {
 
-    void setCurrentView();
-
     ViewKey getCurrentView();
 
     void previousAngle();
@@ -15,9 +13,5 @@ public interface ViewState {
     void setCurrentAngle(int newAngle);
 
     int getCurrentAngle();
-
-    boolean isActive();
-
-    int getPanelIndex();
 
 }

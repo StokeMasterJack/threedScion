@@ -3,8 +3,10 @@ package com.tms.threed.repoWebService;
 import com.google.common.io.Files;
 import com.tms.threed.threedCore.imageModel.shared.ImJpg;
 import com.tms.threed.threedCore.imageModel.shared.ImageStack;
-import com.tms.threed.repo.server.JpgKey;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.JpgKey;
+import com.tms.threed.repoService.server.Repos;
+import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
+import com.tms.threed.threedCore.threedModel.shared.Slice;
 import smartsoft.util.servlet.http.headers.LastModified;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import org.apache.commons.logging.Log;
@@ -14,6 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.List;
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 
@@ -27,13 +30,12 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
 
         log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
 
-        if (!repos.isValidJpgWidth(r.getJpgWidth())) {
-            throw new IllegalArgumentException("Bad JpgWidth: " + r.getJpgWidth());
-        }
-
         ThreedModel threedModel = Repos.get().getVtcThreedModel(r.getSeriesKey());
 
-        ImageStack imageStack = (ImageStack) threedModel.getImageStack(r.getSlice(), r.getVarCodes(), r.getJpgWidth());
+        Slice slice = r.getSlice();
+        List<String> picks = r.getVarCodes();
+        JpgWidth jpgWidth = r.getJpgWidth();
+        ImageStack imageStack = (ImageStack) threedModel.getImageStack(slice, picks, jpgWidth);
 
         ImJpg jpg = imageStack.getFullJpg();
 

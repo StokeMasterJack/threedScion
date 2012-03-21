@@ -3,7 +3,7 @@ package com.tms.threed.threedCore.featureModel.shared.picks;
 import com.tms.threed.threedCore.featureModel.data.SampleFeatureSet;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 //import com.tms.threed.featureModel.shared.ProposePickResponse;
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import junit.framework.TestCase;

@@ -1,6 +1,6 @@
 package com.tms.threed.jpgGen.server.taskManager;
 
-import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repoService.server.Repos;
 import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
 import com.tms.threed.threedCore.threedModel.shared.Slice;
