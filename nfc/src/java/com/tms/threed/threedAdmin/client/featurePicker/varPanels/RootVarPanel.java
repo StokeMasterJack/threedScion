@@ -25,6 +25,7 @@ public class RootVarPanel extends VarPanel {
             VarPanel childPanel = context.getVarPanel(childVar);
             if (childPanel == null) continue;
             String tabName = childVar.getDisplayName();
+            System.out.println("tabName = " + tabName);
             stackLayoutPanel.add(childPanel, tabName, 2.2);
         }
 

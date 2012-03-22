@@ -30,9 +30,13 @@ public final class JsonUnmarshallerFm {
 
     private void mapConstraints(JsBoolExpr rootConstraint) {
         BoolExpr boolExpr = map(rootConstraint);
-        And and = (And) boolExpr;
-        for (BoolExpr constraint : and.getExpressions()) {
-            fm.addConstraint(constraint);
+        if (boolExpr.isTrue()) {
+            //do nothing
+        } else {
+            And and = (And) boolExpr;
+            for (BoolExpr constraint : and.getExpressions()) {
+                fm.addConstraint(constraint);
+            }
         }
     }
 
@@ -73,6 +77,8 @@ public final class JsonUnmarshallerFm {
             return mapVar(jsBoolExpr);
         } else if (t.isNot()) {
             return mapNot(jsBoolExpr);
+        } else if (t.isTrue()) {
+            return BoolExpr.TRUE;
         } else {
             throw new IllegalStateException("Unknown type: [" + t + "]");
         }
@@ -126,6 +132,7 @@ public final class JsonUnmarshallerFm {
         return BoolExpr.not(expr);
 
     }
+
 
     private BoolExpr mapVar(JsBoolExpr jsVar) {
         String varCode = jsVar.getVarCode();

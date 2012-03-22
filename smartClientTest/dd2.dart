@@ -2,7 +2,7 @@
 
 #import('dart:io');
 
-var devMode = true;
+var devMode = false;
 
 var contextPath =  "smartClientTest";
 var modName = 'smartClientTest.SmartClientTest';
@@ -46,7 +46,7 @@ void main(){
 
     var gwtParamsCommon = {
          'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${contextPath}/',
-//         'logLevel':        'DEBUG',
+         'logLevel':        'DEBUG',
          'extra':           '$userHome/temp/gwt/extra',
          'gen':             '$userHome/temp/gwt/gen',
          'workDir':         '$userHome/temp/gwt/workDir'

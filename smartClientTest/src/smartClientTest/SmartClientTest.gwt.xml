@@ -17,4 +17,6 @@
 
     <entry-point class='smartClientTest.client.SmartClientTest'/>
 
+    <collapse-all-properties />
+
 </module>

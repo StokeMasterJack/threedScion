@@ -38,7 +38,7 @@ public class OptionLeaf extends VarPanel {
     private CheckBox initCheckBox() {
          String cbLabel = "<b>" + var.getCode() + "</b>";
         if (var.getName() != null) {
-            cbLabel += var.getDisplayName();
+            cbLabel += " " + var.getDisplayName();
         }
 
         final CheckBox cb = new CheckBox(cbLabel, true);

@@ -5,10 +5,22 @@ import java.util.Set;
 
 public class VarCodeFixer implements IVarGuesser {
 
+    private static boolean enabled = false;
+
+    public static String fixupVarCode(String proposedVarName, String parent) {
+        if (enabled) {
+            String varCode = fixupVarCodeCase(proposedVarName);
+            varCode = fixupShortCodes(varCode, parent);
+            return varCode;
+        } else {
+            return proposedVarName;
+        }
+    }
+
     /**
      * TODO use reflection for this
      */
-    public static Set<String> getCommonVarNames() {
+    private static Set<String> getCommonVarNames() {
         final HashSet<String> s = new HashSet<String>();
 
         s.add(ModelCode);
@@ -32,12 +44,6 @@ public class VarCodeFixer implements IVarGuesser {
 
         return s;
 
-    }
-
-    public static String fixupVarCode(String proposedVarName, String parent) {
-        String varCode = fixupVarCodeCase(proposedVarName);
-        varCode = fixupShortCodes(varCode, parent);
-        return varCode;
     }
 
     private static String fixupShortCodes(String proposedVarName, String parent) {

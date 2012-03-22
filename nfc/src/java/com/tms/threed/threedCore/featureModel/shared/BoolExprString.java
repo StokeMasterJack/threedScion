@@ -119,9 +119,9 @@ public class BoolExprString {
         }
     }
 
-    public static boolean isValidRawExprChar(char c) {
-        return Character.isLetterOrDigit(c) || isValidOperator(c) || Character.isWhitespace(c);
-    }
+//    public static boolean isValidRawExprChar(char c) {
+//        return Character.isLetterOrDigit(c) || isValidOperator(c) || Character.isWhitespace(c);
+//    }
 
     public static boolean isValidOrExprChar(char c) {
         return Character.isLetterOrDigit(c) || isValidOperator(c);

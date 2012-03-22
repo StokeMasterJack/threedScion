@@ -28,7 +28,7 @@ public enum Type {
         return isTrue() || isFalse();
     }
 
-    private boolean isTrue() {
+    public boolean isTrue() {
         return id == True.id;
     }
 

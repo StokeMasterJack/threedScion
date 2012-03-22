@@ -30,7 +30,7 @@ public class PickOneLeaf extends VarPanel {
 
         String radioLabel = "<b>" + var.getCode() + "</b>";
         if (var.getName() != null) {
-            radioLabel += var.getDisplayName();
+            radioLabel += " " + var.getDisplayName();
         }
 
         radioButton = new RadioButton(radioGroupId, radioLabel, true);

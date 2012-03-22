@@ -1,8 +1,5 @@
 package com.tms.threed.threedCore.featureModel.shared;
 
-//import com.tms.threed.featureModel.server.BoolExprString;
-//import com.tms.threed.featureModel.server.ExprParser;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.*;
@@ -10,12 +7,9 @@ import com.tms.threed.threedCore.featureModel.shared.picks.Picks;
 import com.tms.threed.threedCore.featureModel.shared.picks.PicksContextFm;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.SubSeries;
-import smartsoft.util.lang.shared.Path;
 import smartsoft.util.lang.shared.Strings;
 
 import java.util.*;
-
-import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 public class FeatureModel implements Vars {
 
@@ -31,6 +25,8 @@ public class FeatureModel implements Vars {
     private final VarsDb vars;
 
     private SubSeries subSeries;
+
+    private boolean sorted;
 
     public FeatureModel(SeriesKey seriesKey, String displayName) {
         this.seriesKey = seriesKey;
@@ -61,66 +57,30 @@ public class FeatureModel implements Vars {
         return a;
     }
 
-    public Set<Var> getAllXorChildVars() {
-        HashSet<Var> a = new HashSet<Var>();
-        Set<Var> xorParentVars = getAllXorParentVars();
+//    public Set<Var> getModelCodeVars() {
+//        HashSet<Var> set = new HashSet<Var>();
+//        Xor modelCodeXor = getModelCodeXor();
+//        LinkedHashSet<BoolExpr> expressions = modelCodeXor.getExpressions();
+//        for (BoolExpr expr : expressions) {
+//            Var var = expr.asVar();
+//            set.add(var);
+//        }
+//        return set;
+//    }
 
-        for (Var xorParentVar : xorParentVars) {
-            for (Var xorChildVar : xorParentVar.getChildVars()) {
-                a.add(xorChildVar);
-            }
-        }
-        return a;
-    }
-
-
-    public Set<Var> getModelCodeVars() {
-        HashSet<Var> set = new HashSet<Var>();
-        Xor modelCodeXor = getModelCodeXor();
-        LinkedHashSet<BoolExpr> expressions = modelCodeXor.getExpressions();
-        for (BoolExpr expr : expressions) {
-            Var var = expr.asVar();
-            set.add(var);
-        }
-        return set;
-    }
-
-    public Set<Var> getExteriorColorVars() {
-        HashSet<Var> set = new HashSet<Var>();
-        Xor exteriorXor = getExteriorColorXor();
-        LinkedHashSet<BoolExpr> expressions = exteriorXor.getExpressions();
-        for (BoolExpr expr : expressions) {
-            Var var = expr.asVar();
-            set.add(var);
-        }
-        return set;
-    }
-
-    public Set<Var> getInteriorColorVars() {
-        HashSet<Var> set = new HashSet<Var>();
-        Xor interiorXor = getInteriorColorXor();
-        LinkedHashSet<BoolExpr> expressions = interiorXor.getExpressions();
-        for (BoolExpr expr : expressions) {
-            Var var = expr.asVar();
-            set.add(var);
-        }
-        return set;
-    }
-
-
-    public void performSemiHumanFixup() {
-        for (Var var : vars) {
-            if (!var.hasCardinality()) {
-                Cardinality card = VarGuesser.guessCardinality(var);
-                var.setCardinality(card);
-            }
-
-            if (!var.hasMandatory()) {
-                Boolean b = VarGuesser.guessMandatory(var);
-                if (b != null) var.setMandatory(b);
-            }
-        }
-    }
+//    public void performSemiHumanFixup() {
+//        for (Var var : vars) {
+//            if (!var.hasCardinality()) {
+//                Cardinality card = VarGuesser.guessCardinality(var);
+//                var.setCardinality(card);
+//            }
+//
+//            if (!var.hasMandatory()) {
+//                Boolean b = VarGuesser.guessMandatory(var);
+//                if (b != null) var.setMandatory(b);
+//            }
+//        }
+//    }
 
 
     public SeriesKey getSeriesKey() {
@@ -143,14 +103,6 @@ public class FeatureModel implements Vars {
         }
     }
 
-    //    public SeriesId getSeriesId() {
-//        return seriesId;
-//    }
-//
-//    public SeriesKey getSeriesKey() {
-//        return seriesId.getSeriesKey();
-//    }
-
     public Var addVar(String code, String name) {
         return getRootVar().addChild(code, name);
     }
@@ -158,10 +110,6 @@ public class FeatureModel implements Vars {
     public Var addVar(String code) {
         return getRootVar().addChild(code);
     }
-
-//    public Var addVar(Var var) {
-//        return rootVar.addVar(var);
-//    }
 
     public And getCardinalityConstraint() {
         throw new UnsupportedOperationException();
@@ -175,13 +123,6 @@ public class FeatureModel implements Vars {
     }
 
     private void getTreeConstraintsForVar(Var var, LinkedHashSet<BoolExpr> set) {
-
-//        Var p = var.getParent();
-//        boolean addChildImpliesParentRule = p != null && !(p.isZeroOrMoreGroup() && p.isRoot() && p.isAllGroup());
-//
-//        if (addChildImpliesParentRule) {
-//            set.add(imply(var, p));
-//        }
 
         if (var.isRoot()) {
             set.add(var);
@@ -217,22 +158,6 @@ public class FeatureModel implements Vars {
 
 
     }
-
-
-    private boolean sorted;
-
-    public void sortChildVarsByLeafRelationCount() {
-        if (!sorted) {
-            initRelationCount();
-            getRootVar().sortDescendantVarsByLeafRelationCount();
-            sorted = true;
-        }
-    }
-
-    private void initRelationCount() {
-        getRootVar().initLeafRelationCount(this);
-    }
-
 
     public Var get(int varIndex) throws UnknownVarIndexException {
         return vars.get(varIndex);
@@ -385,30 +310,6 @@ public class FeatureModel implements Vars {
         }
     }
 
-    public boolean isPickValid(Var var) {
-        return isAssignmentValid(var, Bit.TRUE);
-    }
-
-    public boolean isAssignmentValid(Var var, Tri value) {
-        throw new UnsupportedOperationException();
-//        BDD testBdd = restrict(f, var, value);
-//        return !testBdd.isZero();
-//        return true; //todo
-    }
-
-    public Set<String> varsToCodes(Set<Var> picks) {
-        HashSet<String> set = new HashSet<String>();
-        for (Var var : picks) {
-            set.add(var.getCode());
-        }
-        return set;
-    }
-
-    public boolean isLeaf(String varCode) {
-        final Var var = getVarOrNull(varCode);
-        return var.isLeaf();
-    }
-
     public void printRootConstraint() {
         System.out.println("RootConstraint: ");
         System.out.println("\t" + getRootConstraint());
@@ -436,15 +337,6 @@ public class FeatureModel implements Vars {
         }
     }
 
-    public static Path createFeaturePath(List<Var> featureList) {
-        if (featureList == null || featureList.size() == 0) return new Path();
-        Path p = new Path();
-        for (Var var : featureList) {
-            p = p.append(var.getCode());
-        }
-        return p;
-    }
-
     public FeatureModel copy() {
         return this;  //todo
     }
@@ -459,41 +351,6 @@ public class FeatureModel implements Vars {
         return false;
     }
 
-    /**
-     * Not needed for NonFlash Config
-     * Maybe needed for eBro
-     */
-    public void preFixup(Set<String> userPicks) {
-
-        HashSet<String> toBeAdded = new HashSet<String>();
-        Iterator<String> it = userPicks.iterator();
-
-        while (it.hasNext()) {
-            String featureCode = it.next();
-
-            if (featureCode == null) it.remove();
-
-            int L = featureCode.length();
-            featureCode = featureCode.trim();
-            if (featureCode.equals("")) it.remove();
-
-            if (featureCode.length() != L) {
-                it.remove();
-                toBeAdded.add(featureCode);
-            }
-
-            if (isBaseGrade(featureCode)) {
-                it.remove();
-                toBeAdded.add(featureCode);
-            }
-
-        }
-
-        userPicks.addAll(toBeAdded);
-
-    }
-
-
     public Picks createPicks() {
         return new Picks(new PicksContextFm(this));
     }
@@ -502,106 +359,6 @@ public class FeatureModel implements Vars {
         Picks p = new Picks(new PicksContextFm(this));
         p.pick(picks);
         return p;
-    }
-
-    public Picks getInitialVisiblePicksOld() {
-        Picks p = createPicks();
-        p.initVisibleDefaults();
-        return p;
-    }
-
-
-    public Set<Var> getInitialVisiblePicksForTestHarness() {
-//        System.out.println("Picks.initVisibleDefaults [map.length: " + map.length + "]");
-
-        HashSet<Var> a = new HashSet<Var>();
-
-        for (Var var : getPickableVars()) {
-
-            boolean leaf = var.isLeaf();
-            boolean firstXorChild = var.isFirstPickOneChild();
-            Boolean defaultValue = var.getDefaultValue();
-
-            if (!leaf) continue;
-            if (defaultValue != null && defaultValue == false) continue;
-
-
-            if (defaultValue != null && defaultValue || firstXorChild) {
-                a.add(var);
-            }
-
-
-        }
-        return a;
-    }
-
-    public void basicFixup() {
-
-    }
-
-    public void basicFixupMandatory() {
-        for (Var var : vars) {
-            if (var.isRoot()) continue;
-            boolean isTrimChild = var.isTrimChild();
-        }
-    }
-
-
-    public static Set<String> parse(String commaDelimitedList) {
-
-        final HashSet<String> set = new HashSet<String>();
-        if (isEmpty(commaDelimitedList)) return set;
-        commaDelimitedList = commaDelimitedList.trim();
-
-        final String[] a = commaDelimitedList.split(",");
-        if (a == null || a.length == 0) return set;
-
-        for (String code : a) {
-            if (isEmpty(code)) continue;
-            String varCode = code.trim();
-
-            set.add(varCode);
-
-        }
-        return set;
-    }
-
-
-//    public And createConjunctionFromSpaceDelimitedList(String spaceDelimitedVarList) {
-//        final List<Var> varList = parseVarList(spaceDelimitedVarList);
-//        final List<BoolExpr> exprList = FeatureModel.upCastList(varList);
-//        return this.and(exprList);
-//    }
-
-//    public Or createDisjunctionFromSpaceDelimitedList(String spaceDelimitedList) {
-//        final List<Var> varList = parseVarList(spaceDelimitedList);
-//        final List<BoolExpr> exprList = FeatureModel.upCastList(varList);
-//        return this.or(exprList);
-//    }
-
-    public List<Var> parseVarList(String spaceDelimitedList) {
-        final ArrayList<Var> list = new ArrayList<Var>();
-        if (isEmpty(spaceDelimitedList)) throw new IllegalArgumentException();
-        spaceDelimitedList = spaceDelimitedList.trim();
-        final String[] a = spaceDelimitedList.split("\\s+");
-        if (a == null || a.length == 0) throw new IllegalArgumentException();
-
-        if (!containsWhitespace(spaceDelimitedList)) {
-            //spaceDelimitedList must be a single code
-            String code = spaceDelimitedList;
-            Var var = getVarOrNull(code);
-            if (var == null) throw new IllegalArgumentException("Invalid Feature Code: [" + code + "]");
-            list.add(var);
-        } else {
-            for (String code : a) {
-                if (isEmpty(code)) continue;
-                code = code.trim();
-                Var var = getVarOrNull(code);
-                if (var == null) throw new IllegalArgumentException("Invalid Feature Code: [" + code + "]");
-                list.add(var);
-            }
-        }
-        return list;
     }
 
     public static boolean containsWhitespace(String s) {
@@ -624,12 +381,6 @@ public class FeatureModel implements Vars {
         a.addAll(tc.getExpressions());
         a.addAll(ec.getExpressions());
         return new MasterConstraint(a);
-    }
-
-    public Collection<Var> getXorExclusions(Var xorPick) {
-        HashSet<Var> a = new HashSet<Var>();
-        a.add(xorPick);
-        return getXorExclusions(a);
     }
 
     public Collection<Var> getXorExclusions(String... xorPicks) {
@@ -661,46 +412,10 @@ public class FeatureModel implements Vars {
         return a;
     }
 
-    public Xor getModelCodeXor() {
-        Var modelCodes = get(IVarGuesser.ModelCode);
-        return modelCodes.getChildNodesAsXor();
-    }
-
-    public Xor getExteriorColorXor() {
-        Var exteriorColors = get(IVarGuesser.ExteriorColor);
-        return exteriorColors.getChildNodesAsXor();
-    }
-
-    public Xor getInteriorColorXor() {
-        Var interiorColors = get(IVarGuesser.InteriorColor);
-        return interiorColors.getChildNodesAsXor();
-    }
-
-
-    public Set<Iff> getModelCodeIffs() {
-        Set<Iff> iffs = new HashSet<Iff>();
-        Var modelCodes = get(IVarGuesser.ModelCode);
-        for (Var modelCode : modelCodes.getChildVars()) {
-            for (BoolExpr ec : extraConstraints) {
-                if (ec.isIff()) {
-                    if (ec.getExpr1().equals(modelCode)) {
-                        iffs.add(ec.asIff());
-                    } else if (ec.getExpr2().equals(modelCode)) {
-                        iffs.add(new Iff(ec.getExpr2(), ec.getExpr()));
-                    }
-                }
-            }
-        }
-        return iffs;
-    }
-
-    public Collection<Var> expandModelCode(Var modelCode) {
-        return getIffVarsForVar(modelCode);
-    }
-
-    public Collection<Var> expandModelCode(String modelCode) {
-        return getIffVarsForVar(get(modelCode));
-    }
+//    public Xor getModelCodeXor() {
+//        Var modelCodes = get(IVarGuesser.ModelCode);
+//        return modelCodes.getChildNodesAsXor();
+//    }
 
     public Collection<Var> getIffVarsForVar(Var var) {
         Collection<BoolExpr> expressions = getExtraConstraint().getExpressions();
@@ -719,69 +434,6 @@ public class FeatureModel implements Vars {
         }
         throw new IllegalStateException();
     }
-
-//    public Csp createLeafOnlyCopy() {
-//
-//        Expressions xors = new Expressions();
-//
-//        List<Var> xorParents = this.getAllXorParents();
-//        List<Var> leafVars = this.getAllLeafsNotIncludingXorChildVars();
-//
-//        VarsDb newVars = new VarsDb();
-//        Var newRoot = newVars.getRootVar();
-//
-//        int i = 0;
-//        //first process xorParents and xorChild
-//        for (Var oldXorParent : xorParents) {
-//            Var newXorParent = oldXorParent.createLeanCopy(newRoot, i);
-//
-//            Expressions xorChildren = new Expressions();
-//            for (Var oldChild : oldXorParent.getChildVars()) {
-//                i++;
-//                Var newXorChild = oldChild.createLeanCopy(newXorParent, i);
-//                newVars.addLeanVar(newXorChild);
-//
-//                xorChildren.add(newXorChild);
-//            }
-//
-//
-//            xors.add(new Xor(xorChildren));
-//
-//        }
-//
-//        //next process non xor leaf vars
-//        for (Var oldLeaf : leafVars) {
-//            i++;
-//            Var newLeaf = oldLeaf.createLeanCopy(newRoot, i);
-//            newVars.addLeanVar(newLeaf);
-//        }
-//
-//
-////        new Csp(newVars, );
-//
-//
-//        return null;
-//    }
-//
-//    private List<Var> getAllLeafsNotIncludingXorChildVars() {
-//        ArrayList<Var> a = new ArrayList<Var>();
-//        for (Var var : vars) {
-//            if (var.isLeaf() && !var.isXorChild()) {
-//                a.add(var);
-//            }
-//        }
-//        return a;
-//    }
-//
-//    private List<Var> getAllXorParents() {
-//        ArrayList<Var> a = new ArrayList<Var>();
-//        for (Var var : vars) {
-//            if (var.isXorParent()) {
-//                a.add(var);
-//            }
-//        }
-//        return a;
-//    }
 
     public Set<Var> getPickableVars() {
         LinkedHashSet<Var> a = new LinkedHashSet<Var>();

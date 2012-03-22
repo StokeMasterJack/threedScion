@@ -381,39 +381,6 @@ public class TreeSearchTest extends TestCase {
     }
 
 
-    public void testTundraTmp1() throws Exception {
-
-        ThreedModel threedModel = getTundra();
-
-        FeatureModel fm = threedModel.getFeatureModel();
-        ImageSlice imageSlice = threedModel.getImageSlice("exterior", 6);
-
-        Set<Var> outputVars = new HashSet<Var>(imageSlice.getJpgVars());
-        outputVars.addAll(fm.getModelCodeVars());
-
-        CspForTreeSearch csp = fm.createCspForTreeSearch(outputVars);
-        csp.assignTrue("8202");
-        csp.assignTrue("040");
-        csp.assignTrue("FM13");
-        csp.assignTrue("7T");
-
-        System.out.println("Picks Raw: " + csp.getAssignments().getTrueVars());
-
-        csp.propagateSimplify();
-
-
-        if (!csp.isSolved1()) {
-            csp.fillInInitialPicks();
-        }
-
-        System.out.println("Picks Fix: " + csp.getAssignments().getTrueOutputVars());
-
-
-        Assignments assignments = csp.getAssignments();
-        Jpg jpg = imageSlice.computeJpg(assignments);
-
-        System.out.println("jpg: " + jpg);
-    }
 
 
     /*

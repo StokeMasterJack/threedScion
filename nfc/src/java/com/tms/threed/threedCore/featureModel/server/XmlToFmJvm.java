@@ -1,16 +1,19 @@
 package com.tms.threed.threedCore.featureModel.server;
 
 import com.google.common.base.Preconditions;
-import com.tms.threed.threedCore.featureModel.shared.*;
+import com.tms.threed.threedCore.featureModel.shared.BoolExprString;
+import com.tms.threed.threedCore.featureModel.shared.Cardinality;
+import com.tms.threed.threedCore.featureModel.shared.ExprParser;
+import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Conflict;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Iff;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Imp;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import smartsoft.util.lang.shared.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
+import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -76,7 +79,7 @@ public class XmlToFmJvm {
         this.seriesYear = seriesYear;
         this.featuresElement = featuresElement;
         processFeaturesElement();
-        fm.performSemiHumanFixup();
+//        fm.performSemiHumanFixup();
         return fm;
     }
 
@@ -157,13 +160,6 @@ public class XmlToFmJvm {
         fm.addConstraint(conflict);
     }
 
-    private void processFeatureGroup(Var parentVar, Element childElement) {
-        String varCode = childElement.getName();
-        varCode = VarCodeFixer.fixupVarCode(varCode, parentVar.getCode());
-        final Var childVar = parentVar.addChild(varCode);
-        common(childVar, childElement);
-        processFeatureChildren(childVar, childElement);
-    }
 
     private void processFeatureChildren(Var parentVar, Element parentElement) {
         List<Element> childElements = parentElement.elements();
@@ -209,6 +205,14 @@ public class XmlToFmJvm {
         return defaultValue.trim().equalsIgnoreCase("true");
     }
 
+    private String getName(Element e) {
+        String name = e.attributeValue(NAME);
+        if (isEmpty(name)) {
+            return null;
+        }
+        return name.trim();
+    }
+
     private void common(Var var, Element e) {
         assert var != null;
         assert e != null;
@@ -216,6 +220,21 @@ public class XmlToFmJvm {
         var.setDerived(isDerived(e));
         var.setCardinality(getCardinality(e));
         var.setMandatory(getMandatory(e));
+    }
+
+
+    private void processFeatureGroup(Var parentVar, Element childElement) {
+        String varCode = childElement.getName();
+        String varName = childElement.attributeValue(NAME);
+        //        varCode = VarCodeFixer.fixupVarCode(varCode, parentVar.getCode());
+
+        if (isEmpty(varName)) {
+            varName = varCode;
+        }
+
+        final Var childVar = parentVar.addChild(varCode, varName);
+        common(childVar, childElement);
+        processFeatureChildren(childVar, childElement);
     }
 
     private void processSolitaryFeature(Var parentVar, Element childElement) {
@@ -232,7 +251,7 @@ public class XmlToFmJvm {
             throw new IllegalStateException(msg);
         }
 
-        varCode = VarCodeFixer.fixupVarCode(varCode, parentVar.getCode());
+//        varCode = VarCodeFixer.fixupVarCode(varCode, parentVar.getCode());
 
         if (isEmpty(varName)) {
             varName = varCode;

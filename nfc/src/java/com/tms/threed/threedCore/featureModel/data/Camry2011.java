@@ -33,7 +33,7 @@ public class Camry2011 extends TrimColorOption {
         addConstraint(imply(r7, se));
 
 
-        performSemiHumanFixup();
+//        performSemiHumanFixup();
     }
 
     public Set<Var> getSamplePicks() {

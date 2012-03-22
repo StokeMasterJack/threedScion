@@ -59,7 +59,7 @@ void main(){
     };
 
     var gwtParamsCompile = {
-        'style':                   'OBF'
+        'style':                   'PRETTY'
 //        'draftCompile':            '',
 //        'localWorkers':            '2',
 //        'XdisableCastChecking':    '',

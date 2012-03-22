@@ -88,10 +88,10 @@ public class Var extends NonConstant {
 //    }
 
 
-    public boolean isTrimChild() {
-        if (parent == null) return false;
-        return parent.isTrimGroup();
-    }
+//    public boolean isTrimChild() {
+//        if (parent == null) return false;
+//        return parent.isTrimGroup();
+//    }
 
     @Override
     public boolean containsShallow(Constant c) {
@@ -271,8 +271,6 @@ public class Var extends NonConstant {
     }
 
     public Cardinality getCardinality() {
-
-        if (cardinality == null && (isTrimGroup() | isColorGroup())) return Cardinality.AllGroup;
         return cardinality;
     }
 
@@ -619,17 +617,17 @@ public class Var extends NonConstant {
         return isDescendantOf(accessoriesVar);
     }
 
-    public boolean isAccessoriesGroup() {
-        return code.equalsIgnoreCase(IVarGuesser.Accessories);
-    }
-
-    public boolean isTrimGroup() {
-        return code.equalsIgnoreCase(IVarGuesser.Trim);
-    }
-
-    public boolean isColorGroup() {
-        return code.equalsIgnoreCase(IVarGuesser.Color);
-    }
+//    public boolean isAccessoriesGroup() {
+//        return code.equalsIgnoreCase(IVarGuesser.Accessories);
+//    }
+//
+//    public boolean isTrimGroup() {
+//        return code.equalsIgnoreCase(IVarGuesser.Trim);
+//    }
+//
+//    public boolean isColorGroup() {
+//        return code.equalsIgnoreCase(IVarGuesser.Color);
+//    }
 
     public Var findVar(int varIndex) {
         if (this.index == -1) throw new IllegalStateException();
@@ -878,8 +876,8 @@ public class Var extends NonConstant {
 
     public boolean isMandatory() {
         if (mandatory != null) return mandatory;
-        else if (isTrimGroup() || isColorGroup()) return true;
-        return false;
+//        else if (isTrimGroup() || isColorGroup()) return true;
+        else return false;
     }
 
     public Boolean getDerived() {
