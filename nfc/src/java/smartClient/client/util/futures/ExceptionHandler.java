@@ -1,4 +1,4 @@
-package smartClient.client;
+package smartClient.client.util.futures;
 
 public interface ExceptionHandler {
 

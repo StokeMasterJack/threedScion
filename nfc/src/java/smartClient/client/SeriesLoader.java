@@ -5,6 +5,7 @@ import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.threedModel.shared.SeriesId;
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import smartClient.client.util.futures.Loader;
 import smartsoft.util.gwt.client.rpc.FailureCallback;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
@@ -53,17 +54,6 @@ public class SeriesLoader extends Loader<ThreedModel> {
 
     public SeriesId getSeriesId() {
         return seriesId;
-    }
-
-    @Override
-    public SeriesFuture createFuture(String name) {
-        return new SeriesFuture();
-    }
-
-    @Nonnull
-    @Override
-    public SeriesFuture ensureLoaded() {
-        return (SeriesFuture) super.ensureLoaded();
     }
 
 }

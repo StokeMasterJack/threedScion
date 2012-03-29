@@ -2,7 +2,7 @@ package com.tms.threed.threedCore.threedModel.client;
 
 import com.google.gwt.http.client.*;
 import com.tms.threed.threedCore.threedModel.shared.*;
-import smartClient.client.Future;
+import smartClient.client.util.futures.Future;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;

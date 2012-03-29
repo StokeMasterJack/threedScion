@@ -7,6 +7,8 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.Loader;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
@@ -80,8 +82,10 @@ public class Image implements Exportable {
         return cache.containsKey(url);
     }
 
-    private static void maybeCacheImage(Path url, ImageElement imageElement) {
+    public static void maybeCacheImage(Path url) {
         if (!cache.containsKey(url)) {
+            ImageElement imageElement = Document.get().createImageElement();
+            imageElement.setSrc(url.toString());
             cache.put(url, imageElement);
         }
     }
@@ -126,4 +130,19 @@ public class Image implements Exportable {
     }
 
 
+    public static class ImageLoadException extends RuntimeException {
+
+        private final Path url;
+
+        public ImageLoadException(Path url) {
+            super(url.toString());
+            this.url = url;
+        }
+
+        public Path getUrl() {
+            return url;
+        }
+
+
+    }
 }

@@ -5,8 +5,6 @@ import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.ImSeries;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.gwt.client.events3.ChangeEvent;
 import smartsoft.util.gwt.client.events3.ChangeListener;
 
 public class SeriesSession {
@@ -18,7 +16,7 @@ public class SeriesSession {
     private final ViewSession[] viewSessions;
     private final ViewSession viewSession;
 
-    public SeriesSession(ThreedModel threedModel, Profile profile) {
+    public SeriesSession(ThreedModel threedModel, Profile profile,ImageModeSession imageModeSession) {
         this.threedModel = threedModel;
         this.profile = profile;
         this.picksSession = new PicksSession(threedModel);
@@ -26,16 +24,10 @@ public class SeriesSession {
 
         viewSessions = new ViewSession[imageModel.getViewCount()];
         for (int i = 0; i < imageModel.getViewCount(); i++) {
-            viewSessions[i] = new ViewSession(threedModel, imageModel.getView(i), profile);
+            viewSessions[i] = new ViewSession(threedModel, imageModel.getView(i), profile,imageModeSession,picksSession,i==0);
         }
         viewSession = viewSessions[0];
 
-        picksSession.addChangeListener(new ChangeListener<PicksSession, FixResult>() {
-            @Override
-            public void onEvent(ChangeEvent<PicksSession, FixResult> ev) {
-                viewSession.setFixedPicks(ev.getNewValue());
-            }
-        });
 
     }
 
@@ -61,14 +53,14 @@ public class SeriesSession {
     }
 
     public void setAngle(int newValue) {
-        viewSession.setAngle(newValue);
+        viewSession.setCurrentAngle(newValue);
     }
 
-    public void addImageChangeListener1(ChangeListener<ViewSession, ImageBatch> listener) {
+    public void addImageChangeListener1(ImageChangeListener listener) {
         viewSession.addImageChangeListener1(listener);
     }
 
-    public void addImageChangeListener2(ChangeListener<ViewSession, ImageBatch> listener) {
+    public void addImageChangeListener2(ImageChangeListener listener) {
         viewSession.addImageChangeListener2(listener);
     }
 
@@ -77,7 +69,7 @@ public class SeriesSession {
     }
 
     public int getAngle() {
-        return viewSession.getAngle();
+        return viewSession.getCurrentAngle();
     }
 
     public ImageBatch getImageBatch() {
@@ -89,7 +81,7 @@ public class SeriesSession {
         return threedModel.getSeriesKey() + "";
     }
 
-    public ViewSession getViewSession() {
+    public ViewSession getCurrentViewSession() {
         return viewSession;
     }
 }

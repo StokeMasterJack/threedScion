@@ -1,9 +1,12 @@
 package smartClient.client;
 
 import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.OnSuccess;
 
 public class ThreedSessionFactory implements Exportable {
 
@@ -51,12 +54,12 @@ public class ThreedSessionFactory implements Exportable {
     }
 
     @Export
-    public ThreedSessionFuture createSession() {
+    public Future<ThreedSession> createSession() {
 
         final ThreedSessionFuture threedSessionFuture = new ThreedSessionFuture();
 
         final BrandLoader brandLoader = new BrandLoader(brandKey);
-        final BrandFuture brandFuture = brandLoader.ensureLoaded();
+        final Future<Brand> brandFuture = brandLoader.ensureLoaded();
 
         brandFuture.success(new OnSuccess() {
 
@@ -66,13 +69,12 @@ public class ThreedSessionFactory implements Exportable {
                 final Profile profile = brand.getProfile(profileKey);
 
                 final SeriesLoader seriesLoader = new SeriesLoader(brand.getSeriesId(seriesKey));
-                final SeriesFuture seriesFuture = seriesLoader.ensureLoaded();
+                final Future<ThreedModel> seriesFuture = seriesLoader.ensureLoaded();
 
                 seriesFuture.success(new OnSuccess() {
                     @Override
                     public void call() {
-                        SeriesSession seriesSession = new SeriesSession(seriesFuture.getResult(), profile);
-                        ThreedSession session = new ThreedSession(seriesSession);
+                        ThreedSession session = new ThreedSession(seriesFuture.getResult(), profile);
                         threedSessionFuture.setResult(session);
                     }
                 });
@@ -83,6 +85,19 @@ public class ThreedSessionFactory implements Exportable {
 
         return threedSessionFuture;
 
+    }
+
+    @Export
+    public static class ThreedSessionFuture extends Future<ThreedSession> implements Exportable {
+
+        public ThreedSessionFuture() {
+            super("ThreedSessionFuture");
+        }
+
+        @Override
+        public ThreedSession getResult() {
+            return super.getResult();
+        }
     }
 
 

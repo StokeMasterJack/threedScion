@@ -14,6 +14,7 @@
     <inherits name="com.tms.threed.previewPanel.PreviewPanel"/>
     <inherits name="com.tms.threed.jpgGen.JpgGen"/>
     <inherits name="com.tms.threed.repo.Repo"/>
+    <inherits name="com.google.common.collect.Collect"/>
 
     <stylesheet src="../index.css" />
 

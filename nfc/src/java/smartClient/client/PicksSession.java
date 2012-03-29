@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gwt.core.client.Scheduler;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
+import com.tms.threed.threedCore.imageModel.shared.slice.SimplePicks;
 import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.events3.ChangeListener;
 import smartsoft.util.gwt.client.events3.ChangeTopic;
 
@@ -73,5 +73,9 @@ public class PicksSession {
 
     public void addChangeListener(ChangeListener<PicksSession, FixResult> listener) {
         changeTopic.addListener(listener);
+    }
+
+    public SimplePicks getSimplePicks() {
+        return fixedPicks;
     }
 }

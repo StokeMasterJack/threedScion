@@ -2,6 +2,8 @@ package smartClient.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import org.timepedia.exporter.client.ExporterUtil;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.OnSuccess;
 import smartsoft.util.gwt.client.Console;
 
 public class SmartClient implements EntryPoint {
@@ -21,6 +23,9 @@ public class SmartClient implements EntryPoint {
             Console.log("Error in initThreed: " + e.toString());
             e.printStackTrace();
         }
+
+
+
 
 
     }

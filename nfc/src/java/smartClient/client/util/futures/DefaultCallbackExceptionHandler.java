@@ -1,4 +1,4 @@
-package smartClient.client;
+package smartClient.client.util.futures;
 
 import smartsoft.util.gwt.client.Console;
 

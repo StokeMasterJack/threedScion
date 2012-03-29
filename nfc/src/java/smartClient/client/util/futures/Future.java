@@ -1,9 +1,11 @@
-package smartClient.client;
+package smartClient.client.util.futures;
 
 import com.google.common.base.Preconditions;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
+import smartClient.client.ThreedSession;
+import smartClient.client.ViewSession;
 
 @Export
 public class Future<S> implements Exportable {
@@ -169,4 +171,5 @@ public class Future<S> implements Exportable {
     public S getThreedSession2() {
         return result;
     }
+
 }

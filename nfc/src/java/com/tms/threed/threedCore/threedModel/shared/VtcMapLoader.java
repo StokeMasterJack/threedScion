@@ -1,8 +1,8 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
 import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
-import smartClient.client.Future;
-import smartClient.client.OnSuccess;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.OnSuccess;
 
 public class VtcMapLoader extends Future<VtcMap> {
 

@@ -87,6 +87,18 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return a;
     }
 
+    public CacheAheadPolicy getCacheAheadPolicy() {
+        if (isExterior()) {
+            return new NumAnglesBothEitherSide(3);
+        } else {
+            return new NoCacheAhead();
+        }
+    }
+
+    public boolean isExterior() {
+        return viewKey.isExterior();
+    }
+
     public ImageStack getImageStack(SimplePicks picks, int angle) {
         Preconditions.checkNotNull(picks);
         Preconditions.checkArgument(angle > 0 && angle <= getAngleCount());

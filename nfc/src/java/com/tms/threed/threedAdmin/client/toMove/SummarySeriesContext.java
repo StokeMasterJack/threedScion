@@ -75,7 +75,7 @@ public class SummarySeriesContext {
         Slice viewState = previewPanel.getViewSnapForPanel(panelIndex);
         ImageStack imageStack = getImageStack(viewState);
         boolean includeZPngs = !Browser.isIe6();
-        ImmutableList<Path> urls = imageStack.getUrlListSmart(JpgWidth.W_STD, includeZPngs);
+        ImmutableList<Path> urls = imageStack.getUrlsJpgMode(JpgWidth.W_STD, includeZPngs);
         threedImagePanel.setImageUrls(urls);
     }
 

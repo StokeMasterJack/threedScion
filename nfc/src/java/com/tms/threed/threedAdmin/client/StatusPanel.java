@@ -142,9 +142,9 @@ public class StatusPanel extends Composite {
         JpgWidth jpgWidth = model.getCurrentJpgWidth();
 
         if (pngMode) {
-            urls = imageStack.getUrlListExploded(jpgWidth);
+            urls = imageStack.getUrlsPngMode(jpgWidth);
         } else {
-            urls = imageStack.getUrlListSmart(jpgWidth);
+            urls = imageStack.getUrlsJpgMode(jpgWidth);
         }
         for (final Path path : urls) {
             int r = t.getRowCount();

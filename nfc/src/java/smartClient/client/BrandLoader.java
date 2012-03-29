@@ -4,6 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
 import com.tms.threed.threedCore.threedModel.shared.VtcMap;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.Loader;
+import smartClient.client.util.futures.OnFailure;
+import smartClient.client.util.futures.OnSuccess;
 import smartsoft.util.gwt.client.Console;
 
 import javax.annotation.Nonnull;
@@ -50,15 +54,15 @@ public class BrandLoader extends Loader<Brand> {
 
     }
 
-    @Override
-    public BrandFuture createFuture(String name) {
-        return new BrandFuture();
-    }
-
-    @Nonnull
-    @Override
-    public BrandFuture ensureLoaded() {
-        return (BrandFuture) super.ensureLoaded();
-    }
+//    @Override
+//    public BrandFuture createFuture(String name) {
+//        return new BrandFuture();
+//    }
+//
+//    @Nonnull
+//    @Override
+//    public BrandFuture ensureLoaded() {
+//        return (BrandFuture) super.ensureLoaded();
+//    }
 
 }

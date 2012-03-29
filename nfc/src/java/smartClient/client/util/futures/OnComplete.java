@@ -1,4 +1,4 @@
-package smartClient.client;
+package smartClient.client.util.futures;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportClosure;

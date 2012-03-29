@@ -1,0 +1,36 @@
+Zero arg constructor
+
+    A zero arg constructor is *sometimes* (but who knows when) a requirement
+
+        The Image class would not work correctly until i added:
+
+            private Image() {
+                throw new UnsupportedOperationException("This is apparently required by gwt-exporter");
+            }
+
+        On the other hand, ThreedSession does just fine with no default constructor:
+
+            public ThreedSession(final SeriesSession session) {
+                this.session = session;
+            }
+
+    Guess:
+        Image is returned as an Image[] while ThreedSession is returned a single object
+
+
+Future and type params
+
+    When returning the future Future<ThreedSession> to js it puked. Returning ThreedSessionFuture worked fine, where:
+
+    class ThreedSessionFuture extends Future<ThreedSession>
+
+    Strangely, the ThreedSessionFuture doesn't even need to be part of the exported method signature.
+    This is what worked:
+
+        @Export
+        public Future<ThreedSession> createSession() {
+            final ThreedSessionFuture threedSessionFuture = new ThreedSessionFuture();
+            ...
+            return threedSessionFuture;
+        }
+

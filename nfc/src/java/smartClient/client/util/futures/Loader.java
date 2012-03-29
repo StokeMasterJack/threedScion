@@ -1,4 +1,4 @@
-package smartClient.client;
+package smartClient.client.util.futures;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
@@ -8,7 +8,10 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
- * Loads one thing, but with potentially multiple listeners (future holders)
+ * Represents a single task execution. There will be exactly one outcome (result or exception).
+ *
+ * While a loader represents a single task with a single completion,
+ * there may be multiple futures handed out (i.e. there may be multiple listeners)
  *
  * @param <S> the result type
  */

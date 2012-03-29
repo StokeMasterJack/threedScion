@@ -62,7 +62,7 @@ public class ConfiguredImageProviderEBro {
     public List<URL> getConfiguredImages(String viewName, int angle) {
         ImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
 
-        ImmutableList<Path> urlsJpgMode = imageStack.getUrlListSmart(JpgWidth.W_STD);
+        ImmutableList<Path> urlsJpgMode = imageStack.getUrlsJpgMode(JpgWidth.W_STD);
 
         ArrayList<URL> urls = new ArrayList<URL>();
         for (Path path : urlsJpgMode) {

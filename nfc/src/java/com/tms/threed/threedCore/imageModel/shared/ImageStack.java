@@ -22,8 +22,8 @@ public class ImageStack {
         this.pngs = pngs;
     }
 
-    public ImmutableList<Path> getUrlListSmart(JpgWidth jpgWidth) {
-        return getUrlListSmart(jpgWidth, true);
+    public ImmutableList<Path> getUrlsJpgMode(JpgWidth jpgWidth) {
+        return getUrlsJpgMode(jpgWidth, true);
     }
 
     public ImJpg getJpg(JpgWidth jpgWidth) {
@@ -42,7 +42,7 @@ public class ImageStack {
         return imView.getJpgFingerprint(pngs);
     }
 
-    public ImmutableList<Path> getUrlListSmart(JpgWidth jpgWidth, boolean includeZPngs) {
+    public ImmutableList<Path> getUrlsJpgMode(JpgWidth jpgWidth, boolean includeZPngs) {
         ImmutableList.Builder<ImPng> jpgPngs = ImmutableList.builder();
         ImmutableList.Builder<Path> urls = ImmutableList.builder();
 
@@ -69,7 +69,7 @@ public class ImageStack {
         return urls.build();
     }
 
-    public ImmutableList<Path> getUrlListExploded(JpgWidth jpgWidth) {
+    public ImmutableList<Path> getUrlsPngMode(JpgWidth jpgWidth) {
         ImmutableList.Builder<Path> urls = ImmutableList.builder();
         for (ImPng png : pngs) {
             urls.add(png.getUrl());

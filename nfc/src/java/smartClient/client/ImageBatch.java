@@ -5,11 +5,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import smartsoft.util.gwt.client.Console;
+import smartClient.client.util.futures.Future;
+import smartClient.client.util.futures.Loader;
+import smartClient.client.util.futures.OnComplete;
 import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ImageBatch implements Exportable {
@@ -27,7 +28,6 @@ public class ImageBatch implements Exportable {
 
         this.urls = urls;
 
-
         ImmutableList.Builder<Image> builder = ImmutableList.builder();
         for (int i = 0; i < urls.size(); i++) {
             final Image image = new Image(urls.get(i));
@@ -35,7 +35,6 @@ public class ImageBatch implements Exportable {
             imageFuture.complete(new OnComplete() {
                 @Override
                 public void call() {
-                    Console.log("complete: " + image);
                     if (isComplete()) {
                         throw new IllegalStateException();
                     }
@@ -52,36 +51,17 @@ public class ImageBatch implements Exportable {
         this.images = builder.build();
     }
 
-    public Future<ImageBatch> getLoadFuture() {
+    public Future<ImageBatch> ensureLoaded() {
         return loader.ensureLoaded();
     }
 
 
-    private int getImageCount() {
+    public int getImageCount() {
         return urls.size();
-    }
-
-    public boolean containsUrl(Path imageUrl) {
-        Preconditions.checkNotNull(imageUrl);
-        return urls.contains(imageUrl);
     }
 
     public ImmutableList<Image> getImages() {
         return images;
-    }
-
-    private Image[] getImageArray1() {
-        Image[] a = new Image[images.size()];
-
-        for (int i = 0; i < images.size(); i++) {
-            Image image = images.get(i);
-            a[i] = image;
-            Console.log("internal image[" + i + "] = " + image);
-        }
-        assert a.length > 0;
-
-        Console.log("internal a = " + a);
-        return a;
     }
 
     @Export
@@ -90,10 +70,8 @@ public class ImageBatch implements Exportable {
         for (int i = 0; i < images.size(); i++) {
             Image image = images.get(i);
             a[i] = image;
-            Console.log("internal image[" + i + "] = " + image);
         }
         assert a.length > 0;
-        Console.log("internal a = " + Arrays.toString(a));
         return a;
     }
 

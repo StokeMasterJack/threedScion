@@ -8,9 +8,6 @@ import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
 import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
 import com.tms.threed.previewPanel.client.main.thumbsPanel.ThumbPanel;
 import com.tms.threed.previewPanel.shared.viewModel.*;
-import smartClient.client.PrefetchStrategy;
-import smartClient.client.PrefetchStrategy2;
-import smartClient.client.Prefetcher;
 import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
 import com.tms.threed.threedCore.featureModel.shared.FixResult;
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
@@ -35,9 +32,6 @@ public class PreviewPaneContext {
     @Nonnull
     private final ThreedModel threedModel;
     private final FeatureModel featureModel;
-
-    private PrefetchStrategy prefetchStrategy;
-    private Prefetcher prefetcher;
 
     private JpgWidth jpgWidth;
     private FixResult fixResult;
@@ -134,21 +128,15 @@ public class PreviewPaneContext {
         refreshMainImage();
     }
 
-    public PrefetchStrategy getPrefetchStrategy() {
-        if (prefetchStrategy == null) {
-            prefetchStrategy = new PrefetchStrategy2(jpgWidth, imageUrlProvider, previewPanelContext.getViewStatesCopy());
-        }
-        return prefetchStrategy;
-    }
+//    public PrefetchStrategy getPrefetchStrategy() {
+//        if (prefetchStrategy == null) {
+//            prefetchStrategy = new PrefetchStrategy2(jpgWidth, imageUrlProvider, previewPanelContext.getViewStatesCopy());
+//        }
+//        return prefetchStrategy;
+//    }
 
 
-    public Prefetcher getPrefetcher() {
-        if (prefetcher == null) {
-            prefetcher = new Prefetcher(getPrefetchStrategy());
 
-        }
-        return prefetcher;
-    }
 
     public void refreshImagePanels() {
         refreshMainImage();
@@ -262,7 +250,7 @@ public class PreviewPaneContext {
 
     private void refreshImagePanelJpgMode(ViewPanel threedImagePanel, ImageStack imageStack) {
         boolean includeZPngs = !Browser.isIe6();
-        ImmutableList<Path> urls = imageStack.getUrlListSmart(jpgWidth, includeZPngs);
+        ImmutableList<Path> urls = imageStack.getUrlsJpgMode(jpgWidth, includeZPngs);
         System.out.println("urls = " + urls);
         threedImagePanel.setImageUrls(urls);
     }
@@ -293,10 +281,10 @@ public class PreviewPaneContext {
         if (picksError()) return;
         if (isPngMode()) return;
 
-        if (picksValid()) {
-            Prefetcher prefetcher1 = getPrefetcher();
-            prefetcher1.prefetch();
-        }
+//        if (picksValid()) {
+//            Prefetcher prefetcher1 = getPrefetcher();
+//            prefetcher1.prefetch();
+//        }
     }
 
 

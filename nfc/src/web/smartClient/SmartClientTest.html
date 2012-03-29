@@ -38,10 +38,11 @@
                 jQuery("#buttons button").removeAttr('disabled');
                 threedSession.setPicks(["Base", "V6", "6AT", "070"]);
 
-                threedSession.addImageChangeListener1(function () {
-                    console.log("imageBatch1: " + threedSession.getImageBatch());
-                    refreshView();
-                });
+
+//                threedSession.addImageChangeListener1(function () {
+//                    console.log("imageBatch1: " + threedSession.getImageBatch());
+//                    refreshView();
+//                });
 
                 threedSession.addImageChangeListener2(function () {
                     console.log("imageBatch2: " + threedSession.getImageBatch());
@@ -55,20 +56,44 @@
 
         function refreshView() {
             jQuery("#view").html(threedSession.getView());
-            jQuery("#angle").html(threedSession.getAngle());
+            jQuery("#angle").html(threedSession.getAngle().toString());
             jQuery("#urls").html(threedSession.getImageBatch().toString());
 
             var imageBatch = threedSession.getImageBatch();
             var images = imageBatch.getImageArray();
+            var maxImageIndex = images.length - 1;
 
-            images.forEach(function (image) {
-                jQuery("#threedImage").attr("src", image.getSrc());
+            var a1 = jQuery("#imageStack img");
+            a1.each(function (index, imageElement) {
+                var img = jQuery(imageElement);
+                if (index <= maxImageIndex) {
+                    img.show();
+                    var image = images[index];
+                    console.log(index + " " + image.getSrc());
+                    img.attr("src", image.getSrc());
+                } else {
+                    img.hide();
+                }
+
             });
+
+//            images.forEach(function (image) {
+//                console.log("ii");
+//                jQuery("#threedImage").attr("src", image.getSrc());
+//            });
 
 
         }
 
     </script>
+
+    <style>
+        img {
+            width: 599px;
+            height: 366px;
+            position: absolute;
+        }
+    </style>
 </head>
 <body style="padding: 1em">
 
@@ -76,6 +101,8 @@
 <div id="buttons">
 
     <!--<button onclick="refreshView()">Refresh View</button>-->
+    <button onclick="threedSession.setImageModeString('JPG')">JPG Mode</button>
+    <button onclick="threedSession.setImageModeString('PNG')">PNG Mode</button>
 
     <div style="padding-bottom: 2em">
         <button onclick="threedSession.previousAngle()">&lt;&lt;</button>
@@ -88,46 +115,43 @@
     </div>
 </div>
 
+<div style="position: relative;" id="imageStack">
+    <img style="z-index: 10">
+    <img style="z-index: 20">
+    <img style="z-index: 30">
+    <img style="z-index: 40">
+    <img style="z-index: 50">
+    <img style="z-index: 60">
+    <img style="z-index: 70">
+    <img style="z-index: 80">
+    <img style="z-index: 90">
+    <img style="z-index: 100">
+</div>
 
-<table>
-    <tr>
-        <td><img id="threedImage" style="padding-left: 1em;width: 599;height: 366"></td>
-        <td>
-            <div style="display: block;">
-                <table border="1" cellpadding='5'>
-                    <!--<colgroup>-->
-                    <!--<col style="width: 5em">-->
-                    <!--<col style="width: 50em">-->
-                    <!--</colgroup>-->
-                    <tr>
-                        <td>View</td>
-                        <td>
-                            <div id="view"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Angle</td>
-                        <td>
-                            <div id="angle"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>URLs</td>
-                        <td>
-                            <div id="urls"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>URLs</td>
-                        <td>
 
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-    </tr>
-</table>
+<div style="display: none;">
+    <table border="1" cellpadding='5'>
+        <tr>
+            <td>View</td>
+            <td>
+                <div id="view"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Angle</td>
+            <td>
+                <div id="angle"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>URLs</td>
+            <td>
+                <div id="urls"></div>
+            </td>
+        </tr>
+
+    </table>
+</div>
 
 
 </body>
