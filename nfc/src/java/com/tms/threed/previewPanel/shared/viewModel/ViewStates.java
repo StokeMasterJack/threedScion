@@ -172,6 +172,10 @@ public class ViewStates {
         return getCurrentView().isInterior();
     }
 
+    public void setCurrentSlice(Slice slice) {
+        setCurrentViewAndAngle(slice.getViewName(), slice.getAngle());
+    }
+
     public void setCurrentViewAndAngle(String viewName, int angle) {
         ViewKey viewKey = seriesInfo.getViewKeyByName(viewName);
         setCurrentViewAndAngle(viewKey, angle);

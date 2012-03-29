@@ -50,6 +50,10 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return viewKey;
     }
 
+    public int getInitialAngle() {
+        return viewKey.getInitialAngle();
+    }
+
     @Override
     public boolean isView() {
         return true;
@@ -287,5 +291,14 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         String fp = getJpgFingerprint(pngs);
         Path threedBaseJpgUrl = getSeries().getThreedBaseJpgUrl(jpgWidth);
         return threedBaseJpgUrl.append(fp).appendName(".jpg");
+    }
+
+    public int getNext(int currentAngle) {
+        return getViewKey().getNext(currentAngle);
+    }
+
+
+    public int getPrevious(int currentAngle) {
+        return getViewKey().getPrevious(currentAngle);
     }
 }

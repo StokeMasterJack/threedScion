@@ -14,8 +14,8 @@ public class Settings implements Serializable {
 
     private static final long serialVersionUID = -8175875818895006502L;
 
-    private  transient ValueChangeHandlers<Integer> threadCountChangeHandlers;
-    private  transient ValueChangeHandlers<List<JpgWidth>> jpgWidthsChangeHandlers;
+    private transient ValueChangeHandlers<Integer> threadCountChangeHandlers;
+    private transient ValueChangeHandlers<List<JpgWidth>> jpgWidthsChangeHandlers;
 
     private int jpgGenThreadCount = 5;
     private ArrayList<JpgWidth> jpgWidths = new ArrayList<JpgWidth>();
@@ -23,7 +23,7 @@ public class Settings implements Serializable {
     public void addJpgWidth(JpgWidth jpgWidth) {
         if (jpgWidths.contains(jpgWidth)) return;
         jpgWidths.add(jpgWidth);
-        if(jpgWidthsChangeHandlers!=null)  jpgWidthsChangeHandlers.fire(null);
+        if (jpgWidthsChangeHandlers != null) jpgWidthsChangeHandlers.fire(null);
     }
 
     public List<JpgWidth> getJpgWidths() {
@@ -35,21 +35,22 @@ public class Settings implements Serializable {
     }
 
     public void setJpgGenThreadCount(int jpgGenThreadCount) {
-        if(this.jpgGenThreadCount == jpgGenThreadCount) return;
+        if (this.jpgGenThreadCount == jpgGenThreadCount) return;
         if (jpgGenThreadCount < 1 || jpgGenThreadCount > 100) {
             throw new IllegalArgumentException();
         }
         this.jpgGenThreadCount = jpgGenThreadCount;
-        if(threadCountChangeHandlers!=null)  threadCountChangeHandlers.fire(jpgGenThreadCount);
+        if (threadCountChangeHandlers != null) threadCountChangeHandlers.fire(jpgGenThreadCount);
     }
 
     public static Settings createDefault() {
         Settings repoConfig = new Settings();
-        repoConfig.addJpgWidth(new JpgWidth(480));
+        repoConfig.addJpgWidth(JpgWidth.W_STD);
         return repoConfig;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Settings{" +
                 "jpgGenThreadCount=" + jpgGenThreadCount +
                 ", jpgWidths=" + jpgWidths +
@@ -58,16 +59,16 @@ public class Settings implements Serializable {
 
     public void removeJpgWith(JpgWidth jpgWidth) {
         jpgWidths.remove(jpgWidth);
-        if(jpgWidthsChangeHandlers!=null) jpgWidthsChangeHandlers.fire(null);
+        if (jpgWidthsChangeHandlers != null) jpgWidthsChangeHandlers.fire(null);
     }
 
     public HandlerRegistration addThreadCountChangeHandlers(ValueChangeHandler<Integer> handler) {
-        if(threadCountChangeHandlers==null) threadCountChangeHandlers = new ValueChangeHandlers<Integer>(this);
+        if (threadCountChangeHandlers == null) threadCountChangeHandlers = new ValueChangeHandlers<Integer>(this);
         return threadCountChangeHandlers.addHandler(ValueChangeEvent.getType(), handler);
     }
 
     public HandlerRegistration addJpgWidthsChangeHandlers(ValueChangeHandler<List<JpgWidth>> handler) {
-        if(jpgWidthsChangeHandlers==null) jpgWidthsChangeHandlers = new ValueChangeHandlers<List<JpgWidth>>(this);
+        if (jpgWidthsChangeHandlers == null) jpgWidthsChangeHandlers = new ValueChangeHandlers<List<JpgWidth>>(this);
         return jpgWidthsChangeHandlers.addHandler(ValueChangeEvent.getType(), handler);
     }
 }

@@ -2,7 +2,6 @@ package com.tms.threed.threedCore.imageModel.shared;
 
 import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
 import com.tms.threed.threedCore.threedModel.shared.*;
 import smartsoft.util.lang.shared.Path;
 
@@ -45,6 +44,10 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
 
     public SeriesInfo getSeriesInfo() {
         return seriesInfo;
+    }
+
+    public ImView getView(int i) {
+        return imViews.get(i);
     }
 
     public ImView getView(ViewKey viewKey) {
@@ -153,8 +156,13 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return getSeriesInfo().getInitialViewState();
     }
 
+    public ImView getInitialView() {
+        ViewKey initialViewKey = getSeriesInfo().getInitialView();
+        return getView(initialViewKey);
+    }
+
     public Path getThreedBaseUrl() {
-        if(repoBaseUrl == null) {
+        if (repoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl should not be null");
         }
         assert repoBaseUrl != null;
@@ -210,7 +218,8 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return t;
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != ImSeries.class) return false;
 
@@ -228,5 +237,9 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
         if (repoBaseUrl != null && thatRepoBase == null) return false;
         if (repoBaseUrl == null && thatRepoBase != null) return false;
         return repoBaseUrl.equals(thatRepoBase);
+    }
+
+    public int getViewCount() {
+        return imViews.size();
     }
 }

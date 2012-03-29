@@ -36,7 +36,7 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
         Slice slice = r.getSlice();
         ImmutableSet<String> picks = r.getVarCodes();
         JpgWidth jpgWidth = r.getJpgWidth();
-        ImageStack imageStack = threedModel.getImageStack(slice, picks);
+        ImageStack imageStack = threedModel.getImageStackFromRawPicks(slice, picks);
 
         ImmutableList<Path> urlListSmart = imageStack.getUrlListSmart(jpgWidth);
 

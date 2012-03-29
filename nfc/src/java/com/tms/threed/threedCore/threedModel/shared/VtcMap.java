@@ -1,6 +1,7 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
 import com.google.common.collect.ImmutableMap;
+import org.timepedia.exporter.client.Exportable;
 
 import java.util.Map;
 
@@ -41,6 +42,15 @@ public class VtcMap {
             }
         }
         return new VtcMap(builder.build());
+    }
+
+    public RootTreeId getRootTreeId(SeriesKey seriesKey) {
+        return map.get(seriesKey);
+    }
+
+    public SeriesId getSeriesId(SeriesKey seriesKey) {
+        RootTreeId rootTreeId = getRootTreeId(seriesKey);
+        return new SeriesId(seriesKey, rootTreeId);
     }
 
 }

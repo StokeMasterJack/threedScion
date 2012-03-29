@@ -1,8 +1,8 @@
 package com.tms.threed.repoWebService;
 
 import com.google.common.io.Files;
-import com.tms.threed.repo.shared.JpgKey;
 import com.tms.threed.repo.server.Repos;
+import com.tms.threed.repo.shared.JpgKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import smartsoft.util.servlet.http.headers.CacheUtil;
@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.Random;
 
 public class JpgHandler extends RepoHandler<JpgRequest> {
 
@@ -21,8 +22,9 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
     @Override
     public void handle(JpgRequest r) {
-
         log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
+
+        imageLoaderTestHelper();
 
         JpgKey jpgKey = r.getJpgKey();
 
@@ -40,11 +42,39 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
         response.setHeader("X-Content-Type-Options", "nosniff");
 
 
-        try {
+        try
+
+        {
             ServletOutputStream os = response.getOutputStream();
             Files.copy(jpgFile, os);
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             throw new NotFoundException("Problem streaming jpg object back to client", e);
+        }
+
+    }
+
+    private void imageLoaderTestHelper() {
+        boolean slowItDown = false;
+        boolean randomFailure = false;
+        if (slowItDown) {
+            try {
+                System.out.println("Sleeping...");
+                Thread.sleep(5000);
+                System.out.println("Awake!");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (randomFailure) {
+            Random rng = new Random();
+            int i = rng.nextInt(4);
+            if (i == 0) {
+                throw new NotFoundException();
+            }
         }
     }
 

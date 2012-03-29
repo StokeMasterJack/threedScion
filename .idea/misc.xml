@@ -165,6 +165,18 @@
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/gwt-exporter/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/gwt-exporter/pom.xml" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectFacetManager">
     <default-configurations>
       <entry facet-type="gwt">

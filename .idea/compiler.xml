@@ -32,6 +32,7 @@
   </component>
   <component name="JavacSettings">
     <option name="DEPRECATION" value="false" />
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.6" />
   </component>
 </project>
 

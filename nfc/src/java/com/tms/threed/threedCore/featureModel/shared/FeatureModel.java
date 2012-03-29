@@ -482,7 +482,7 @@ public class FeatureModel implements Vars {
         this.subSeries = subSeries;
     }
 
-    public ImmutableSet<Var> rawToPicks(ImmutableSet<String> picksRaw) {
+    public ImmutableSet<Var> varCodesToVars(Iterable<String> picksRaw) {
         ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
         for (String varCode : picksRaw) {
             Var var = getVarOrNull(varCode);
@@ -494,7 +494,7 @@ public class FeatureModel implements Vars {
     }
 
     public Assignments fixRaw(ImmutableSet<String> picksRaw) throws AssignmentException {
-        ImmutableSet<Var> picks = rawToPicks(picksRaw);
+        ImmutableSet<Var> picks = varCodesToVars(picksRaw);
         return fix(picks);
     }
 
@@ -519,7 +519,7 @@ public class FeatureModel implements Vars {
     }
 
     public FixResult fixupRaw(ImmutableSet<String> picksRaw) {
-        ImmutableSet<Var> picks = rawToPicks(picksRaw);
+        ImmutableSet<Var> picks = varCodesToVars(picksRaw);
         try {
             Assignments assignments = fix(picks);
             return new FixResult(picksRaw, picks, assignments, null);

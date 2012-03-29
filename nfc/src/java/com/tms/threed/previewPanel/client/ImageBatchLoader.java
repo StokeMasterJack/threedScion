@@ -1,7 +1,7 @@
 package com.tms.threed.previewPanel.client;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.gwt.user.client.ui.Image;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.ImageSize;
 import smartsoft.util.lang.shared.Path;
@@ -12,7 +12,7 @@ import java.util.List;
 public class ImageBatchLoader {
 
     private final ImmutableList<Path> urls;
-    private final ImmutableList<ImageLoader> imageLoaders;
+    private final ImmutableList<ImageLoaderOld> imageLoaders;
 
     private ArrayList<Path> completeSuccess = new ArrayList<Path>();
     private ArrayList<Path> completeError = new ArrayList<Path>();
@@ -23,7 +23,7 @@ public class ImageBatchLoader {
 
         this.urls = urls;
 
-        ImmutableList.Builder<ImageLoader> builder = ImmutableList.builder();
+        ImmutableList.Builder<ImageLoaderOld> builder = ImmutableList.builder();
 
         Console.log("Fetching jpgs: ");
         for (Path url : urls) {
@@ -32,9 +32,9 @@ public class ImageBatchLoader {
 
         for (int i = 0; i < urls.size(); i++) {
             Path url = urls.get(i);
-            builder.add(new ImageLoader(i, url, imageSize, new ImageLoader.CompleteCallback() {
+            builder.add(new ImageLoaderOld(i, url, imageSize, new ImageLoaderOld.CompleteCallback() {
                 @Override
-                public void call(ImageLoader.FinalOutcome finalOutcome) {
+                public void call(ImageLoaderOld.FinalOutcome finalOutcome) {
                     if (finalOutcome.isCompleteError()) {
                         completeError.add(finalOutcome.getUrl());
                     } else if (finalOutcome.isCompleteSuccess()) {
@@ -44,11 +44,17 @@ public class ImageBatchLoader {
                     }
 
                     if (finalOutcome.isBase()) {
-                        batchLoadListener.onFirstImageComplete(finalOutcome);
+                        Console.log("firstComplete");
+                        if (batchLoadListener != null) {
+                            batchLoadListener.onFirstImageComplete(finalOutcome);
+                        }
                     }
 
-                    if (isAllComplete()) {
-                        batchLoadListener.onAllImagesComplete();
+                    if (isComplete()) {
+                        Console.log("AllComplete");
+                        if (batchLoadListener != null) {
+                            batchLoadListener.onAllImagesComplete();
+                        }
                     }
                 }
             }));
@@ -61,7 +67,7 @@ public class ImageBatchLoader {
 
 
     public void showAll() {
-        for (ImageLoader imageLoader : imageLoaders) {
+        for (ImageLoaderOld imageLoader : imageLoaders) {
             imageLoader.setVisible();
         }
     }
@@ -87,7 +93,7 @@ public class ImageBatchLoader {
         return getLoadedCount() + getErrorCount();
     }
 
-    private boolean isAllComplete() {
+    private boolean isComplete() {
         return getCompleteCount() == getImageCount();
     }
 
@@ -99,7 +105,7 @@ public class ImageBatchLoader {
         return completeError.size() == getImageCount();
     }
 
-    private ImageLoader getBaseImage() {
+    private ImageLoaderOld getBaseImage() {
         if (imageLoaders != null && imageLoaders.size() > 0) {
             return imageLoaders.get(0);
         } else {
@@ -108,7 +114,7 @@ public class ImageBatchLoader {
     }
 
     private boolean baseImageHadError() {
-        ImageLoader baseImage = getBaseImage();
+        ImageLoaderOld baseImage = getBaseImage();
         if (baseImage == null) {
             return false;
         } else {
@@ -125,22 +131,12 @@ public class ImageBatchLoader {
         return this.completeError;
     }
 
-    public boolean isActive(Image image) {
-        String url = image.getUrl();
-        for (ImageLoader loader : imageLoaders) {
-            if (loader.matches(image)) {
-                return true;
-            }
-        }
-        for (Path path : urls) {
-            if (path.toString().equals(url)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean containsUrl(Path imageUrl) {
+        Preconditions.checkNotNull(imageUrl);
+        return urls.contains(imageUrl);
     }
 
-    public ImmutableList<ImageLoader> getLoaders() {
+    public ImmutableList<ImageLoaderOld> getLoaders() {
         return imageLoaders;
     }
 
@@ -148,7 +144,7 @@ public class ImageBatchLoader {
     public static interface BatchLoadListener {
         void onAllImagesComplete();
 
-        void onFirstImageComplete(ImageLoader.FinalOutcome finalOutcome);
+        void onFirstImageComplete(ImageLoaderOld.FinalOutcome finalOutcome);
     }
 
 

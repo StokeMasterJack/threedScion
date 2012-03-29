@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script type="text/javascript" language="javascript" src="jquery.js"></script>
+
+    <script>
+        jQuery.noConflict();
+    </script>
+
+    <script type="text/javascript"
+            language="javascript"
+            src="smartClient.SmartClient/smartClient.SmartClient.nocache.js">
+    </script>
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+            jQuery("#buttons button").attr('disabled', 'disabled');
+        });
+
+        var threedSession;
+
+        function initThreed() {
+
+            var factory = new smartClient.ThreedSessionFactory();
+
+            factory.setBrandKey("toyota");
+            factory.setProfileKey("wStd");
+            factory.setSeriesKey(2011, "avalon");
+
+            var threedSessionFuture = factory.createSession();
+
+            threedSessionFuture.success(function () {
+                threedSession = threedSessionFuture.getResult();
+                jQuery("#buttons button").removeAttr('disabled');
+                threedSession.setPicks(["Base", "V6", "6AT", "070"]);
+
+                threedSession.addImageChangeListener1(function () {
+                    console.log("imageBatch1: " + threedSession.getImageBatch());
+                    refreshView();
+                });
+
+                threedSession.addImageChangeListener2(function () {
+                    console.log("imageBatch2: " + threedSession.getImageBatch());
+                    refreshView();
+                });
+            });
+
+
+        }
+
+
+        function refreshView() {
+            jQuery("#view").html(threedSession.getView());
+            jQuery("#angle").html(threedSession.getAngle());
+            jQuery("#urls").html(threedSession.getImageBatch().toString());
+
+            var imageBatch = threedSession.getImageBatch();
+            var images = imageBatch.getImageArray();
+
+            images.forEach(function (image) {
+                jQuery("#threedImage").attr("src", image.getSrc());
+            });
+
+
+        }
+
+    </script>
+</head>
+<body style="padding: 1em">
+
+
+<div id="buttons">
+
+    <!--<button onclick="refreshView()">Refresh View</button>-->
+
+    <div style="padding-bottom: 2em">
+        <button onclick="threedSession.previousAngle()">&lt;&lt;</button>
+        <button onclick="threedSession.nextAngle()">&gt;&gt;</button>
+    </div>
+
+    <div style="padding-bottom: 2em;">
+        <button onclick="threedSession.setPicks(['Base', 'V6', '6AT', '202']);">'Base', 'V6', '6AT', '202'</button>
+        <button onclick="threedSession.setPicks(['LTD', 'V6', '6AT', '8N0']);">'LTD', 'V6', '6AT', '8N0'</button>
+    </div>
+</div>
+
+
+<table>
+    <tr>
+        <td><img id="threedImage" style="padding-left: 1em;width: 599;height: 366"></td>
+        <td>
+            <div style="display: block;">
+                <table border="1" cellpadding='5'>
+                    <!--<colgroup>-->
+                    <!--<col style="width: 5em">-->
+                    <!--<col style="width: 50em">-->
+                    <!--</colgroup>-->
+                    <tr>
+                        <td>View</td>
+                        <td>
+                            <div id="view"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Angle</td>
+                        <td>
+                            <div id="angle"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>URLs</td>
+                        <td>
+                            <div id="urls"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>URLs</td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

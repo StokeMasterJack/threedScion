@@ -1,39 +1,54 @@
 package com.tms.threed.threedCore.threedModel.shared;
 
+import com.google.common.base.Preconditions;
 import smartsoft.util.lang.shared.ImageSize;
 
 import java.io.Serializable;
 
-import static smartsoft.util.date.shared.StringUtil.isEmpty;
-
 /**
  * Used for scaling. If this returns null then no scaling (i.e.JPG image dims same as input png image dims)
  */
-public class JpgWidth implements Serializable{
+public class JpgWidth implements Serializable {
 
     private static final long serialVersionUID = -30797081563647027L;
 
-    private static final String W_STD_STRING = "wStd";
-    private static final String STD_STRING = "Std";
+    private static final String STD_KEY = "wStd";
+    public static final Integer STD_WIDTH = ImageSize.STD_PNG.getWidth();
 
-    private static final String STANDARD_STRING = "standard";
-    public static final JpgWidth W_STD = new JpgWidth((Integer) null);
+    public static final JpgWidth W_STD = new JpgWidth(STD_KEY, STD_WIDTH);
 
-    private Integer width;
+    private final String key;
+    private final Integer width;
 
     /**
      * @param width jpg width in pixes or null to use same width as png
      */
-    public JpgWidth(Integer width) {
-        this.width = width;
+    public JpgWidth(String key, Integer width) {
+        Preconditions.checkNotNull(key);
+        Preconditions.checkNotNull(width);
 
         if (width != null) {
             if (width < 10 || width > 5000) throw new IllegalArgumentException("Bad JpgWidth");
         }
 
+        this.key = key;
+        this.width = width;
     }
 
-    private JpgWidth(){}
+    public JpgWidth(Integer width) {
+        Preconditions.checkNotNull(width);
+
+        if (width != null) {
+            if (width < 10 || width > 5000) throw new IllegalArgumentException("Bad JpgWidth");
+        }
+
+        if (STD_WIDTH.equals(width)) {
+            this.key = "wStd";
+        } else {
+            this.key = "w" + width;
+        }
+        this.width = width;
+    }
 
     /**
      * @param widthString jpg width string. examples of valid values:
@@ -48,53 +63,49 @@ public class JpgWidth implements Serializable{
      */
     public JpgWidth(String widthString) {
         if (isStandard(widthString)) {
-            width = null;
+            key = "wStd";
+            width = ImageSize.STD_PNG.getWidth();
         } else if (widthString.length() < 3) {
             throw new IllegalArgumentException("Bad JpgWidth: " + widthString);
         } else {
             if (widthString.startsWith("w")) {
-                widthString = widthString.substring(1);
-            }
-            try {
-                width = new Integer(widthString);
-            } catch (NumberFormatException e) {
+                key = widthString;
+                try {
+                    width = Integer.parseInt(widthString.substring(1));
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Bad JpgWidth: " + widthString);
+                }
+            } else {
                 throw new IllegalArgumentException("Bad JpgWidth: " + widthString);
             }
         }
     }
 
     public static boolean isStandard(String jpgWidthString) {
-        if (isEmpty(jpgWidthString)) return true;
-        if (jpgWidthString.equalsIgnoreCase(STANDARD_STRING)) return true;
-        if (jpgWidthString.equalsIgnoreCase(W_STD_STRING)) return true;
-        if (jpgWidthString.equalsIgnoreCase(STD_STRING)) return true;
-        if (jpgWidthString.toLowerCase().contains("standard")) return true;
-        if (jpgWidthString.toLowerCase().contains("std")) return true;
-        return false;
+        return STD_KEY.equals(jpgWidthString);
     }
 
+    //    public boolean isSta
     public String stringValue() {
-        if (width == null) {
-            return W_STD_STRING;
+        if (isStandard()) {
+            return STD_KEY;
         } else {
             return "w" + width;
         }
     }
+
 
     public String getUrlPathFolderName() {
-        if (width == null) {
-            return W_STD_STRING;
-        } else {
-            return "w" + width;
-        }
+        return stringValue();
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return stringValue();
     }
 
     public boolean isStandard() {
-        return width == null;
+        return key.equals(STD_KEY);
     }
 
     public boolean isScaled() {
@@ -135,27 +146,17 @@ public class JpgWidth implements Serializable{
         return getJpgSize(ImageSize.STD_PNG);
     }
 
-    public ImageSize getJpgSize(ImageSize pngSize) {
-        if (width == null) return pngSize;
+    public ImageSize getJpgSize(ImageSize ratio) {
+        double widthHeightRatio = ratio.getWidthHeightRatio();
+        return getJpgSize(widthHeightRatio);
+    }
 
-        int pngWidth = pngSize.getWidth();
-        int pngHeight = pngSize.getHeight();
+    public ImageSize getJpgSize(double widthHeightRatio) {
+        double thisHeight = ((double) width) / widthHeightRatio;
+        return new ImageSize(width, (int) thisHeight);
+    }
 
-        int iJpgWidth = width.intValue();
-        double dJpgWidth = iJpgWidth;
-
-        double dPngWidth = pngWidth;
-
-
-        double sx = dJpgWidth / dPngWidth;
-        double sy = sx;
-
-        double dJpgHeight = pngHeight * sy;
-
-        int iJpgHeight = (int) dJpgHeight;
-
-        ImageSize jpgImageSize = new ImageSize(iJpgWidth, iJpgHeight);
-        return jpgImageSize;
-
+    public String getKey() {
+        return key;
     }
 }

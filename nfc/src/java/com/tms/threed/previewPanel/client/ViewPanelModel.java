@@ -1,12 +1,6 @@
 package com.tms.threed.previewPanel.client;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.tms.threed.smartClients.gwt.client.ThreedSession;
-import smartsoft.util.lang.shared.Path;
-
-import java.util.List;
+import smartClient.client.ThreedSession;
 
 public class ViewPanelModel {
 
@@ -20,12 +14,7 @@ public class ViewPanelModel {
         this.threedSession = threedSession;
         this.panelIndex = panelIndex;
 
-        threedSession.addUrlChangeHandler(new ValueChangeHandler<ImmutableList<Path>>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<ImmutableList<Path>> event) {
 
-            }
-        });
 
 //        imageBatchLoader = new ImageBatchLoader();
     }

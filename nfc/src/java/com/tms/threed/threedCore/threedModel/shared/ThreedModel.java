@@ -8,6 +8,7 @@ import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
 import com.tms.threed.threedCore.imageModel.shared.*;
 import com.tms.threed.threedCore.imageModel.shared.slice.ImageSlice;
 import com.tms.threed.threedCore.imageModel.shared.slice.SimplePicks;
+import org.timepedia.exporter.client.Exportable;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Path;
 
@@ -25,10 +26,14 @@ public class ThreedModel {
 
     private final Map<Slice, ImageSlice> imageSliceMap = new HashMap<Slice, ImageSlice>();
 
+//    private final
+
     public final ViewKey exteriorViewKey;
     public final ViewKey interiorViewKey;
 
+
     public final Slice heroSlice;
+
 
     public ThreedModel(FeatureModel featureModel, ImSeries imageModel) {
         assert featureModel != null;
@@ -82,7 +87,22 @@ public class ThreedModel {
         return view.getImageStack(picks, slice.getAngle());
     }
 
-    public ImageStack getImageStack(Slice slice, ImmutableSet<String> rawPicks) {
+    public ImageStack getImageStack(Slice slice, Assignments fixedPicks) {
+        assert slice != null;
+        assert fixedPicks != null;
+        ImView view = imageModel.getView(slice.getViewName());
+        return view.getImageStack(fixedPicks, slice.getAngle());
+    }
+
+    public ImageStack getImageStack(Slice slice, ImmutableSet<Var> picks) {
+        assert slice != null;
+        assert picks != null;
+        ImView view = imageModel.getView(slice.getViewName());
+        Assignments assignments = featureModel.fix(picks);
+        return view.getImageStack(assignments, slice.getAngle());
+    }
+
+    public ImageStack getImageStackFromRawPicks(Slice slice, ImmutableSet<String> rawPicks) {
         assert slice != null;
         assert rawPicks != null;
         ImView view = imageModel.getView(slice.getViewName());
@@ -136,6 +156,10 @@ public class ThreedModel {
 
     public Slice getInitialSlice() {
         return getImageModel().getInitialViewState();
+    }
+
+    public ImView getInitialView() {
+        return getImageModel().getInitialView();
     }
 
     public SeriesKey getSeriesKey() {
@@ -278,7 +302,13 @@ public class ThreedModel {
         return getFeatureModel().getDisplayName();
     }
 
-    public ImmutableSet<Var> fixRaw(ImmutableSet<String> picksRaw) {
-        return featureModel.rawToPicks(picksRaw);
+    public ImmutableSet<Var> varCodesToVars(Iterable<String> picksRaw) {
+        return featureModel.varCodesToVars(picksRaw);
     }
+
+    public List<ImView> getViews() {
+        return imageModel.getViews();
+    }
+
+
 }

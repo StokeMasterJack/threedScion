@@ -2,11 +2,11 @@ package com.tms.threed.threedCore.threedModel.client;
 
 import com.google.gwt.http.client.*;
 import com.tms.threed.threedCore.threedModel.shared.*;
+import smartClient.client.Future;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.gwt.client.rpc.UiLog;
-import smartsoft.util.gwt.client.rpc2.Future;
 import smartsoft.util.lang.shared.Path;
 
 /**
@@ -21,6 +21,8 @@ import smartsoft.util.lang.shared.Path;
  *
  */
 public class ThreedModelClient {
+
+    private static final Path DEFAULT_REPO_BASE_URL = new Path("/configurator-content");
 
     private final String urlTemplate = "${repoBase.url}/${seriesName}/${seriesYear}/3d/models/${rootTreeId}.json";
 
@@ -106,13 +108,18 @@ public class ThreedModelClient {
                 if (response.getStatusCode() != 200) {
                     f.setException(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
                 } else {
+                    VtcMap vtcMap = null;
                     try {
-                        final VtcMap vtcMap = VtcMap.parse(response.getText());
-                        f.setResult(vtcMap);
+                        vtcMap = VtcMap.parse(response.getText());
                     } catch (Exception e) {
-                        f.setException(new RuntimeException("Problem parsing vtcMap[" + response.getText() + "]", e));
+                        RuntimeException exception = new RuntimeException("Problem parsing vtcMap[" + response.getText() + "]", e);
+                        exception.printStackTrace();
+                        Console.error(exception);
+                        f.setException(exception);
                     }
-
+                    if (vtcMap != null) {
+                        f.setResult(vtcMap);
+                    }
                 }
             }
 
@@ -136,7 +143,6 @@ public class ThreedModelClient {
 
 
     public Req<ThreedModel> fetchThreedModel(final SeriesId seriesId) {
-
         final Req<ThreedModel> r = newRequest("fetchThreedModel");
 
         Path url = getThreedModelUrl(seriesId);
@@ -224,6 +230,10 @@ public class ThreedModelClient {
 
     public ThreedModel fetchThreedModelFromPage() {
         return jsonThreedModelBuilder.createModelFromJsInPage();
+    }
+
+    public static ThreedModelClient create() {
+        return new ThreedModelClient(UiLog.DEFAULT, DEFAULT_REPO_BASE_URL);
     }
 
     public static interface Callback {

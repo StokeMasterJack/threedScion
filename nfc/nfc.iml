@@ -38,6 +38,19 @@
         </packaging>
       </configuration>
     </facet>
+    <facet type="web" name="smartClient">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/web/smartClient/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/web/smartClient" relative="/" />
+        </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/java" />
+        </sourceRoots>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -59,7 +72,8 @@
     <orderEntry type="module" module-name="util" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" name="guava-11" level="application" />
-    <orderEntry type="library" name="guava-gwt-11" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="guava-gwt-11" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="project" />
   </component>
 </module>
 

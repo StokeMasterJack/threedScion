@@ -62,14 +62,14 @@ public class ThreedImagePanel extends Composite {
             }
 
             @Override
-            public void onFirstImageComplete(ImageLoader.FinalOutcome finalOutcome) {
+            public void onFirstImageComplete(ImageLoaderOld.FinalOutcome finalOutcome) {
                 clearNonActiveImages();
             }
 
         });
 
-        List<ImageLoader> loaders = batchLoader.getLoaders();
-        for (ImageLoader loader : loaders) {
+        List<ImageLoaderOld> loaders = batchLoader.getLoaders();
+        for (ImageLoaderOld loader : loaders) {
             absPanel.add(loader.getImage());
         }
 
@@ -149,8 +149,13 @@ public class ThreedImagePanel extends Composite {
         ArrayList<Widget> toBeRemoved = new ArrayList<Widget>();
         for (int i = 0; i < L; i++) {
             Widget w = absPanel.getWidget(i);
-            if (w instanceof Image && !isActive((Image) w)) {
-                toBeRemoved.add(w);
+            if (w instanceof Image) {
+                Image img = (Image) w;
+                String url = img.getUrl();
+                Path urlPath = new Path(url);
+                if (!isActive(urlPath)) {
+                    toBeRemoved.add(w);
+                }
             }
         }
 
@@ -163,8 +168,8 @@ public class ThreedImagePanel extends Composite {
         void allImagesComplete(List<Path> errors, boolean fatal);
     }
 
-    public boolean isActive(Image image) {
-        return batchLoader.isActive(image);
+    public boolean isActive(Path imageUrl) {
+        return batchLoader.containsUrl(imageUrl);
     }
 
 

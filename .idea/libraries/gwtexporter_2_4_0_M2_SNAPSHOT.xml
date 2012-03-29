@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="gwtexporter-2.4.0-M2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$daven$/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$daven$/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar!/" />
+    </SOURCES>
+  </library>
+</component>
