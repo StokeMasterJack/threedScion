@@ -66,7 +66,6 @@
     <orderEntry type="library" name="log4j-1.2.8" level="project" />
     <orderEntry type="library" name="commons-logging-1.0.3" level="project" />
     <orderEntry type="library" name="jgit-snap" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="gwt-user-2" level="project" />
     <orderEntry type="library" name="jackson-1.7.4" level="project" />
     <orderEntry type="library" scope="TEST" name="junit4" level="project" />
     <orderEntry type="module" module-name="util" />
@@ -74,6 +73,7 @@
     <orderEntry type="library" name="guava-11" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="guava-gwt-11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="guava 11" level="application" />
   </component>
 </module>
 

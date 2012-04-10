@@ -1,11 +1,17 @@
 package com.tms.threedToyota.byt.client.notification;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.BrandKey;
+import threed.core.threedModel.shared.SeriesKey;
 
 public final class JsVehicle extends JavaScriptObject {
 
-    protected JsVehicle() {}
+    protected JsVehicle() {
+    }
+
+    private native String getBrand() /*-{
+        return this.brand;
+    }-*/;
 
     private native String getName() /*-{
         return this.name;
@@ -18,8 +24,11 @@ public final class JsVehicle extends JavaScriptObject {
     public SeriesKey getSeriesKey() {
         int y = getYear();
         String n = getName();
-        if(n == null) throw new IllegalStateException();
-        return new SeriesKey(y, n);
+        String b = getBrand();
+        if (n == null) throw new IllegalStateException();
+        if (b == null) throw new IllegalStateException();
+        BrandKey brandKey = BrandKey.fromString(b);
+        return new SeriesKey(brandKey, y, n);
     }
 
 }

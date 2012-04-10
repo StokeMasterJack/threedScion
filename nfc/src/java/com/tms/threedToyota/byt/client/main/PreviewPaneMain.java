@@ -2,23 +2,23 @@ package com.tms.threedToyota.byt.client.main;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.tms.threed.previewPanel.client.main.PreviewPanelMainContext;
-import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedAdmin.client.toMove.PreviewPaneContext;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import threed.skin.previewPanel.client.PreviewPanelMainContext;
+import threed.skin.previewPanel.client.chatPanel.ChatInfo;
+import threed.skin.common.client.PreviewPaneContext;
+import threed.core.featureModel.shared.FeatureModel;
+import threed.core.featureModel.shared.FixResult;
+import threed.core.featureModel.shared.boolExpr.Var;
+import threed.core.featureModel.shared.picks.PicksChangeEvent;
+import threed.core.featureModel.shared.picks.PicksChangeHandler;
+import threed.core.threedModel.shared.JpgWidth;
+import threed.core.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.ThreedModel;
 import com.tms.threedToyota.byt.client.PreviewPane;
 import com.tms.threedToyota.byt.client.externalState.ExternalState;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threedToyota.byt.client.notification.AccessoryWithFlashOrientationHandler;
 import com.tms.threedToyota.byt.client.notification.NotificationCenterBridge;
+import threed.smartClient.client.api.ThreedModelClient;
 import smartsoft.util.gwt.client.Console;
 
 import static smartsoft.util.date.shared.StringUtil.isEmpty;
@@ -31,7 +31,7 @@ public class PreviewPaneMain extends PreviewPane {
 
     public PreviewPaneMain() {
 
-        externalState = new ExternalState(new ThreedModelClient(null));
+        externalState = new ExternalState(new ThreedModelClient());
 
         final ThreedModel threedModel = externalState.getThreedModel();
         final FeatureModel featureModel = threedModel.getFeatureModel();
@@ -130,7 +130,6 @@ public class PreviewPaneMain extends PreviewPane {
     public void updateImage2(ExternalStateSnapshot externalStateSnapshot) {
         externalState.updateExternalState(externalStateSnapshot);
     }
-
 
 
 }

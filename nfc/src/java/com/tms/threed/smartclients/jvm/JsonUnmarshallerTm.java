@@ -1,13 +1,13 @@
 package com.tms.threed.smartClients.jvm;
 
 import com.google.common.io.Closeables;
-import com.tms.threed.threedCore.featureModel.server.JsonToFmJvm;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.imageModel.server.JsonToImJvm;
-import com.tms.threed.threedCore.imageModel.shared.ImSeries;
-import com.tms.threed.threedCore.threedModel.shared.SeriesInfoBuilder;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import threed.core.featureModel.server.JsonToFmJvm;
+import threed.core.featureModel.shared.FeatureModel;
+import threed.core.imageModel.server.JsonToImJvm;
+import threed.core.imageModel.shared.ImSeries;
+import threed.core.threedModel.shared.SeriesInfoBuilder;
+import threed.core.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.ThreedModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonNode;

@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import com.tms.threedToyota.byt.client.main.PreviewPaneMain;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.SeriesKey;
 
 import java.util.HashMap;
 import java.util.Map;

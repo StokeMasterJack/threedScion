@@ -1,11 +1,8 @@
 package com.tms.threed.smartClients.jvm;
 
-import com.tms.threed.repo.server.Repos;
-import com.tms.threed.threedCore.threedModel.shared.RootTreeId;
+import threed.repo.server.Repos;
+import threed.core.threedModel.shared.*;
 
-import com.tms.threed.threedCore.threedModel.shared.SeriesId;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
 import smartsoft.util.lang.shared.Path;
 import org.junit.Test;
 
@@ -35,7 +32,7 @@ public class RepoClientTest {
 
         //read from local repo using XML file - just to have something to compare against
         Repos repos = Repos.get();
-        ThreedModel threedModel2 = repos.getThreedModel("avalon", 2011);
+        ThreedModel threedModel2 = repos.getThreedModel(BrandKey.TOYOTA,"avalon", 2011);
 
         assertEquals(threedModel1, threedModel2);
 

@@ -1,8 +1,8 @@
 package com.tms.threedToyota.byt.client.externalState.picks;
 
-import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.featureModel.shared.picks.PicksSnapshot;
-import com.tms.threed.threedCore.threedModel.client.VarPicksSnapshot;
+import threed.core.featureModel.shared.boolExpr.Var;
+import threed.core.featureModel.shared.picks.PicksSnapshot;
+import threed.core.threedModel.client.VarPicksSnapshot;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -7,7 +7,7 @@
 
     <filter>
         <filter-name>threedAdminFilter</filter-name>
-        <filter-class>com.tms.threed.threedAdmin.server.ThreedAdminFilter</filter-class>
+        <filter-class>threed.admin.server.ThreedAdminFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>threedAdminService</servlet-name>
-        <servlet-class>com.tms.threed.threedAdmin.server.ThreedAdminServlet</servlet-class>
+        <servlet-class>threed.admin.server.ThreedAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>threedAdminService</servlet-name>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>jpgGenService</servlet-name>
-        <servlet-class>com.tms.threed.jpgGen.server.JpgGenServlet</servlet-class>
+        <servlet-class>threed.jpgGen.server.JpgGenServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>jpgGenService</servlet-name>

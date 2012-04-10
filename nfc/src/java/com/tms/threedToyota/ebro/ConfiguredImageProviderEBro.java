@@ -3,12 +3,12 @@ package com.tms.threedToyota.ebro;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.tms.threed.smartClients.jvm.RepoClient;
-import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.imageModel.shared.ImageStack;
-import com.tms.threed.threedCore.threedModel.shared.JpgWidth;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
-import com.tms.threed.threedCore.threedModel.shared.ViewKey;
+import threed.core.featureModel.shared.FixResult;
+import threed.core.imageModel.shared.ImImageStack;
+import threed.core.threedModel.shared.JpgWidth;
+import threed.core.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.ThreedModel;
+import threed.core.threedModel.shared.ViewKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import smartsoft.util.lang.shared.Path;
@@ -60,7 +60,7 @@ public class ConfiguredImageProviderEBro {
     }
 
     public List<URL> getConfiguredImages(String viewName, int angle) {
-        ImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
+        ImImageStack imageStack = threedModel.getImageStack(viewName, angle, fixResult.getAssignments());
 
         ImmutableList<Path> urlsJpgMode = imageStack.getUrlsJpgMode(JpgWidth.W_STD);
 

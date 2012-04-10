@@ -1,7 +1,7 @@
 package com.tms.threedToyota.byt.client.externalState.raw;
 
-import com.tms.threed.previewPanel.client.main.chatPanel.ChatInfo;
-import com.tms.threed.threedCore.threedModel.client.RawPicksSnapshot;
+import threed.skin.previewPanel.client.chatPanel.ChatInfo;
+import threed.core.threedModel.client.RawPicksSnapshot;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Objects;
 import smartsoft.util.lang.shared.Path;

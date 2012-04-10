@@ -35,7 +35,8 @@ void main(){
       '$gwtHome/validation-api-1.0.0.GA-sources.jar',
       '$lib/jsr305/1.0/jsr305.jar',
       '$lib/guava/11.0/guava-11.0.2.jar',
-      '$lib/guava/11.0/guava-gwt-11.0.2.jar'
+      '$lib/guava/11.0/guava-gwt-11.0.2.jar',
+      '$lib/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar',
     ];
 
     var cp = "${src}:${Strings.join(libs,':')}";

@@ -1,24 +1,19 @@
 package com.tms.threedToyota.byt.client.summary;
 
-import com.google.common.collect.ImmutableSet;
-import com.tms.threed.previewPanel.client.summary.PreviewPanelSummary;
-import com.tms.threed.previewPanel.client.summary.PreviewPanelSummaryContext;
-import com.tms.threed.threedAdmin.client.toMove.SummarySeriesContext;
-import com.tms.threed.threedCore.featureModel.shared.FeatureModel;
-import com.tms.threed.threedCore.featureModel.shared.FixResult;
-import com.tms.threed.threedCore.featureModel.shared.boolExpr.Var;
-import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeEvent;
-import com.tms.threed.threedCore.featureModel.shared.picks.PicksChangeHandler;
-import com.tms.threed.threedCore.threedModel.client.SimplePicks2;
-import com.tms.threed.threedCore.threedModel.client.ThreedModelClient;
-import com.tms.threed.threedCore.threedModel.shared.SeriesKey;
-import com.tms.threed.threedCore.threedModel.shared.ThreedModel;
+import threed.skin.summaryPanel.client.PreviewPanelSummary;
+import threed.skin.summaryPanel.client.PreviewPanelSummaryContext;
+import threed.admin.client.toMove.SummarySeriesContext;
+import threed.core.featureModel.shared.FeatureModel;
+import threed.core.featureModel.shared.FixResult;
+import threed.core.featureModel.shared.picks.PicksChangeEvent;
+import threed.core.featureModel.shared.picks.PicksChangeHandler;
+import threed.smartClient.client.api.ThreedModelClient;
+import threed.core.threedModel.shared.SeriesKey;
+import threed.core.threedModel.shared.ThreedModel;
 import com.tms.threedToyota.byt.client.PreviewPane;
 import com.tms.threedToyota.byt.client.externalState.ExternalState;
 import com.tms.threedToyota.byt.client.externalState.raw.ExternalStateSnapshot;
 import smartsoft.util.gwt.client.Console;
-
-import java.util.Set;
 
 public class PreviewPaneSummary extends PreviewPane {
 
