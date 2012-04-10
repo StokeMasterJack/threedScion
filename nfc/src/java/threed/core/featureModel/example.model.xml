@@ -1,0 +1,133 @@
+<model year="2010" name="Yaris" code="14">
+    <features>
+        <trim pick="*">
+
+            <grade pick="1">
+                <feature code="3Door" includes="LB" conflicts="" name="3-Door Liftback"/>
+                <feature code="4Door" includes="Sedan" conflicts="" name="4-Door Sedan"/>
+                <feature code="5Door" includes="LB" conflicts="" name="5-Door Liftback"/>
+            </grade>
+
+            <bodyType pick="1" derived="true">
+                <feature code="LB" name="Liftback"/>
+                <feature code="Sedan" name="Sedan"/>
+            </bodyType>
+
+            <engine pick="1">
+                <feature code="L4" name="1.5L 4-Cyl" manditory="true"/>
+            </engine>
+
+            <transmission pick="1">
+                <feature code="5MT" name="5-Speed Manual"/>
+                <feature code="4AT" name="6-Speed Auto"/>
+            </transmission>
+
+            <modelCode pick="1" derived="true">
+                <feature code="1421" iffs="L4 5MT 3Door" name="3-Door Liftback 5-Speed Manual"/>
+                <feature code="1422" iffs="L4 4AT 3Door" name="3-Door Liftback 4-Speed Auto"/>
+                <feature code="1441" iffs="L4 5MT 4Door" name="4-Door Sedan 5-Speed Manual"/>
+                <feature code="1442" iffs="L4 4AT 4Door" name="4-Door Sedan 4-Speed Auto"/>
+                <feature code="1461" iffs="L4 5MT 5Door" name="5-Door Liftback 5-Speed Manual"/>
+                <feature code="1462" iffs="L4 4AT 5Door" name="5-Door Liftback 4-Speed Auto"/>
+            </modelCode>
+
+            <!--<wheels pick="1" derived="true">
+                <feature code="14W" name="Standard Wheels"/>
+                <feature code="15W" name="Upgrade/Sport Wheels"/>
+                <feature code="18W" name="TRD Wheels"/>
+            </wheels>-->
+
+        </trim>
+        <color>
+            <exterior pick="1">
+                <feature code="068" name="Polar White"/>
+                <feature code="1F8" conflicts="4Door" name="Meteorite Metallic"/>
+                <feature code="209" name="Black Sand Pearl"/>
+                <feature code="3P0" conflicts="4Door" name="Absolutely Red"/>
+                <feature code="3Q8" conflicts="4Door" name="Carmine Red Metallic"/>
+                <feature code="5A6" conflicts="4Door" name="Yellow Jolt"/>
+                <feature code="8T0" conflicts="4Door" name="Blazing Blue Pearl"/>
+                <feature code="8T1" conflicts="4Door" name="Bayou Blue Pearl"/>
+                <feature code="1E0" conflicts="3Door 5Door" name="Flint Mica"/>
+                <feature code="1E7" conflicts="3Door 5Door" name="Silver Streak Mica"/>
+                <feature code="3R3" conflicts="3Door 5Door" name="Barcelona Red Metallic"/>
+                <feature code="777" conflicts="3Door 5Door" name="Jade Sea Metallic"/>
+                <feature code="8N0" conflicts="3Door 5Door" name="Zephyr Blue Metallic"/>
+                <feature code="8R3" conflicts="3Door 5Door" name="Pacific Blue Metallic"/>
+                <feature code="8T7" conflicts="3Door 5Door" name="Blue Streak Metallic"/>
+            </exterior>
+            <interior pick="1">
+                <feature code="FC18" includes="3Door Charcoal Fabric" conflicts="4Door 5Door Sport 1E0 1E7 3R3 777 8N0 8R3 8T7" name="3 Door Liftback - Dark Charcoal Fabric"/>
+                <feature code="FB18" includes="3Door Charcoal Fabric Sport" conflicts="4Door 5Door 1E0 1E7 3R3 777 8N0 8R3 8T7" name="3 Door Liftback - Dark Charcoal Sport Fabric"/>
+                <feature code="FU18" includes="5Door Charcoal Fabric" conflicts="3Door 4Door Sport 1E0 1E7 3R3 5A6 777 8N0 8R3 8T7" name="5 Door Liftback - Dark Charcoal Fabric"/>
+                <feature code="FT18" includes="5Door Charcoal Fabric Sport" conflicts="3Door 4Door 1E0 1E7 3R3 5A6 777 8N0 8R3 8T7" name="5 Door Liftback - Dark Charcoal Sport Fabric"/>
+                <feature code="FF10" includes="4Door Charcoal Fabric" conflicts="3Door 5Door Sport 1F8 3P0 3Q8 5A6 8T0 8T1" name="Sedan - Dark Charcoal Fabric"/>
+                <feature code="FF40" includes="4Door Bisque Fabric" conflicts="3Door 5Door Sport 1E0 1E7 1F8 3P0 3Q8 5A6 8T0 8T1 8T7" name="Sedan - Bisque Fabric"/>
+                <feature code="FJ10" includes="4Door Charcoal Fabric CQ" conflicts="3Door 5Door Sport 1F8 3P0 3Q8 5A6 8T0 8T1" name="Sedan - Upgrade Dark Charcoal Fabric"/>
+                <feature code="FJ40" includes="4Door Bisque Fabric CQ" conflicts="3Door 5Door Sport 1E0 1E7 1F8 3P0 3Q8 5A6 8T0 8T1 8T7" name="Sedan - Upgrade Bisque Fabric"/>
+                <feature code="FT10" includes="4Door Charcoal Fabric CQ Sport" conflicts="3Door 5Door 1F8 3P0 3Q8 5A6 777 8N0 8T0 8T1" name="Sedan - Dark Charcoal Sport Fabric"/>
+                <feature code="FT41" includes="4Door Bisque Fabric CQ Sport" conflicts="3Door 5Door 1E0 1E7 1F8 3P0 3Q8 5A6 777 8N0 8T0 8T1 8T7" name="Sedan - Bisque Sport Fabric"/>
+            </interior>
+            <iColor pick="1" derived="true">
+                <feature code="Charcoal" name="Dark Charcoal"/>
+                <feature code="Bisque" name="Bisque"/>
+            </iColor>
+            <iFabric pick="1" derived="true">
+                <feature code="Fabric"/>
+            </iFabric>
+
+        </color>
+
+        <options>
+            <feature code="Sport" name="Sport Package" derived="true"/>
+            <feature code="Power" name="Power Package" derived="true"/>
+            <feature code="15W" name="15in. Wheels" derived="true"/>
+            <feature code="Alloy" name="15in. Alloy Wheels" derived="true"/>
+            <feature code="TRD" name="18in. TRD Wheels" derived="true"/>
+            <feature code="Wiper" name="Rear Window Wiper" derived="true"/>
+            <feature code="Spoiler" name="Rear Spoiler" derived="true"/>
+
+            <!--<feature code="FE" name="50 state emissions"/>-->
+            <feature code="CL" name="Cruise Control"/>
+            <feature code="LF" name="Fog Lamps"/>
+            <feature code="RF" includes="Sedan Spoiler" conflicts="LB" name="Rear Spoiler"/>
+
+            <feature code="CQ" includes="15W Wiper" conflicts="" name="Convenience Package"/>
+            <feature code="CX" includes="" conflicts="Sedan" name="Convenience Package w/FSA Audio"/>
+            <feature code="PV" includes="Sport PP LF Spoiler" conflicts="PO PQ" name="Sport package w/15in. alloy wheels"/>
+            <feature code="PY" includes="Sport PQ LF Spoiler" conflicts="PO PP Alloy" name="Sport package w/15in. steel wheels"/>
+            <feature code="PP" includes="CQ Power Alloy" conflicts="PO PQ" name="Power package w/15in. alloy wheels"/>
+            <feature code="PQ" includes="CQ Power" conflicts="PO PP Alloy" name="Power package w/15in. steel wheels"/>
+            <feature code="PO" includes="CQ Power" conflicts="4Door PY Alloy" name="Power package w/15in. steel wheels and FSA Audio"/>
+            <feature code="CP" includes="" conflicts="" name="All-Weather Guard Package"/>
+
+        </options>
+
+        <accessories>
+            <feature code="EF" name="Rear Bumper Protector"/>
+            <feature code="R7" includes="LB Spoiler" conflicts="Sedan" name="Rear Spoiler"/>
+            <feature code="DI01" name="Mudguards"/>
+
+            <feature code="CF" name="Carpeted floor and cargo mats"/>
+            <feature code="22" name="Sport Shift Knob"/>
+            <feature code="32" name="Sport Pedal Covers"/>
+            <feature code="EL" includes="LB" conflicts="Sedan" name="Center Armrest"/>
+            <feature code="G0" conflicts="5Door" name="Door Sill Enhancements"/>
+            <feature code="GN" name="Cargo Net"/>
+            <!--<feature code="N1" name="Auto-dimming Mirror"/>-->
+            <!--<feature code="P7" name="XM Satellite Radio Kit"/>-->
+            <feature code="DI02" name="AM/FM CD Deck"/>
+            <feature code="E5" name="Chrome Exhaust tip"/>
+
+            <feature code="DI05" name="TRD Shift Knob"/>
+            <feature code="DI06" iffs="TRD" name="TRD 18in. Wheel"/>
+
+        </accessories>
+    </features>
+
+</model>
+
+
+
+
+

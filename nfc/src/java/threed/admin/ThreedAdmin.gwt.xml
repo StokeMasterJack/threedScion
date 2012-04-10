@@ -1,0 +1,36 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.4//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.4/distro-source/core/src/gwt-module.dtd">
+
+
+<module>
+
+    <inherits name="com.google.gwt.core.Core"/>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+    <inherits name="com.google.gwt.rpc.RPC"/>
+
+    <inherits name="smartsoft.util.Util"/>
+    <inherits name="threed.core.ThreedCore"/>
+    <inherits name="threed.smartClient.SmartClient"/>
+    <inherits name="threed.skin.previewPanel.PreviewPanel"/>
+    <inherits name="threed.skin.summaryPanel.SummaryPanel"/>
+    <inherits name="threed.jpgGen.JpgGen"/>
+    <inherits name="threed.repo.Repo"/>
+
+    <inherits name="com.google.common.collect.Collect"/>
+
+    <stylesheet src="../index.css" />
+
+
+    <entry-point class='threed.admin.client.MainEntryPoint'/>
+
+    <source path="client"/>
+    <source path="shared"/>
+
+    <public path="public"/>
+
+
+
+    <collapse-all-properties />
+
+</module>
