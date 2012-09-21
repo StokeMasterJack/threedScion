@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tmpPython/tmpPython.iml" filepath="$PROJECT_DIR$/tmpPython/tmpPython.iml" />
       <module fileurl="file://$repos$/util/util/util.iml" filepath="$repos$/util/util/util.iml" />
     </modules>
   </component>

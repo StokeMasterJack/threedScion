@@ -73,7 +73,7 @@
     <orderEntry type="library" name="guava-11" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="guava-gwt-11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="guava 11" level="application" />
+    <orderEntry type="library" name="imgscalr-lib-4.2" level="application" />
   </component>
 </module>
 

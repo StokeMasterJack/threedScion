@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" build-on-make="true" name="threed-admin">
-    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/threed-admin</output-path>
+    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/threed-admin-v2</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -16,6 +16,7 @@
           <element id="library" level="project" name="commons-logging-1.0.3" />
           <element id="library" level="project" name="gwt-servlet-2" />
           <element id="library" level="application" name="guava-11" />
+          <element id="library" level="application" name="imgscalr-lib-4.2" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="nfc/web/admin" />

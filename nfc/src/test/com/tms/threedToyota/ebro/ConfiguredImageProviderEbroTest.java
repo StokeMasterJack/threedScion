@@ -1,6 +1,6 @@
 package com.tms.threedToyota.ebro;
 
-import threed.repo.server.Repos;
+import c3i.repo.server.Repos;
 import junit.framework.TestCase;
 
 /**

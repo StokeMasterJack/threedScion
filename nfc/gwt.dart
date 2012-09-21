@@ -9,18 +9,27 @@ var contextPath;
 
 void main(){
 
-    appName = "threed";
+    appName = "c3i";
 
-    contextPath = "smartClient";
-    contextPath = "threed-admin";
-
-    modName = "smartClient.GwtTest";
-    modName = "smartClient.ExportJavaScript";
+    //threed admin
+    contextPath = "threed-admin-v2";
     modName = "admin.ThreedAdmin";
-
-    startupPage =  "GwtTest";
-    startupPage =  "JavaScriptApiTest";
     startupPage =  "index";
+
+    //gwt demo
+    contextPath = "smartClient";
+    modName = "smartClient.SmartClientDemoGwt";
+    startupPage =  "DemoGwt";
+
+    //SmartClientExportJavaScript
+    contextPath = "smartClient";
+    modName = "smartClient.SmartClientExportJavaScript";
+    startupPage =  "demo/api/toyota/demo";
+
+    //gwt demo
+        contextPath = "smartClient";
+        modName = "smartClient.SmartClientDemoGwt";
+        startupPage =  "DemoGwt";
 
     var options = new Options();
     List<String> args = options.arguments;
@@ -34,7 +43,7 @@ void main(){
 
     var apps = '$cvsRoot/TMS/apps';
     var frameworks = '$cvsRoot/TMS/framework';
-    var lib = '/Users/dford/p-java/daven-repository';
+    var lib = '/Users/dford/daven-repository';
 
     var repo1 = '$repos/threedScion';
     var repo2 = '$repos/util';
@@ -128,7 +137,7 @@ void main(){
 
     processArgs.add(modFullName);
 
-    var p = new Process.start('java',processArgs);
+    var p = Process.start('java',processArgs);
 
     var stdoutStream = new StringInputStream(p.stdout);
     var stderrStream = new StringInputStream(p.stderr);

@@ -5,5 +5,14 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
            version="2.5">
 
+    <filter>
+        <filter-name>cacheFilter</filter-name>
+        <filter-class>c3i.smartClient.server.CacheFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cacheFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

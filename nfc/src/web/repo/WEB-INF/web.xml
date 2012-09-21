@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>repoServlet</servlet-name>
-        <servlet-class>threed.repoWebService.RepoServlet</servlet-class>
+        <servlet-class>c3i.repoWebService.RepoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

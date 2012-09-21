@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
     <title>3D Web Service</title>
     <script type="text/javascript">
@@ -22,8 +23,12 @@
 
 <h2>Option A - Simple</h2>
 
+
+
 <ul id="aOptionDetails" >
+
     <li><b>Simple, minimal caching</b></li>
+    <li  style="color: red">Note: If you can't use the JavaScript smart client (Option B), we strongly recommend using Option C rather than option A. It is 90% as easy but much more efficient.</li>
     <li>Simplest for 3rd party vendors to consume</li>
     <li>Requires no special client-side software</li>
     <li>No fingerprinting: URL's cannot be cached forever.</li>
@@ -44,18 +49,18 @@
 
 Option A has the simplest API. A single URL:<br/><br/>
 
-<a href="/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg">/configurator-content/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg</a>
+<a href="/configurator-content-v2/toyota/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg">/configurator-content-v2/toyota/avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg</a>
 
 <h2>Option B - Fully Fingerprinted URL's (used by BYT and eBrochure): </h2>
 
 <ul id="bOptionDetails" >
     <li><b>Richest, fastest, most scalable</b></li>
-    <li  style="color: red">Requires Smart Client Library (coming soon)</li>
+    <li  style="color: red">Requires Smart Client Library (new!)</li>
 
     <li>It is not currently set up as a general purpose web service, because it requires some complex client-side processing.
-        <p style="color: red">Note: This is about to change.
-        We are extracting the client-side processing into a Smart Client Library (for Scion),
-        with a very simple JavaScript API. This give the best of all worlds. Simplicity for front-end developers plus great performance, scalability, etc.</li>
+        <p style="color: red">Note: This has just changed:
+        We have extracted the client-side processing into a stand-alone javascript Smart Client Library (for Scion),
+        with a very simple JavaScript API. This gives the best of all worlds. Simplicity for front-end developers plus great performance, scalability, etc.</li>
     <li>This option provides the best performance, and smallest server load.</li>
     <li>This is the web service used internally for eBrochure and BYT.</li>
     <li>Usage:
@@ -91,7 +96,7 @@ Option A has the simplest API. A single URL:<br/><br/>
             </li>
             <li>This is non-trivial - and the reason that Option A and C were created.</li>
             <li>Future project: create a simple, stand-alone JavaScript library, that would allow clients to
-                consume 3D images the same way that NFC does. <span style="color:red">This is moving forward now that the 3D engine
+                consume 3D images the same way that NFC does. <span style="color:red">This is now complete with the updated 3D engine that
                 will be consumed by both Toyota and Scion.</span>
             </li>
 
@@ -108,17 +113,17 @@ Option A has the simplest API. A single URL:<br/><br/>
     <!--<tr><th colspan="2" align="left">URL's:</th></tr>-->
     <tr>
         <td><b>Feature Model URL</b></td>
-        <td><a href="/configurator-content/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json">/configurator-content/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json</a>
+        <td><a href="/configurator-content-v2/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json">/configurator-content-v2/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json</a>
         </td>
     </tr>
     <tr>
         <td><b>3D JPG URL:</b></td>
-        <td><a href="/configurator-content/toyota/avalon/2011/3d/jpgs/wStd/cae39a7-180eda8.jpg">/configurator-content/toyota/avalon/2011/3d/jpgs/wStd/cae39a7-180eda8.jpg</a>
+        <td><a href="/configurator-content-v2/toyota/avalon/2011/3d/jpgs/wStd/cae39a7-180eda8.jpg">/configurator-content-v2/toyota/avalon/2011/3d/jpgs/wStd/cae39a7-180eda8.jpg</a>
         </td>
     </tr>
     <tr>
         <td><b>PNG Accessory URL</b></td>
-        <td><a href="/configurator-content/toyota/tundra/2011/3d/pngs/b0cb555.png">/configurator-content/toyota/tundra/2011/3d/pngs/b0cb555.png</a>
+        <td><a href="/configurator-content-v2/toyota/tundra/2011/3d/pngs/b0cb555.png">/configurator-content-v2/toyota/tundra/2011/3d/pngs/b0cb555.png</a>
         </td>
     </tr>
 </table>
@@ -144,7 +149,7 @@ Option A has the simplest API. A single URL:<br/><br/>
 
 <h4>Option C - API</h4>
 
-<a href="/configurator-content/avalon/2011/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d/exterior-2/wStd/3544/070/LH02/seriesfp.jpg">/configurator-content/avalon/2011/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d/exterior-2/wStd/3544/070/LH02/seriesfp.jpg</a>
+<a href="/configurator-content-v2/toyota/avalon/2011/4c9cc5bbc3693f4005644170044f43ed397073ed/exterior-2/wStd/3544/070/LH02/seriesfp.jpg">/configurator-content-v2/toyota/avalon/2011/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d/exterior-2/wStd/3544/070/LH02/seriesfp.jpg</a>
 
 
 
@@ -153,7 +158,7 @@ Option A has the simplest API. A single URL:<br/><br/>
 Options B and C both require the client to know the current version (for the series).
 
 <h4>VTC - API</h4>
-<a href="/configurator-content/avalon/2011/vtc.txt">/configurator-content/avalon/2011/vtc.txt</a>
+<a href="/configurator-content-v2/toyota/avalon/2011/vtc.txt">/configurator-content-v2/toyota/avalon/2011/vtc.txt</a>
 
 
 </body>

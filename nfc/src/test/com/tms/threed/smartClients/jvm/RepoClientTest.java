@@ -1,8 +1,13 @@
 package com.tms.threed.smartClients.jvm;
 
-import threed.repo.server.Repos;
-import threed.core.threedModel.shared.*;
+import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
+import c3i.core.common.shared.SeriesKey;
+import c3i.repo.server.Repos;
+import c3i.core.threedModel.shared.*;
 
+import c3i.smartClientJvm.JsonUnmarshallerTm;
+import c3i.smartClientJvm.RepoClient;
 import smartsoft.util.lang.shared.Path;
 import org.junit.Test;
 

@@ -60,6 +60,7 @@
       <w>jgit</w>
       <w>jpeg</w>
       <w>jpgs</w>
+      <w>jsonp</w>
       <w>jstl</w>
       <w>landcruiser</w>
       <w>liftback</w>
@@ -112,6 +113,7 @@
       <w>serverlib</w>
       <w>servlets</w>
       <w>shas</w>
+      <w>skinnable</w>
       <w>soln</w>
       <w>ssdev</w>
       <w>stacktrace</w>

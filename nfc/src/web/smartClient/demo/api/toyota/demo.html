@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" language="javascript" src="/smartClient/api/api.nocache.js"></script>
+
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="../../jquery.js"></script>
+
+    <style>
+        .ImageStack img {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+        }
+    </style>
+
+    <link href="demo.css" rel="stylesheet" type="text/css"/>
+</head>
+<body style="padding: 1em">
+
+<div style="padding-bottom: 1em;">
+    Picks:
+    <button onclick="threedSession.setPicks(['Base', 'V6', '6AT', '202']);">'Base', 'V6', '6AT', '202'</button>
+    <button onclick="threedSession.setPicks(['LTD', 'V6', '6AT', '8N0']);">'LTD', 'V6', '6AT', '8N0'</button>
+</div>
+
+
+
+<select id="viewSelector" class="ViewSelector">
+    <option>Exterior</option>
+    <option>Interior</option>
+</select>
+<div style="width: 599px">
+
+
+    <div style="width: 599px;height: 366px">
+        <div id="imageStack" class="ImageStack" style="position: relative;">
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+        </div>
+
+
+    </div>
+
+    <div class="AngleSelector">
+        <button onclick="threedSession.anglePrevious()">&lt;&lt;</button>
+        <button onclick="threedSession.angleNext()">&gt;&gt;</button>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.4//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.4/distro-source/core/src/gwt-module.dtd">
+
+
+<module rename-to="demoGwt">
+
+    <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+    <inherits name="c3i.smartClient.SmartClient"/>
+    <inherits name='org.timepedia.exporter.Exporter'/>
+    <set-property name="export" value="yes"/>
+
+    <entry-point class='c3i.smartClient.client.demoGwt.MainEntryPoint'/>
+
+    <collapse-all-properties/>
+
+
+</module>

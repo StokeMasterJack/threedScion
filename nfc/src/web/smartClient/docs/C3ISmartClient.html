@@ -1,0 +1,329 @@
+<html>
+<head><title>C3I Smart Client</title>
+    <style type="text/css">ol {
+        margin: 0;
+        padding: 0
+    }
+
+    .c9 {
+        max-width: 468pt;
+        background-color: #ffffff;
+        padding: 72pt 72pt 72pt 72pt
+    }
+
+    .c6 {
+        color: inherit;
+        text-decoration: inherit
+    }
+
+    .c8 {
+        color: #1155cc;
+        text-decoration: underline
+    }
+
+    .c2 {
+        font-weight: bold
+    }
+
+    .c7 {
+        margin-left: 36pt
+    }
+
+    .c4 {
+        height: 11pt
+    }
+
+    .c0 {
+        direction: ltr
+    }
+
+    .c3 {
+        font-family: "Verdana"
+    }
+
+    .c5 {
+        font-style: italic
+    }
+
+    .c1 {
+        font-family: "Courier New"
+    }
+
+    .title {
+        padding-top: 24pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #000000;
+        font-size: 36pt;
+        font-family: "Arial";
+        font-weight: bold;
+        padding-bottom: 6pt
+    }
+
+    .subtitle {
+        padding-top: 18pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #666666;
+        font-style: italic;
+        font-size: 24pt;
+        font-family: "Georgia";
+        padding-bottom: 4pt
+    }
+
+    li {
+        color: #000000;
+        font-size: 11pt;
+        font-family: "Arial"
+    }
+
+    p {
+        color: #000000;
+        font-size: 11pt;
+        margin: 0;
+        font-family: "Arial"
+    }
+
+    h1 {
+        padding-top: 24pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #000000;
+        font-size: 18pt;
+        font-family: "Arial";
+        font-weight: bold;
+        padding-bottom: 6pt
+    }
+
+    h2 {
+        padding-top: 18pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #000000;
+        font-size: 14pt;
+        font-family: "Arial";
+        font-weight: bold;
+        padding-bottom: 4pt
+    }
+
+    h3 {
+        padding-top: 14pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #666666;
+        font-size: 12pt;
+        font-family: "Arial";
+        font-weight: bold;
+        padding-bottom: 4pt
+    }
+
+    h4 {
+        padding-top: 12pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #666666;
+        font-style: italic;
+        font-size: 11pt;
+        font-family: "Arial";
+        padding-bottom: 2pt
+    }
+
+    h5 {
+        padding-top: 11pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #666666;
+        font-size: 10pt;
+        font-family: "Arial";
+        font-weight: bold;
+        padding-bottom: 2pt
+    }
+
+    h6 {
+        padding-top: 10pt;
+        line-height: 1.15;
+        text-align: left;
+        color: #666666;
+        font-style: italic;
+        font-size: 10pt;
+        font-family: "Arial";
+        padding-bottom: 2pt
+    }</style>
+</head>
+<body class="c9"><p class="c0 title"><a name="h.88hrs9kvc17z"></a><span>C3I Smart Client</span></p>
+
+<p class="c0"><span>The simplest way to create a Configured 3D Image (C3I) like the one shown below is to use a ViewPanel. </span><img
+        height="322" src="images/image01.jpg" width="572"><span>&nbsp;</span><img height="1" src="images/image00.gif"
+                                                                                  width="1"></p>
+
+<h2 class="c0"><a name="h.pmie3a124kfk"></a><span>Basic steps</span></h2>
+
+<p class="c0"><span>The basic steps to do this are outlined below.</span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c0"><span class="c5">First, import the javascript file:</span><span><br><br></span><span class="c1">&lt;script <br>type=&quot;text/javascript&quot; <br>language=&quot;javascript&quot; <br>src=&quot;</span><span
+        class="c2 c1">/smartClient/api/api.nocache.js</span><span class="c1">&quot;&gt;<br>&lt;/script&gt;<br></span>
+</p>
+
+<p class="c4 c0"><span class="c5"></span></p>
+<hr style="page-break-before:always;display:none;">
+<p class="c4 c0"><span class="c5"></span></p>
+
+<p class="c0"><span class="c5">Next, create a top-level function called </span><span
+        class="c1 c5">onThreedReady()</span><span>:</span><span><br><br></span><span class="c2 c1">function onThreedReady() {</span>
+</p>
+
+<p class="c0"><span class="c2 c1">}</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0">
+    <span>This function will be called by the framework once the C3I smart client library is loaded.</span><span
+        class="c1"><br></span></p>
+
+<p class="c0"><span class="c5">Next, create a </span><span class="c8 c5"><a class="c6"
+                                                                            href="../apidocs/#c3i.smartClient.model.ThreedSession">ThreedSession</a></span><span
+        class="c5">&nbsp;</span><span>using the </span><span class="c8"><a class="c6"
+                                                                           href="../apidocs/#c3i.smartClient.model.ThreedSessionFactory">ThreedSessionFactory</a></span><span
+        class="c5">:</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span class="c1">function onThreedReady() {</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp;</span><span class="c2 c1">&nbsp;var factory = new c3i.smartClient.model.ThreedSessionFactory();</span>
+</p>
+
+<p class="c4 c0"><span class="c2 c1"></span></p>
+
+<p class="c0"><span class="c2 c1">&nbsp; &nbsp; factory.setRepoBase(&quot;/configurator-content-v2&quot;);</span></p>
+
+<p class="c0"><span class="c2 c3">&nbsp; &nbsp; &nbsp; &nbsp;</span><span class="c2 c1">factory.setSeries(&quot;scion&quot;, 2012, &quot;iq&quot;);</span>
+</p>
+
+<p class="c4 c0"><span class="c2 c1"></span></p>
+
+<p class="c0"><span class="c2 c1">&nbsp; &nbsp; //this method loads the threed model and creates a ThreedSession</span>
+</p>
+
+<p class="c0"><span class="c1 c2">&nbsp; &nbsp; factory.createSession().success(function (threedSession) {</span></p>
+
+<p class="c0"><span class="c2 c1">&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">//use threedSession</span></p>
+
+<p class="c0"><span class="c2 c1">&nbsp; &nbsp; });</span></p>
+
+<p class="c0"><span class="c1">}</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span class="c5">Once you have a ThreedSession, use it to set the picks, view and angle:</span></p>
+
+<p class="c0 c4"><span class="c1"></span></p>
+
+<p class="c0"><span class="c1">factory.createSession().success(function (threedSession) {</span></p>
+
+<p class="c7 c0"><span class="c2 c1">threedSession.setPicks([&quot;1F7&quot;, &quot;SS&quot;, &quot;R7&quot;, &quot;MDS&quot;]);</span>
+</p>
+
+<p class="c0 c7"><span class="c2 c1">threedSession.setView(0); &nbsp;//0=exterior</span></p>
+
+<p class="c7 c0"><span class="c2 c1">threedSession.setAngle(2); //2=hero angle</span></p>
+
+<p class="c0"><span class="c1">});</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span class="c5">Next</span><span
+        class="c5">, add a div to your html page with a class of ViewPanel:</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span class="c1">&lt;div class=&quot;ViewPanel&quot;&gt;&lt;/div&gt;</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c4 c0"><span></span></p>
+<hr style="page-break-before:always;display:none;">
+<p class="c4 c0"><span></span></p>
+
+<p class="c0"><span class="c5">Finally, invoke threedSession.scan() to replace the ViewPanel div with a configured 3D image:</span>
+</p>
+
+<p class="c4 c0"><span class="c2 c1"></span></p>
+
+<p class="c0"><span class="c1">factory.createSession().success(function (threedSession) {</span></p>
+
+<p class="c7 c0"><span class="c1">threedSession.setPicks([&quot;1F7&quot;, &quot;SS&quot;, &quot;R7&quot;, &quot;MDS&quot;]);</span>
+</p>
+
+<p class="c7 c0"><span class="c1">threedSession.setView(0); &nbsp;//0=exterior</span></p>
+
+<p class="c7 c0"><span class="c1">threedSession.setAngle(2); //2=hero angle</span></p>
+
+<p class="c7 c0"><span class="c2 c1">threedSession.scan();</span></p>
+
+<p class="c0"><span class="c1">});</span></p>
+
+<p class="c0"><span class="c1"><br></span><span>You should now see a configured 3D image like the one shown above. You can drag-to-spin or swipe-to-spin (on a mobile).</span>
+</p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span>Now, if you update the picks, the view or the angle using any the methods below:</span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;setPicks(..)</span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;setView(..)</span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;setAngle(..)</span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;angleNext(..)</span></p>
+
+<p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;anglePrevious(..)</span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c0"><span>the configured 3D image will automatically update to reflect those values.</span></p>
+
+<h2 class="c0"><a name="h.2bu3gayke9lf"></a><span>Next steps</span></h2>
+
+<p class="c0"><span>L</span><span>ook at this example live and do a View Source:</span>
+
+    <span class="c8"><a class="c6" href="../demo/widgets/scion/demo-easy.html">Easy Demo</a></span>
+</p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c0"><span>Check out the other examples and API docs:</span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c0"><span class="c8"><a class="c6" href="../demos.html">Demos</a></span>
+</p>
+
+<p class="c0"><span class="c8"><a class="c6" href="../apidocs/">API Docs</a></span>
+</p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span></span></p>
+
+<p class="c4 c0"><span class="c1"></span></p>
+
+<p class="c4 c0"><span class="c1"><br></span><span><br><br></span></p>
+
+<p class="c4 c0"><span></span></p></body>
+</html>

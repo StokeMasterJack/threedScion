@@ -1,0 +1,39 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.4//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.4/distro-source/core/src/gwt-module.dtd">
+
+
+<module>
+
+
+
+    <inherits name="com.google.gwt.core.Core"/>
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+    <inherits name="com.google.gwt.rpc.RPC"/>
+
+    <inherits name="smartsoft.util.Util"/>
+    <inherits name="c3i.core.ThreedCore"/>
+    <inherits name="c3i.smartClient.SmartClient"/>
+    <!--<inherits name="c3i.skin.previewPanel.PreviewPanel"/>-->
+    <!--<inherits name="c3i.skin.summaryPanel.SummaryPanel"/>-->
+    <inherits name="c3i.jpgGen.JpgGen"/>
+    <inherits name="c3i.repo.Repo"/>
+
+    <inherits name="com.google.common.collect.Collect"/>
+
+    <inherits name='com.google.gwt.debug.Debug'/>
+
+    <stylesheet src="../index.css" />
+
+
+    <entry-point class='c3i.admin.client.MainEntryPoint'/>
+
+    <source path="client"/>
+    <source path="shared"/>
+
+    <public path="public"/>
+
+
+    <collapse-all-properties />
+
+</module>
