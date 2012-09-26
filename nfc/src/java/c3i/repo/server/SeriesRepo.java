@@ -273,7 +273,10 @@ public class SeriesRepo {
         log.info("\tBuilding server-side ThreedModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
         ModelXml modelXml = readModelXml(rootTreeId);
 
+        log.info("\t\t Building FeatureModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
         FeatureModel fm = createFeatureModel(modelXml);
+
+        log.info("\t\t Building ImageModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
         ImSeries im = createImageModel(rootTreeId, fm);
         ThreedModel threedModel = new ThreedModel(fm, im);
 

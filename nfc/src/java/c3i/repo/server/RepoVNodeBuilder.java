@@ -93,14 +93,14 @@ public class RepoVNodeBuilder extends VNodeBuilder {
                 if (childIsDirectory) {
                     childVNode = buildTreeNode(childObjectId, childNodeName, childDepth);
                     if (childVNode == null) {
-                        log.info("skipping treeNode " + stack + "\t" + childNodeName);
+                        log.info("skipping null treeNode " + stack + "\t" + childNodeName);
                     } else {
                         childNodes.add(childVNode);
                     }
                 } else {
                     childVNode = buildBlobNode(childObjectId, childNodeName, stack, childDepth);
                     if (childVNode == null) {
-                        log.info("skipping blobNode " + stack + "\t" + childNodeName);
+                        log.info("skipping null blobNode " + stack + "\t" + childNodeName);
                     } else {
                         childNodes.add(childVNode);
                     }
@@ -128,7 +128,7 @@ public class RepoVNodeBuilder extends VNodeBuilder {
     private VNode buildBlobNode(ObjectId objectId, String name, Stack<String> path, int depth) {
         boolean emptyPng = seriesRepo.isEmptyPng(path.toString() + "\t" + name, objectId);
         if (emptyPng) {
-//             log.debug("Empty png[" + stack + "\t" + name);
+            log.debug("Skipping empty png[" + stack + "\t" + name);
             return null;
         }
         return new VNodeRepo(name, objectId, depth, seriesRepo);
