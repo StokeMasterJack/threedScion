@@ -17,16 +17,16 @@ void main(){
     startupPage =  "index";
 
 
-
-    //SmartClientExportJavaScript
-    contextPath = "smartClient";
-    modName = "smartClient.SmartClientExportJavaScript";
-    startupPage =  "demo/api/toyota/demo";
-
     //gwt demo
     contextPath = "smartClient";
     modName = "smartClient.SmartClientDemoGwt";
     startupPage =  "DemoGwt";
+
+
+    //SmartClientExportJavaScript
+    contextPath = "smartClient";
+    modName = "smartClient.SmartClientExportJavaScript";
+    startupPage =  "demo/widget/toyota/demo";
 
 
     var options = new Options();

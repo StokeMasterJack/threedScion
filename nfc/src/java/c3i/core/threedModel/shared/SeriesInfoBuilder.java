@@ -1,9 +1,6 @@
 package c3i.core.threedModel.shared;
 
 
-import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.ViewKeyOld;
-
 public class SeriesInfoBuilder {
 
 //    private static final ViewKeyOld[] standard = {ViewKeyOld.createExteriorView(0), ViewKeyOld.createInteriorView(1)};

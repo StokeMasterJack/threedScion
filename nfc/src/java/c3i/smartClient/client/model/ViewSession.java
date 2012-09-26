@@ -37,7 +37,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     //fixed init state
     @Nonnull private final ViewsSession viewsSession;
     @Nonnull private final ImView view;
-    @Nonnull private final RValue<Boolean> dragToSpin; // doesn't actually change
+    @Nonnull private final RWValue<Boolean> dragToSpin; // doesn't actually change
 
     //owned state
     @Nonnull private final RWValue<AngleKey> angle; //value @Nonnull
@@ -371,7 +371,12 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     @Export
     public boolean isDragToSpin() {
-        return view.isDragToSpin();
+        return dragToSpin().get();
+    }
+
+    @Export
+    public void setDragToSpin(boolean dragToSpin) {
+        this.dragToSpin.set(dragToSpin);
     }
 
     public ViewsSession getParent() {

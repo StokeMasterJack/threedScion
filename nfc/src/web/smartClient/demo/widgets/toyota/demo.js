@@ -13,6 +13,12 @@ function onThreedReady() {
         threedSession.scan();
     });
 
+    $("#viewSelector").change(viewSelector_onChange);
+
+    function viewSelector_onChange(ev) {
+        threedSession.setViewIndex(ev.target.selectedIndex);
+    }
+
 }
 
 
