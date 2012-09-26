@@ -453,7 +453,8 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     public boolean isDragToSpin() {
-        return isExterior();
+        return this.angleCount > 1;
+//        return isExterior();
     }
 
     public ViewLiftSpec getLiftSpec() {

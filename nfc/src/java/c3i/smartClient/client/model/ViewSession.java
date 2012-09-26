@@ -24,7 +24,6 @@ import com.google.common.base.Preconditions;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
 import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.Exportable;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Path;
 
@@ -49,6 +48,8 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     private Scheduler.ScheduledCommand refreshImageStackKeyCommand;
 
     private final LayerState layerState;
+
+    private boolean scrollReverse = true;
 
     public ViewSession(@Nonnull ViewsSession parent, @Nonnull final ImView view) {
         Preconditions.checkNotNull(parent);
@@ -174,14 +175,24 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     @Export
     public void angleNext() {
-        int newValue = view.getNext(angle.get().getAngle());
-        setAngle(newValue);
+        if (scrollReverse) {
+            int newValue = view.getPrevious(angle.get().getAngle());
+            setAngle(newValue);
+        } else {
+            int newValue = view.getNext(angle.get().getAngle());
+            setAngle(newValue);
+        }
     }
 
     @Export
     public void anglePrevious() {
-        int newValue = view.getPrevious(angle.get().getAngle());
-        setAngle(newValue);
+        if (scrollReverse) {
+            int newValue = view.getNext(angle.get().getAngle());
+            setAngle(newValue);
+        } else {
+            int newValue = view.getPrevious(angle.get().getAngle());
+            setAngle(newValue);
+        }
     }
 
     @Override
