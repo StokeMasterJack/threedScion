@@ -115,8 +115,9 @@ public class RepoVNodeBuilder extends VNodeBuilder {
         stack.pop();
 
         if (childNodes.size() == 0) {
-            log.error("ImageModel folder[" + name + "] has no child nodes");
-            throw new IllegalStateException("ImageModel folder[" + name + "] has no child nodes: " + stack);
+            log.debug("ImageModel folder[" + name + "] has no child nodes");
+            return null;
+//            throw new IllegalStateException("ImageModel folder[" + name + "] has no child nodes: " + stack);
         }
 
         return new VNodeRepo(name, childNodes, depth, seriesRepo);
