@@ -106,6 +106,11 @@ public class Repos {
         seriesRepoCache.invalidateAll();
     }
 
+    public SeriesRepo getSeriesRepo(String brand, String series, int year) {
+        SeriesKey seriesKey = new SeriesKey(brand, year, series);
+        return getSeriesRepo(seriesKey);
+    }
+
     public SeriesRepo getSeriesRepo(BrandKey brandKey, String seriesName, int seriesYear) {
         return getSeriesRepo(new SeriesKey(brandKey, seriesYear, seriesName));
     }
@@ -311,7 +316,7 @@ public class Repos {
         }
     };
 
-    public File getFileForZPng(SeriesKey sk, int width,PngKey pngKey) {
+    public File getFileForZPng(SeriesKey sk, int width, PngKey pngKey) {
         SeriesRepo seriesRepo = getSeriesRepo(sk);
         RtRepo genRepo = seriesRepo.getRtRepo();
 
@@ -319,7 +324,7 @@ public class Repos {
 
         if (!pngFile.exists()) {
             log.warn("Creating fallback zPng on the fly: " + pngFile);
-            createZPngOnTheFly(width,sk,pngKey);
+            createZPngOnTheFly(width, sk, pngKey);
 
             if (!pngFile.exists()) {
                 throw new RuntimeException("Failed to create fallback zPng[" + pngFile + "]");

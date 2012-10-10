@@ -1,24 +1,37 @@
 package c3i.repo.server;
 
+import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.CommitId;
+import c3i.core.threedModel.shared.FullSha;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.repo.shared.CommitHistory;
+import c3i.repo.shared.RepoHasNoHeadException;
+import c3i.repo.shared.RevisionParameter;
+import c3i.repo.shared.TagCommit;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
-import c3i.core.threedModel.shared.CommitId;
-import c3i.repo.shared.*;
-import c3i.core.threedModel.shared.FullSha;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.common.shared.SeriesKey;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.JGitText;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.NoMessageException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -32,7 +45,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
@@ -124,6 +144,22 @@ public class SrcRepo {
         return oid;
     }
 
+    public RootTreeId resolveRootTreeId(@Nullable String revisionParameter) throws UnableToResolveRevisionParameterException {
+        ObjectId commitId;
+        if (revisionParameter == null) {
+            commitId = resolveCommitHead();
+        } else {
+            commitId = resolve(new RevisionParameter(revisionParameter));
+        }
+        RevCommit revCommit = getRevCommitEager(commitId);
+        RevTree tree = revCommit.getTree();
+        return new RootTreeId(tree.getName());
+    }
+
+    public ObjectId resolve(String revisionParameter) throws UnableToResolveRevisionParameterException {
+        return resolve(new RevisionParameter(revisionParameter));
+    }
+
     public ObjectId resolve(RevisionParameter revisionParameter) throws UnableToResolveRevisionParameterException {
         return resolveGitObjectId(revisionParameter);
     }
@@ -132,11 +168,10 @@ public class SrcRepo {
         return resolve(RevisionParameter.HEAD_REVISION_PARAMETER);
     }
 
+
     public RootTreeId resolveHeadRootTreeId() {
         ObjectId commitId = resolveCommitHead();
-
         RevCommit revCommit = getRevCommitEager(commitId);
-
         RevTree tree = revCommit.getTree();
         return new RootTreeId(tree.getName());
     }

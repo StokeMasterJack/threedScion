@@ -279,6 +279,10 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
         return brandKey.getKey() + " " + year + " " + name;
     }
 
+    /**
+     *
+     * @param brandSpaceYearSpaceName "brand year series"  or "brand-year-series"
+     */
     public static SeriesKey parse(String brandSpaceYearSpaceName) {
         String[] a;
         if (brandSpaceYearSpaceName.indexOf(' ') != -1) {

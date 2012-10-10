@@ -7,7 +7,6 @@ import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.rt.RtRepo;
 import c3i.repo.server.vnode.FileSystemVNodeBuilder;
@@ -38,7 +37,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class SeriesRepo {
@@ -144,6 +142,11 @@ public class SeriesRepo {
         srcRepo.close();
     }
 
+    public RootTreeId getHead() {
+        RootTreeId rootTreeId = srcRepo.resolveHeadRootTreeId();
+        return rootTreeId;
+    }
+
     public ThreedModel getThreedModelHead() {
         RootTreeId rootTreeId = srcRepo.resolveHeadRootTreeId();
         return getThreedModel(rootTreeId);
@@ -237,13 +240,7 @@ public class SeriesRepo {
         RepoVNodeBuilder b = new RepoVNodeBuilder(this, revCommit, rtRepo);
         b.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode seriesVDir = b.buildVNode();
-        System.out.println("seriesVDir = " + seriesVDir);
-        List<VNode> childNodes = seriesVDir.getChildNodes();
-        for (VNode childNode : childNodes) {
-            System.out.println("childNode = " + childNode);
-        }
         Preconditions.checkNotNull(seriesVDir);
-
         ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, seriesVDir, rtRepo);
         return imNodeBuilder.buildImageModel();
     }

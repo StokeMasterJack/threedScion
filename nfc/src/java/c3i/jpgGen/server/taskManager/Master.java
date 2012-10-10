@@ -237,6 +237,7 @@ public class Master {
             } catch (InterruptedException e) {
                 retVal = JobStatus.createCanceled();
             } catch (ExecutionException e) {
+                e.printStackTrace();
                 String serializedStackTrace = ExceptionRenderer.render(e);
                 retVal = JobStatus.createExceptionStatus(serializedStackTrace);
             }
@@ -261,6 +262,12 @@ public class Master {
         return monitorTask.isCancelled();
     }
 
+    /**
+     *
+     * Creates a list of jpgSet for each slice (view-angle)
+     * Input:   a ThreedModel
+     * Output:  JpgSet for each slice
+     */
     private final class CreateJpgSetsTask extends MyFutureTask<ImmutableList<CreateJpgSetTask>> {
 
         private final ThreedModel threedModel;
@@ -278,7 +285,7 @@ public class Master {
                         int angleCount = view.getAngleCount();
                         for (int a = 1; a <= angleCount; a++) {
                             if (monitorTask.isCancelled()) throw new InterruptedException();
-                            CreateJpgSetTask task = new CreateJpgSetTask(new Slice2(view,a));
+                            CreateJpgSetTask task = new CreateJpgSetTask(new Slice2(view, a));
                             executors.createJpgSet.submit(task);
                             builder.add(task);
                         }
@@ -381,7 +388,6 @@ public class Master {
     }
 
 
-
     private final class ProcessJpgSetTask extends MyFutureTask<ImmutableList<JpgTask>> {
 
         private final int jpgCountForSlice;
@@ -451,8 +457,6 @@ public class Master {
             }
         }
     }
-
-
 
 
     public Stats getStats() {
