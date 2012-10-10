@@ -1,11 +1,12 @@
 package c3i.core.imageModel.server;
 
 import com.google.common.base.Preconditions;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
-//import org.apache.tools.ant.filters.StringInputStream;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 
@@ -19,11 +20,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.HashSet;
 import java.util.Set;
+
+//import org.apache.tools.ant.filters.StringInputStream;
 
 public class ImageUtil {
 
@@ -260,32 +262,26 @@ public class ImageUtil {
                     return new ByteArrayInputStream(text.getBytes());
                 }
             };
-
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-
-            byte[] bytes1 = ByteStreams.getDigest(inputSupplier, md);
-            return byteArray2Hex(bytes1);
+            HashCode hash = ByteStreams.hash(inputSupplier, Hashing.sha1());
+            byte[] bytes = hash.asBytes();
+            return byteArray2Hex(bytes);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
 
-
     public static String getFingerprint(File file) {
         Preconditions.checkNotNull(file);
-        byte[] digest;
+        byte[] bytes;
         try {
-            try {
-                digest = Files.getDigest(file, MessageDigest.getInstance("SHA1"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (NoSuchAlgorithmException e) {
+            HashCode hash = Files.hash(file, Hashing.sha1());
+            bytes = hash.asBytes();
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return toBase62(digest);
+        return toBase62(bytes);
     }
 
     public static ObjectId getFingerprintGitStyle(File file) {
@@ -304,7 +300,8 @@ public class ImageUtil {
 
             InputSupplier<FileInputStream> content = Files.newInputStreamSupplier(file);
 
-            byte[] digest = ByteStreams.getDigest(content, md);
+//            byte[] digest = ByteStreams.getDigest(content, md);
+            byte[] digest = ByteStreams.hash(content, Hashing.sha1()).asBytes();
 
             return ObjectId.fromRaw(digest);
         } catch (Exception e) {
