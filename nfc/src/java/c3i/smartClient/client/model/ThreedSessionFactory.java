@@ -4,6 +4,7 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.Brand;
+import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.service.ThreedModelLoader;
@@ -21,7 +22,6 @@ import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;
-
 
 /**
  *  A <code>ThreedSessionFactory</code> is used to configure and load a <code>ThreedSession </code>. For example:<br/>
@@ -172,6 +172,8 @@ public class ThreedSessionFactory implements Exportable {
         }
 
     }
+
+
 
     @NoExport
     public static boolean isEmpty(String s) {

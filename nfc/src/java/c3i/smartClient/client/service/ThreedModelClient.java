@@ -7,15 +7,15 @@ import c3i.core.threedModel.client.JsonUnmarshallerTm;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.util.shared.futures.AsyncFunction;
+import c3i.util.shared.futures.Completer;
+import c3i.util.shared.futures.CompleterImpl;
+import c3i.util.shared.futures.Future;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import c3i.util.shared.futures.AsyncFunction;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.CompleterImpl;
-import c3i.util.shared.futures.Future;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
@@ -81,6 +81,19 @@ public class ThreedModelClient {
         return new Path("vtcMap.txt").prepend(brandKey.getKey()).prepend(repoBaseUrl);
     }
 
+    public Path getVtcUrl(SeriesKey seriesKey) {
+        if (repoBaseUrl == null) {
+            throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
+        }
+
+        return repoBaseUrl
+                .append(seriesKey.getBrandKey().getKey())
+                .append(seriesKey.getName())
+                .append(seriesKey.getYear())
+                .append("vtc.txt");
+
+    }
+
     public Path getThreedModelUrl(final SeriesKey seriesKey, RootTreeId rootTreeId) {
         if (repoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
@@ -97,9 +110,13 @@ public class ThreedModelClient {
     public Future<Brand> getBrandInit(BrandKey brandKey) throws Exception {
         final Completer<Brand> f = new CompleterImpl<Brand>();
         brandLoaderFunction.start(brandKey, f);
-
         return f.getFuture();
+    }
 
+    public Future<String> getVtc(SeriesKey seriesKey) throws Exception {
+        final Completer<String> f = new CompleterImpl<String>();
+        vtcLoaderFunction.start(seriesKey, f);
+        return f.getFuture();
     }
 
 
@@ -198,6 +215,7 @@ public class ThreedModelClient {
     }
 
     public AsyncFunction<BrandKey, Brand> brandLoaderFunction = new AsyncFunction<BrandKey, Brand>() {
+
         @Override
         public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
             Path vtcMapUrl = getVtcMapUrl(brandKey);
@@ -212,6 +230,41 @@ public class ThreedModelClient {
                     } else {
                         Brand brandInitData = BrandParser.parse(response.getText());
                         f.setResult(brandInitData);
+                    }
+                }
+
+                @Override
+                public void onError(Request request, Throwable exception) {
+                    f.setException(exception);
+                }
+
+            });
+
+            try {
+                requestBuilder.send();
+            } catch (RequestException e) {
+                e.printStackTrace();
+                f.setException(e);
+            }
+
+        }
+    };
+
+    public AsyncFunction<SeriesKey, String> vtcLoaderFunction = new AsyncFunction<SeriesKey, String>() {
+
+        @Override
+        public void start(SeriesKey seriesKey, final Completer<String> f) throws RuntimeException {
+            Path vtcMapUrl = getVtcUrl(seriesKey);
+
+            RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
+            requestBuilder.setCallback(new RequestCallback() {
+
+                @Override
+                public void onResponseReceived(Request request, final Response response) {
+                    if (response.getStatusCode() != 200) {
+                        f.setException(new RuntimeException("getVtc return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
+                    } else {
+                        f.setResult(response.getText());
                     }
                 }
 
