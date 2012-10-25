@@ -9,6 +9,7 @@ import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.repo.server.BlinkCheckin;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
@@ -44,19 +45,19 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     private ThreedAdminApp app;
     private Log log;
-    private Repos repos;
+    private BrandRepos brandRepos;
     private String initErrorMessage;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        app = ThreedAdminApp.getFromServletContext(config.getServletContext());
-        Preconditions.checkNotNull(app);
-        log = LogFactory.getLog(ThreedAdminFilter.class);
-        log.info("Initializing " + getClass().getSimpleName());
 
         try {
-            repos = Repos.create(app.getRepoBaseDirs());
+            app = ThreedAdminApp.getFromServletContext(config.getServletContext());
+            Preconditions.checkNotNull(app);
+            log = LogFactory.getLog(ThreedAdminFilter.class);
+            log.info("Initializing " + getClass().getSimpleName());
+            brandRepos = app.getBrandRepos();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             this.initErrorMessage = "Problem initializing ThreedAdminServletJson: " + e;
@@ -72,8 +73,10 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         Preconditions.checkNotNull(app);
         Path repoContextPath = app.getRepoContextPath();
 
-        ArrayList<Series> seriesNamesWithYears = repos.getSeriesNamesWithYears(brandKey);
-        Settings settings = repos.getSettings(brandKey);
+        Repos repos = brandRepos.getRepos(brandKey);
+
+        ArrayList<Series> seriesNamesWithYears = repos.getSeriesNamesWithYears();
+        Settings settings = repos.getSettings();
         log.info("serving [" + settings + "]");
         Principal userPrincipal = getThreadLocalRequest().getUserPrincipal();
         String userName;
@@ -118,11 +121,12 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
      */
     @Override
     public RootTreeId getVtcRootTreeId(SeriesKey seriesKey) {
-        return repos.getVtcRootTreeId(seriesKey);
+        return brandRepos.getRepos(seriesKey.getBrandKey()).getVtcRootTreeId(seriesKey);
     }
 
     @Override
     public CommitHistory setVtc(SeriesKey seriesKey, CommitKey commitKey) {
+        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
         CommitHistory commitHistory = repos.setVtcCommitId(seriesKey, commitKey);
         log.info(seriesKey + " VTC set to [" + commitKey.getRootTreeId() + "]");
         return commitHistory;
@@ -130,16 +134,19 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     @Override
     public Settings getSettings(BrandKey brandKey) {
-        return repos.getSettingsHelper().read(brandKey);
+        Repos repos = brandRepos.getRepos(brandKey);
+        return repos.getSettingsHelper().read();
     }
 
     @Override
     public void saveSettings(BrandKey brandKey, Settings config) {
-        repos.getSettingsHelper().save(brandKey, config);
+        Repos repos = brandRepos.getRepos(brandKey);
+        repos.getSettingsHelper().save(config);
     }
 
     @Override
     public CommitHistory getCommitHistory(SeriesKey seriesKey) throws RepoHasNoHeadException {
+        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         log.info("Building commit history on server..");
@@ -151,6 +158,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     @Override
     public CommitHistory tagCommit(SeriesKey seriesKey, String newTagName, CommitId commitId) {
         log.info("Tagging commit[" + commitId + "] with tag[" + newTagName + "]");
+        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         ObjectId objectId = srcRepo.tagCommit(newTagName, commitId);
@@ -161,6 +169,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     public CommitHistory addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag) {
 
         try {
+            Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
             SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
 
             SrcRepo srcRepo = seriesRepo.getSrcRepo();
@@ -190,7 +199,8 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     }
 
     @Override
-    public void purgeRepoCache() {
+    public void purgeRepoCache(BrandKey brandKey) {
+        Repos repos = brandRepos.getRepos(brandKey);
         repos.purgeCache();
     }
 

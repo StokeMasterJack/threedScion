@@ -3,6 +3,7 @@ package c3i.repoWebService;
 import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.threedModel.shared.BaseImageKey;
+import c3i.repo.server.BrandRepos;
 import com.google.common.io.Files;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,8 +19,8 @@ import java.util.Random;
 
 public class JpgHandler extends RepoHandler<JpgRequest> {
 
-    public JpgHandler(Repos repos, ServletContext application) {
-        super(repos, application);
+    public JpgHandler(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
     }
 
     @Override
@@ -28,6 +29,7 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
         BaseImageKey jpgKey = r.getBaseImageKey();
 
+        Repos repos = r.getRepos();
         File jpgFile = repos.getFileForJpg(jpgKey);
 
         HttpServletResponse response = r.getResponse();

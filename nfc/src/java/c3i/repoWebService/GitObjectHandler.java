@@ -1,5 +1,6 @@
 package c3i.repoWebService;
 
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
@@ -38,7 +39,7 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
 
     private static Map<String, String> contentTypes = buildMimeMap();
 
-    public GitObjectHandler(Repos repos, ServletContext application) {
+    public GitObjectHandler(BrandRepos repos, ServletContext application) {
         super(repos, application);
     }
 

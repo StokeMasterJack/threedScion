@@ -32,9 +32,11 @@ public class TestImages {
             .append("io")
             .append("dave.png");
 
+    Repos repos;
+
     @Before
     public void setup() throws Exception {
-        Repos.setRepoBaseDir(new File("/configurator-content-chuck"));
+        repos = new Repos(BrandKey.TOYOTA, new File("/configurator-content-chuck"));
     }
 
     @Test
@@ -43,7 +45,7 @@ public class TestImages {
         SeriesKey sk = SeriesKey.FRS_2013;
         String fp = "f2cd70a-49f9b91-2926eca-0c9f56a-ce22027-01de875-957b422";
 
-        List<Profile> profiles = Repos.get().getProfiles(BrandKey.SCION).getList();
+        List<Profile> profiles = repos.getProfiles().getList();
 
         for (Profile profile : profiles) {
             BaseImageKey baseImage = new BaseImageKey(sk, profile, fp);

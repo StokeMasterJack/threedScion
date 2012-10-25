@@ -10,6 +10,9 @@ public class WebAppListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ThreedAdminApp app = new ThreedAdminApp();
         sce.getServletContext().setAttribute(ThreedAdminApp.class.getName(), app);
+
+
+
     }
 
     @Override

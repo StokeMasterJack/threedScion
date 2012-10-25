@@ -69,7 +69,7 @@ public class ThreedAdminModel {
         this.viewsSession = viewsSession;
         this.profiles = profiles;
 
-        this.jpgGenClient = new JpgGenClient(uiContext);
+        this.jpgGenClient = new JpgGenClient(series.getBrandKey());
 
         this.repoBaseUrl = viewsSession.getRepoBaseUrl();
         this.threedModel = viewsSession.getThreedModel();

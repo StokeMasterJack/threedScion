@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.base.Strings;
@@ -15,8 +16,8 @@ public class SeriesBasedRepoRequest extends RepoRequest {
 
     protected final SeriesKey seriesKey;
 
-    public SeriesBasedRepoRequest(Repos repos, HttpServletRequest request, HttpServletResponse response) {
-        super(repos, request, response);
+    public SeriesBasedRepoRequest(BrandRepos brandRepos, HttpServletRequest request, HttpServletResponse response) {
+        super(brandRepos, request, response);
 
         String pathInfo = request.getPathInfo();
 
@@ -46,9 +47,15 @@ public class SeriesBasedRepoRequest extends RepoRequest {
 
     }
 
+    public BrandRepos getBrandRepos() {
+        return brandRepos;
+    }
+
+
+
     protected SeriesRepo getSeriesRepo() {
         SeriesKey seriesKey = getSeriesKey();
-        return Repos.get().getSeriesRepo(seriesKey);
+        return getRepos().getSeriesRepo(seriesKey);
     }
 
     public String getSeriesName() {

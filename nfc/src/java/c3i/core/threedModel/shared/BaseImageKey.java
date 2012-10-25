@@ -2,7 +2,8 @@ package c3i.core.threedModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
+import c3i.core.imageModel.shared.PngSegments;
 import c3i.core.imageModel.shared.Profile;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -13,7 +14,7 @@ public class BaseImageKey implements IBaseImageKey{
     private final Profile profile;
     private final String fingerprint;  //example: 0e24056-80e3097 (i.e. png1-png2-png3 etc)
 
-    private final ImmutableList<PngKey> zPngKeys;
+    private final PngSegments zPngKeys;
 
     /**
      *
@@ -30,13 +31,8 @@ public class BaseImageKey implements IBaseImageKey{
         this.zPngKeys = initZPngKeys(fingerprint);
     }
 
-    private static ImmutableList<PngKey> initZPngKeys(String fp) {
-        ImmutableList.Builder<PngKey> builder = ImmutableList.builder();
-        String[] pngSegments = fp.split("-");
-        for (String pngSegment : pngSegments) {
-            builder.add(new PngKey(pngSegment));
-        }
-        return builder.build();
+    private static PngSegments initZPngKeys(String fp) {
+        return new PngSegments(fp);
     }
 
 
@@ -92,7 +88,7 @@ public class BaseImageKey implements IBaseImageKey{
 
 
     @Override
-    public ImmutableList<PngKey> getPngKeys() {
+    public PngSegments getPngKeys() {
         return zPngKeys;
     }
 

@@ -2,6 +2,7 @@ package c3i.repoWebService;
 
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.common.shared.SeriesId;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class ThreedModelRequest extends SeriesBasedRepoRequest {
 
     protected final RootTreeId rootTreeId;
 
-    public ThreedModelRequest(Repos repos,HttpServletRequest request, HttpServletResponse response) {
+    public ThreedModelRequest(BrandRepos repos,HttpServletRequest request, HttpServletResponse response) {
         super(repos,request, response);
 
         String msg = "Invalid ThreedModelRequest URL: [" + getUri() + "].";

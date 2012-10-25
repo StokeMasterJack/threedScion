@@ -13,7 +13,6 @@ import c3i.core.imageModel.shared.ImLayer;
 import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.SrcPng;
-import c3i.core.imageModel.shared.ViewKey;
 import c3i.core.imageModel.shared.ViewKeyOld;
 import c3i.core.imageModel.shared.ViewSlice;
 

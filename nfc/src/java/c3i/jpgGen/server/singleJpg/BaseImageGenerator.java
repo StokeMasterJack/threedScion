@@ -2,7 +2,8 @@ package c3i.jpgGen.server.singleJpg;
 
 
 import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
+import c3i.core.imageModel.shared.PngSegments;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
@@ -73,12 +74,12 @@ public class BaseImageGenerator {
         BufferedImage newImage = null;
         Graphics2D newGraphics = null;
 
-        ImmutableList<PngKey> pngKeys = baseImage.getPngKeys();
+        PngSegments pngKeys = baseImage.getPngKeys();
 
         boolean zeroPngIsBackground = false;
 
         int i = 0;
-        for (PngKey pngKey : pngKeys) {
+        for (PngSegment pngKey : pngKeys.getPngs()) {
             BufferedImage layerPng = readSrcPng(pngKey.getShortSha(), stats);
 
             boolean background = layerPng.getTransparency() == Transparency.OPAQUE;

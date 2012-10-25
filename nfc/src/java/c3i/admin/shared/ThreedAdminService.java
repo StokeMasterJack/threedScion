@@ -32,5 +32,5 @@ public interface ThreedAdminService extends RpcService {
 
     CommitHistory addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag) throws Exception;
 
-    void purgeRepoCache();
+    void purgeRepoCache(BrandKey brandKey);
 }

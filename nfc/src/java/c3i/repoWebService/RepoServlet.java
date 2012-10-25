@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
@@ -58,7 +59,7 @@ public class RepoServlet extends HttpServlet {
 
     private ServletContext application;
 
-    private Repos repos;
+    private BrandRepos brandRepos;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -71,7 +72,7 @@ public class RepoServlet extends HttpServlet {
         log = LogFactory.getLog(RepoServlet.class);
 
         try {
-            repos = initRepos(app.getRepoBaseDirs());
+            brandRepos = app.getBrandRepos();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
@@ -79,30 +80,21 @@ public class RepoServlet extends HttpServlet {
             throw new RuntimeException(msg,e);
         }
 
-        pngHandler = new PngHandler(repos, application);
-        vtcHandler = new VtcHandler(repos, application);
-        brandInitHandler = new BrandInitHandler(repos, application);
-        jpgHandler = new JpgHandler(repos, application);
-        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(repos, application);
-        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(repos, application);
-        blinkHandler = new BlinkHandler(repos, application);
-        threedModelHandler = new ThreedModelHandler(repos, application);
-        threedModelHandlerJsonP = new ThreedModelHandlerJsonP(repos, application);
-        gitObjectHandler = new GitObjectHandler(repos, application);
+        pngHandler = new PngHandler(brandRepos, application);
+        vtcHandler = new VtcHandler(brandRepos, application);
+        brandInitHandler = new BrandInitHandler(brandRepos, application);
+        jpgHandler = new JpgHandler(brandRepos, application);
+        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos, application);
+        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos, application);
+        blinkHandler = new BlinkHandler(brandRepos, application);
+        threedModelHandler = new ThreedModelHandler(brandRepos, application);
+        threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos, application);
+        gitObjectHandler = new GitObjectHandler(brandRepos, application);
 
 
     }
 
-    private static Repos initRepos(Map<String, String> map) {
-        Map<BrandKey, File> repoBaseDirMap = new HashMap<BrandKey, File>();
-        for (String brand : map.keySet()) {
-            BrandKey brandKey = BrandKey.fromString(brand);
-            String sRepoBaseDir = map.get(brand);
-            File repoBaseDir = new File(sRepoBaseDir);
-            repoBaseDirMap.put(brandKey, repoBaseDir);
-        }
-        return new Repos(repoBaseDirMap);
-    }
+
 
 
     @Override
@@ -135,34 +127,34 @@ public class RepoServlet extends HttpServlet {
                 ByteStreams.copy(is, response.getOutputStream());
             } else if (isVtcRequest(request)) {
                 log.debug("isVtcRequest");
-                vtcHandler.handle(new SeriesBasedRepoRequest(repos,request, response));
+                vtcHandler.handle(new SeriesBasedRepoRequest(brandRepos,request, response));
             } else if (isBrandInitRequest(request)) {
                 log.debug("isBrandInitRequest");
-                brandInitHandler.handle(new RepoRequest(repos,request, response));
+                brandInitHandler.handle(new RepoRequest(brandRepos,request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
                 log.debug("isJpgRequestSeriesFingerprintRequest");
-                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(repos,request, response));
+                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos,request, response));
             } else if (isJpgRequestNoFingerprintRequest(request)) {
                 log.debug("isJpgRequestNoFingerprintRequest");
-                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(repos,request, response));
+                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(brandRepos,request, response));
             } else if (isPngRequest(request)) {
                 log.debug("isPngRequest");
-                pngHandler.handle(new PngRequest(repos,request, response));
+                pngHandler.handle(new PngRequest(brandRepos,request, response));
             } else if (isJpgRequest(request)) {
                 log.debug("isJpgRequest");
-                jpgHandler.handle(new JpgRequest(repos,request, response));
+                jpgHandler.handle(new JpgRequest(brandRepos,request, response));
             } else if (isBlinkRequest(request)) {
                 log.debug("isBlinkRequest");
-                blinkHandler.handle(new SeriesBasedRepoRequest(repos,request, response));
+                blinkHandler.handle(new SeriesBasedRepoRequest(brandRepos,request, response));
             } else if (isThreedModelRequest(request)) {
                 log.debug("isThreedModelRequest");
-                threedModelHandler.handle(new ThreedModelRequest(repos,request, response));
+                threedModelHandler.handle(new ThreedModelRequest(brandRepos,request, response));
             } else if (isThreedModelJsonpRequest(request)) {
                 log.debug("isThreedModelJsonpRequest");
-                threedModelHandlerJsonP.handle(new ThreedModelRequest(repos,request, response));
+                threedModelHandlerJsonP.handle(new ThreedModelRequest(brandRepos,request, response));
             } else if (isObjectRequest(request)) {
                 log.debug("isObjectRequest");
-                gitObjectHandler.handle(new GitObjectRequest(repos,request, response));
+                gitObjectHandler.handle(new GitObjectRequest(brandRepos,request, response));
             } else {
                 throw new NotFoundException("No handler for this URL: [" + request.getRequestURI() + "]");
             }

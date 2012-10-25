@@ -23,7 +23,7 @@ public class PngSpec {
     }
 
     public String serializeToUrlSegment() {
-        return PngSegmentKey.serializeUrlSegment(getShortSha(), deltaY);
+        return PngSegment.serializeUrlSegment(getShortSha(), deltaY);
     }
 
     public String getShortSha() {
@@ -69,8 +69,8 @@ public class PngSpec {
 //        return srcPng.getUrl(repoBase);
 //    }
 
-    public PngSegmentKey getKey(){
-        return new PngSegmentKey(srcPng.getShortSha(),deltaY);
+    public PngSegment getKey(){
+        return new PngSegment(srcPng.getShortSha(),deltaY);
     }
     public Path getUrl(Path repoBaseUrl) {
         ImView view = srcPng.getView();

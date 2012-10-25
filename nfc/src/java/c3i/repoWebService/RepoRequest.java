@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.base.Strings;
 
@@ -17,15 +18,15 @@ public class RepoRequest {
     protected final HttpServletRequest request;
     protected final HttpServletResponse response;
 
-    protected final Repos repos;
+    protected final BrandRepos brandRepos;
     protected final BrandKey brandKey;
 
     protected String baseErrorMessage;
     protected String extension;
     protected String uri;
 
-    public RepoRequest(Repos repos, HttpServletRequest request, HttpServletResponse response) {
-        this.repos = repos;
+    public RepoRequest(BrandRepos brandRepos, HttpServletRequest request, HttpServletResponse response) {
+        this.brandRepos = brandRepos;
         this.request = request;
         this.response = response;
 
@@ -71,6 +72,16 @@ public class RepoRequest {
         }
 
 
+    }
+
+    public BrandRepos getBrandRepos() {
+        return brandRepos;
+    }
+
+    public Repos getRepos() {
+        BrandKey brandKey = getBrandKey();
+        BrandRepos brandRepos = getBrandRepos();
+        return brandRepos.getRepos(brandKey);
     }
 
 

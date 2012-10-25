@@ -1,5 +1,6 @@
 package c3i.jpgGen.shared;
 
+import c3i.core.common.shared.BrandKey;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.ArrayList;
@@ -10,15 +11,15 @@ public interface JpgGenServiceAsync {
      */
     void startJob(JobSpec jobSpec, AsyncCallback<Boolean> async);
 
-    void getQueueStatus(AsyncCallback<ArrayList<JobStatusItem>> async);
+    void getQueueStatus(BrandKey brandKey,AsyncCallback<ArrayList<JobStatusItem>> async);
 
-    void getQueueDetails(JobId jobId, AsyncCallback<ArrayList<ExecutorStatus>> async);
+    void getQueueDetails(BrandKey brandKey,JobId jobId, AsyncCallback<ArrayList<ExecutorStatus>> async);
 
-    void getJpgGenFinalStats(JobId jobId, AsyncCallback<Stats> async);
+    void getJpgGenFinalStats(BrandKey brandKey,JobId jobId, AsyncCallback<Stats> async);
 
-    void cancelJob(JobId jobId, AsyncCallback<Void> async);
+    void cancelJob(BrandKey brandKey,JobId jobId, AsyncCallback<Void> async);
 
-    void removeJob(JobId jobId, AsyncCallback<Void> async);
+    void removeJob(BrandKey brandKey,JobId jobId, AsyncCallback<Void> async);
 
-    void removeTerminal(AsyncCallback<Void> async);
+    void removeTerminal(BrandKey brandKey,AsyncCallback<Void> async);
 }

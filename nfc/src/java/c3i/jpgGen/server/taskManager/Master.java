@@ -3,10 +3,12 @@ package c3i.jpgGen.server.taskManager;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.ImView;
+import c3i.core.imageModel.shared.PngSegments;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.jpgGen.server.JpgSet;
 import c3i.jpgGen.server.singleJpg.BaseImageGenerator;
 import c3i.jpgGen.shared.ExecutorStatus;
 import c3i.jpgGen.shared.JobId;
@@ -31,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -103,11 +104,6 @@ public class Master {
         masterTask.awaitDoneDeep();
     }
 
-    public void printStatusBrief() {
-        JobStatus status = getStatus();
-        status.printBrief();
-    }
-
     /**
      * This is the KickOff task to kick of the jpg generation for one series-year-version-profile.
      * Just because this task finishes does not mean the entire job is finished
@@ -151,6 +147,7 @@ public class Master {
             CreateJpgSetsTask createJpgSetsTask = get();
             if (createJpgSetsTask != null) {
                 createJpgSetsTask.awaitDoneDeep();
+                log.info("createJpgSetsTask complete!");
             }
         }
 
@@ -278,6 +275,8 @@ public class Master {
                 @Override
                 public ImmutableList<CreateJpgSetTask> call() throws Exception {
 
+
+                    log.info("Creating JpgSets");
                     final ImmutableList.Builder<CreateJpgSetTask> builder = new ImmutableList.Builder<CreateJpgSetTask>();
 
                     List<ImView> views = threedModel.getViews();
@@ -361,11 +360,13 @@ public class Master {
             super(new Callable<ProcessJpgSetTask>() {
                 @Override
                 public ProcessJpgSetTask call() throws Exception {
+
                     if (monitorTask.isCancelled()) throw new InterruptedException();
 
-                    JpgSetAction childJob1 = new JpgSetAction(repos, seriesId, slice, profile);
-                    final Set<String> jpgSet = childJob1.getJpgSet();
-
+                    log.info("Start: jpgSetAction: " + slice);
+                    JpgSetAction jpgSetAction = new JpgSetAction(repos, new JpgSet.JpgSetKey(seriesId, slice.getViewName(), slice.getAngle()));
+                    JpgSet jpgSet = jpgSetAction.getJpgSet();
+                    log.info("Complete: jpgSetAction: " + slice + "  jpgCount: " + jpgSet.size());
 
                     ProcessJpgSetTask task1 = new ProcessJpgSetTask(slice, jpgSet);
                     executors.processJpgSet1.submit(task1);
@@ -392,7 +393,7 @@ public class Master {
 
         private final int jpgCountForSlice;
 
-        private ProcessJpgSetTask(final Slice2 slice, final Set<String> jpgSet) {
+        private ProcessJpgSetTask(final Slice2 slice, final JpgSet jpgSet) {
 
             super(new Callable<ImmutableList<JpgTask>>() {
                 @Override
@@ -400,7 +401,7 @@ public class Master {
 
                     final ImmutableList.Builder<JpgTask> builder = new ImmutableList.Builder<JpgTask>();
 
-                    for (final String fingerprint : jpgSet) {
+                    for (final PngSegments fingerprint : jpgSet.getJpgSpecs()) {
                         if (monitorTask.isCancelled()) throw new InterruptedException();
 
 
@@ -465,14 +466,14 @@ public class Master {
 
     private final class JpgTask extends MyFutureTask<JpgState> {
 
-        private JpgTask(final Slice2 slice, final String fingerprint) {
+        private JpgTask(final Slice2 slice, final PngSegments fingerprint) {
             super(new Callable<JpgState>() {
                 @Override
                 public JpgState call() throws Exception {
 
                     if (monitorTask.isCancelled()) throw new InterruptedException();
 
-                    BaseImage baseImage = BaseImage.parse(profile, slice, fingerprint);
+                    BaseImage baseImage = new BaseImage(profile, slice, fingerprint);
 
                     BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(repos, baseImage);
                     jpgGeneratorPureJava.generate(stats);

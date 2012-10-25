@@ -1,19 +1,12 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.VtcMap;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
-import smartsoft.util.lang.shared.RectSize;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
 import javax.servlet.ServletContext;
@@ -28,9 +21,8 @@ import java.io.PrintWriter;
 public class BrandInitHandler extends RepoHandler<RepoRequest> {
 
 
-
-    public BrandInitHandler(Repos repos, ServletContext application) {
-        super(repos, application);
+    public BrandInitHandler(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
     }
 
     @Override
@@ -42,10 +34,10 @@ public class BrandInitHandler extends RepoHandler<RepoRequest> {
         CacheUtil.addCacheNeverResponseHeaders(response);
 
         BrandKey brandKey = r.getBrandKey();
-        Brand brandInitData = repos.getBrandInitData(brandKey);
+        Repos repos = r.getRepos();
+        Brand brandInitData = repos.getBrandInitData();
 
         BrandSerializer brandSerializer = new BrandSerializer();
-
 
 
         ObjectNode jsBrandInitData = brandSerializer.toJson(brandInitData);

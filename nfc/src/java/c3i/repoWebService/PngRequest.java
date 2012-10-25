@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PngRequest extends SeriesBasedRepoRequest {
 
-    private final PngKey pngKey;
+    private final PngSegment pngKey;
 
-    public PngRequest(Repos repos,HttpServletRequest request, HttpServletResponse response) {
-        super(repos,request, response);
+    public PngRequest(BrandRepos brandRepos,HttpServletRequest request, HttpServletResponse response) {
+        super(brandRepos,request, response);
 
         String msg = "Invalid PngHandler URL: [" + getUri() + "].";
 
@@ -41,11 +42,11 @@ public class PngRequest extends SeriesBasedRepoRequest {
         a = s.split("\\.");
         if (a == null || a.length != 2)
             throw new NotFoundException(msg);
-        pngKey = new PngKey(a[0]);
+        pngKey = new PngSegment(a[0]);
 
     }
 
-    public PngKey getPngKey() {
+    public PngSegment getPngKey() {
         return pngKey;
     }
 }

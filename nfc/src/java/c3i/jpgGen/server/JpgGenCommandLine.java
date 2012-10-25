@@ -55,7 +55,7 @@ public class JpgGenCommandLine {
     }
 
     public void start() {
-        Repos repos = Repos.create(args.getBrandKey(), args.getRepoBase());
+        Repos repos = new Repos(args.getBrandKey(), args.getRepoBase());
 
         SeriesRepo seriesRepo = repos.getSeriesRepo(args.getSeriesKey());
         RootTreeId rootTreeId = seriesRepo.getSrcRepo().resolveRootTreeId(args.getRev());
@@ -194,7 +194,7 @@ public class JpgGenCommandLine {
         }
 
         public SeriesKey getSeriesKey() {
-            return new SeriesKey(getBrand(), getYear(), getSeries());
+            return new SeriesKey(getBrand(), getYear() + "", getSeries());
         }
 
         public int getThreadCount() {

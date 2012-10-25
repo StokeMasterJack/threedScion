@@ -1,6 +1,6 @@
 package c3i.jpgGen.server.singleJpg;
 
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 public class PngBufferedImage {
 
     private final BufferedImage sourceBufferedImage;
-    private final PngKey pngSpec;
+    private final PngSegment pngSpec;
 
-    public PngBufferedImage(BufferedImage sourceBufferedImage, PngKey pngSpec) {
+    public PngBufferedImage(BufferedImage sourceBufferedImage, PngSegment pngSpec) {
         this.sourceBufferedImage = sourceBufferedImage;
         this.pngSpec = pngSpec;
     }
@@ -19,7 +19,7 @@ public class PngBufferedImage {
         return sourceBufferedImage;
     }
 
-    public PngKey getPngSpec() {
+    public PngSegment getPngSpec() {
         return pngSpec;
     }
 

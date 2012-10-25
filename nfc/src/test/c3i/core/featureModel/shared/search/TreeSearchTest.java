@@ -39,8 +39,7 @@ public class TreeSearchTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        Repos.setRepoBaseDir(new File("/configurator-content-chuck"));
-        repos = Repos.get();
+        repos = new Repos(BrandKey.TOYOTA, new File("/configurator-content-toyota"));
     }
 
     public void testTrim() throws Exception {

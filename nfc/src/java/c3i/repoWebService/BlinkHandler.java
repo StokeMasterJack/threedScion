@@ -1,5 +1,6 @@
 package c3i.repoWebService;
 
+import c3i.repo.server.BrandRepos;
 import com.google.common.io.Files;
 import c3i.core.imageModel.shared.PngShortSha;
 import c3i.repo.server.Repos;
@@ -15,7 +16,7 @@ import java.io.File;
 
 public class BlinkHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
-    public BlinkHandler(Repos repos, ServletContext application) {
+    public BlinkHandler(BrandRepos repos, ServletContext application) {
         super(repos, application);
     }
 
@@ -27,6 +28,7 @@ public class BlinkHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
         PngShortSha pngShortSha = getShortSha(repoRequest);
 
+        Repos repos = repoRequest.getRepos();
         SeriesRepo seriesRepo = repos.getSeriesRepo(repoRequest.getSeriesKey());
         RtRepo rtRepo = seriesRepo.getRtRepo();
 

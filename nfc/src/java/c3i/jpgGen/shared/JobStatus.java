@@ -95,22 +95,6 @@ public class JobStatus implements Serializable {
         return jpgStateCounts.getErrorCount();
     }
 
-    public void printBrief() {
-//        System.err.print(TIME_FORMAT.format(new Date()) + "\t" + state);
-//        if (state.equals(JobState.InProcess) || state.equals(JobState.Complete)) {
-//            System.err.println(getPercentJpgsCompleteFormatted() + "\t" + getJpgsComplete() + "/" + jpgCount);
-//        } else {
-//            System.out.println();
-//        }
-    }
-
-//    private static final NumberFormat PERCENT_FORMAT = NumberFormat.getPercentInstance();
-//    private static final DateFormat TIME_FORMAT = DateFormat.getTimeInstance();
-
-//    public String getPercentJpgsCompleteFormatted() {
-//        return PERCENT_FORMAT.format(getPercentJpgsComplete());
-//    }
-
     public double getPercentJpgsComplete() {
         if (jpgCount == null) return 0;
         Integer jpgsComplete = getJpgsComplete();

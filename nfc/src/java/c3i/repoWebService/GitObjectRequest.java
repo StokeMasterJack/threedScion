@@ -1,5 +1,6 @@
 package c3i.repoWebService;
 
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.shared.RevisionParameter;
 
@@ -34,7 +35,7 @@ public class GitObjectRequest extends SeriesBasedRepoRequest {
 
     private final RevisionParameter revisionParameter;
 
-    public GitObjectRequest(Repos repos,HttpServletRequest request, HttpServletResponse response) {
+    public GitObjectRequest(BrandRepos repos,HttpServletRequest request, HttpServletResponse response) {
         super(repos,request, response);
 
         String msg = "Invalid ObjectHandler URL: [" + getUri() + "].";

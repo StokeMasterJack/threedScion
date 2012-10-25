@@ -1,5 +1,6 @@
 package c3i.jpgGen.shared;
 
+import c3i.core.common.shared.BrandKey;
 import com.google.gwt.rpc.client.RpcService;
 
 import java.util.ArrayList;
@@ -11,16 +12,16 @@ public interface JpgGenService extends RpcService {
      */
     boolean startJob(JobSpec jobSpec);
 
-    ArrayList<JobStatusItem> getQueueStatus();
+    ArrayList<JobStatusItem> getQueueStatus(BrandKey brandKey);
 
-    ArrayList<ExecutorStatus> getQueueDetails(JobId jobId);
+    ArrayList<ExecutorStatus> getQueueDetails(BrandKey brandKey,JobId jobId);
 
-    Stats getJpgGenFinalStats(JobId jobId);
+    Stats getJpgGenFinalStats(BrandKey brandKey,JobId jobId);
 
-    void cancelJob(JobId jobId);
+    void cancelJob(BrandKey brandKey,JobId jobId);
 
-    void removeJob(JobId jobId);
+    void removeJob(BrandKey brandKey,JobId jobId);
 
-    void removeTerminal();
+    void removeTerminal(BrandKey brandKey);
 
 }

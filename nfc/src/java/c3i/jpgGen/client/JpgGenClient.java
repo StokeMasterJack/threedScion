@@ -1,5 +1,6 @@
 package c3i.jpgGen.client;
 
+import c3i.core.common.shared.BrandKey;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import c3i.jpgGen.shared.*;
@@ -21,7 +22,10 @@ public class JpgGenClient {
     private final JpgGenServiceAsync service;
     private final RequestContext requestContext;
 
-    public JpgGenClient(UiContext ctx) {
+    private final BrandKey brandKey;
+
+    public JpgGenClient(BrandKey brandKey) {
+        this.brandKey = brandKey;
         Path baseUrl = JpgGenClient.getUrlOfJpgGenService();
         service = GWT.create(JpgGenService.class);
         ((ServiceDefTarget) service).setServiceEntryPoint(baseUrl.toString());
@@ -47,31 +51,31 @@ public class JpgGenClient {
 
     public Req<Void> removeTerminal() {
         Req<Void> r = newRequest("removeTerminal");
-        service.removeTerminal(r);
+        service.removeTerminal(brandKey, r);
         return r;
     }
 
     public Req<Void> removeJob(JobId jobId) {
         Req<Void> r = newRequest("removeJob");
-        service.removeJob(jobId, r);
+        service.removeJob(brandKey, jobId, r);
         return r;
     }
 
     public Req<Void> cancelJob(JobId jobId) {
         Req<Void> r = newRequest("cancelJob");
-        service.cancelJob(jobId, r);
+        service.cancelJob(brandKey, jobId, r);
         return r;
     }
 
     public Req<ArrayList<ExecutorStatus>> getQueueDetails(JobId jobId) {
         Req<ArrayList<ExecutorStatus>> r = newRequest("getQueueDetails");
-        service.getQueueDetails(jobId, r);
+        service.getQueueDetails(brandKey, jobId, r);
         return r;
     }
 
     public Req<ArrayList<JobStatusItem>> getQueueStatus() {
         Req<ArrayList<JobStatusItem>> r = newRequest("getQueueStatus");
-        service.getQueueStatus(r);
+        service.getQueueStatus(brandKey, r);
         return r;
     }
 
@@ -84,7 +88,7 @@ public class JpgGenClient {
 
     public Req<Stats> getJpgGenFinalStats(JobId jobId) {
         Req<Stats> r = newRequest("getJpgGenFinalStats");
-        service.getJpgGenFinalStats(jobId, r);
+        service.getJpgGenFinalStats(brandKey, jobId, r);
         return r;
     }
 

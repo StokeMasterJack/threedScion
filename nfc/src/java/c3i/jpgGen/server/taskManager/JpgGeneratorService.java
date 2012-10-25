@@ -1,13 +1,13 @@
 package c3i.jpgGen.server.taskManager;
 
-import com.google.common.util.concurrent.AbstractIdleService;
+import c3i.core.common.shared.SeriesId;
 import c3i.jpgGen.shared.JobId;
 import c3i.jpgGen.shared.JobSpec;
 import c3i.jpgGen.shared.JobState;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
-import c3i.core.common.shared.SeriesId;
+import com.google.common.util.concurrent.AbstractIdleService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.lib.ObjectId;
@@ -27,15 +27,14 @@ public class JpgGeneratorService extends AbstractIdleService {
         this.repos = repos;
     }
 
-
-    public Master startNewJpgJob(JobSpec jobSpec,int threadCount,int priority) throws EquivalentJobAlreadyRunningException {
+    public Master startNewJpgJob(JobSpec jobSpec, int threadCount, int priority) throws EquivalentJobAlreadyRunningException {
         if (isThereAlreadyAnOpenJobWithThisSpec(jobSpec)) {
             log.error("AlreadyRunningException");
             throw new EquivalentJobAlreadyRunningException();
         }
 
         jobSpec.getProfile().getBaseImageType();
-        Master master = new Master(repos, jobSpec,threadCount,priority);
+        Master master = new Master(repos, jobSpec, threadCount, priority);
         map.put(master.getId(), master);
         return master;
     }
@@ -107,14 +106,16 @@ public class JpgGeneratorService extends AbstractIdleService {
 
     private static Log log = LogFactory.getLog(JpgGeneratorService.class);
 
-    @Override protected void startUp() throws Exception {
+    @Override
+    protected void startUp() throws Exception {
 
     }
 
     /**
      * Actually does a shutdownNow
      */
-    @Override protected void shutDown() throws Exception {
+    @Override
+    protected void shutDown() throws Exception {
         for (Master master : map.values()) {
             master.shutdownNow();
         }

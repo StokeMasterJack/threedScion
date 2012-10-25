@@ -2,7 +2,7 @@ package c3i.jpgGen.server.singleJpg;
 
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
@@ -34,14 +34,14 @@ public class ZPngGenerator {
 
     public static final float QUALITY = 75F * .01F;
 
-    private final PngKey pngKey;
+    private final PngSegment pngKey;
     private final int width;
 
     private final SeriesRepo seriesRepo;
     private final RtRepo genRepo;
     private final File outputFile;
 
-    public ZPngGenerator(Repos repos, int width, SeriesKey seriesKey, PngKey pngKey) {
+    public ZPngGenerator(Repos repos, int width, SeriesKey seriesKey, PngSegment pngKey) {
         this.pngKey = pngKey;
         this.width = width;
         this.seriesRepo = repos.getSeriesRepo(seriesKey);

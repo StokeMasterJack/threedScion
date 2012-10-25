@@ -23,20 +23,18 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     public static final String BLINK_SUFFIX = "_w" + PNG_SUFFIX;
 
 
+
+
     @Override
     public String toString() {
         return super.toString() + "  " + shortSha + "  Z:" + (isZLayer() ? "T" : "F");
     }
 
-    public SrcPng(int depth, int angle, PngShortSha shortSha, boolean blink) {
+    public SrcPng(int depth, int angle, PngShortSha shortSha,boolean blink) {
         super(depth);
         this.angle = angle;
         this.shortSha = shortSha;
         this.blink = blink;
-    }
-
-    public boolean isBlink() {
-        return blink;
     }
 
 
@@ -89,6 +87,10 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     @Override
     public boolean isPng() {
         return true;
+    }
+
+    public boolean isBlink() {
+        return blink;
     }
 
     @Override
@@ -228,7 +230,7 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     }
 
     public SrcPng copy(int angle) {
-        if (this.angle == angle) return new SrcPng(depth, angle, shortSha, blink);
+        if (this.angle == angle) return new SrcPng(depth, angle, shortSha,blink);
         else throw new IllegalStateException();
     }
 
@@ -350,8 +352,6 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     public Var getLiftTrigger() {
         return getLayer().getView().getLiftSpec().getTriggerFeature();
     }
-
-
 
 
 }

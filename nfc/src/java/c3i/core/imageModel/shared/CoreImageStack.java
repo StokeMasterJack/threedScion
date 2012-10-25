@@ -38,13 +38,12 @@ public class CoreImageStack {
         if (key.imageMode.isPngMode()) {
             return null;
         } else {
-            ImmutableList.Builder<PngKey> builder = ImmutableList.builder();
+            ImmutableList.Builder<PngSegment> builder = ImmutableList.builder();
             for (final PngSpec pngSpec : getBasePngs()) {
-                PngKey pk = new PngKey(pngSpec.getShortSha(), pngSpec.getDeltaY());
+                PngSegment pk = new PngSegment(pngSpec.getShortSha(), pngSpec.getDeltaY());
                 builder.add(pk);
             }
-            ImmutableList<PngKey> pngs = builder.build();
-            return new BaseImage(getProfile(), getSlice2(), pngs);
+            return new BaseImage(getProfile(), getSlice2(), new PngSegments(builder.build()));
         }
     }
 

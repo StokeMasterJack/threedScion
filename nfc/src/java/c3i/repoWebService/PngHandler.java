@@ -1,7 +1,8 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
 import org.apache.commons.logging.Log;
@@ -25,8 +26,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
 
     public static final long LAST_MODIFIED_DATE = new Date(2010, 1, 1).toLong();
 
-    public PngHandler(Repos repos, ServletContext application) {
-        super(repos, application);
+    public PngHandler(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
     }
 
     @Override
@@ -35,7 +36,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
         log.debug("Received request for [" + repoRequest.getRequest().getRequestURI() + "]");
 
         SeriesKey seriesKey = repoRequest.getSeriesKey();
-        PngKey pngKey = repoRequest.getPngKey();
+        PngSegment pngKey = repoRequest.getPngKey();
+        Repos repos = repoRequest.getRepos();
         File zPngFile = repos.getFileForZPng(seriesKey,-1,pngKey);
 
         HttpServletResponse response = repoRequest.getResponse();

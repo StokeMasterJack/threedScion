@@ -2,7 +2,6 @@ package c3i.smartClient.client.model;
 
 import c3i.core.imageModel.shared.ImImage;
 import c3i.core.imageModel.shared.LayerImage;
-import c3i.core.imageModel.shared.Png;
 import c3i.core.imageModel.shared.PngSpec;
 import com.google.common.base.Preconditions;
 import com.google.gwt.dom.client.Document;
@@ -15,7 +14,6 @@ import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
-import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.Path;
 
 import javax.annotation.Nonnull;

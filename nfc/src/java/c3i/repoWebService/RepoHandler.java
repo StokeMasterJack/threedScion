@@ -1,13 +1,14 @@
 package c3i.repoWebService;
 
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 
 import javax.servlet.ServletContext;
 
 public abstract class RepoHandler<T extends RepoRequest> extends ReposHandler<T> {
 
-    protected RepoHandler(Repos repos, ServletContext application) {
-        super(repos, application);
+    protected RepoHandler(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
     }
 
     public abstract void handle(T repoRequest);

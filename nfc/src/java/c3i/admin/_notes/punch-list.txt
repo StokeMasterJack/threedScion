@@ -3,7 +3,7 @@ todo make sure blink still works
 
 get current version mechanism
 
-.gitattributes  and .gitignore files
+todo .gitattributes  and .gitignore files
 
 TwoThirty8 jpg names
 

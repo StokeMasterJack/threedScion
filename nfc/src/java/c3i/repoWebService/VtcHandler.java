@@ -1,5 +1,7 @@
 package c3i.repoWebService;
 
+import c3i.core.common.shared.BrandKey;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.common.shared.SeriesKey;
@@ -18,14 +20,17 @@ import java.io.PrintWriter;
  */
 public class VtcHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
-    public VtcHandler(Repos repos, ServletContext application) {
-        super(repos, application);
+    public VtcHandler(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
     }
 
     @Override
     public void handle(SeriesBasedRepoRequest r) {
         SeriesKey seriesKey = r.getSeriesKey();
 
+        BrandKey brandKey = r.getSeriesKey().getBrandKey();
+
+        Repos repos = getRepos(brandKey);
         RootTreeId vtcRootTreeId = repos.getVtcRootTreeId(seriesKey);
 
         HttpServletResponse response = r.getResponse();

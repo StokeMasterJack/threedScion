@@ -184,7 +184,17 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return name.equals("interior");
     }
 
-    public ImmutableList<PngSpec> getSrcPngs(SimplePicks picks, int angle) {
+    public PngSegments getPngSegments(SimplePicks picks, int angle) {
+        ImmutableList.Builder<PngSegment> pngs = ImmutableList.builder();
+        ImmutableList<PngSpec> pngSpecs = getPngSpecs(picks, angle);
+        for (PngSpec pngSpec : pngSpecs) {
+            PngSegment pngSegment = pngSpec.getKey();
+            pngs.add(pngSegment);
+        }
+        return new PngSegments(pngs.build());
+    }
+
+    public ImmutableList<PngSpec> getPngSpecs(SimplePicks picks, int angle) {
         Preconditions.checkNotNull(picks);
         Preconditions.checkArgument(angle > 0, "Angle must be greater than zero for " + getName() + " view");
         int angleCount = getAngleCount();
@@ -202,14 +212,14 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     public RawImageStack getRawImageStack(RawImageStack.Key spec) {
-        ImmutableList<PngSpec> srcPngs = getSrcPngs(spec.getFixedPicks(), spec.getAngle());
+        ImmutableList<PngSpec> srcPngs = getPngSpecs(spec.getFixedPicks(), spec.getAngle());
         return new RawImageStack(spec, this, srcPngs);
 
     }
 
     public RawImageStack getRawImageStack(FixedPicks picks, int angle) {
         if (picks.isValidBuild()) {
-            ImmutableList<PngSpec> srcPngs = getSrcPngs(picks, angle);
+            ImmutableList<PngSpec> srcPngs = getPngSpecs(picks, angle);
             return new RawImageStack(picks, angle, this, srcPngs);
         } else {
             return new RawImageStack(picks, angle, this, ImmutableList.<PngSpec>of());

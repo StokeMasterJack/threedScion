@@ -10,6 +10,7 @@
       <w>anding</w>
       <w>async</w>
       <w>attr</w>
+      <w>autocrlf</w>
       <w>bdds</w>
       <w>bddvar</w>
       <w>cacheable</w>
@@ -21,6 +22,7 @@
       <w>committers</w>
       <w>concat</w>
       <w>configws</w>
+      <w>creeped</w>
       <w>cudd</w>
       <w>culos</w>
       <w>cvsroot</w>
@@ -41,6 +43,7 @@
       <w>firefox</w>
       <w>fixup</w>
       <w>fixups</w>
+      <w>gitignore</w>
       <w>googleapis</w>
       <w>guid</w>
       <w>gzip</w>

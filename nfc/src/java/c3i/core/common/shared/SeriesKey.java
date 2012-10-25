@@ -9,7 +9,13 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.lang.Integer.parseInt;
+
 public class SeriesKey implements Comparable<SeriesKey>, Serializable {
+
+    private static final long serialVersionUID = -1194176968240952697L;
 
     private BrandKey brandKey;
     private int year;
@@ -19,40 +25,22 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
 //        this(null, year, seriesName);
 //    }
 
-    public SeriesKey(final BrandKey brandKey, final int year, @Nonnull final String seriesName) throws IllegalArgumentException {
-        if (brandKey == null) {
-            this.brandKey = BrandKey.TOYOTA;
-        } else {
-            this.brandKey = brandKey;
-        }
-        if (Strings.isEmpty(seriesName)) {
-            throw new IllegalArgumentException("name is required");
-        }
+    public SeriesKey(BrandKey brandKey, final int year, @Nonnull final String seriesName) throws IllegalArgumentException {
+        checkNotNull(brandKey);
+        checkNotNull(seriesName);
+        checkArgument(year > 2000 && year < 2080);
+
+        this.brandKey = brandKey;
         this.year = year;
-
-        String s1 = seriesName.trim();
-        if (Strings.containsWhitespace(s1)) {
-            s1 = s1.replace(" ", "");
-        }
-
-
-        this.name = s1.toLowerCase();
+        this.name = seriesName.toLowerCase().trim().replace(" ", "");
     }
 
-    public SeriesKey(@Nonnull final String brand, @Nonnull final int year, @Nonnull final String seriesName) throws IllegalArgumentException {
-        this(BrandKey.fromString(brand), year, seriesName);
-    }
 
-    public SeriesKey(@Nonnull final BrandKey brand, @Nonnull final String year, @Nonnull final String seriesName) throws IllegalArgumentException {
-        this(brand, Integer.parseInt(year), seriesName);
-    }
-
-    public SeriesKey(final String brandKey, @Nonnull final String seriesYear, @Nonnull final String seriesName) throws IllegalArgumentException {
-        if (brandKey == null) throw new IllegalArgumentException("seriesName is required");
+    public SeriesKey(@Nonnull final String brandKey ,@Nonnull final String seriesYear, @Nonnull final String seriesName) throws IllegalArgumentException {
+        if (Strings.isEmpty(brandKey)) throw new IllegalArgumentException("brandKey is required");
         if (Strings.isEmpty(seriesName)) throw new IllegalArgumentException("seriesName is required");
         if (Strings.isEmpty(seriesYear)) throw new IllegalArgumentException("seriesYear is required");
 
-        this.brandKey = BrandKey.fromString(brandKey);
 
         if (seriesName.length() < 2) throw new IllegalArgumentException("seriesName must be at least 2 digits long");
         if (seriesYear.length() != 4)
@@ -71,9 +59,19 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
 
 
         this.name = s1.toLowerCase();
+
+        this.brandKey = BrandKey.fromString(brandKey);
     }
 
     protected SeriesKey() {
+    }
+
+    public SeriesKey(BrandKey brandKey, String seriesYear, String seriesName) {
+       this(brandKey,parseInt(seriesYear),seriesName);
+    }
+
+    public BrandKey getBrandKey() {
+        return brandKey;
     }
 
     public static int parserModelYear(String modelYear) {
@@ -99,7 +97,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     }
 
     public String toStringPretty() {
-        return brandKey.getKey() + " " + getNamePretty() + " " + getYear();
+        return getNamePretty() + " " + getYear();
     }
 
     public String getShortName() {
@@ -179,6 +177,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
 
     public static final SeriesKey FRS_2013 = new SeriesKey(BrandKey.SCION, 2013, "frs");
     public static final SeriesKey IQ_2012 = new SeriesKey(BrandKey.SCION, 2012, "iq");
+
     public static final SeriesKey YARIS_2010 = new SeriesKey(BrandKey.TOYOTA, 2010, YARIS);
     public static final SeriesKey RAV4_2010 = new SeriesKey(BrandKey.TOYOTA, 2010, RAV4);
     public static final SeriesKey RAV4_2011 = new SeriesKey(BrandKey.TOYOTA, 2011, RAV4);
@@ -267,35 +266,31 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     }
 
 
-    public BrandKey getBrandKey() {
-        return brandKey;
-    }
-
     /**
      *
      * @return inverse of parse: brandSpaceYearSpaceName
      */
     public String serialize() {
-        return brandKey.getKey() + " " + year + " " + name;
+        return year + " " + name;
     }
 
     /**
      *
-     * @param brandSpaceYearSpaceName "brand year series"  or "brand-year-series"
+     * @param yearSpaceName "brand year series"  or "brand-year-series"
      */
-    public static SeriesKey parse(String brandSpaceYearSpaceName) {
+    public static SeriesKey parse(String yearSpaceName) {
         String[] a;
-        if (brandSpaceYearSpaceName.indexOf(' ') != -1) {
-            a = brandSpaceYearSpaceName.split(" ");
-        } else if (brandSpaceYearSpaceName.indexOf('-') != -1) {
-            a = brandSpaceYearSpaceName.split("-");
+        if (yearSpaceName.indexOf(' ') != -1) {
+            a = yearSpaceName.split(" ");
+        } else if (yearSpaceName.indexOf('-') != -1) {
+            a = yearSpaceName.split("-");
         } else {
             throw new IllegalArgumentException();
         }
         try {
             return new SeriesKey(a[0], a[1], a[2]);
         } catch (Exception e) {
-            throw new RuntimeException("Problems parsing[" + brandSpaceYearSpaceName + "]");
+            throw new RuntimeException("Problems parsing[" + yearSpaceName + "]");
         }
     }
 }

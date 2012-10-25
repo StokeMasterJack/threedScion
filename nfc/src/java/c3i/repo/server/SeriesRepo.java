@@ -57,13 +57,13 @@ public class SeriesRepo {
         Preconditions.checkNotNull(repoBaseDir);
         Preconditions.checkNotNull(seriesKey);
 
-        this.vtcBaseDir = repos.getVtcBaseDir(seriesKey.getBrandKey());
+        this.vtcBaseDir = repos.getVtcBaseDir();
         this.repoBaseDir = repoBaseDir;
         this.seriesKey = seriesKey;
         this.seriesDir = initSeriesDir();
 
         this.srcWork = new SrcWork(getSrcWorkDir(), seriesKey);
-        this.srcRepo = new SrcRepo(vtcBaseDir, getSrcRepoDir(), seriesKey);
+        this.srcRepo = new SrcRepo(vtcBaseDir, getSrcRepoDir(), getSrcWorkDir(),seriesKey);
         this.rtRepo = new RtRepo(getGenRepoDir(), seriesKey);
 
 
@@ -124,7 +124,7 @@ public class SeriesRepo {
 
 
     public SrcRepo getSrcRepo() {
-        srcRepo.initGitDirIfNecessary();
+        srcRepo.createGitRepoIfNeeded();
         return srcRepo;
     }
 

@@ -2,34 +2,70 @@ package c3i.core.imageModel.shared;
 
 import com.google.common.collect.ImmutableList;
 
-public class PngSegments {
+import java.io.Serializable;
+
+public class PngSegments implements Serializable {
 
     public static final String FINGERPRINT_SEPARATOR = "-";
+    private static final long serialVersionUID = -2941099965195410437L;
 
-    private final ImmutableList<PngSegment> pngs;
+    private String fingerprint;
 
     public PngSegments(ImmutableList<PngSegment> pngs) {
-        this.pngs = pngs;
+        fingerprint = generateFingerprint(pngs);
+    }
+
+    public PngSegments(String fingerprint) {
+        this.fingerprint = fingerprint;
+    }
+
+    private PngSegments() {
     }
 
     public ImmutableList<PngSegment> getPngs() {
-        return pngs;
+        return parse(fingerprint);
     }
 
     public String getFingerprint() {
-        return generateFingerprint(pngs);
+        return fingerprint;
     }
 
-
-    public static String generateFingerprint(ImmutableList<PngSegmentKey> allPngs) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < allPngs.size(); i++) {
-                PngSegmentKey srcPng = allPngs.get(i);
-                String pngUrlSegment = srcPng.serializeToUrlSegment();
-                sb.append(pngUrlSegment);
-                boolean last = (i == allPngs.size() - 1);
-                if (!last) sb.append(FINGERPRINT_SEPARATOR);
-            }
-            return sb.toString();
+    public static ImmutableList<PngSegment> parse(String fingerprint) {
+        ImmutableList.Builder<PngSegment> builder = ImmutableList.builder();
+        String[] pngSegments = fingerprint.split("-");
+        for (String pngSegment : pngSegments) {
+            builder.add(new PngSegment(pngSegment));
         }
+        return builder.build();
+    }
+
+    public static String generateFingerprint(ImmutableList<PngSegment> pngs) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < pngs.size(); i++) {
+            PngSegment srcPng = pngs.get(i);
+            String pngUrlSegment = srcPng.serializeToUrlSegment();
+            sb.append(pngUrlSegment);
+            boolean last = (i == pngs.size() - 1);
+            if (!last) sb.append(FINGERPRINT_SEPARATOR);
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getFingerprint();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PngSegments that = (PngSegments) o;
+        return fingerprint.equals(that.fingerprint);
+    }
+
+    @Override
+    public int hashCode() {
+        return fingerprint.hashCode();
+    }
 }

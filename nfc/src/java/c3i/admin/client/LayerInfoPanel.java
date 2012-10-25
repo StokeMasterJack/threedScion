@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.SrcPng;
 
 import java.util.Set;
 

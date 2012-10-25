@@ -25,8 +25,8 @@ public class SeriesId implements Serializable {
         this.rootTreeId = rootTreeId;
     }
 
-    public SeriesId(@Nonnull BrandKey brandKey,@Nonnull String seriesName, int seriesYear, @Nonnull String rootTreeId) {
-        this(new SeriesKey(brandKey,seriesYear, seriesName), new RootTreeId(rootTreeId));
+    public SeriesId(@Nonnull BrandKey brandKey, @Nonnull String seriesName, int seriesYear, @Nonnull String rootTreeId) {
+        this(new SeriesKey(brandKey, seriesYear, seriesName), new RootTreeId(rootTreeId));
     }
 
     private SeriesId() {
@@ -71,6 +71,10 @@ public class SeriesId implements Serializable {
     @Override
     public String toString() {
         return seriesKey.toString() + " " + rootTreeId;
+    }
+
+    public String serialize() {
+        return seriesKey.serialize() + "-" + rootTreeId;
     }
 
 }

@@ -1,5 +1,8 @@
 package c3i.admin.server;
 
+import c3i.core.common.shared.BrandKey;
+import c3i.repo.server.BrandRepos;
+import com.google.common.collect.ImmutableMap;
 import smartsoft.util.config.App;
 import smartsoft.util.lang.shared.Path;
 
@@ -15,13 +18,26 @@ public class ThreedAdminApp extends App {
     private static final File REPO_BASE_DIR_SHARE = new File("/www_share/nfc_image_repo");
     private static final File REPO_BASE_DIR_PRIVATE = new File("/configurator-content");
 
+    private BrandRepos brandRepos;
 
     public ThreedAdminApp() {
         super("threed-admin");
+
+
     }
 
-    public Map<String, String> getRepoBaseDirs() {
-        return getProperties(REPO_BASE_DIR_KEY);
+    public ImmutableMap<BrandKey, File> getRepoBaseDirs() {
+        Map<String, String> m = getProperties(REPO_BASE_DIR_KEY);
+
+        ImmutableMap.Builder<BrandKey, File> b = ImmutableMap.builder();
+        for (String brand : m.keySet()) {
+            BrandKey brandKey = BrandKey.fromString(brand);
+            String sFile = m.get(brand);
+            File f = new File(sFile);
+            b.put(brandKey, f);
+        }
+
+        return b.build();
     }
 
     public String getRepoBaseDirName(String brand) {
@@ -61,8 +77,32 @@ public class ThreedAdminApp extends App {
 
     }
 
+    public static ThreedAdminApp getOrCreate(ServletContext servletContext) {
+        String attName = ThreedAdminApp.class.getName();
+        ThreedAdminApp app = (ThreedAdminApp) servletContext.getAttribute(attName);
+        if (app == null) {
+            app = new ThreedAdminApp();
+            servletContext.setAttribute(attName, app);
+        }
+        return app;
+    }
+
     public static ThreedAdminApp getFromServletContext(ServletContext servletContext) {
-        return (ThreedAdminApp) servletContext.getAttribute(ThreedAdminApp.class.getName());
+        ThreedAdminApp app = (ThreedAdminApp) servletContext.getAttribute(ThreedAdminApp.class.getName());
+        if (app == null) {
+            app = new ThreedAdminApp();
+            servletContext.setAttribute(ThreedAdminApp.class.getName(), app);
+        }
+        return app;
+    }
+
+    public BrandRepos getBrandRepos() {
+        if (brandRepos == null) {
+            ImmutableMap<BrandKey, File> repoBaseDirs = getRepoBaseDirs();
+            brandRepos = new BrandRepos(repoBaseDirs);
+        }
+        return brandRepos;
+
     }
 
 

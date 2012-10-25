@@ -8,10 +8,12 @@ import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.RevisionParameter;
 import c3i.repo.shared.TagCommit;
+import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
+import com.google.common.io.Resources;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.JGitText;
@@ -25,6 +27,7 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
@@ -43,6 +46,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -60,18 +64,21 @@ public class SrcRepo {
 
     private final File vtcBaseDir;
     private final File srcRepoDir;
+    private final File srcWorkDir;
     private final SeriesKey seriesKey;
 
     private final FileRepository repo;
 
-    public SrcRepo(File vtcBaseDir, File srcRepoDir, SeriesKey seriesKey) {
+    public SrcRepo(File vtcBaseDir, File srcRepoDir, File srcWorkDir, SeriesKey seriesKey) {
 
         assert vtcBaseDir != null;
         assert srcRepoDir != null;
+        assert srcWorkDir != null;
         assert seriesKey != null;
 
         this.vtcBaseDir = vtcBaseDir;
         this.srcRepoDir = srcRepoDir;
+        this.srcWorkDir = srcWorkDir;
         this.seriesKey = seriesKey;
 
 
@@ -82,29 +89,120 @@ public class SrcRepo {
             throw new RepoException("Problems reading srcRepoDir [" + srcRepoDir + "]", e);
         }
 
-        initGitDirIfNecessary();
+        createGitRepoIfNeeded();
+        fixupGitConfigIfNeeded();
+        fixupGitAttributesIfNeeded();
+        fixupGitIgnoreIfNeeded();
 
 
     }
 
-    protected void initGitDirIfNecessary() {
+    protected void createGitRepoIfNeeded() {
         if (!srcRepoDir.exists()) {
             try {
                 repo.create();
             } catch (IOException e) {
                 throw new RepoException("Problems initializing new srcRepoDir [" + srcRepoDir + "]", e);
             }
-            initConfig();
         }
     }
 
-    private void initConfig() {
-        FileBasedConfig config = repo.getConfig();
-        config.setInt("core", null, "compression", 0);
+    public String getLocalResource(String localName) {
+        URL configFileUrl = Resources.getResource(this.getClass(), localName);
         try {
-            config.save();
+            return Resources.toString(configFileUrl, Charsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public String getExpectedGitConfigFile() {
+        return getLocalResource("expectedGitConfigFile.txt");
+    }
+
+    public String getExpectedGitAttributesFile() {
+        return getLocalResource("expectedGitAttributesFile.txt");
+    }
+
+    public String getExpectedGitIgnoreFile() {
+        return getLocalResource("expectedGitIgnoreFile.txt");
+    }
+
+    private void fixupGitConfigIfNeeded() {
+
+        String expected = getExpectedGitConfigFile();
+
+        FileBasedConfig config = repo.getConfig();
+        String actual = config.toText();
+
+        boolean needsFixup = !expected.equals(actual);
+
+        if (needsFixup) {
+            try {
+                config.fromText(expected);
+            } catch (ConfigInvalidException e) {
+                throw new RuntimeException("Problem with ExpectedGitConfigFile");
+            }
+            try {
+                config.save();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    private void fixupGitAttributesIfNeeded() {
+
+        String expected = getExpectedGitAttributesFile();
+        String actual;
+
+        File file = new File(srcWorkDir, ".gitattributes");
+        if (file.exists()) {
+            try {
+                actual = Files.toString(file, Charsets.UTF_8);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            actual = null;
+        }
+
+        boolean needsFixup = !expected.equals(actual);
+
+        if (needsFixup) {
+            try {
+                Files.write(expected, file, Charsets.UTF_8);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void fixupGitIgnoreIfNeeded() {
+
+        String expected = getExpectedGitIgnoreFile();
+        String actual;
+
+        File file = new File(srcWorkDir, ".gitignore");
+        if (file.exists()) {
+            try {
+                actual = Files.toString(file, Charsets.UTF_8);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            actual = null;
+        }
+
+        boolean needsFixup = !expected.equals(actual);
+
+        if (needsFixup) {
+            try {
+                Files.write(expected, file, Charsets.UTF_8);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

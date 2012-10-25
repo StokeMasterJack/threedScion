@@ -1,5 +1,15 @@
 package c3i.admin.client;
 
+import c3i.admin.shared.BrandInit;
+import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesKey;
+import c3i.jpgGen.client.JpgGenClient;
+import c3i.jpgGen.client.JpgQueueMasterPanel;
+import c3i.repo.shared.CommitHistory;
+import c3i.repo.shared.RepoHasNoHeadException;
+import c3i.repo.shared.SeriesCommit;
+import c3i.repo.shared.Settings;
+import c3i.util.shared.futures.OnSuccess;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,7 +23,6 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
-import c3i.util.shared.futures.OnSuccess;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.FailureCallback;
 import smartsoft.util.gwt.client.rpc.Req;
@@ -21,45 +30,37 @@ import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.ui.UiContext;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
-import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
-import c3i.jpgGen.client.JpgGenClient;
-import c3i.jpgGen.client.JpgQueueMasterPanel;
-import c3i.repo.shared.CommitHistory;
-import c3i.repo.shared.RepoHasNoHeadException;
-import c3i.repo.shared.SeriesCommit;
-import c3i.repo.shared.Settings;
 
 import javax.annotation.Nonnull;
 
 import static smartsoft.util.date.shared.StringUtil.isEmpty;
 
-public class MainEntryPoint implements EntryPoint,   UiContext {
+public class MainEntryPoint implements EntryPoint, UiContext {
 
     private App app;
 
     private MainMenu mainMenuBar;
     private TabLayoutPanel tab = new TabLayoutPanel(2, Style.Unit.EM);
 
-//    private MessageLog messageLog;
+    //    private MessageLog messageLog;
     private SettingsDialog settingsDialog;
 
     private BrandKey brandKey;
     private BrandSession brandSession;
 
     public void onModuleLoad() {
-        app = new App(this);
+
 //        messageLog = new MessageLog();
 
         String brand = Window.Location.getParameter("brand");
-        Console.log("brand = " + brand);
         if (isEmpty(brand)) {
             this.brandKey = BrandKey.TOYOTA;
         } else {
             this.brandKey = BrandKey.fromString(brand);
         }
 
+
+        app = new App(this, brandKey);
         brandSession = new BrandSession(app, brandKey);
 
         Console.log("Waiting for Brand to load...");
@@ -155,7 +156,7 @@ public class MainEntryPoint implements EntryPoint,   UiContext {
         ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
         Settings settings = brandInit.getSettings();
         if (settingsDialog == null) {
-            settingsDialog = new SettingsDialog(brandKey,settings, threedAdminClient);
+            settingsDialog = new SettingsDialog(brandKey, settings, threedAdminClient);
         } else {
             settingsDialog.setSettings(settings);
         }

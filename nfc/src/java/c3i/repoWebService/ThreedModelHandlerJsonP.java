@@ -1,8 +1,10 @@
 package c3i.repoWebService;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.threedModel.server.TmToJsonJvm;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -25,8 +27,8 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
 
     protected final LoadingCache<SeriesId, byte[]> jsonMap;
 
-    public ThreedModelHandlerJsonP(Repos repos, ServletContext application) {
-        super(repos, application);
+    public ThreedModelHandlerJsonP(BrandRepos brandRepos, ServletContext application) {
+        super(brandRepos, application);
 
 
         jsonMap = CacheBuilder.newBuilder()
@@ -79,6 +81,8 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
     }
 
     private byte[] createGzippedJson(SeriesId seriesId) {
+        BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
+        Repos repos = getRepos(brandKey);
         ThreedModel threedModel = repos.getThreedModel(seriesId);
         String jsonText = TmToJsonJvm.toJson(threedModel, true);
         byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));

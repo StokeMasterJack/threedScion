@@ -1,5 +1,6 @@
 package c3i.admin.client;
 
+import c3i.core.common.shared.BrandKey;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.ui.UiContext;
 import c3i.core.common.shared.SeriesKey;
@@ -11,10 +12,10 @@ public class App {
     private final ThreedAdminClient threedAdminClient;
     private final JpgGenClient jpgGenClient;
 
-    public App(final UiContext uiContext) {
+    public App(final UiContext uiContext,BrandKey brandKey) {
         this.uiContext = uiContext;
         threedAdminClient = new ThreedAdminClient();
-        jpgGenClient = new JpgGenClient(uiContext);
+        jpgGenClient = new JpgGenClient(brandKey);
     }
 
     public UiContext getUiContext() {

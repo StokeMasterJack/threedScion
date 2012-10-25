@@ -23,6 +23,7 @@
       <entry name="?*.pdf" />
       <entry name="?*.dtd" />
       <entry name="?*.json" />
+      <entry name="?*.txt" />
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>

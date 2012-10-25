@@ -1,33 +1,47 @@
 package c3i.repo.server;
 
-import c3i.repo.shared.CommitHistory;
-
+import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.server.TestConstants;
+import c3i.repo.shared.CommitHistory;
 import junit.framework.TestCase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 
+import java.util.Set;
+
 
 public class SrcRepoTest extends TestCase {
 
+    Repos repos;
+
+    @Override
+    public void setUp() throws Exception {
+        repos = new Repos(BrandKey.TOYOTA, TestConstants.TOYOTA_REPO_BASE_DIR);
+    }
+
+    public void test_init() throws Exception {
+        Set<SeriesKey> seriesKeys = repos.getSeriesKeys();
+        for (SeriesKey seriesKey : seriesKeys) {
+            SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+            SrcRepo srcRepo = seriesRepo.getSrcRepo();
+        }
+    }
+
     public void test_checkin_Camry() throws Exception {
-        Repos repos = Repos.get();
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.CAMRY_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Commit Comment");
     }
 
     public void test_addAllAndCommit2() throws Exception {
-        Repos repos = Repos.get();
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.TUNDRA_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Poop");
     }
 
     public void test_getCommitHistory() throws Exception {
-        Repos repos = Repos.get();
-
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
 
@@ -40,8 +54,6 @@ public class SrcRepoTest extends TestCase {
 
 
     public void test_getRevCommitEager() throws Exception {
-        Repos repos = Repos.get();
-
         SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
 

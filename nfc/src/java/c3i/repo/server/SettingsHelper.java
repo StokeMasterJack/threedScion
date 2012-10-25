@@ -10,22 +10,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Map;
 
 public class SettingsHelper {
 
     public static final String LOCAL_FILE_NAME = ".config.ser";
 
 
-    private final Map<BrandKey, File> repoBaseDirMap;
+    private final File repoBaseDir;
 
-    public SettingsHelper(final Map<BrandKey, File> repoBaseDirMap) {
-        Preconditions.checkNotNull(repoBaseDirMap);
-        this.repoBaseDirMap = repoBaseDirMap;
+    public SettingsHelper(File repoBaseDir) {
+        Preconditions.checkNotNull(repoBaseDir);
+        this.repoBaseDir = repoBaseDir;
     }
 
-    public Settings read(BrandKey brandKey) {
-        File repoBaseDir = repoBaseDirMap.get(brandKey);
+    public Settings read() {
         File configFile = new File(repoBaseDir, LOCAL_FILE_NAME);
         if (!configFile.exists()) {
             Settings settings = Settings.createDefault();
@@ -50,8 +48,7 @@ public class SettingsHelper {
 
     }
 
-    public void save(BrandKey brandKey, Settings repoConfig) {
-        File repoBaseDir = repoBaseDirMap.get(brandKey);
+    public void save(Settings repoConfig) {
         File configFile = new File(repoBaseDir, LOCAL_FILE_NAME);
 
         FileOutputStream os = null;

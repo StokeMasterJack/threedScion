@@ -60,6 +60,21 @@ public class PngSegment {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PngSegment that = (PngSegment) o;
+        return shortSha.equals(that.shortSha) && deltaY != that.deltaY;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = shortSha.hashCode();
+        result = 31 * result + deltaY;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "PngSegment{" +
                 "shortSha='" + shortSha + '\'' +

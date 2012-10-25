@@ -6,7 +6,7 @@ import c3i.core.imageModel.server.ImageUtil;
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.imageModel.shared.IBaseImageKey;
 import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
 import c3i.core.imageModel.shared.PngShortSha;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
@@ -46,6 +46,7 @@ public class RtRepo implements BlinkChecker {
     private final File notEmptyPngDir;
     private final File versionsDir;
     private final File blinksDir;
+    private final File cacheDir;
 
     public RtRepo(File rtRepoDir, SeriesKey seriesKey) {
         assert rtRepoDir != null;
@@ -83,6 +84,9 @@ public class RtRepo implements BlinkChecker {
 
         blinksDir = new File(this.rtRepoDir, "blinks");
         FileUtil.createDirNotExists(blinksDir);
+
+        cacheDir = new File(this.rtRepoDir, "cache");
+        FileUtil.createDirNotExists(cacheDir);
 
     }
 
@@ -188,13 +192,22 @@ public class RtRepo implements BlinkChecker {
         return new File(versionDir, profile.getKey());
     }
 
+    public File getVersionSliceDir(RootTreeId rootTreeId, ImView view, int angle) {
+        String sliceName = view.getName() + "-" + Slice.getAnglePadded(angle);
+        return new File(getVersionDir(rootTreeId), sliceName);
+    }
+
     public File getVersionWidthSliceDir(RootTreeId rootTreeId, Profile profile, ImView view, int angle) {
         String sliceName = view.getName() + "-" + Slice.getAnglePadded(angle);
         return new File(getVersionWidthDir(rootTreeId, profile), sliceName);
     }
 
-    public File getJpgSetFile(RootTreeId rootTreeId, Profile profile, ImView view, int angle) {
-        File vws = getVersionWidthSliceDir(rootTreeId, profile, view, angle);
+    public File getCacheDir() {
+        return cacheDir;
+    }
+
+    public File getJpgSetFile(RootTreeId rootTreeId, ImView view, int angle) {
+        File vws = getVersionSliceDir(rootTreeId, view, angle);
         return new File(vws, "jpgSet.ser");
     }
 
@@ -208,8 +221,8 @@ public class RtRepo implements BlinkChecker {
         return new File(vws, "complete.txt");
     }
 
-    public File getJpgCountFile(RootTreeId rootTreeId, Profile profile, ImView view, int angle) {
-        File vws = getVersionWidthSliceDir(rootTreeId, profile, view, angle);
+    public File getJpgCountFile(RootTreeId rootTreeId, ImView view, int angle) {
+        File vws = getVersionSliceDir(rootTreeId, view, angle);
         return new File(vws, "jpgCount.txt");
     }
 
@@ -257,7 +270,7 @@ public class RtRepo implements BlinkChecker {
         return exists;
     }
 
-    public File getZPngFileName(PngKey pngKey) {
+    public File getZPngFileName(PngSegment pngKey) {
         File pngDir = getPngDir();
         String fingerprint = pngKey.serializeToUrlSegment();
         File pngFileName = new File(pngDir, fingerprint + ".png");

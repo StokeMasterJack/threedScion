@@ -3,7 +3,7 @@ package c3i.jpgGen.server.singleJpg;
 
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
 import c3i.core.imageModel.shared.Profile;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
@@ -115,7 +115,7 @@ public class BaseImageGeneratorOld {
         String pngSegment = pngSegments[0];
 
 
-        PngKey bgPngSpec = new PngKey(pngSegment);
+        PngSegment bgPngSpec = new PngSegment(pngSegment);
         BufferedImage bgImage = readSrcPng(bgPngSpec.getShortSha());
 
         a.add(new PngBufferedImage(bgImage, bgPngSpec));
@@ -123,7 +123,7 @@ public class BaseImageGeneratorOld {
 
         for (int i = 1; i < pngSegments.length; i++) {
             pngSegment = pngSegments[i];
-            PngKey pngSpec = new PngKey(pngSegment);
+            PngSegment pngSpec = new PngSegment(pngSegment);
             BufferedImage sourceBufferedImage = readSrcPng(pngSpec.getShortSha());
             a.add(new PngBufferedImage(sourceBufferedImage, pngSpec));
         }

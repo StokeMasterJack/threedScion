@@ -1,17 +1,16 @@
 package c3i.repoWebService;
 
 
-import c3i.repo.server.Repos;
-import com.google.common.collect.ImmutableSet;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.Slice;
+import c3i.repo.server.BrandRepos;
+import c3i.repo.server.Repos;
+import com.google.common.collect.ImmutableSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.Arrays;
 
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
@@ -28,18 +27,18 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
 
     private final SeriesKey seriesKey;
     private final Slice slice;
-    private final String  profileKey;
+    private final String profileKey;
     private final ImmutableSet<String> varCodes;
 
-    public JpgRequestNoFingerprint(Repos repos, HttpServletRequest request, HttpServletResponse response) {
-        super(repos,request, response);
+    public JpgRequestNoFingerprint(BrandRepos repos, HttpServletRequest request, HttpServletResponse response) {
+        super(repos, request, response);
         String uri = getUri();
 
 
         String msg = "Bad jpg uri [" + uri + "]";
         if (isEmpty(uri)) throw new NotFoundException(msg);
 
-        if(uri.startsWith("/")){
+        if (uri.startsWith("/")) {
             uri = uri.substring(1);
         }
 
@@ -75,6 +74,7 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
     }
 
     public Profile getProfile() {
+        Repos repos = getRepos();
         ProfilesCache profilesCache = repos.getProfilesCache();
         return profilesCache.getProfile(brandKey, profileKey);
     }

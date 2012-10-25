@@ -6,7 +6,7 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngKey;
+import c3i.core.imageModel.shared.PngSegment;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
@@ -46,61 +46,69 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static com.google.common.base.Preconditions.checkState;
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 public class Repos {
 
     public static final String VTC_LOCAL_DIR_NAME = ".vtc";
 
+    private final static HashMap<BrandKey, File> repoBaseDirs = new HashMap<BrandKey, File>();
+
     private static Repos INSTANCE;
-    private static Map<BrandKey, File> staticRepoBaseDirMap;
+
+    private final BrandKey brandKey;
+    private final File repoBaseDir;
 
     private ProfilesCache profilesCache;
 
-    public static void setRepoBaseDir(File repoBaseDir) {
-        setRepoBaseDir(ImmutableMap.of(BrandKey.TOYOTA, repoBaseDir));
+    public static void setRepoBaseDir(BrandKey brandKey, File repoBaseDir) {
+        File existingValue = repoBaseDirs.get(brandKey);
+        if (existingValue == null) {
+            repoBaseDirs.put(brandKey, repoBaseDir);
+        } else if (existingValue.equals(repoBaseDir)) {
+            //ignore
+        } else {
+            throw new IllegalStateException("repoBaseDir for " + brandKey + " already set to " + existingValue);
+        }
+
     }
 
-    public static void setRepoBaseDir(Map<BrandKey, File> repoBaseDirMap) {
-        Repos.staticRepoBaseDirMap = repoBaseDirMap;
-    }
 
     public static Repos get() {
-        if (staticRepoBaseDirMap == null) {
+        return get(BrandKey.TOYOTA);
+    }
+
+    public static Repos get(BrandKey brandKey) {
+        File staticRepoBaseDir = repoBaseDirs.get(brandKey);
+        if (staticRepoBaseDir == null) {
             throw new IllegalStateException("Must call setRepoBaseDir(..) before calling get()");
         }
         if (INSTANCE == null) {
-            INSTANCE = new Repos(staticRepoBaseDirMap);
+            INSTANCE = new Repos(brandKey, staticRepoBaseDir);
         }
         return INSTANCE;
     }
 
-    private Map<BrandKey, File> repoBaseDirMap;
-
     private final LoadingCache<SeriesKey, SeriesRepo> seriesRepoCache;
     private final SettingsHelper settingsHelper;
 
-    public Repos(final Map<BrandKey, File> repoBaseDirMap) {
-        Preconditions.checkNotNull(repoBaseDirMap);
-        this.repoBaseDirMap = repoBaseDirMap;
+    public Repos(final BrandKey brandKey, File repoBaseDir) {
+        Preconditions.checkNotNull(brandKey);
+        Preconditions.checkNotNull(repoBaseDir);
+        this.brandKey = brandKey;
+        this.repoBaseDir = repoBaseDir;
 
-        for (Map.Entry<BrandKey, File> entry : repoBaseDirMap.entrySet()) {
-            BrandKey brandKey = entry.getKey();
-            File repoBaseDir = entry.getValue();
-            if (!repoBaseDir.exists()) {
-                throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] for brand[" + brandKey + "]  does not exist");
-            }
+        if (!repoBaseDir.exists()) {
+            throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] for brand[" + brandKey + "]  does not exist");
         }
 
         profilesCache = new ProfilesCache(new CacheLoader<BrandKey, Profiles>() {
             @Override
             public Profiles load(BrandKey key) throws Exception {
-                return getProfiles(key);
+                return getProfiles();
             }
         });
 
@@ -111,17 +119,14 @@ public class Repos {
                         new CacheLoader<SeriesKey, SeriesRepo>() {
                             @Override
                             public SeriesRepo load(SeriesKey seriesKey) throws Exception {
-                                File repoBaseDir = repoBaseDirMap.get(seriesKey.getBrandKey());
-                                checkState(repoBaseDir != null);
-                                return new SeriesRepo(Repos.this, repoBaseDir, seriesKey);
+                                return new SeriesRepo(Repos.this, Repos.this.repoBaseDir, seriesKey);
                             }
                         });
 
-        settingsHelper = new SettingsHelper(repoBaseDirMap);
+        settingsHelper = new SettingsHelper(repoBaseDir);
 
-        FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.TOYOTA));
-        FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.LEXUS));
-        FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.SCION));
+        FileUtil.createDirNotExists(getVtcBaseDir());
+        FileUtil.createDirNotExists(getCacheDir());
 
 
     }
@@ -135,7 +140,7 @@ public class Repos {
     }
 
     public SeriesRepo getSeriesRepo(String brand, String series, int year) {
-        SeriesKey seriesKey = new SeriesKey(brand, year, series);
+        SeriesKey seriesKey = new SeriesKey(BrandKey.fromString(brand), year, series);
         return getSeriesRepo(seriesKey);
     }
 
@@ -157,8 +162,8 @@ public class Repos {
         return settingsHelper;
     }
 
-    public Settings getSettings(BrandKey brandKey) {
-        return settingsHelper.read(brandKey);
+    public Settings getSettings() {
+        return settingsHelper.read();
     }
 
     public ThreedModel getThreedModel(SeriesKey seriesKey, RootTreeId rootTreeId) {
@@ -185,13 +190,13 @@ public class Repos {
         return getThreedModelForHead(seriesKey).getFeatureModel();
     }
 
-    public File getRepoBaseDir(BrandKey brandKey) {
-        return repoBaseDirMap.get(brandKey);
+    public File getRepoBaseDir() {
+        return repoBaseDir;
     }
 
-    public VtcMap getVtcMap(BrandKey brandKey) {
+    public VtcMap getVtcMap() {
         ImmutableMap.Builder<SeriesKey, RootTreeId> builder = ImmutableMap.builder();
-        Set<SeriesKey> seriesKeys = getSeriesKeys(brandKey);
+        Set<SeriesKey> seriesKeys = getSeriesKeys();
         for (SeriesKey seriesKey : seriesKeys) {
             try {
                 RootTreeId vtcRootTreeId = getVtcRootTreeId(seriesKey);
@@ -207,57 +212,64 @@ public class Repos {
     }
 
 
-    public Brand getBrandInitData(BrandKey brandKey) {
-        VtcMap vtcMap = getVtcMap(brandKey);
-        Profiles profiles = getProfiles(brandKey);
+    public Brand getBrandInitData() {
+        VtcMap vtcMap = getVtcMap();
+        Profiles profiles = getProfiles();
         return new Brand(brandKey, vtcMap, profiles);
     }
 
-    public Profiles getProfiles(BrandKey brandKey) {
-        ArrayList<Profile> a = new ArrayList<Profile>();
-        ObjectNode o = getProfilesAsJson(brandKey);
-        Iterator<String> fieldNames = o.getFieldNames();
-        while (fieldNames.hasNext()) {
+    private Profiles profiles;
+
+    public Profiles getProfiles() {
+
+        if (profiles == null) {
+            ArrayList<Profile> a = new ArrayList<Profile>();
+            ObjectNode o = getProfilesAsJson();
+            Iterator<String> fieldNames = o.getFieldNames();
+            while (fieldNames.hasNext()) {
 
 
-            String profileKey = fieldNames.next();
-            JsonNode profile = o.get(profileKey);
+                String profileKey = fieldNames.next();
+                JsonNode profile = o.get(profileKey);
 
-            JsonNode imageSize = profile.get("image");
+                JsonNode imageSize = profile.get("image");
 
-            int w = imageSize.get("w").getIntValue();
-            int h = imageSize.get("h").getIntValue();
-            RectSize rectSize = new RectSize(w, h);
+                int w = imageSize.get("w").getIntValue();
+                int h = imageSize.get("h").getIntValue();
+                RectSize rectSize = new RectSize(w, h);
 
-            BaseImageType baseImageType;
-            JsonNode jsBaseImageType = profile.get("baseImageType");
-            if (jsBaseImageType != null) {
-                try {
-                    String sBaseImageType = jsBaseImageType.getTextValue();
-                    if (isEmpty(sBaseImageType)) {
+                BaseImageType baseImageType;
+                JsonNode jsBaseImageType = profile.get("baseImageType");
+                if (jsBaseImageType != null) {
+                    try {
+                        String sBaseImageType = jsBaseImageType.getTextValue();
+                        if (isEmpty(sBaseImageType)) {
+                            baseImageType = BaseImageType.JPG;
+                        } else {
+                            baseImageType = BaseImageType.valueOf(sBaseImageType);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        log.error("Problem reading baseImageType", e);
                         baseImageType = BaseImageType.JPG;
-                    } else {
-                        baseImageType = BaseImageType.valueOf(sBaseImageType);
                     }
-                } catch (IllegalArgumentException e) {
-                    log.error("Problem reading baseImageType", e);
+                } else {
                     baseImageType = BaseImageType.JPG;
                 }
-            } else {
-                baseImageType = BaseImageType.JPG;
+
+                Profile p = new Profile(profileKey, rectSize, baseImageType);
+                a.add(p);
             }
 
-            Profile p = new Profile(profileKey, rectSize, baseImageType);
-            a.add(p);
+            profiles = new Profiles(a);
         }
 
-        return new Profiles(a);
+        return profiles;
 
     }
 
-    public ObjectNode getProfilesAsJson(BrandKey brandKey) {
+    public ObjectNode getProfilesAsJson() {
         ObjectMapper mapper = new ObjectMapper();
-        File repoBaseDir = getRepoBaseDir(brandKey);
+        File repoBaseDir = getRepoBaseDir();
         if (repoBaseDir == null) throw new IllegalStateException();
         File brandBaseDir = repoBaseDir;
         if (!brandBaseDir.exists()) return mapper.createObjectNode();
@@ -273,9 +285,9 @@ public class Repos {
         }
     }
 
-    public Set<SeriesKey> getSeriesKeys(BrandKey brandKey) {
+    public Set<SeriesKey> getSeriesKeys() {
         HashSet<SeriesKey> seriesKeys = new HashSet<SeriesKey>();
-        ArrayList<Series> seriesNamesWithYears = getSeriesNamesWithYears(brandKey);
+        ArrayList<Series> seriesNamesWithYears = getSeriesNamesWithYears();
         for (Series seriesNamesWithYear : seriesNamesWithYears) {
             String seriesName = seriesNamesWithYear.getName();
             ArrayList<Integer> years = seriesNamesWithYear.getYears();
@@ -287,10 +299,8 @@ public class Repos {
         return seriesKeys;
     }
 
-    public ArrayList<Series> getSeriesNamesWithYears(BrandKey brandKey) {
-        System.out.println("repoBaseDirMap = " + repoBaseDirMap);
-        System.out.println("brandKey = " + brandKey);
-        File repoBaseDir = getRepoBaseDir(brandKey);
+    public ArrayList<Series> getSeriesNamesWithYears() {
+        File repoBaseDir = getRepoBaseDir();
 
         if (repoBaseDir == null) throw new IllegalStateException();
 
@@ -346,7 +356,7 @@ public class Repos {
         }
     };
 
-    public File getFileForZPng(SeriesKey sk, int width, PngKey pngKey) {
+    public File getFileForZPng(SeriesKey sk, int width, PngSegment pngKey) {
         SeriesRepo seriesRepo = getSeriesRepo(sk);
         RtRepo genRepo = seriesRepo.getRtRepo();
 
@@ -364,7 +374,7 @@ public class Repos {
         return pngFile;
     }
 
-    private void createZPngOnTheFly(int width, SeriesKey sk, PngKey pngKey) {
+    private void createZPngOnTheFly(int width, SeriesKey sk, PngSegment pngKey) {
         ZPngGenerator zPngGenerator = new ZPngGenerator(this, width, sk, pngKey);
         zPngGenerator.generate();
     }
@@ -414,8 +424,8 @@ public class Repos {
         return getThreedModel(seriesId);
     }
 
-    public File getVtcBaseDir(BrandKey brandKey) {
-        File brandRepoBase = new File(getRepoBaseDir(brandKey), brandKey.getKey());
+    public File getVtcBaseDir() {
+        File brandRepoBase = new File(getRepoBaseDir(), brandKey.getKey());
         File f = new File(brandRepoBase, VTC_LOCAL_DIR_NAME);
         FileUtil.createDirNotExists(f);
         return f;
@@ -442,21 +452,7 @@ public class Repos {
         return srcRepo.getCommitHistory(commitId);
     }
 
-
-    public static Repos create(Map<String, String> map) {
-        Map<BrandKey, File> repoBaseDirMap = new HashMap<BrandKey, File>();
-        for (String brand : map.keySet()) {
-            BrandKey brandKey = BrandKey.fromString(brand);
-            String sRepoBaseDir = map.get(brand);
-            File repoBaseDir = new File(sRepoBaseDir);
-            repoBaseDirMap.put(brandKey, repoBaseDir);
-        }
-        return new Repos(repoBaseDirMap);
+    public File getCacheDir() {
+        return new File(repoBaseDir, "cache");
     }
-
-    public static Repos create(BrandKey brandKey, File repoBaseDir) {
-        return new Repos(ImmutableMap.of(brandKey, repoBaseDir));
-    }
-
-
 }

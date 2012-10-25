@@ -10,7 +10,7 @@ public interface IBaseImageKey {
 
     SeriesKey getSeriesKey();
 
-    ImmutableList<PngKey> getPngKeys();
+    PngSegments getPngKeys();
 
     boolean isJpg();
 }
