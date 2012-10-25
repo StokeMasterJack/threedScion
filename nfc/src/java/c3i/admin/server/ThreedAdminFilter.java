@@ -1,9 +1,5 @@
 package c3i.admin.server;
 
-import c3i.repoWebService.ThreedRepoApp;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import smartsoft.util.servlet.http.RequestInterrogator;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
 import javax.servlet.Filter;
@@ -17,14 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ThreedAdminFilter implements Filter {
-
-    private static final ThreedRepoApp app;
-    private static final Log log;
-
-    static {
-        app = ThreedRepoApp.get();
-        log = LogFactory.getLog(ThreedAdminFilter.class);
-    }
 
     @Override
     public void init(FilterConfig config) throws ServletException {

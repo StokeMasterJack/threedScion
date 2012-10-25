@@ -155,7 +155,7 @@ public class MainEntryPoint implements EntryPoint,   UiContext {
         ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
         Settings settings = brandInit.getSettings();
         if (settingsDialog == null) {
-            settingsDialog = new SettingsDialog(settings, threedAdminClient);
+            settingsDialog = new SettingsDialog(brandKey,settings, threedAdminClient);
         } else {
             settingsDialog.setSettings(settings);
         }

@@ -1,5 +1,6 @@
 package c3i.jpgGen.server;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
@@ -15,6 +16,7 @@ import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.BasicConfigurator;
 import smartsoft.util.CommandLineArgs;
 import smartsoft.util.Sys;
 
@@ -29,6 +31,9 @@ public class JpgGenCommandLine {
 
     private static final NumberFormat PERCENT_FORMAT = NumberFormat.getPercentInstance();
 
+    static {
+        BasicConfigurator.configure();
+    }
 
     private final Args args;
 
@@ -36,12 +41,12 @@ public class JpgGenCommandLine {
         args = new Args(a);
 
         //ide mode only
-        args.putRaw(Args.REPO_BASE, "/Users/dford/temp/jpgGenTundraTest/configurator-content-v2");
+        args.putRaw(Args.REPO_BASE, "/configurator-content-toyota");
 
         System.out.println("Using options:");
         args.printMerged(1);
 
-        Repos.setRepoBaseDir(args.getRepoBase());
+//        Repos.setRepoBaseDir(args.getRepoBase());
     }
 
     public static void main(String... args) {
@@ -50,8 +55,7 @@ public class JpgGenCommandLine {
     }
 
     public void start() {
-
-        Repos repos = Repos.get();
+        Repos repos = Repos.create(args.getBrandKey(), args.getRepoBase());
 
         SeriesRepo seriesRepo = repos.getSeriesRepo(args.getSeriesKey());
         RootTreeId rootTreeId = seriesRepo.getSrcRepo().resolveRootTreeId(args.getRev());
@@ -142,7 +146,7 @@ public class JpgGenCommandLine {
         private static Map<String, String> buildDefaults() {
             ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
             b.put(BRAND, "toyota");
-            b.put(YEAR, "2011");
+            b.put(YEAR, "2013");
             b.put(SERIES, "tundra");
             b.put(PROFILE, "wStd");
             b.put(THREAD_COUNT, "5");
@@ -165,6 +169,10 @@ public class JpgGenCommandLine {
 
         public String getBrand() {
             return get(BRAND);
+        }
+
+        public BrandKey getBrandKey() {
+            return BrandKey.fromString(getBrand());
         }
 
         public String getSeries() {

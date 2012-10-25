@@ -6,6 +6,7 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.Slice;
+import c3i.repo.server.Repos;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,8 +34,8 @@ public class JpgRequestSeriesFingerprint extends SeriesBasedRepoRequest {
     private final List<String> varCodes = new ArrayList<String>();
 
 
-    public JpgRequestSeriesFingerprint(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    public JpgRequestSeriesFingerprint(Repos repos, HttpServletRequest request, HttpServletResponse response) {
+        super(repos, request, response);
 
         String uri = getUri();
 
@@ -81,7 +82,7 @@ public class JpgRequestSeriesFingerprint extends SeriesBasedRepoRequest {
     }
 
     public Profile getProfile() {
-        return ProfilesCache.get().getProfile(brandKey, profileKey);
+        return repos.getProfilesCache().getProfile(brandKey, profileKey);
     }
 
     public List<String> getVarCodes() {

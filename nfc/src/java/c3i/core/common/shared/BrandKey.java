@@ -55,4 +55,21 @@ public class BrandKey implements Serializable {
     public boolean isToyota() {
         return this == TOYOTA;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BrandKey brandKey = (BrandKey) o;
+
+        if (!key.equals(brandKey.key)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return key.hashCode();
+    }
 }

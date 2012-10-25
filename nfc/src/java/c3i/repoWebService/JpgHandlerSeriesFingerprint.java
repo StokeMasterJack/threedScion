@@ -30,7 +30,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
 
         log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
 
-        ThreedModel threedModel = Repos.get().getThreedModel(r.getSeriesId());
+        ThreedModel threedModel = repos.getThreedModel(r.getSeriesId());
 
         List<String> varCodes = r.getVarCodes();
         FixedPicks fixedPicks = threedModel.fixupRaw(varCodes);

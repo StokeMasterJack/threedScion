@@ -1,6 +1,7 @@
 package c3i.jpgGen.server;
 
 import c3i.admin.server.ThreedAdminApp;
+import c3i.core.common.shared.BrandKey;
 import c3i.jpgGen.server.taskManager.EquivalentJobAlreadyRunningException;
 import c3i.jpgGen.server.taskManager.JpgGeneratorService;
 import c3i.jpgGen.server.taskManager.Master;
@@ -18,7 +19,6 @@ import sun.misc.VM;
 
 import javax.servlet.ServletException;
 import java.awt.*;
-import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -45,14 +45,12 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
     @Override
     public void init() throws ServletException {
         super.init();
-        app = ThreedAdminApp.get();
+        app = ThreedAdminApp.getFromServletContext(getServletContext());
         log = LogFactory.getLog(JpgGenServlet.class);
         log.info("Initializing " + getClass().getSimpleName());
-        File repoBaseDir = app.getRepoBaseDir();
-        Repos.setRepoBaseDir(repoBaseDir);
 
         try {
-            this.repos = Repos.get();
+            repos = Repos.create(app.getRepoBaseDirs());
             this.jpgGen = new JpgGeneratorService(repos);
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,8 +103,11 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
         System.out.println("VM.maxDirectMemory = " + VM.maxDirectMemory());
 
         jobSpec.getProfile().getBaseImageType();
+
+        BrandKey brandKey = jobSpec.getSeriesId().getSeriesKey().getBrandKey();
+
         try {
-            int threadCount = repos.getSettings().getThreadCount();
+            int threadCount = repos.getSettings(brandKey).getThreadCount();
             int priority = Thread.NORM_PRIORITY;
             if (isDfLocal()) {
                 threadCount = 1;

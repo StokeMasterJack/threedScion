@@ -53,11 +53,11 @@ public class SeriesRepo {
     private final SrcWork srcWork;
     private final RtRepo rtRepo;
 
-    SeriesRepo(final File repoBaseDir, final SeriesKey seriesKey) {
+    SeriesRepo(Repos repos,final File repoBaseDir, final SeriesKey seriesKey) {
         Preconditions.checkNotNull(repoBaseDir);
         Preconditions.checkNotNull(seriesKey);
 
-        this.vtcBaseDir = Repos.get().getVtcBaseDir(seriesKey.getBrandKey());
+        this.vtcBaseDir = repos.getVtcBaseDir(seriesKey.getBrandKey());
         this.repoBaseDir = repoBaseDir;
         this.seriesKey = seriesKey;
         this.seriesDir = initSeriesDir();
@@ -112,7 +112,7 @@ public class SeriesRepo {
 
     private File initSeriesDir() {
 
-        File brandDir = new File(repoBaseDir, seriesKey.getBrandKey().getKey());
+        File brandDir = repoBaseDir;
         File seriesNameDir = new File(brandDir, seriesKey.getName());
         File seriesDir = new File(seriesNameDir, seriesKey.getYear() + "");
 

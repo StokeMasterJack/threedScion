@@ -2,12 +2,18 @@ package c3i.core.imageModel.shared;
 
 import com.google.common.base.Preconditions;
 
-public class PngKey {
+/**
+ * Represents one segment of a png layer stack like this:
+ *
+ * 7126703-b357925-63985d3
+ *
+ */
+public class PngSegment {
 
     private final String shortSha;      //7 digits
     private final int deltaY;    //2 or 0 digits
 
-    public PngKey(String shortSha, int deltaY) {
+    public PngSegment(String shortSha, int deltaY) {
         Preconditions.checkNotNull(shortSha);
         Preconditions.checkArgument(shortSha.length() == 7);
         Preconditions.checkArgument(deltaY >= 0);
@@ -16,7 +22,7 @@ public class PngKey {
         this.deltaY = deltaY;
     }
 
-    public PngKey(String pngSegment) {
+    public PngSegment(String pngSegment) {
         if (pngSegment.length() == 9) {
             this.shortSha = pngSegment.substring(0, 7);
             String sTransform = pngSegment.substring(7);
@@ -37,7 +43,7 @@ public class PngKey {
         return deltaY;
     }
 
-    public static String serializeToUrlSegment(String shortSha, int deltaY) {
+    public static String serializeUrlSegment(String shortSha, int deltaY) {
         if (deltaY == 0) {
             return shortSha;
         } else if (deltaY > 0 && deltaY < 10) {
@@ -50,7 +56,7 @@ public class PngKey {
     }
 
     public String serializeToUrlSegment() {
-        return serializeToUrlSegment(shortSha, deltaY);
+        return serializeUrlSegment(shortSha, deltaY);
     }
 
     @Override

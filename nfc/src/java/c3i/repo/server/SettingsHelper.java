@@ -1,30 +1,34 @@
 package c3i.repo.server;
 
-import com.google.common.io.Closeables;
+import c3i.core.common.shared.BrandKey;
 import c3i.repo.shared.Settings;
+import com.google.common.base.Preconditions;
+import com.google.common.io.Closeables;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Map;
 
 public class SettingsHelper {
 
     public static final String LOCAL_FILE_NAME = ".config.ser";
 
 
-    private final File configFile;
+    private final Map<BrandKey, File> repoBaseDirMap;
 
-    public SettingsHelper(File repoBaseDir) {
-        configFile = new File(repoBaseDir, LOCAL_FILE_NAME);
+    public SettingsHelper(final Map<BrandKey, File> repoBaseDirMap) {
+        Preconditions.checkNotNull(repoBaseDirMap);
+        this.repoBaseDirMap = repoBaseDirMap;
     }
 
-    public Settings read() {
-        System.out.println("SettingsHelper.read");
+    public Settings read(BrandKey brandKey) {
+        File repoBaseDir = repoBaseDirMap.get(brandKey);
+        File configFile = new File(repoBaseDir, LOCAL_FILE_NAME);
         if (!configFile.exists()) {
             Settings settings = Settings.createDefault();
-            System.out.println("settings = " + settings);
             return settings;
         }
 
@@ -35,7 +39,6 @@ public class SettingsHelper {
             is = new FileInputStream(configFile);
             ois = new ObjectInputStream(is);
             Settings settings = (Settings) ois.readObject();
-            System.out.println("Settings: " + settings);
             return settings;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +50,10 @@ public class SettingsHelper {
 
     }
 
-    public void save(Settings repoConfig) {
+    public void save(BrandKey brandKey, Settings repoConfig) {
+        File repoBaseDir = repoBaseDirMap.get(brandKey);
+        File configFile = new File(repoBaseDir, LOCAL_FILE_NAME);
+
         FileOutputStream os = null;
         ObjectOutputStream oos = null;
 
@@ -62,7 +68,6 @@ public class SettingsHelper {
             Closeables.closeQuietly(oos);
         }
     }
-
 
 
 }

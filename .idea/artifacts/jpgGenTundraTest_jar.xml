@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="jpgGenTundraTest:jar">
+    <output-path>$USER_HOME$/temp/jpgGenTundraTest</output-path>
+    <root id="archive" name="jpgGenTundraTest.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/nfc/src/java/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="nfc" />
+      <element id="module-output" name="util" />
+      <element id="extracted-dir" path="$daven$/imgscal/imgscalr-lib-4.2/imgscalr-lib-4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/jsr305/1.0/jsr305.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/jgit/jgit/1.1.0-SNAPSHOT/org.eclipse.jgit-1.1.0-20110821.221230-38.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/dom4j/1.6.1/dom4j-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/dom4j/1.6.1/jaxen-1.1-beta-6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/commons-logging/1.0.4/commons-logging-1.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/log4j/1.2.8/log4j-1.2.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$daven$/guava/12.0/guava-12.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

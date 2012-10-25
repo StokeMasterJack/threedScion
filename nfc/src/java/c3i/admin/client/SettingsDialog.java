@@ -1,18 +1,23 @@
 package c3i.admin.client;
 
+import c3i.core.common.shared.BrandKey;
+import c3i.core.imageModel.shared.Profile;
+import c3i.repo.shared.Settings;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.TextBox;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
-import c3i.core.imageModel.shared.Profile;
-import c3i.repo.shared.Settings;
 
 import java.util.List;
 
 public class SettingsDialog extends MyDialogBox {
-
 
     private final FlexTable main = new FlexTable();
     private final FlowPanel fp = new FlowPanel();
@@ -27,10 +32,15 @@ public class SettingsDialog extends MyDialogBox {
 
     private final ThreedAdminClient threedAdminClient;
 
+    private BrandKey brandKey;
     private Settings settings;
 
-    public SettingsDialog(final Settings settings, final ThreedAdminClient threedAdminClient) {
+    public SettingsDialog(BrandKey brandKey, final Settings settings, final ThreedAdminClient threedAdminClient) {
         super("Jpg Width");
+
+        if (brandKey == null) {
+            throw new NullPointerException();
+        }
 
         if (settings == null) {
             throw new NullPointerException();
@@ -39,7 +49,6 @@ public class SettingsDialog extends MyDialogBox {
         if (threedAdminClient == null) {
             throw new NullPointerException();
         }
-
 
 
         this.settings = settings;
@@ -81,7 +90,7 @@ public class SettingsDialog extends MyDialogBox {
         bSave.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                saveSettings();
+                saveSettings(SettingsDialog.this.brandKey);
                 hide();
             }
         });
@@ -181,8 +190,8 @@ public class SettingsDialog extends MyDialogBox {
     }
 
 
-    private void saveSettings() {
-        threedAdminClient.saveSettings(settings);
+    private void saveSettings(BrandKey brandKey) {
+        threedAdminClient.saveSettings(brandKey, settings);
     }
 
 }

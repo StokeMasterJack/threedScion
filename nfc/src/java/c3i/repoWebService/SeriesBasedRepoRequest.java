@@ -1,9 +1,9 @@
 package c3i.repoWebService;
 
-import com.google.common.base.Strings;
+import c3i.core.common.shared.SeriesKey;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
-import c3i.core.common.shared.SeriesKey;
+import com.google.common.base.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -15,11 +15,10 @@ public class SeriesBasedRepoRequest extends RepoRequest {
 
     protected final SeriesKey seriesKey;
 
-    public SeriesBasedRepoRequest(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    public SeriesBasedRepoRequest(Repos repos, HttpServletRequest request, HttpServletResponse response) {
+        super(repos, request, response);
 
         String pathInfo = request.getPathInfo();
-
 
         if (Strings.isNullOrEmpty(pathInfo)) throw new NotFoundException(baseErrorMessage);
 
@@ -39,7 +38,7 @@ public class SeriesBasedRepoRequest extends RepoRequest {
 
 
         try {
-            this.seriesKey = new SeriesKey(brand,seriesYear, seriesName);
+            this.seriesKey = new SeriesKey(brand, seriesYear, seriesName);
         } catch (Exception e) {
             throw new NotFoundException(baseErrorMessage + e.toString(), e);
         }

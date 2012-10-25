@@ -11,7 +11,6 @@
           <element id="library" level="project" name="log4j-1.2.8" />
           <element id="library" level="application" name="imgscalr-lib-4.2" />
           <element id="library" level="application" name="org.eclipse.jgit-1.1.0" />
-          <element id="library" level="project" name="gwtexporter-2.4.0-M2-SNAPSHOT" />
           <element id="library" level="application" name="dom4j-1.6.1" />
           <element id="library" level="application" name="jsr305" />
           <element id="library" level="application" name="com.google.gwt:gwt-servlet:2.5.0-rc1" />
@@ -20,6 +19,7 @@
           <element id="library" level="application" name="com.google.gwt:gwt-user:2.5.0-rc1" />
           <element id="library" level="project" name="jackson-1.7.4" />
           <element id="library" level="application" name="com.google.web.bindery:requestfactory-server:2.5.0-rc1" />
+          <element id="library" level="application" name="gwtexporter-2.4.0-M2-SNAPSHOT" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="nfc/web/admin" />

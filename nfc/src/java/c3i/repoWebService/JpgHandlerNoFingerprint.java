@@ -1,14 +1,20 @@
 package c3i.repoWebService;
 
+import c3i.core.featureModel.shared.FixedPicks;
+import c3i.core.imageModel.shared.CoreImageStack;
+import c3i.core.imageModel.shared.ImView;
+import c3i.core.imageModel.shared.ImageMode;
+import c3i.core.imageModel.shared.Profile;
+import c3i.core.imageModel.shared.RawImageStack;
+import c3i.core.threedModel.shared.BaseImageKey;
+import c3i.core.threedModel.shared.Slice;
+import c3i.core.threedModel.shared.ThreedModel;
+import c3i.repo.server.Repos;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Files;
-import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.*;
-import c3i.core.threedModel.shared.*;
-import c3i.repo.server.Repos;
-import smartsoft.util.servlet.http.headers.LastModified;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import smartsoft.util.servlet.http.headers.LastModified;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -16,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
-
 
     public JpgHandlerNoFingerprint(Repos repos, ServletContext application) {
         super(repos, application);
@@ -27,7 +32,7 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
 
         log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
 
-        ThreedModel threedModel = Repos.get().getVtcThreedModel(r.getSeriesKey());
+        ThreedModel threedModel = repos.getVtcThreedModel(r.getSeriesKey());
 
         Slice slice = r.getSlice();
         ImmutableSet<String> rawPicks = r.getVarCodes();

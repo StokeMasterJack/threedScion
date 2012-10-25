@@ -1,6 +1,8 @@
 package c3i.repoWebService;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.repo.server.Repos;
+import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -38,15 +42,8 @@ import java.io.InputStream;
  */
 public class RepoServlet extends HttpServlet {
 
-    private static final ThreedRepoApp app;
-    private static final Log log;
-
-    static {
-        app = ThreedRepoApp.get();
-        log = LogFactory.getLog(RepoServlet.class);
-    }
-
-    private Repos repos;
+    private ThreedRepoApp app;
+    private Log log;
 
     private PngHandler pngHandler;
     private VtcHandler vtcHandler;
@@ -61,6 +58,7 @@ public class RepoServlet extends HttpServlet {
 
     private ServletContext application;
 
+    private Repos repos;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -68,15 +66,17 @@ public class RepoServlet extends HttpServlet {
 
         application = config.getServletContext();
 
-        try {
-            File repoBaseDir = app.getRepoBaseDir();
-            Repos.setRepoBaseDir(repoBaseDir);
+        app = new ThreedRepoApp();
+        Preconditions.checkNotNull(app);
+        log = LogFactory.getLog(RepoServlet.class);
 
-            this.repos = Repos.get();
+        try {
+            repos = initRepos(app.getRepoBaseDirs());
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
             log.error(msg, e);
+            throw new RuntimeException(msg,e);
         }
 
         pngHandler = new PngHandler(repos, application);
@@ -91,6 +91,17 @@ public class RepoServlet extends HttpServlet {
         gitObjectHandler = new GitObjectHandler(repos, application);
 
 
+    }
+
+    private static Repos initRepos(Map<String, String> map) {
+        Map<BrandKey, File> repoBaseDirMap = new HashMap<BrandKey, File>();
+        for (String brand : map.keySet()) {
+            BrandKey brandKey = BrandKey.fromString(brand);
+            String sRepoBaseDir = map.get(brand);
+            File repoBaseDir = new File(sRepoBaseDir);
+            repoBaseDirMap.put(brandKey, repoBaseDir);
+        }
+        return new Repos(repoBaseDirMap);
     }
 
 
@@ -124,34 +135,34 @@ public class RepoServlet extends HttpServlet {
                 ByteStreams.copy(is, response.getOutputStream());
             } else if (isVtcRequest(request)) {
                 log.debug("isVtcRequest");
-                vtcHandler.handle(new SeriesBasedRepoRequest(request, response));
+                vtcHandler.handle(new SeriesBasedRepoRequest(repos,request, response));
             } else if (isBrandInitRequest(request)) {
                 log.debug("isBrandInitRequest");
-                brandInitHandler.handle(new RepoRequest(request, response));
+                brandInitHandler.handle(new RepoRequest(repos,request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
                 log.debug("isJpgRequestSeriesFingerprintRequest");
-                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(request, response));
+                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(repos,request, response));
             } else if (isJpgRequestNoFingerprintRequest(request)) {
                 log.debug("isJpgRequestNoFingerprintRequest");
-                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(request, response));
+                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(repos,request, response));
             } else if (isPngRequest(request)) {
                 log.debug("isPngRequest");
-                pngHandler.handle(new PngRequest(request, response));
+                pngHandler.handle(new PngRequest(repos,request, response));
             } else if (isJpgRequest(request)) {
                 log.debug("isJpgRequest");
-                jpgHandler.handle(new JpgRequest(request, response));
+                jpgHandler.handle(new JpgRequest(repos,request, response));
             } else if (isBlinkRequest(request)) {
                 log.debug("isBlinkRequest");
-                blinkHandler.handle(new SeriesBasedRepoRequest(request, response));
+                blinkHandler.handle(new SeriesBasedRepoRequest(repos,request, response));
             } else if (isThreedModelRequest(request)) {
                 log.debug("isThreedModelRequest");
-                threedModelHandler.handle(new ThreedModelRequest(request, response));
+                threedModelHandler.handle(new ThreedModelRequest(repos,request, response));
             } else if (isThreedModelJsonpRequest(request)) {
                 log.debug("isThreedModelJsonpRequest");
-                threedModelHandlerJsonP.handle(new ThreedModelRequest(request, response));
+                threedModelHandlerJsonP.handle(new ThreedModelRequest(repos,request, response));
             } else if (isObjectRequest(request)) {
                 log.debug("isObjectRequest");
-                gitObjectHandler.handle(new GitObjectRequest(request, response));
+                gitObjectHandler.handle(new GitObjectRequest(repos,request, response));
             } else {
                 throw new NotFoundException("No handler for this URL: [" + request.getRequestURI() + "]");
             }

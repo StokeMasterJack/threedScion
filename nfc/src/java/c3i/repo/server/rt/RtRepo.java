@@ -3,14 +3,12 @@ package c3i.repo.server.rt;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.server.BlinkChecker;
 import c3i.core.imageModel.server.ImageUtil;
-import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.imageModel.shared.IBaseImageKey;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngKey;
 import c3i.core.imageModel.shared.PngShortSha;
 import c3i.core.imageModel.shared.Profile;
-import c3i.core.threedModel.shared.BaseImageKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
@@ -30,6 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+/**
+ * This is the gen directory
+ */
 public class RtRepo implements BlinkChecker {
 
     private final File rtRepoDir;

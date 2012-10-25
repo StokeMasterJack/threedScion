@@ -3,7 +3,9 @@ package c3i.admin.server;
 import smartsoft.util.config.App;
 import smartsoft.util.lang.shared.Path;
 
+import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.Map;
 
 public class ThreedAdminApp extends App {
 
@@ -13,21 +15,18 @@ public class ThreedAdminApp extends App {
     private static final File REPO_BASE_DIR_SHARE = new File("/www_share/nfc_image_repo");
     private static final File REPO_BASE_DIR_PRIVATE = new File("/configurator-content");
 
-    private static ThreedAdminApp INSTANCE;
 
-    private ThreedAdminApp() {
+    public ThreedAdminApp() {
         super("threed-admin");
     }
 
-    public static ThreedAdminApp get() {
-        if (INSTANCE == null) {
-            INSTANCE = new ThreedAdminApp();
-        }
-        return INSTANCE;
+    public Map<String, String> getRepoBaseDirs() {
+        return getProperties(REPO_BASE_DIR_KEY);
     }
 
-    public String getRepoBaseDirName() {
-        return getProperty(REPO_BASE_DIR_KEY);
+    public String getRepoBaseDirName(String brand) {
+        String propName = brand + "." + REPO_BASE_DIR_KEY;
+        return getProperty(propName);
     }
 
     public String getRepoContextPathName() {
@@ -38,8 +37,8 @@ public class ThreedAdminApp extends App {
         return new Path(getRepoContextPathName());
     }
 
-    public File getRepoBaseDir() {
-        String dirName = getRepoBaseDirName();
+    public File getRepoBaseDir(String brand) {
+        String dirName = getRepoBaseDirName(brand);
         log.info("Read repoBaseDir[" + dirName + "] from properties file");
 
         if (dirName != null) {
@@ -60,6 +59,10 @@ public class ThreedAdminApp extends App {
         throw new IllegalStateException("Could not find " + REPO_BASE_DIR_KEY);
 
 
+    }
+
+    public static ThreedAdminApp getFromServletContext(ServletContext servletContext) {
+        return (ThreedAdminApp) servletContext.getAttribute(ThreedAdminApp.class.getName());
     }
 
 

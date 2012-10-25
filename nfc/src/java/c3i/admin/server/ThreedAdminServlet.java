@@ -16,20 +16,17 @@ import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.Series;
 import c3i.repo.shared.Settings;
-import c3i.repoWebService.ProfilesCache;
-import com.google.gwt.rpc.server.ClientOracle;
+import com.google.common.base.Preconditions;
 import com.google.gwt.rpc.server.RpcServlet;
-import com.google.gwt.user.client.rpc.SerializationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 import smartsoft.util.lang.shared.Path;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.OutputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -51,18 +48,15 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     private String initErrorMessage;
 
     @Override
-    public void init() throws ServletException {
-        super.init();
-
-        app = ThreedAdminApp.get();
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        app = ThreedAdminApp.getFromServletContext(config.getServletContext());
+        Preconditions.checkNotNull(app);
         log = LogFactory.getLog(ThreedAdminFilter.class);
-
         log.info("Initializing " + getClass().getSimpleName());
-        File repoBaseDir = app.getRepoBaseDir();
-        Repos.setRepoBaseDir(repoBaseDir);
 
         try {
-            this.repos = Repos.get();
+            repos = Repos.create(app.getRepoBaseDirs());
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             this.initErrorMessage = "Problem initializing ThreedAdminServletJson: " + e;
@@ -73,10 +67,13 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     @Override
     public BrandInit getInitData(BrandKey brandKey) {
+        System.out.println("ThreedAdminServlet.getInitData");
+        Preconditions.checkNotNull(brandKey);
+        Preconditions.checkNotNull(app);
         Path repoContextPath = app.getRepoContextPath();
 
         ArrayList<Series> seriesNamesWithYears = repos.getSeriesNamesWithYears(brandKey);
-        Settings settings = repos.getSettings();
+        Settings settings = repos.getSettings(brandKey);
         log.info("serving [" + settings + "]");
         Principal userPrincipal = getThreadLocalRequest().getUserPrincipal();
         String userName;
@@ -90,9 +87,12 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         }
         ArrayList<BrandKey> visibleBrandsForUser = getVisibleBrandsForUser();
 
-        Profiles profiles = ProfilesCache.get().getProfiles(brandKey);
+        Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);
 
-        return new BrandInit(brandKey, seriesNamesWithYears, settings, userName, visibleBrandsForUser, repoContextPath, profiles);
+        BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears, settings, userName, visibleBrandsForUser, repoContextPath, profiles);
+        System.out.println("serving brandInit = " + brandInit);
+        System.out.println("serving seriesNamesWithYears = " + seriesNamesWithYears);
+        return brandInit;
     }
 
     private ArrayList<BrandKey> getVisibleBrandsForUser() {
@@ -129,13 +129,13 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     }
 
     @Override
-    public Settings getSettings() {
-        return repos.getSettingsHelper().read();
+    public Settings getSettings(BrandKey brandKey) {
+        return repos.getSettingsHelper().read(brandKey);
     }
 
     @Override
-    public void saveSettings(Settings config) {
-        repos.getSettingsHelper().save(config);
+    public void saveSettings(BrandKey brandKey, Settings config) {
+        repos.getSettingsHelper().save(brandKey, config);
     }
 
     @Override

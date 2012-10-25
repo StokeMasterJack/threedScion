@@ -11,10 +11,7 @@ void main(){
 
     appName = "c3i";
 
-    //threed admin
-    contextPath = "threed-admin-v2";
-    modName = "admin.ThreedAdmin";
-    startupPage =  "index";
+
 
 
     //gwt demo
@@ -27,6 +24,11 @@ void main(){
     contextPath = "smartClient";
     modName = "smartClient.SmartClientExportJavaScript";
     startupPage =  "demo/widget/toyota/demo";
+
+    //threed admin
+    contextPath = "threed-admin-v2";
+    modName = "admin.ThreedAdmin";
+    startupPage =  "index";
 
 
     var options = new Options();

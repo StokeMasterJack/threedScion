@@ -1,16 +1,17 @@
 package c3i.core.imageModel.shared;
 
+import c3i.core.featureModel.shared.FixedPicks;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import c3i.core.featureModel.shared.FixedPicks;
 
 import javax.annotation.concurrent.Immutable;
 
 /**
- * This class represents a stack of images such that:
- * <p/>
- * 1.  Each image in the stack has the same x,y,width,height but different zIndex
- * 2.  The bottom image is always a JPG all others are PNGs
+ *  This class represents a stack of images such that:
+ *
+ *      1.  Each image in the stack has the same x,y,width,height but different zIndex
+ *      2.  The bottom image is always a JPG all others are PNGs
+ *
  */
 @Immutable
 public class RawImageStack {

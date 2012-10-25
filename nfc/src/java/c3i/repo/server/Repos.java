@@ -20,6 +20,7 @@ import c3i.repo.server.rt.RtRepo;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.Series;
 import c3i.repo.shared.Settings;
+import c3i.repoWebService.ProfilesCache;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -41,11 +42,15 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import static com.google.common.base.Preconditions.checkState;
 import static smartsoft.util.lang.shared.Strings.isEmpty;
 
 public class Repos {
@@ -53,33 +58,51 @@ public class Repos {
     public static final String VTC_LOCAL_DIR_NAME = ".vtc";
 
     private static Repos INSTANCE;
-    private static File staticRepoBaseDir;
+    private static Map<BrandKey, File> staticRepoBaseDirMap;
+
+    private ProfilesCache profilesCache;
 
     public static void setRepoBaseDir(File repoBaseDir) {
-        Repos.staticRepoBaseDir = repoBaseDir;
+        setRepoBaseDir(ImmutableMap.of(BrandKey.TOYOTA, repoBaseDir));
+    }
+
+    public static void setRepoBaseDir(Map<BrandKey, File> repoBaseDirMap) {
+        Repos.staticRepoBaseDirMap = repoBaseDirMap;
     }
 
     public static Repos get() {
-        if (staticRepoBaseDir == null) {
+        if (staticRepoBaseDirMap == null) {
             throw new IllegalStateException("Must call setRepoBaseDir(..) before calling get()");
         }
         if (INSTANCE == null) {
-            INSTANCE = new Repos(staticRepoBaseDir);
+            INSTANCE = new Repos(staticRepoBaseDirMap);
         }
         return INSTANCE;
     }
 
-    private File repoBaseDir;
+    private Map<BrandKey, File> repoBaseDirMap;
+
     private final LoadingCache<SeriesKey, SeriesRepo> seriesRepoCache;
     private final SettingsHelper settingsHelper;
 
-    public Repos(final File repoBaseDir) {
-        Preconditions.checkNotNull(repoBaseDir);
-        this.repoBaseDir = repoBaseDir;
+    public Repos(final Map<BrandKey, File> repoBaseDirMap) {
+        Preconditions.checkNotNull(repoBaseDirMap);
+        this.repoBaseDirMap = repoBaseDirMap;
 
-        if (!repoBaseDir.exists()) {
-            throw new IllegalStateException("repoBaseDir [" + repoBaseDir + "] does not exist");
+        for (Map.Entry<BrandKey, File> entry : repoBaseDirMap.entrySet()) {
+            BrandKey brandKey = entry.getKey();
+            File repoBaseDir = entry.getValue();
+            if (!repoBaseDir.exists()) {
+                throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] for brand[" + brandKey + "]  does not exist");
+            }
         }
+
+        profilesCache = new ProfilesCache(new CacheLoader<BrandKey, Profiles>() {
+            @Override
+            public Profiles load(BrandKey key) throws Exception {
+                return getProfiles(key);
+            }
+        });
 
         seriesRepoCache = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
@@ -88,18 +111,23 @@ public class Repos {
                         new CacheLoader<SeriesKey, SeriesRepo>() {
                             @Override
                             public SeriesRepo load(SeriesKey seriesKey) throws Exception {
-                                return new SeriesRepo(repoBaseDir, seriesKey);
+                                File repoBaseDir = repoBaseDirMap.get(seriesKey.getBrandKey());
+                                checkState(repoBaseDir != null);
+                                return new SeriesRepo(Repos.this, repoBaseDir, seriesKey);
                             }
                         });
 
-        settingsHelper = new SettingsHelper(repoBaseDir);
-
+        settingsHelper = new SettingsHelper(repoBaseDirMap);
 
         FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.TOYOTA));
         FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.LEXUS));
         FileUtil.createDirNotExists(getVtcBaseDir(BrandKey.SCION));
 
 
+    }
+
+    public ProfilesCache getProfilesCache() {
+        return profilesCache;
     }
 
     public void purgeCache() {
@@ -129,8 +157,8 @@ public class Repos {
         return settingsHelper;
     }
 
-    public Settings getSettings() {
-        return settingsHelper.read();
+    public Settings getSettings(BrandKey brandKey) {
+        return settingsHelper.read(brandKey);
     }
 
     public ThreedModel getThreedModel(SeriesKey seriesKey, RootTreeId rootTreeId) {
@@ -157,8 +185,8 @@ public class Repos {
         return getThreedModelForHead(seriesKey).getFeatureModel();
     }
 
-    public File getRepoBaseDir() {
-        return repoBaseDir;
+    public File getRepoBaseDir(BrandKey brandKey) {
+        return repoBaseDirMap.get(brandKey);
     }
 
     public VtcMap getVtcMap(BrandKey brandKey) {
@@ -229,9 +257,9 @@ public class Repos {
 
     public ObjectNode getProfilesAsJson(BrandKey brandKey) {
         ObjectMapper mapper = new ObjectMapper();
-        File repoBaseDir = getRepoBaseDir();
+        File repoBaseDir = getRepoBaseDir(brandKey);
         if (repoBaseDir == null) throw new IllegalStateException();
-        File brandBaseDir = new File(repoBaseDir, brandKey.getKey());
+        File brandBaseDir = repoBaseDir;
         if (!brandBaseDir.exists()) return mapper.createObjectNode();
         File profileFile = new File(brandBaseDir, ".profiles/profiles.json");
 
@@ -260,11 +288,13 @@ public class Repos {
     }
 
     public ArrayList<Series> getSeriesNamesWithYears(BrandKey brandKey) {
-        File repoBaseDir = getRepoBaseDir();
+        System.out.println("repoBaseDirMap = " + repoBaseDirMap);
+        System.out.println("brandKey = " + brandKey);
+        File repoBaseDir = getRepoBaseDir(brandKey);
 
         if (repoBaseDir == null) throw new IllegalStateException();
 
-        File brandBaseDir = new File(repoBaseDir, brandKey.getKey());
+        File brandBaseDir = repoBaseDir;
 
         File[] seriesNameDirs = brandBaseDir.listFiles(seriesDirFilter);
 
@@ -272,9 +302,12 @@ public class Repos {
             throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] which is defined in web.xml contains no child directories. ");
         }
 
+        System.out.println("seriesNameDirs.length = " + seriesNameDirs.length);
+        System.out.println("seriesNameDirs = " + Arrays.toString(seriesNameDirs));
 
         ArrayList<Series> seriesNamesWithYears = new ArrayList<Series>();
         for (File seriesNameDir : seriesNameDirs) {
+
             String seriesName = seriesNameDir.getName();
             File[] yearDirs = seriesNameDir.listFiles(seriesDirFilter);
 
@@ -282,8 +315,6 @@ public class Repos {
             seriesNameWithYears.setSeriesName(seriesName);
 
             for (File yearDir : yearDirs) {
-
-
                 String sSeriesYear = yearDir.getName();
                 try {
                     Integer seriesYear = new Integer(sSeriesYear);
@@ -291,7 +322,6 @@ public class Repos {
                 } catch (NumberFormatException e) {
                     log.warn("Found a non-int directory name [" + sSeriesYear + "] for a seriesYear in folder [" + seriesNameDir + "]");
                 }
-
             }
 
             seriesNamesWithYears.add(seriesNameWithYears);
@@ -385,7 +415,7 @@ public class Repos {
     }
 
     public File getVtcBaseDir(BrandKey brandKey) {
-        File brandRepoBase = new File(getRepoBaseDir(), brandKey.getKey());
+        File brandRepoBase = new File(getRepoBaseDir(brandKey), brandKey.getKey());
         File f = new File(brandRepoBase, VTC_LOCAL_DIR_NAME);
         FileUtil.createDirNotExists(f);
         return f;
@@ -410,6 +440,22 @@ public class Repos {
         srcRepo.setVtcRootTreeId(commitKey.getRootTreeId());
         ObjectId commitId = srcRepo.toGitObjectId(commitKey.getCommitId());
         return srcRepo.getCommitHistory(commitId);
+    }
+
+
+    public static Repos create(Map<String, String> map) {
+        Map<BrandKey, File> repoBaseDirMap = new HashMap<BrandKey, File>();
+        for (String brand : map.keySet()) {
+            BrandKey brandKey = BrandKey.fromString(brand);
+            String sRepoBaseDir = map.get(brand);
+            File repoBaseDir = new File(sRepoBaseDir);
+            repoBaseDirMap.put(brandKey, repoBaseDir);
+        }
+        return new Repos(repoBaseDirMap);
+    }
+
+    public static Repos create(BrandKey brandKey, File repoBaseDir) {
+        return new Repos(ImmutableMap.of(brandKey, repoBaseDir));
     }
 
 

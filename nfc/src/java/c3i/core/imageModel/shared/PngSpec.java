@@ -6,7 +6,13 @@ import smartsoft.util.lang.shared.Path;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PngSpec  {
+/**
+ * Represents one segment of a png layer stack like this:
+ *
+ * 7126703-b357925-63985d3
+ *
+ */
+public class PngSpec {
 
     private final SrcPng srcPng;
     private final int deltaY;
@@ -17,7 +23,7 @@ public class PngSpec  {
     }
 
     public String serializeToUrlSegment() {
-        return PngKey.serializeToUrlSegment(getShortSha(), deltaY);
+        return PngSegmentKey.serializeUrlSegment(getShortSha(), deltaY);
     }
 
     public String getShortSha() {
@@ -63,15 +69,19 @@ public class PngSpec  {
 //        return srcPng.getUrl(repoBase);
 //    }
 
-    public PngKey getKey(){
-        return new PngKey(srcPng.getShortSha(),deltaY);
+    public PngSegmentKey getKey(){
+        return new PngSegmentKey(srcPng.getShortSha(),deltaY);
     }
     public Path getUrl(Path repoBaseUrl) {
         ImView view = srcPng.getView();
         ImSeries series = view.getSeries();
 
-        String serial = getKey().serializeToUrlSegment();
+        String serial = getSegmentString();
         return series.getThreedBaseUrl(repoBaseUrl).append("pngs").append(serial).appendName(".png");
+    }
+
+    private String getSegmentString() {
+        return getKey().serializeToUrlSegment();
     }
 
     public int getDeltaY() {

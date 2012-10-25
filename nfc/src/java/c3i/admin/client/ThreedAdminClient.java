@@ -1,10 +1,5 @@
 package c3i.admin.client;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import smartsoft.util.gwt.client.rpc.Req;
-import smartsoft.util.gwt.client.rpc.RequestContext;
-import smartsoft.util.lang.shared.Path;
 import c3i.admin.shared.BrandInit;
 import c3i.admin.shared.ThreedAdminService;
 import c3i.admin.shared.ThreedAdminServiceAsync;
@@ -15,6 +10,11 @@ import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.Settings;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import smartsoft.util.gwt.client.rpc.Req;
+import smartsoft.util.gwt.client.rpc.RequestContext;
+import smartsoft.util.lang.shared.Path;
 
 public class ThreedAdminClient {
 
@@ -65,9 +65,9 @@ public class ThreedAdminClient {
         return r;
     }
 
-    public Req<Void> saveSettings(Settings settings) {
+    public Req<Void> saveSettings(BrandKey brandKey, Settings settings) {
         Req<Void> r = newRequest("saveSettings");
-        service.saveSettings(settings, r);
+        service.saveSettings( brandKey, settings, r);
         return r;
     }
 

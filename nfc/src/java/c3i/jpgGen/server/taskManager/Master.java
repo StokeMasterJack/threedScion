@@ -55,7 +55,7 @@ public class Master {
     private final SeriesId seriesId;
     private final Profile profile;
 
-    private final MasterTask masterTask;
+    private final KickOffTask masterTask;
 
     private final MonitorTask monitorTask;
 
@@ -82,7 +82,7 @@ public class Master {
 
         stats.masterJobStartTime = id.getEnqueueTime();
 
-        this.masterTask = new MasterTask();
+        this.masterTask = new KickOffTask();
         this.monitorTask = new MonitorTask(masterTask);
 
 
@@ -108,18 +108,19 @@ public class Master {
         status.printBrief();
     }
 
-    public final class MasterTask extends MyFutureTask<CreateJpgSetsTask> {
+    /**
+     * This is the KickOff task to kick of the jpg generation for one series-year-version-profile.
+     * Just because this task finishes does not mean the entire job is finished
+     */
+    public final class KickOffTask extends MyFutureTask<CreateJpgSetsTask> {
 
-        public MasterTask() {
+
+        public KickOffTask() {
             super(new Callable<CreateJpgSetsTask>() {
                 @Override
                 public CreateJpgSetsTask call() throws Exception {
 
                     if (monitorTask.isCancelled()) throw new InterruptedException();
-
-//                    final ImmutableList<Slice> slices = new ImmutableList.Builder<Slice>()
-//                            .addAll(threedModel.getSlices())
-//                            .build();
 
                     initDirsAndStartFile();
 
@@ -133,7 +134,7 @@ public class Master {
 
         public JobStatus getStatus() throws InterruptedException, ExecutionException {
 
-            if (Master.this.isCancelled()) {
+            if (monitorTask.isCancelled()) {
                 return JobStatus.createCanceled();
             } else if (isDone()) {
                 CreateJpgSetsTask createJpgSetsTask = get();
@@ -159,7 +160,7 @@ public class Master {
 
     public final class MonitorTask extends MyFutureTask<TerminalStatus> {
 
-        public MonitorTask(final MasterTask masterTask) {
+        public MonitorTask(final KickOffTask masterTask) {
             super(new Callable<TerminalStatus>() {
                 @Override
                 public TerminalStatus call() throws Exception {
@@ -226,7 +227,6 @@ public class Master {
 
 
     public JobStatus getStatus() {
-
 
         JobStatus retVal;
         if (isCancelled()) {
@@ -489,7 +489,7 @@ public class Master {
         }
     }
 
-    public MasterTask getFuture() {
+    public KickOffTask getFuture() {
         return masterTask;
     }
 
@@ -638,7 +638,7 @@ public class Master {
     private static class MyExecutors {
 
         public final MyThreadPoolExecutor<MonitorTask> monitorExecutor = new MyThreadPoolExecutor<MonitorTask>(MonitorTask.class, 1);
-        public final MyThreadPoolExecutor<MasterTask> masterExecutor = new MyThreadPoolExecutor<MasterTask>(MasterTask.class, 1);
+        public final MyThreadPoolExecutor<KickOffTask> masterExecutor = new MyThreadPoolExecutor<KickOffTask>(KickOffTask.class, 1);
         public final MyThreadPoolExecutor createJpgSets = new MyThreadPoolExecutor(CreateJpgSetsTask.class, 1);
         public final MyThreadPoolExecutor createJpgSet = new MyThreadPoolExecutor(CreateJpgSetTask.class, 1);
         public final MyThreadPoolExecutor processJpgSet1 = new MyThreadPoolExecutor(ProcessJpgSetTask.class, 1);

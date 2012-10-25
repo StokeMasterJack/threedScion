@@ -38,10 +38,9 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
 
-//import threed.core.imageModel.shared.slice.ViewSliceImpl;
-//import threed.core.imageModel.shared.slice.ImageSlice;
-//import threed.core.imageModel.shared.slice.Jpg;
-
+/**
+ * This class computes the list of jpgs for one slice
+ */
 public class JpgSetAction {
 
     private final Repos repos;
@@ -122,7 +121,10 @@ public class JpgSetAction {
                         set.add(fingerprint);
                     }
                 });
+                long t1 = System.currentTimeMillis();
                 treeSearch.start(csp);
+                long t2 = System.currentTimeMillis();
+                System.err.println("TreeSearch Delta[" + seriesId + "-" + slice + "-" + profile + "]: " + (t2 - t1));
                 this.set = ImmutableSet.copyOf(set);
                 writeJpgSetFile(this.set, jpgSetFile);
             }

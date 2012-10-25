@@ -5,8 +5,11 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
 import c3i.core.featureModel.shared.CspForTreeSearch;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
+import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.Profile;
+import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.jpgGen.shared.JobSpec;
@@ -16,25 +19,55 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import sun.misc.VM;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MasterTest {
 
+    static class MySimplePicks implements SimplePicks {
+
+        private final Set<Var> set;
+
+        MySimplePicks(Set<Var> set) {
+            this.set = set;
+        }
+
+        @Override
+        public boolean isPicked(Var var) {
+            return set.contains(var);
+        }
+    }
+
+    @Test
+    public void testDave() throws Exception {
+        Repos.setRepoBaseDir(TestConstants.REPO_BASE_DIR);
+        Repos repos = Repos.get();
+        SeriesKey seriesKey = SeriesKey.IQ_2012;
+        SeriesId seriesId = repos.getHead(seriesKey);
+        ThreedModel threedModel = repos.getThreedModel(seriesId);
+        ImSeries imageModel = threedModel.getImageModel();
+
+
+//        imageModel.getView("exterior").getSrcPngs(simplePicks, 2);
+    }
+
+
     @Test
     public void test0() throws Exception {
         Repos.setRepoBaseDir(TestConstants.REPO_BASE_DIR);
         Repos repos = Repos.get();
-        SeriesKey seriesKey = SeriesKey.IQ_2012;
+        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, SeriesKey.TUNDRA);
+//        SeriesKey seriesKey = SeriesKey.IQ_2012;
         SeriesId seriesId = repos.getHead(seriesKey);
 
 
         ThreedModel threedModel = repos.getThreedModel(seriesId);
 
         CspForTreeSearch csp = threedModel.getFeatureModel().createCspForTreeSearch();
+
+
 
         final HashSet<String> all = new HashSet<String>();
         csp.findAll(new ProductHandler() {
@@ -55,7 +88,7 @@ public class MasterTest {
         SeriesId seriesId = repos.getHead(seriesKey);
 
         Profile profile = repos.getProfiles(BrandKey.SCION).get("wStdP");
-        final Master master = new Master(repos, new JobSpec(seriesId, profile), 5,Thread.NORM_PRIORITY);
+        final Master master = new Master(repos, new JobSpec(seriesId, profile), 5, Thread.NORM_PRIORITY);
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -87,7 +120,7 @@ public class MasterTest {
         Repos repos = Repos.get();
         SeriesKey seriesKey = SeriesKey.CAMRY_2011;
         SeriesId seriesId = repos.getHead(seriesKey);
-        final Master master = new Master(repos, new JobSpec(seriesId, Profile.STD), 5,Thread.NORM_PRIORITY);
+        final Master master = new Master(repos, new JobSpec(seriesId, Profile.STD), 5, Thread.NORM_PRIORITY);
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -119,8 +152,8 @@ public class MasterTest {
 
 
         System.out.println(VM.maxDirectMemory());
-            //  129,957,888
-            //2,117,795,840
+        //  129,957,888
+        //2,117,795,840
 
     }
 

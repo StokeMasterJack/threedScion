@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
 
+import c3i.repo.server.Repos;
 import com.google.common.collect.ImmutableSet;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
@@ -30,8 +31,8 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
     private final String  profileKey;
     private final ImmutableSet<String> varCodes;
 
-    public JpgRequestNoFingerprint(HttpServletRequest request, HttpServletResponse response) {
-        super(request, response);
+    public JpgRequestNoFingerprint(Repos repos, HttpServletRequest request, HttpServletResponse response) {
+        super(repos,request, response);
         String uri = getUri();
 
 
@@ -74,7 +75,8 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
     }
 
     public Profile getProfile() {
-        return ProfilesCache.get().getProfile(brandKey, profileKey);
+        ProfilesCache profilesCache = repos.getProfilesCache();
+        return profilesCache.getProfile(brandKey, profileKey);
     }
 
     public ImmutableSet<String> getVarCodes() {

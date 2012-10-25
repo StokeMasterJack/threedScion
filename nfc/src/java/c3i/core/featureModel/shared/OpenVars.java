@@ -9,6 +9,10 @@ import java.util.List;
 
 public class OpenVars {
 
+    /**
+     * vars1: output vars
+     * vars2: non-output vars
+     */
     @Nonnull
     private final List<Var> vars1;
     @Nonnull
