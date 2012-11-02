@@ -113,9 +113,9 @@ public class JsonUnmarshallerIm {
             return parsePng(depth, jsFeatureOrPng.isArray());
         } else {
             Console.error("jsFeatureOrPng should be a Object or an Array. This is not either: ");
-            Console.error("jsFeatureOrPng: [" + jsFeatureOrPng + "]");
-            Console.error("jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
-            throw new IllegalArgumentException("jsFeatureOrPng should be a Object or an Array");
+            Console.error("\t jsFeatureOrPng: [" + jsFeatureOrPng + "]");
+            Console.error("\t jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
+            throw new IllegalArgumentException("jsFeatureOrPng should be a Object or an Array: ");
         }
 
     }

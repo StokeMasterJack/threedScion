@@ -63,7 +63,9 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
         Collection<Master> masterJobs = jpgGen.getMasterJobs();
         ArrayList<JobStatusItem> jobStatusItems = new ArrayList<JobStatusItem>();
         for (Master job : masterJobs) {
-            jobStatusItems.add(job.getJobStatusItem());
+            JobStatusItem item = job.getJobStatusItem();
+            Integer jpgCount = item.getStatus().getJpgCount();
+            jobStatusItems.add(item);
         }
         return jobStatusItems;
 

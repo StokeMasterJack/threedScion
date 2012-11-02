@@ -276,21 +276,21 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
 
     /**
      *
-     * @param yearSpaceName "brand year series"  or "brand-year-series"
+     * @param brandSpaceYearSpaceName "brand year series"  or "brand-year-series"
      */
-    public static SeriesKey parse(String yearSpaceName) {
+    public static SeriesKey parse(String brandSpaceYearSpaceName) {
         String[] a;
-        if (yearSpaceName.indexOf(' ') != -1) {
-            a = yearSpaceName.split(" ");
-        } else if (yearSpaceName.indexOf('-') != -1) {
-            a = yearSpaceName.split("-");
+        if (brandSpaceYearSpaceName.indexOf(' ') != -1) {
+            a = brandSpaceYearSpaceName.split(" ");
+        } else if (brandSpaceYearSpaceName.indexOf('-') != -1) {
+            a = brandSpaceYearSpaceName.split("-");
         } else {
             throw new IllegalArgumentException();
         }
         try {
             return new SeriesKey(a[0], a[1], a[2]);
         } catch (Exception e) {
-            throw new RuntimeException("Problems parsing[" + yearSpaceName + "]");
+            throw new RuntimeException("Problems parsing[" + brandSpaceYearSpaceName + "]");
         }
     }
 }

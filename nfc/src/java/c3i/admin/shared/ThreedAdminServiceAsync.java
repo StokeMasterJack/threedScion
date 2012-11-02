@@ -22,7 +22,7 @@ public interface ThreedAdminServiceAsync {
 
     void getCommitHistory(SeriesKey seriesKey, AsyncCallback<CommitHistory> async);
 
-    void purgeRepoCache(AsyncCallback<Void> async);
+    void purgeRepoCache(BrandKey brandKey, AsyncCallback<Void> async);
 
     void getInitData(BrandKey brandKey, AsyncCallback<BrandInit> async);
 

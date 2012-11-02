@@ -20,15 +20,17 @@ void main(){
     startupPage =  "DemoGwt";
 
 
-    //SmartClientExportJavaScript
-    contextPath = "smartClient";
-    modName = "smartClient.SmartClientExportJavaScript";
-    startupPage =  "demo/widget/toyota/demo";
+
 
     //threed admin
     contextPath = "threed-admin-v2";
     modName = "admin.ThreedAdmin";
     startupPage =  "index";
+
+     //SmartClientExportJavaScript
+        contextPath = "smartClient";
+        modName = "smartClient.SmartClientExportJavaScript";
+        startupPage =  "demo/widget/toyota/demo";
 
 
     var options = new Options();
@@ -52,7 +54,8 @@ void main(){
     var src2 = '$repo2/util/src/java';
     var src = '$src1:$src2';
 
-    var gwtVersion = '2.5.0.rc1';
+    //var gwtVersion = '2.5.0.rc1';
+    var gwtVersion = '2.4.0';
     var gwtHome = '${userHome}/p-java/gwt-${gwtVersion}';
     
     var libs = [

@@ -22,6 +22,7 @@ public class VtcMap {
         for (String line : lines) {
             if (line != null && line.trim().length() != 0) {
                 String[] a = line.split(":");
+
                 SeriesKey seriesKey = SeriesKey.parse(a[0]);
                 RootTreeId treeId = new RootTreeId(a[1]);
                 builder.put(seriesKey, treeId);

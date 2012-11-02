@@ -32,7 +32,7 @@ public class JpgSetAction {
             if (jpgSetFileExists()) {
                 this.jpgSet = JpgSet.readJpgSetFile(repos.getCacheDir(), jpgSetKey);
             } else {
-                JpgSet.createJpgSet(repos, jpgSetKey);
+                this.jpgSet = JpgSet.createJpgSet(repos, jpgSetKey);
                 jpgSet.writeToFile(repos.getCacheDir());
             }
         }

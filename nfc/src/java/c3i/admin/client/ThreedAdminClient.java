@@ -90,9 +90,9 @@ public class ThreedAdminClient {
         return r;
     }
 
-    public Req<Void> purgeRepoCache() {
+    public Req<Void> purgeRepoCache(BrandKey brandKey) {
         Req<Void> r = newRequest("purgeRepoCache");
-        service.purgeRepoCache(r);
+        service.purgeRepoCache(brandKey,r);
         return r;
     }
 

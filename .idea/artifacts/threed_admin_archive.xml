@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="threed-admin archive">
+    <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
+    <root id="archive" name="threed-admin-v2.war">
+      <element id="artifact" artifact-name="threed-admin" />
+    </root>
+  </artifact>
+</component>

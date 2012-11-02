@@ -28,6 +28,7 @@ import smartsoft.util.lang.shared.Path;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -66,12 +67,24 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     }
 
+    private void checkCacheFile(int msg){
+        String s = "/configurator-content-toyota/cache";
+        File file = new File(s);
+        if(file.exists()){
+            System.out.println(msg + " Yes");
+        }
+        else{
+            System.out.println(msg + " No");
+        }
+    }
+
     @Override
     public BrandInit getInitData(BrandKey brandKey) {
-        System.out.println("ThreedAdminServlet.getInitData");
+        System.out.println("ThreedAdminServlet.getInitData AAA" );
         Preconditions.checkNotNull(brandKey);
         Preconditions.checkNotNull(app);
         Path repoContextPath = app.getRepoContextPath();
+
 
         Repos repos = brandRepos.getRepos(brandKey);
 
@@ -88,6 +101,8 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
                 userName = "NullUserName";
             }
         }
+
+
         ArrayList<BrandKey> visibleBrandsForUser = getVisibleBrandsForUser();
 
         Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);

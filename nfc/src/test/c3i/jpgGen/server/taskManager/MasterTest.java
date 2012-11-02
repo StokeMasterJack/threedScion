@@ -128,7 +128,8 @@ public class MasterTest implements TestConstants {
 
     @Test
     public void testAnalOnly() throws Exception {
-        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
+//        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
+        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2011, "avalon");
         SeriesId seriesId = repos.getHead(seriesKey);
 
 

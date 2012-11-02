@@ -417,6 +417,7 @@ public class Master {
                 }
             });
 
+            int jpgSetSize = jpgSet.size();
             this.jpgCountForSlice = jpgSet.size();
 
         }

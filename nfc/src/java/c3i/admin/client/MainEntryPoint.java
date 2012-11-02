@@ -190,7 +190,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
             public void execute() {
                 ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
                 Console.log("Purging cache..");
-                threedAdminClient.purgeRepoCache();
+                threedAdminClient.purgeRepoCache(brandKey);
             }
         };
 

@@ -126,8 +126,8 @@ public class Repos {
         settingsHelper = new SettingsHelper(repoBaseDir);
 
         FileUtil.createDirNotExists(getVtcBaseDir());
-        FileUtil.createDirNotExists(getCacheDir());
-
+        File cacheDir = getCacheDir();
+        FileUtil.createDirNotExists(cacheDir);
 
     }
 
@@ -425,8 +425,7 @@ public class Repos {
     }
 
     public File getVtcBaseDir() {
-        File brandRepoBase = new File(getRepoBaseDir(), brandKey.getKey());
-        File f = new File(brandRepoBase, VTC_LOCAL_DIR_NAME);
+        File f = new File(getRepoBaseDir(), VTC_LOCAL_DIR_NAME);
         FileUtil.createDirNotExists(f);
         return f;
     }
@@ -453,6 +452,6 @@ public class Repos {
     }
 
     public File getCacheDir() {
-        return new File(repoBaseDir, "cache");
+        return new File(repoBaseDir, ".cache");
     }
 }

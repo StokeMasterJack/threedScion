@@ -16,6 +16,8 @@ public class BrandRepos {
     private ImmutableMap<BrandKey, JpgGeneratorService> jpgGenMap;
 
     public BrandRepos(ImmutableMap<BrandKey, File> repoBaseDirs) {
+        System.out.println("repoBaseDirs = " + repoBaseDirs);
+        log.info("repoBaseDirs = " + repoBaseDirs);
         ImmutableMap.Builder<BrandKey, Repos> b1 = ImmutableMap.builder();
         ImmutableMap.Builder<BrandKey, JpgGeneratorService> b2 = ImmutableMap.builder();
         for (Map.Entry<BrandKey, File> entry : repoBaseDirs.entrySet()) {

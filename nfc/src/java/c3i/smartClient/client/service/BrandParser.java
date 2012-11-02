@@ -39,19 +39,21 @@ public class BrandParser {
         JSONString jssBrandKey = jsBrandKey.isString();
         Preconditions.checkNotNull(jssBrandKey);
         String sBrandKey = jssBrandKey.stringValue();
+        BrandKey brandKey = BrandKey.fromString(sBrandKey);
         Preconditions.checkNotNull(sBrandKey);
         JSONObject jsVtcMap = jsBrandInit.get("vtcMap").isObject();
         JSONObject jsProfileMap = jsBrandInit.get("profileMap").isObject();
-        VtcMap vtcMap = parseVtcMap(jsVtcMap);
+        VtcMap vtcMap = parseVtcMap(brandKey,jsVtcMap);
         Profiles profiles = parseProfileMap(jsProfileMap);
-        return new Brand(BrandKey.fromString(sBrandKey), vtcMap, profiles);
+
+        return new Brand(brandKey, vtcMap, profiles);
     }
 
-    private VtcMap parseVtcMap(JSONObject json) {
+    private VtcMap parseVtcMap(BrandKey brandKey,JSONObject json) {
         ImmutableMap.Builder<SeriesKey, RootTreeId> builder = ImmutableMap.builder();
         Set<String> sSeriesKeys = json.keySet();
         for (String sSeriesKey : sSeriesKeys) {
-            SeriesKey seriesKey = SeriesKey.parse(sSeriesKey);
+            SeriesKey seriesKey = SeriesKey.parse(brandKey + " " + sSeriesKey);
             String sRootTreeId = json.get(sSeriesKey).isString().stringValue();
             RootTreeId rootTreeId = new RootTreeId(sRootTreeId);
             builder.put(seriesKey, rootTreeId);

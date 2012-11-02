@@ -14,7 +14,6 @@
           <element id="library" level="project" name="commons-logging-1.0.3" />
           <element id="library" level="project" name="jgit-snap" />
           <element id="library" level="project" name="jackson-1.7.4" />
-          <element id="library" level="project" name="gwt-servlet-2" />
           <element id="library" level="application" name="imgscalr-lib-4.2" />
           <element id="library" level="application" name="com.google.guava:guava:13.0.1" />
         </element>
