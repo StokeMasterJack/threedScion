@@ -8,7 +8,6 @@ import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
-import com.google.common.collect.ImmutableList;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import org.apache.commons.logging.Log;
@@ -91,7 +90,7 @@ public class BaseImageGenerator {
                 int h = layerPng.getHeight();
 
                 int combinedImageType;
-                if (includeBackground()) {
+                if (includeBackground()) { //is final thing supposed to be a jpg
                     assert zeroPngIsBackground;
                     combinedImageType = BufferedImage.TYPE_INT_RGB;
                 } else {
@@ -100,6 +99,16 @@ public class BaseImageGenerator {
 
                 newImage = new BufferedImage(w, h, combinedImageType);
                 newGraphics = newImage.createGraphics();
+
+                //If layer zero is supposed to be a background
+                //but it somehow has some transparency (like Tundra undercarriage)
+                //then make sure those alpha portions are not accidentally turned black.
+                if (includeBackground()) {
+                    newGraphics.setPaint(Color.WHITE);
+                    newGraphics.fillRect(0, 0, w, h);
+                }
+
+
             }
 
             if (i != 0 && background) {
