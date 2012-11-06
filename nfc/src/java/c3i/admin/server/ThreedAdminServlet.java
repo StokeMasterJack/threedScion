@@ -80,7 +80,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     @Override
     public BrandInit getInitData(BrandKey brandKey) {
-        System.out.println("ThreedAdminServlet.getInitData AAA" );
         Preconditions.checkNotNull(brandKey);
         Preconditions.checkNotNull(app);
         Path repoContextPath = app.getRepoContextPath();
@@ -108,8 +107,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);
 
         BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears, settings, userName, visibleBrandsForUser, repoContextPath, profiles);
-        System.out.println("serving brandInit = " + brandInit);
-        System.out.println("serving seriesNamesWithYears = " + seriesNamesWithYears);
         return brandInit;
     }
 
