@@ -11,31 +11,43 @@ void main(){
 
     appName = "c3i";
 
+    boolean devMode = false;
+    String app = "admin";
 
-
-
-    //gwt demo
-    contextPath = "smartClient";
-    modName = "smartClient.SmartClientDemoGwt";
-    startupPage =  "DemoGwt";
-
-
-
-
-    //threed admin
-    contextPath = "threed-admin-v2";
-    modName = "admin.ThreedAdmin";
-    startupPage =  "index";
-
-     //SmartClientExportJavaScript
-        contextPath = "smartClient";
-        modName = "smartClient.SmartClientExportJavaScript";
-        startupPage =  "demo/widget/toyota/demo";
-
-
-    var options = new Options();
+    //process command line args
+    Options options = new Options();
     List<String> args = options.arguments;
-    var devMode = args.length==0?false:args.last()=="dev";
+
+    args.forEach((arg) {
+        if(arg.startsWith("--mode=") && arg.endsWith("dev")){
+           devMode = true;
+        }
+        if(arg.startsWith("--app=") ){
+            if(arg.endsWith("admin")) app = "admin";
+            else if(arg.endsWith("smartClient")) app = "smartClient";
+            else if(arg.endsWith("gwtDemo")) app = "gwtDemo";
+            devMode = true;
+        }
+    });
+
+
+    if(app == "gwtDemo"){ //g
+        contextPath = "smartClient";
+        modName = "smartClient.SmartClientDemoGwt";
+        startupPage =  "DemoGwt";
+    }else if(app == "smartClient"){ //s
+         contextPath = "smartClient";
+         modName = "smartClient.SmartClientExportJavaScript";
+         startupPage =  "demo/widget/toyota/demo";
+    }
+    else if(app == "admin"){ //a
+        //a:threed admin
+        contextPath = "threed-admin-v2";
+        modName = "admin.ThreedAdmin";
+        startupPage =  "index";
+    } else{
+        throw new Exception("Bad app name: " + app);
+    }
 
     var modFullName = '${appName}.${modName}';  //threed.smartClient.SmartClient
 
