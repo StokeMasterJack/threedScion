@@ -47,7 +47,7 @@ public class ImageStack implements Exportable, HasKey {
     private final ImmutableList<Img> images;
 
     private ImageStack(){
-        throw new UnsupportedOperationException("needed by gwt exported");
+        throw new UnsupportedOperationException("needed (but not called) by gwt-exporter");
     }
 
     public ImageStack(final Key key, CoreImageStack coreImageStack) {

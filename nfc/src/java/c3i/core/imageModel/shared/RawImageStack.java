@@ -11,6 +11,8 @@ import javax.annotation.concurrent.Immutable;
  *
  *      Each image in the stack has the same x,y,width,height but different zIndex
  *      The bottom image is always a JPG all others are PNGs
+ *
+ *      It does not include profile.
  */
 @Immutable
 public class RawImageStack {
