@@ -2,6 +2,8 @@
 
 #import('dart:io');
 
+//usage: ./gwt.dart --app=[admin]|smartClient|gwtDemo --mode=dev|[compile]
+
 var appName;
 var modName;
 var startupPage;
