@@ -26,7 +26,6 @@ void main(){
             if(arg.endsWith("admin")) app = "admin";
             else if(arg.endsWith("smartClient")) app = "smartClient";
             else if(arg.endsWith("gwtDemo")) app = "gwtDemo";
-            devMode = true;
         }
     });
 
