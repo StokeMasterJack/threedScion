@@ -35,8 +35,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
 
     private final HeaderPanel headerPanel;
     private final MiddlePanel middlePanel;
-    private final StatusPanels statusPanels;
-
+    private final StatusPanel statusPanel;
 
     public ThreedAdminPanel(ThreedAdminModel model) {
         super(Style.Unit.PX);
@@ -48,11 +47,11 @@ public class ThreedAdminPanel extends DockLayoutPanel {
         middlePanel = new MiddlePanel(contentPanel, layersPanels);
 
         headerPanel = new HeaderPanel();
-        statusPanels = new StatusPanels(model.getSeries());
+        statusPanel = new StatusPanel(model.getSeries());
 
 
         addNorth(headerPanel, 35);
-        addSouth(statusPanels, 100);
+        addSouth(statusPanel, 150);
         add(middlePanel);
 
 //        getElement().getStyle().setBackgroundColor("yellow");

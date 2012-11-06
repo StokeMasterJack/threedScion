@@ -26,7 +26,6 @@ public class SeriesPanel extends SplitLayoutPanel implements TabAware {
 
     private FeaturePickerPanel featurePickerPanel;
     private ThreedAdminPanel threedAdminPanel;
-    private ArrayList<StatusPanel> statusPanels;
 
     public SeriesPanel(final SeriesSession seriesSession) {
         this.seriesSession = seriesSession;

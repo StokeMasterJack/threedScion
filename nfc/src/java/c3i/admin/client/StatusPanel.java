@@ -1,24 +1,5 @@
 package c3i.admin.client;
 
-import c3i.smartClient.client.model.ImageStackChangeListener;
-import com.google.common.collect.ImmutableList;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Label;
-//import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.Widget;
-import smartsoft.util.gwt.client.dialogs.MyDialogBox;
-import c3i.util.shared.events.ChangeListener;
-import smartsoft.util.lang.shared.Path;
 import c3i.admin.client.featurePicker.CurrentUiPicks;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.featureModel.shared.Assignments;
@@ -26,39 +7,63 @@ import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.Tri;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.imageModel.shared.ViewKey;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.ImageStack;
+import c3i.smartClient.client.model.ImageStackChangeListener;
 import c3i.smartClient.client.model.Img;
-import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.model.ViewSession;
 import c3i.smartClient.client.model.ViewsSession;
+import c3i.smartClient.client.model.event.ViewChangeListener;
+import c3i.smartClient.client.service.ThreedModelClient;
+import c3i.util.shared.events.ChangeListener;
+import com.google.common.collect.ImmutableList;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Widget;
+import smartsoft.util.gwt.client.dialogs.MyDialogBox;
+import smartsoft.util.lang.shared.Path;
 
 import java.util.Set;
 
-public class StatusPanel extends Composite {
+//import com.google.gwt.user.client.ui.ScrollPanel;
 
-    private final StatusPanelModel model;
+public class StatusPanel extends ScrollPanel {
 
+
+    private final Series series;
     private final SeriesId seriesId;
     private final ViewsSession viewsSession;
-    private final ViewSession viewSession;
+
     private final ThreedModel threedModel;
     private final FeatureModel featureModel;
     private final CurrentUiPicks currentUiPicks;
     private final ThreedModelClient threedModelClient;
 
+    private ViewSession viewSession;
+    private StatusPanelModel model;
+
     private final FlexTable t;
 
-    private final ScrollPanel scrollPanel;
 
-    public StatusPanel(StatusPanelModel model) {
-        this.model = model;
-        this.seriesId = model.getSeriesId();
-        this.viewSession = model.getViewSession();
-        this.viewsSession = viewSession.getParent();
+    public StatusPanel(Series series) {
+        this.series = series;
+        this.viewsSession = series.getViewsSession();
+
+        this.seriesId = series.getSeriesId();
+
         this.threedModel = viewsSession.getThreedModel();
         this.featureModel = threedModel.getFeatureModel();
-        this.currentUiPicks = model.getCurrentUiPicks();
+        this.currentUiPicks = series.getCurrentUiPicks();
         threedModelClient = new ThreedModelClient(viewsSession.getRepoBaseUrl());
 
         currentUiPicks.addChangeListener(new ChangeListener<FixedPicks>() {
@@ -68,10 +73,18 @@ public class StatusPanel extends Composite {
             }
         });
 
+        for (ViewSession vs : viewsSession.getViewSessions()) {
+            vs.addImageStackChangeListener(new ImageStackChangeListener() {
+                @Override
+                public void onChange(ImageStack newValue) {
+                    refresh();
+                }
+            });
+        }
 
-        viewSession.addImageStackChangeListener(new ImageStackChangeListener() {
+        viewsSession.addViewChangeListener(new ViewChangeListener() {
             @Override
-            public void onChange(ImageStack newValue) {
+            public void onChange(ViewKey newValue) {
                 refresh();
             }
         });
@@ -82,34 +95,35 @@ public class StatusPanel extends Composite {
 
         Style style = t.getElement().getStyle();
         style.setMarginLeft(1, Style.Unit.EM);
+        style.setMarginBottom(1, Style.Unit.EM);
 //        style.setBackgroundColor("#DDDDDD");
         t.getColumnFormatter().setWidth(0, "120");
         t.getColumnFormatter().setWidth(1, "*");
 
-        refresh();
 
-        scrollPanel = new ScrollPanel(t);
-        scrollPanel.setHeight("100%");
-
-//        FlowPanel fp = new FlowPanel();
-//        fp.add(t);
+        FlowPanel fp = new FlowPanel();
+        fp.add(t);
 
 //        t.setHeight("100em");
-        scrollPanel.setWidget(t);
 
-        initWidget(scrollPanel);
+        getElement().getStyle().setBorderColor("black");
+        getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
+        getElement().getStyle().setBorderStyle(Style.BorderStyle.SOLID);
 
-//        getElement().getStyle().setBorderColor("black");
-//        getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
-//        getElement().getStyle().setBorderStyle(Style.BorderStyle.SOLID);
-
-
+        setWidget(fp);
+//        setHeight("100%");
 
         setStyleName("StatusPanel");
+
+        refresh();
     }
 
 
     public void refresh() {
+        this.viewSession = viewsSession.getViewSession();
+        this.model = new StatusPanelModel(viewSession, series);
+
+
         t.clear();
 
         t.removeAllRows();

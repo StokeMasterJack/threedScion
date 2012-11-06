@@ -51,7 +51,6 @@ public class ThumbViewSelector extends ViewSelector {
         viewPanels = new ViewPanel[thumbModels.size()];
 
         for (final ViewModel thumbModel : thumbModels) {
-            System.out.println("thumbModel = " + thumbModel);
             int thumbViewIndex = thumbModel.getViewIndex();
 
             viewPanels[thumbViewIndex] = new ThumbViewPanel(thumbModel, this.thumbSize);
