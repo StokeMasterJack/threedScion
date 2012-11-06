@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" build-on-make="true" name="smartClient archive">
+  <artifact type="war" name="smartClient archive">
     <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
     <root id="archive" name="smartClient.war">
       <element id="artifact" artifact-name="smartClient" />

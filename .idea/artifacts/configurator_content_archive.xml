@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" build-on-make="true" name="configurator-content archive">
+  <artifact type="war" name="configurator-content archive">
     <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
     <root id="archive" name="configurator-content-v2.war">
       <element id="artifact" artifact-name="configurator-content" />
