@@ -22,7 +22,7 @@ import smartsoft.util.lang.shared.RectSize;
 
 public class ViewPanel extends ComplexPanel {
 
-    private static final int IMAGE_COUNT = 10;
+    private static final int IMAGE_COUNT = 20;
 
     private ViewModel viewModel;
     private RectSize fixedSize;
