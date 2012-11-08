@@ -95,7 +95,7 @@ public class ImageUtil {
             retVal = ImageUtil.allPixesHaveAlphaZero(is);
         } catch (IOException e) {
             retVal = false;
-            throw new RuntimeException(e);
+            throw new RuntimeException("File[" + fullFileName + "]", e);
         } finally {
             Closeables.closeQuietly(is);
         }
