@@ -19,8 +19,8 @@ import java.util.Random;
 
 public class JpgHandler extends RepoHandler<JpgRequest> {
 
-    public JpgHandler(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    public JpgHandler(BrandRepos brandRepos) {
+        super(brandRepos);
     }
 
     @Override

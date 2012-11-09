@@ -65,8 +65,8 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
     private final LoadingCache<SeriesId, byte[]> jsonMapGzipped;
     private final LoadingCache<SeriesId, byte[]> jsonMapNotZipped;
 
-    public ThreedModelHandler(BrandRepos repos, ServletContext application) {
-        super(repos, application);
+    public ThreedModelHandler(BrandRepos repos) {
+        super(repos);
 
 
         jsonMapGzipped = CacheBuilder.newBuilder()

@@ -7,8 +7,8 @@ import javax.servlet.ServletContext;
 
 public abstract class RepoHandler<T extends RepoRequest> extends ReposHandler<T> {
 
-    protected RepoHandler(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    protected RepoHandler(BrandRepos brandRepos) {
+        super(brandRepos);
     }
 
     public abstract void handle(T repoRequest);

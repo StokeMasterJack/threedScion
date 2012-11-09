@@ -27,8 +27,8 @@ import java.util.List;
 public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFingerprint> {
 
 
-    public JpgHandlerSeriesFingerprint(BrandRepos repos, ServletContext application) {
-        super(repos, application);
+    public JpgHandlerSeriesFingerprint(BrandRepos repos) {
+        super(repos);
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ThreedRepoApp extends App {
 
     public ThreedRepoApp() {
         super("threed-repo");
+        brandRepos = new BrandRepos(getRepoBaseDirs());
     }
 
     public ImmutableMap<BrandKey, File> getRepoBaseDirs() {
@@ -76,8 +77,7 @@ public class ThreedRepoApp extends App {
 
     }
 
-
-    public static ThreedRepoApp getFromServletContext(ServletContext servletContext) {
+    public synchronized static ThreedRepoApp getFromServletContext(ServletContext servletContext) {
         ThreedRepoApp app = (ThreedRepoApp) servletContext.getAttribute(ThreedRepoApp.class.getName());
         if (app == null) {
             app = new ThreedRepoApp();
@@ -87,12 +87,7 @@ public class ThreedRepoApp extends App {
     }
 
     public BrandRepos getBrandRepos() {
-        if (brandRepos == null) {
-            ImmutableMap<BrandKey, File> repoBaseDirs = getRepoBaseDirs();
-            brandRepos = new BrandRepos(repoBaseDirs);
-        }
         return brandRepos;
-
     }
 
 

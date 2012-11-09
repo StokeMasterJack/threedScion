@@ -27,8 +27,8 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
 
     protected final LoadingCache<SeriesId, byte[]> jsonMap;
 
-    public ThreedModelHandlerJsonP(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    public ThreedModelHandlerJsonP(BrandRepos brandRepos) {
+        super(brandRepos);
 
 
         jsonMap = CacheBuilder.newBuilder()

@@ -21,8 +21,8 @@ import java.io.PrintWriter;
 public class VtcMapHandler extends RepoHandler<RepoRequest> {
 
 
-    public VtcMapHandler(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    public VtcMapHandler(BrandRepos brandRepos) {
+        super(brandRepos);
     }
 
     @Override

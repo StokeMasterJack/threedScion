@@ -20,8 +20,8 @@ import java.io.PrintWriter;
  */
 public class VtcHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
-    public VtcHandler(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    public VtcHandler(BrandRepos brandRepos) {
+        super(brandRepos);
     }
 
     @Override

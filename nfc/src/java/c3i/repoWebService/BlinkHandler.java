@@ -16,8 +16,8 @@ import java.io.File;
 
 public class BlinkHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
-    public BlinkHandler(BrandRepos repos, ServletContext application) {
-        super(repos, application);
+    public BlinkHandler(BrandRepos repos) {
+        super(repos);
     }
 
     @Override public void handle(SeriesBasedRepoRequest repoRequest) {

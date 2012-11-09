@@ -1,5 +1,6 @@
 package c3i.jpgGen.shared;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.imageModel.shared.Profile;
 import com.google.common.base.Preconditions;
@@ -54,5 +55,9 @@ public class JobSpec implements Serializable {
     @Override
     public String toString() {
         return seriesId.toString() + " " + profile.toString();
+    }
+
+    public BrandKey getBrandKey() {
+        return seriesId.getBrandKey();
     }
 }

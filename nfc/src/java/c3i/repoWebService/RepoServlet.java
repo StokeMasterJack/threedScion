@@ -52,20 +52,16 @@ public class RepoServlet extends HttpServlet {
     private ThreedModelHandlerJsonP threedModelHandlerJsonP;
     private GitObjectHandler gitObjectHandler;
 
-    private ServletContext application;
-
     private BrandRepos brandRepos;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        application = config.getServletContext();
-
         log = LogFactory.getLog(RepoServlet.class);
+        log.info("Initializing " + getClass().getSimpleName());
 
         try {
-            app = ThreedRepoApp.getFromServletContext(application);
+            app = ThreedRepoApp.getFromServletContext(getServletContext());
             Preconditions.checkNotNull(app);
             brandRepos = app.getBrandRepos();
             log.info(getClass().getSimpleName() + " initialization complete!");
@@ -75,16 +71,16 @@ public class RepoServlet extends HttpServlet {
             throw new RuntimeException(msg, e);
         }
 
-        pngHandler = new PngHandler(brandRepos, application);
-        vtcHandler = new VtcHandler(brandRepos, application);
-        vtcMapHandler = new VtcMapHandler(brandRepos, application);
-        jpgHandler = new JpgHandler(brandRepos, application);
-        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos, application);
-        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos, application);
-        blinkHandler = new BlinkHandler(brandRepos, application);
-        threedModelHandler = new ThreedModelHandler(brandRepos, application);
-        threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos, application);
-        gitObjectHandler = new GitObjectHandler(brandRepos, application);
+        pngHandler = new PngHandler(brandRepos);
+        vtcHandler = new VtcHandler(brandRepos);
+        vtcMapHandler = new VtcMapHandler(brandRepos);
+        jpgHandler = new JpgHandler(brandRepos);
+        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos);
+        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos);
+        blinkHandler = new BlinkHandler(brandRepos);
+        threedModelHandler = new ThreedModelHandler(brandRepos);
+        threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos);
+        gitObjectHandler = new GitObjectHandler(brandRepos);
 
 
     }
@@ -115,7 +111,7 @@ public class RepoServlet extends HttpServlet {
 
             if (isIndexHtmlRequest(request, response)) {
                 log.debug("isIndexHtmlRequest");
-                InputStream is = application.getResourceAsStream("index.html");
+                InputStream is = getServletContext().getResourceAsStream("index.html");
                 response.setContentType("text/html");
                 ByteStreams.copy(is, response.getOutputStream());
             } else if (isVtcRequest(request)) {

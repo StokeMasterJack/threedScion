@@ -1,6 +1,7 @@
 package c3i.admin.server;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.jpgGen.server.taskManager.JpgGeneratorService;
 import c3i.repo.server.BrandRepos;
 import com.google.common.collect.ImmutableMap;
 import smartsoft.util.config.App;
@@ -19,9 +20,12 @@ public class ThreedAdminApp extends App {
     private static final File REPO_BASE_DIR_PRIVATE = new File("/configurator-content");
 
     private BrandRepos brandRepos;
+    private JpgGeneratorService jpgGeneratorService;
 
     public ThreedAdminApp() {
         super("threed-admin");
+        brandRepos = new BrandRepos(getRepoBaseDirs());
+        jpgGeneratorService = new JpgGeneratorService(brandRepos);
     }
 
     public ImmutableMap<BrandKey, File> getRepoBaseDirs() {
@@ -75,17 +79,7 @@ public class ThreedAdminApp extends App {
 
     }
 
-    public static ThreedAdminApp getOrCreate(ServletContext servletContext) {
-        String attName = ThreedAdminApp.class.getName();
-        ThreedAdminApp app = (ThreedAdminApp) servletContext.getAttribute(attName);
-        if (app == null) {
-            app = new ThreedAdminApp();
-            servletContext.setAttribute(attName, app);
-        }
-        return app;
-    }
-
-    public static ThreedAdminApp getFromServletContext(ServletContext servletContext) {
+    public synchronized static ThreedAdminApp getFromServletContext(ServletContext servletContext) {
         ThreedAdminApp app = (ThreedAdminApp) servletContext.getAttribute(ThreedAdminApp.class.getName());
         if (app == null) {
             app = new ThreedAdminApp();
@@ -95,13 +89,10 @@ public class ThreedAdminApp extends App {
     }
 
     public BrandRepos getBrandRepos() {
-        if (brandRepos == null) {
-            ImmutableMap<BrandKey, File> repoBaseDirs = getRepoBaseDirs();
-            brandRepos = new BrandRepos(repoBaseDirs);
-        }
         return brandRepos;
-
     }
 
-
+    public JpgGeneratorService getJpgGeneratorService() {
+        return jpgGeneratorService;
+    }
 }

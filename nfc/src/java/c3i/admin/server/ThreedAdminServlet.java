@@ -52,12 +52,12 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        log = LogFactory.getLog(ThreedAdminFilter.class);
+        log.info("Initializing " + getClass().getSimpleName());
 
         try {
             app = ThreedAdminApp.getFromServletContext(config.getServletContext());
             Preconditions.checkNotNull(app);
-            log = LogFactory.getLog(ThreedAdminFilter.class);
-            log.info("Initializing " + getClass().getSimpleName());
             brandRepos = app.getBrandRepos();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
@@ -67,13 +67,12 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     }
 
-    private void checkCacheFile(int msg){
+    private void checkCacheFile(int msg) {
         String s = "/configurator-content-toyota/cache";
         File file = new File(s);
-        if(file.exists()){
+        if (file.exists()) {
             System.out.println(msg + " Yes");
-        }
-        else{
+        } else {
             System.out.println(msg + " No");
         }
     }

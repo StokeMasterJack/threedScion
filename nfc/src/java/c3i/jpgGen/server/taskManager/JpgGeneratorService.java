@@ -1,9 +1,11 @@
 package c3i.jpgGen.server.taskManager;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.jpgGen.shared.JobId;
 import c3i.jpgGen.shared.JobSpec;
 import c3i.jpgGen.shared.JobState;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
@@ -21,10 +23,10 @@ public class JpgGeneratorService extends AbstractIdleService {
 
     private final ConcurrentHashMap<JobId, Master> jobQueue = new ConcurrentHashMap<JobId, Master>();
 
-    private final Repos repos;
+    private final BrandRepos brandRepos;
 
-    public JpgGeneratorService(Repos repos) {
-        this.repos = repos;
+    public JpgGeneratorService(BrandRepos brandRepos) {
+        this.brandRepos = brandRepos;
     }
 
     public Master startNewJpgJob(JobSpec jobSpec, int threadCount, int priority) throws EquivalentJobAlreadyRunningException {
@@ -34,10 +36,16 @@ public class JpgGeneratorService extends AbstractIdleService {
         }
 
         jobSpec.getProfile().getBaseImageType();
+
+        BrandKey brandKey = jobSpec.getBrandKey();
+        Repos repos = brandRepos.getRepos(brandKey);
+
         Master master = new Master(repos, jobSpec, threadCount, priority);
         jobQueue.put(master.getId(), master);
         return master;
     }
+
+
 
     private boolean isThereAlreadyAnOpenJobWithThisSpec(JobSpec jobSpec) {
         for (Master master : jobQueue.values()) {
@@ -57,6 +65,7 @@ public class JpgGeneratorService extends AbstractIdleService {
 
 
     private String commitIdToTag(SeriesId seriesId) {
+        Repos repos = brandRepos.getRepos(seriesId.getBrandKey());
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId.getSeriesKey());
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         Map<String, Ref> tags = srcRepo.getTags();

@@ -11,6 +11,7 @@ import c3i.jpgGen.server.taskManager.Master;
 import c3i.jpgGen.shared.JobSpec;
 import c3i.jpgGen.shared.JobState;
 import c3i.jpgGen.shared.JobStatus;
+import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
@@ -57,12 +58,14 @@ public class JpgGenCommandLine {
     public void start() {
         Repos repos = new Repos(args.getBrandKey(), args.getRepoBase());
 
+        BrandRepos brandRepos = BrandRepos.createSingleBrand(args.getBrandKey(), args.getRepoBase());
+
         SeriesRepo seriesRepo = repos.getSeriesRepo(args.getSeriesKey());
         RootTreeId rootTreeId = seriesRepo.getSrcRepo().resolveRootTreeId(args.getRev());
         SeriesId seriesId = new SeriesId(args.getSeriesKey(), rootTreeId);
         JobSpec jobSpec = new JobSpec(seriesId, args.getProfile());
 
-        final JpgGeneratorService jpgGen = new JpgGeneratorService(repos);
+        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos);
 
 
         final Master job = jpgGen.startNewJpgJob(jobSpec, args.getThreadCount(), Thread.NORM_PRIORITY);

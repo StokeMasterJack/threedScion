@@ -25,8 +25,8 @@ import java.io.File;
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 
-    public JpgHandlerNoFingerprint(BrandRepos repos, ServletContext application) {
-        super(repos, application);
+    public JpgHandlerNoFingerprint(BrandRepos repos) {
+        super(repos);
     }
 
     @Override

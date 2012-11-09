@@ -26,8 +26,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
 
     public static final long LAST_MODIFIED_DATE = new Date(2010, 1, 1).toLong();
 
-    public PngHandler(BrandRepos brandRepos, ServletContext application) {
-        super(brandRepos, application);
+    public PngHandler(BrandRepos brandRepos) {
+        super(brandRepos);
     }
 
     @Override

@@ -39,8 +39,8 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
 
     private static Map<String, String> contentTypes = buildMimeMap();
 
-    public GitObjectHandler(BrandRepos repos, ServletContext application) {
-        super(repos, application);
+    public GitObjectHandler(BrandRepos repos) {
+        super(repos);
     }
 
     @Override

@@ -77,4 +77,7 @@ public class SeriesId implements Serializable {
         return seriesKey.serialize() + "-" + rootTreeId;
     }
 
+    public BrandKey getBrandKey() {
+        return seriesKey.getBrandKey();
+    }
 }
