@@ -1,4 +1,4 @@
-package c3i.jpgGen.client;
+package c3i.admin.client.jpgGen;
 
 import c3i.jpgGen.shared.JobId;
 import c3i.jpgGen.shared.Stats;

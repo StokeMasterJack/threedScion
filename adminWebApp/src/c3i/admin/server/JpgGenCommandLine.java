@@ -1,4 +1,4 @@
-package c3i.jpgGen.server;
+package c3i.admin.server;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
@@ -6,8 +6,8 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.JpgWidth;
 import c3i.core.threedModel.shared.RootTreeId;
-import c3i.jpgGen.server.taskManager.JpgGeneratorService;
-import c3i.jpgGen.server.taskManager.Master;
+import c3i.admin.server.taskManager.JpgGeneratorService;
+import c3i.admin.server.taskManager.Master;
 import c3i.jpgGen.shared.JobSpec;
 import c3i.jpgGen.shared.JobState;
 import c3i.jpgGen.shared.JobStatus;
@@ -17,7 +17,6 @@ import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.BasicConfigurator;
 import smartsoft.util.CommandLineArgs;
 import smartsoft.util.Sys;
 
@@ -31,10 +30,6 @@ import java.util.TimerTask;
 public class JpgGenCommandLine {
 
     private static final NumberFormat PERCENT_FORMAT = NumberFormat.getPercentInstance();
-
-    static {
-        BasicConfigurator.configure();
-    }
 
     private final Args args;
 

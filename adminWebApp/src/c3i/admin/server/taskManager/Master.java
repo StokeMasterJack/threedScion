@@ -1,4 +1,4 @@
-package c3i.jpgGen.server.taskManager;
+package c3i.admin.server.taskManager;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.imageModel.shared.BaseImage;
@@ -8,7 +8,7 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.jpgGen.server.JpgSet;
+import c3i.admin.server.JpgSet;
 import c3i.jpgGen.server.singleJpg.BaseImageGenerator;
 import c3i.jpgGen.shared.ExecutorStatus;
 import c3i.jpgGen.shared.JobId;

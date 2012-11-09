@@ -74,7 +74,8 @@ void doIt(bool devMode,App a) {
   
   var src1 = '$repo1/nfc/src/java';
   var src2 = '$repo2/util/src/java';
-  var src = '$src1:$src2';
+  var src3 = '$repo1/adminWebApp/src';
+  var src = '$src1:$src2:$src3';
   
   //var gwtVersion = '2.5.0.rc1';
   var gwtVersion = '2.4.0';

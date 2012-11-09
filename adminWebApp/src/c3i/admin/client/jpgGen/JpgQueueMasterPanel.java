@@ -1,4 +1,4 @@
-package c3i.jpgGen.client;
+package c3i.admin.client.jpgGen;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.ClickableTextCell;

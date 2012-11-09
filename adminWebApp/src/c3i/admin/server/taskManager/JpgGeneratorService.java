@@ -1,4 +1,4 @@
-package c3i.jpgGen.server.taskManager;
+package c3i.admin.server.taskManager;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;

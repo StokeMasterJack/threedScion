@@ -1,6 +1,6 @@
-package c3i.jpgGen.server.taskManager;
+package c3i.admin.server.taskManager;
 
-import c3i.jpgGen.server.JpgSet;
+import c3i.admin.server.JpgSet;
 import c3i.repo.server.Repos;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

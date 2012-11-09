@@ -1,4 +1,4 @@
-package c3i.jpgGen.server;
+package c3i.admin.server;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.featureModel.shared.AssignmentsForTreeSearch;

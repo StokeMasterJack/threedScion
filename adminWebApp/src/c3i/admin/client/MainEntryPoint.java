@@ -3,8 +3,8 @@ package c3i.admin.client;
 import c3i.admin.shared.BrandInit;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.jpgGen.client.JpgGenClient;
-import c3i.jpgGen.client.JpgQueueMasterPanel;
+import c3i.admin.client.jpgGen.JpgGenClient;
+import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.SeriesCommit;
@@ -289,7 +289,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
     }
 
 
-    private static String jpgGenUrlTemplate = "/jpgGenerator/queueStatus.jsp?seriesName=${seriesName}&seriesYear=${seriesYear}";
 
     public static native void open(String url) /*-{
         $wnd.open(url);

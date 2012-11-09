@@ -1,4 +1,4 @@
-package c3i.jpgGen.server.taskManager;
+package c3i.admin.server.taskManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;

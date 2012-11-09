@@ -4,7 +4,7 @@ import c3i.core.common.shared.BrandKey;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.ui.UiContext;
 import c3i.core.common.shared.SeriesKey;
-import c3i.jpgGen.client.JpgGenClient;
+import c3i.admin.client.jpgGen.JpgGenClient;
 
 public class App {
 

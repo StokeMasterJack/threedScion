@@ -1,4 +1,4 @@
-package c3i.jpgGen.client;
+package c3i.admin.client.jpgGen;
 
 import c3i.core.common.shared.BrandKey;
 import com.google.gwt.core.client.GWT;
@@ -6,7 +6,6 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import c3i.jpgGen.shared.*;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
-import smartsoft.util.gwt.client.ui.UiContext;
 import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package c3i.jpgGen.server.taskManager;
+package c3i.admin.server.taskManager;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
@@ -14,12 +14,11 @@ import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.jpgGen.server.JpgSet;
+import c3i.admin.server.JpgSet;
 import c3i.jpgGen.shared.JobSpec;
 import c3i.jpgGen.shared.JobState;
 import c3i.jpgGen.shared.JobStatus;
 import c3i.repo.server.Repos;
-import com.google.common.base.Charsets;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;

@@ -32,6 +32,7 @@
     <orderEntry type="library" name="jackson-1.8.1" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
+    <orderEntry type="library" name="com.google.guava:guava-gwt:13.0.1" level="application" />
   </component>
 </module>
 

@@ -1,9 +1,9 @@
 package c3i.admin.server;
 
 import c3i.core.common.shared.BrandKey;
-import c3i.jpgGen.server.taskManager.EquivalentJobAlreadyRunningException;
-import c3i.jpgGen.server.taskManager.JpgGeneratorService;
-import c3i.jpgGen.server.taskManager.Master;
+import c3i.admin.server.taskManager.EquivalentJobAlreadyRunningException;
+import c3i.admin.server.taskManager.JpgGeneratorService;
+import c3i.admin.server.taskManager.Master;
 import c3i.jpgGen.shared.ExecutorStatus;
 import c3i.jpgGen.shared.JobId;
 import c3i.jpgGen.shared.JobSpec;
