@@ -2,7 +2,7 @@
 
 #import('dart:io');
 
-//usage: ./gwt.dart --app=[admin]|smartClient|gwtDemo --mode=dev|[compile]
+//usage: ./gwt.dart --app=admin|smartClient|gwtDemo|[all] --mode=dev|[compile]
 
 String appName = "c3i";
 

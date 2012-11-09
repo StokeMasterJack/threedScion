@@ -1,4 +1,4 @@
-package c3i.jpgGen.shared;
+package c3i.admin.shared.jpgGen;
 
 import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;

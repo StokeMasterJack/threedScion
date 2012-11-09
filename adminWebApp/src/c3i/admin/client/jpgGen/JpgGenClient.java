@@ -1,5 +1,11 @@
 package c3i.admin.client.jpgGen;
 
+import c3i.admin.shared.jpgGen.ExecutorStatus;
+import c3i.admin.shared.jpgGen.JobId;
+import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.admin.shared.jpgGen.JobStatusItem;
+import c3i.admin.shared.jpgGen.JpgGenService;
+import c3i.admin.shared.jpgGen.JpgGenServiceAsync;
 import c3i.core.common.shared.BrandKey;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;

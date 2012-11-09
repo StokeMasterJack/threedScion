@@ -2,9 +2,9 @@ package c3i.admin.server.taskManager;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
-import c3i.jpgGen.shared.JobId;
-import c3i.jpgGen.shared.JobSpec;
-import c3i.jpgGen.shared.JobState;
+import c3i.admin.shared.jpgGen.JobId;
+import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.admin.shared.jpgGen.JobState;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;

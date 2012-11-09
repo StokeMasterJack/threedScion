@@ -1,4 +1,4 @@
-package c3i.jpgGen.shared;
+package c3i.admin.shared.jpgGen;
 
 public enum JpgState {
 

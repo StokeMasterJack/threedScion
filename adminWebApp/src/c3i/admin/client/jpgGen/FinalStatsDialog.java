@@ -1,6 +1,6 @@
 package c3i.admin.client.jpgGen;
 
-import c3i.jpgGen.shared.JobId;
+import c3i.admin.shared.jpgGen.JobId;
 import c3i.jpgGen.shared.Stats;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.DateTimeFormat;

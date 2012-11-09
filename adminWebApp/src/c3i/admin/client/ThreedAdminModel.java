@@ -21,7 +21,7 @@ import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.admin.client.jpgGen.JpgGenClient;
 import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
-import c3i.jpgGen.shared.JobSpec;
+import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.repo.shared.CommitHistory;
 import c3i.smartClient.client.skins.Skin;
 import c3i.smartClient.client.skins.ViewStackSkin;
