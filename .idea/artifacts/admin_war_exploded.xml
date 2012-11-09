@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="admin:war exploded">
+    <output-path>$tmsOut$/threedScion/artifacts/admin_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="admin/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="admin" />
+        </element>
+      </element>
+      <element id="gwt-compiler-output" facet="admin/gwt/GWT" />
+    </root>
+  </artifact>
+</component>
