@@ -16,7 +16,6 @@ import c3i.repo.server.SrcRepo;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.Series;
-import c3i.repo.shared.Settings;
 import com.google.common.base.Preconditions;
 import com.google.gwt.rpc.server.RpcServlet;
 import org.apache.commons.logging.Log;
@@ -87,8 +86,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         Repos repos = brandRepos.getRepos(brandKey);
 
         ArrayList<Series> seriesNamesWithYears = repos.getSeriesNamesWithYears();
-        Settings settings = repos.getSettings();
-        log.info("serving [" + settings + "]");
         Principal userPrincipal = getThreadLocalRequest().getUserPrincipal();
         String userName;
         if (userPrincipal == null) {
@@ -105,7 +102,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
         Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);
 
-        BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears, settings, userName, visibleBrandsForUser, repoContextPath, profiles);
+        BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears,userName, visibleBrandsForUser, repoContextPath, profiles);
         return brandInit;
     }
 
@@ -141,18 +138,6 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         CommitHistory commitHistory = repos.setVtcCommitId(seriesKey, commitKey);
         log.info(seriesKey + " VTC set to [" + commitKey.getRootTreeId() + "]");
         return commitHistory;
-    }
-
-    @Override
-    public Settings getSettings(BrandKey brandKey) {
-        Repos repos = brandRepos.getRepos(brandKey);
-        return repos.getSettingsHelper().read();
-    }
-
-    @Override
-    public void saveSettings(BrandKey brandKey, Settings config) {
-        Repos repos = brandRepos.getRepos(brandKey);
-        repos.getSettingsHelper().save(config);
     }
 
     @Override

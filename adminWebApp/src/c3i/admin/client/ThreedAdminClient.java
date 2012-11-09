@@ -9,7 +9,6 @@ import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.repo.shared.CommitHistory;
-import c3i.repo.shared.Settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import smartsoft.util.gwt.client.rpc.Req;
@@ -62,12 +61,6 @@ public class ThreedAdminClient {
     public Req<CommitHistory> addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag) {
         Req<CommitHistory> r = newRequest("addAllAndCommit");
         service.addAllAndCommit(seriesKey, commitMessage, tag, r);
-        return r;
-    }
-
-    public Req<Void> saveSettings(BrandKey brandKey, Settings settings) {
-        Req<Void> r = newRequest("saveSettings");
-        service.saveSettings( brandKey, settings, r);
         return r;
     }
 

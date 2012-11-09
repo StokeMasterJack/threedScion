@@ -8,7 +8,6 @@ import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.SeriesCommit;
-import c3i.repo.shared.Settings;
 import c3i.util.shared.futures.OnSuccess;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style;
@@ -43,7 +42,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
     private TabLayoutPanel tab = new TabLayoutPanel(2, Style.Unit.EM);
 
     //    private MessageLog messageLog;
-    private SettingsDialog settingsDialog;
 
     private BrandKey brandKey;
     private BrandSession brandSession;
@@ -152,18 +150,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
     }
 
 
-    private void openSettingsDialog(BrandInit brandInit) {
-        ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
-        Settings settings = brandInit.getSettings();
-        if (settingsDialog == null) {
-            settingsDialog = new SettingsDialog(brandKey, settings, threedAdminClient);
-        } else {
-            settingsDialog.setSettings(settings);
-        }
 
-        settingsDialog.center();
-        settingsDialog.show();
-    }
 
     public int addTab(final TabAware tabAware) {
         final TabLabel tabLabel = tabAware.getTabLabel();
@@ -211,13 +198,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
         MainMenu(final BrandInit brand) {
 
-            final Command openSettings = new Command() {
-                @Override
-                public void execute() {
-                    openSettingsDialog(brand);
-                }
-            };
-
             final Command showJpgQueueMasterStatus = new Command() {
                 @Override
                 public void execute() {
@@ -253,7 +233,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
             addItem(new MenuItem("Open Series", seriesPickerForOpenMenu));
             addItem(new MenuItem("JPG Gen Job Status", showJpgQueueMasterStatus));
-            addItem(new MenuItem("Settings", openSettings));
             addItem(new MenuItem("Local Checkin", seriesPickerForCheckinMenu));
             addItem(new MenuItem("Misc", createMiscMenu(brand)));
 

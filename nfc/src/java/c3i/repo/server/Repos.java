@@ -19,7 +19,6 @@ import c3i.jpgGen.server.singleJpg.ZPngGenerator;
 import c3i.repo.server.rt.RtRepo;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.Series;
-import c3i.repo.shared.Settings;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -92,7 +91,6 @@ public class Repos {
     }
 
     private final LoadingCache<SeriesKey, SeriesRepo> seriesRepoCache;
-    private final SettingsHelper settingsHelper;
 
     public Repos(final BrandKey brandKey, File repoBaseDir) {
         Preconditions.checkNotNull(brandKey);
@@ -122,7 +120,6 @@ public class Repos {
                             }
                         });
 
-        settingsHelper = new SettingsHelper(repoBaseDir);
 
         FileUtil.createDirNotExists(getVtcBaseDir());
         File cacheDir = getCacheDir();
@@ -155,14 +152,6 @@ public class Repos {
             throw new RuntimeException(e);
         }
 
-    }
-
-    public SettingsHelper getSettingsHelper() {
-        return settingsHelper;
-    }
-
-    public Settings getSettings() {
-        return settingsHelper.read();
     }
 
     public ThreedModel getThreedModel(SeriesKey seriesKey, RootTreeId rootTreeId) {

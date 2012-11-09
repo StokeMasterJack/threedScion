@@ -6,7 +6,6 @@ import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.repo.shared.CommitHistory;
-import c3i.repo.shared.Settings;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ThreedAdminServiceAsync {
@@ -26,7 +25,4 @@ public interface ThreedAdminServiceAsync {
 
     void getInitData(BrandKey brandKey, AsyncCallback<BrandInit> async);
 
-    void getSettings(BrandKey brandKey, AsyncCallback<Settings> async);
-
-    void saveSettings(BrandKey brandKey, Settings repoConfig, AsyncCallback<Void> async);
 }

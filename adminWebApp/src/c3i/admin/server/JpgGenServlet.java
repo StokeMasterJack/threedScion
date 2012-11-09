@@ -108,7 +108,7 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
 
         Repos repos = brandRepos.getRepos(brandKey);
         try {
-            int threadCount = repos.getSettings().getThreadCount();
+            int threadCount = 5;
             int priority = Thread.NORM_PRIORITY;
             if (isDfLocal()) {
                 threadCount = 1;

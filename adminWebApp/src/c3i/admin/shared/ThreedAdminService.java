@@ -22,10 +22,6 @@ public interface ThreedAdminService extends RpcService {
 
     CommitHistory setVtc(SeriesKey seriesKey, CommitKey commitKey);
 
-    Settings getSettings(BrandKey brandKey);
-
-    void saveSettings(BrandKey brandKey,Settings config);
-
     CommitHistory getCommitHistory(SeriesKey seriesKey) throws RepoHasNoHeadException;
 
     CommitHistory tagCommit(SeriesKey seriesKey, String newTagName, CommitId commitId);

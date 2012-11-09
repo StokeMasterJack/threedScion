@@ -5,7 +5,6 @@ import c3i.admin.client.SeriesPickList;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.imageModel.shared.Profiles;
 import c3i.repo.shared.Series;
-import c3i.repo.shared.Settings;
 import c3i.smartClient.client.service.ThreedModelClient;
 
 import java.io.Serializable;
@@ -18,7 +17,6 @@ public class BrandInit implements Serializable {
     private /* final */ BrandKey brandKey;
     private /* final */ ArrayList<Series> seriesNameWithYears;
 
-    private /* final */ Settings settings;
     private /* final */ String userName;
 
     private /* final */ ArrayList<BrandKey> visibleBrandsForUser;
@@ -30,12 +28,9 @@ public class BrandInit implements Serializable {
     private transient SeriesPickList seriesPickList;
     private transient ThreedModelClient threedModelClient;
 
-    public BrandInit(BrandKey brandKey, ArrayList<Series> seriesNameWithYears, Settings settings, String userName, ArrayList<BrandKey> visibleBrandsForUser, Path repoContextPath, Profiles profiles) {
+    public BrandInit(BrandKey brandKey, ArrayList<Series> seriesNameWithYears,  String userName, ArrayList<BrandKey> visibleBrandsForUser, Path repoContextPath, Profiles profiles) {
         if (seriesNameWithYears == null) {
             throw new IllegalArgumentException("seriesNameWithYears must be non-null");
-        }
-        if (settings == null) {
-            throw new IllegalArgumentException("settings must be non-null");
         }
         if (visibleBrandsForUser == null) {
             throw new IllegalArgumentException("visibleBrandsForUser must be non-null");
@@ -45,7 +40,6 @@ public class BrandInit implements Serializable {
         }
         this.brandKey = brandKey;
         this.seriesNameWithYears = seriesNameWithYears;
-        this.settings = settings;
         this.userName = userName;
         this.visibleBrandsForUser = visibleBrandsForUser;
         this.repoContextPath = repoContextPath;
@@ -64,10 +58,6 @@ public class BrandInit implements Serializable {
             seriesPickList = new SeriesPickList(brandKey, seriesNameWithYears);
         }
         return seriesPickList;
-    }
-
-    public Settings getSettings() {
-        return settings;
     }
 
     public String getUserName() {
@@ -94,7 +84,6 @@ public class BrandInit implements Serializable {
     public String toString() {
         return "InitData{" +
                 "seriesNameWithYears=" + seriesNameWithYears +
-                ", settings=" + settings +
                 ", userName='" + userName + '\'' +
                 ", visibleBrandsForUser=" + visibleBrandsForUser +
                 ", repoContextPath=" + repoContextPath +
