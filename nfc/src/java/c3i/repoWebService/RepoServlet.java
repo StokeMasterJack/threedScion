@@ -62,17 +62,17 @@ public class RepoServlet extends HttpServlet {
 
         application = config.getServletContext();
 
-        app = new ThreedRepoApp();
-        Preconditions.checkNotNull(app);
         log = LogFactory.getLog(RepoServlet.class);
 
         try {
+            app = ThreedRepoApp.getFromServletContext(application);
+            Preconditions.checkNotNull(app);
             brandRepos = app.getBrandRepos();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
             log.error(msg, e);
-            throw new RuntimeException(msg,e);
+            throw new RuntimeException(msg, e);
         }
 
         pngHandler = new PngHandler(brandRepos, application);
@@ -88,8 +88,6 @@ public class RepoServlet extends HttpServlet {
 
 
     }
-
-
 
 
     @Override
@@ -122,34 +120,34 @@ public class RepoServlet extends HttpServlet {
                 ByteStreams.copy(is, response.getOutputStream());
             } else if (isVtcRequest(request)) {
                 log.debug("isVtcRequest");
-                vtcHandler.handle(new SeriesBasedRepoRequest(brandRepos,request, response));
+                vtcHandler.handle(new SeriesBasedRepoRequest(brandRepos, request, response));
             } else if (isVtcMapRequest(request)) {
                 log.debug("isVtcMapRequest");
                 vtcMapHandler.handle(new RepoRequest(brandRepos, request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
                 log.debug("isJpgRequestSeriesFingerprintRequest");
-                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos,request, response));
+                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos, request, response));
             } else if (isJpgRequestNoFingerprintRequest(request)) {
                 log.debug("isJpgRequestNoFingerprintRequest");
-                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(brandRepos,request, response));
+                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(brandRepos, request, response));
             } else if (isPngRequest(request)) {
                 log.debug("isPngRequest");
-                pngHandler.handle(new PngRequest(brandRepos,request, response));
+                pngHandler.handle(new PngRequest(brandRepos, request, response));
             } else if (isJpgRequest(request)) {
                 log.debug("isJpgRequest");
-                jpgHandler.handle(new JpgRequest(brandRepos,request, response));
+                jpgHandler.handle(new JpgRequest(brandRepos, request, response));
             } else if (isBlinkRequest(request)) {
                 log.debug("isBlinkRequest");
-                blinkHandler.handle(new SeriesBasedRepoRequest(brandRepos,request, response));
+                blinkHandler.handle(new SeriesBasedRepoRequest(brandRepos, request, response));
             } else if (isThreedModelRequest(request)) {
                 log.debug("isThreedModelRequest");
-                threedModelHandler.handle(new ThreedModelRequest(brandRepos,request, response));
+                threedModelHandler.handle(new ThreedModelRequest(brandRepos, request, response));
             } else if (isThreedModelJsonpRequest(request)) {
                 log.debug("isThreedModelJsonpRequest");
-                threedModelHandlerJsonP.handle(new ThreedModelRequest(brandRepos,request, response));
+                threedModelHandlerJsonP.handle(new ThreedModelRequest(brandRepos, request, response));
             } else if (isObjectRequest(request)) {
                 log.debug("isObjectRequest");
-                gitObjectHandler.handle(new GitObjectRequest(brandRepos,request, response));
+                gitObjectHandler.handle(new GitObjectRequest(brandRepos, request, response));
             } else {
                 throw new NotFoundException("No handler for this URL: [" + request.getRequestURI() + "]");
             }

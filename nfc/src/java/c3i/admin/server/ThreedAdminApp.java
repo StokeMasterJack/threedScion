@@ -22,8 +22,6 @@ public class ThreedAdminApp extends App {
 
     public ThreedAdminApp() {
         super("threed-admin");
-
-
     }
 
     public ImmutableMap<BrandKey, File> getRepoBaseDirs() {
