@@ -78,7 +78,7 @@ public class ThreedModelClient {
         if (repoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
         }
-        return new Path("vtcMap.txt").prepend(brandKey.getKey()).prepend(repoBaseUrl);
+        return new Path("vtcMap.json").prepend(brandKey.getKey()).prepend(repoBaseUrl);
     }
 
     public Path getVtcUrl(SeriesKey seriesKey) {

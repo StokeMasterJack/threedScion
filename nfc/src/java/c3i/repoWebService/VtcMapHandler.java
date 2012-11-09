@@ -18,10 +18,10 @@ import java.io.PrintWriter;
  *
  * Redundant with gwt-rpc call: ThreedAdminService2.getVtcRootTreeId(..)
  */
-public class BrandInitHandler extends RepoHandler<RepoRequest> {
+public class VtcMapHandler extends RepoHandler<RepoRequest> {
 
 
-    public BrandInitHandler(BrandRepos brandRepos, ServletContext application) {
+    public VtcMapHandler(BrandRepos brandRepos, ServletContext application) {
         super(brandRepos, application);
     }
 
@@ -29,7 +29,9 @@ public class BrandInitHandler extends RepoHandler<RepoRequest> {
     public void handle(RepoRequest r) {
 
         HttpServletResponse response = r.getResponse();
-        response.setContentType("text/plain");
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
         CacheUtil.addCacheNeverResponseHeaders(response);
 
@@ -55,7 +57,7 @@ public class BrandInitHandler extends RepoHandler<RepoRequest> {
     }
 
 
-    private static Log log = LogFactory.getLog(BrandInitHandler.class);
+    private static Log log = LogFactory.getLog(VtcMapHandler.class);
 
 
 }

@@ -1,8 +1,6 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.logging.Log;
@@ -14,11 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -48,7 +43,7 @@ public class RepoServlet extends HttpServlet {
 
     private PngHandler pngHandler;
     private VtcHandler vtcHandler;
-    private BrandInitHandler brandInitHandler;
+    private VtcMapHandler vtcMapHandler;
     private JpgHandler jpgHandler;
     private JpgHandlerSeriesFingerprint jpgHandlerSeriesFingerprint;
     private JpgHandlerNoFingerprint jpgHandlerNoFingerprint;
@@ -82,7 +77,7 @@ public class RepoServlet extends HttpServlet {
 
         pngHandler = new PngHandler(brandRepos, application);
         vtcHandler = new VtcHandler(brandRepos, application);
-        brandInitHandler = new BrandInitHandler(brandRepos, application);
+        vtcMapHandler = new VtcMapHandler(brandRepos, application);
         jpgHandler = new JpgHandler(brandRepos, application);
         jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos, application);
         jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos, application);
@@ -128,9 +123,9 @@ public class RepoServlet extends HttpServlet {
             } else if (isVtcRequest(request)) {
                 log.debug("isVtcRequest");
                 vtcHandler.handle(new SeriesBasedRepoRequest(brandRepos,request, response));
-            } else if (isBrandInitRequest(request)) {
-                log.debug("isBrandInitRequest");
-                brandInitHandler.handle(new RepoRequest(brandRepos,request, response));
+            } else if (isVtcMapRequest(request)) {
+                log.debug("isVtcMapRequest");
+                vtcMapHandler.handle(new RepoRequest(brandRepos, request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
                 log.debug("isJpgRequestSeriesFingerprintRequest");
                 jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos,request, response));
@@ -182,9 +177,9 @@ public class RepoServlet extends HttpServlet {
         return uri.endsWith("vtc.txt");
     }
 
-    private boolean isBrandInitRequest(HttpServletRequest request) {
+    private boolean isVtcMapRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        return uri.endsWith("/vtcMap.txt");
+        return uri.endsWith("/vtcMap.txt") || uri.endsWith("/vtcMap.json");
     }
 
 
