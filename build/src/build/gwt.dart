@@ -4,17 +4,12 @@
 
 //usage: ./gwt.dart --app=[admin]|smartClient|gwtDemo --mode=dev|[compile]
 
-String appName;
-String modName;
-String startupPage;
-String contextPath;
+String appName = "c3i";
 
 void main(){
 
-    appName = "c3i";
-
     bool devMode = false;
-    String app = "admin";
+    String app = null;
 
     //process command line args
     Options options = new Options();
@@ -31,31 +26,40 @@ void main(){
         }
     });
 
-
-    if(app == "gwtDemo"){ //g
-        contextPath = "smartClient";
-        modName = "smartClient.SmartClientDemoGwt";
-        startupPage =  "DemoGwt";
-    }else if(app == "smartClient"){ //s
-         contextPath = "smartClient";
-         modName = "smartClient.SmartClientExportJavaScript";
-         startupPage =  "demo/widget/toyota/demo";
+    App gwtDemo =  new App("smartClient","smartClient.SmartClientDemoGwt","DemoGwt");
+    App smartClient =  new App("smartClient","smartClient.SmartClientExportJavaScript","demo/widget/toyota/demo");
+    App admin =  new App("threed-admin-v2","admin.ThreedAdmin","index");
+    
+    if(app == "gwtDemo") {
+        doIt(devMode,gwtDemo);
     }
-    else if(app == "admin"){ //a
-        //a:threed admin
-        contextPath = "threed-admin-v2";
-        modName = "admin.ThreedAdmin";
-        startupPage =  "index";
-    } else{
-        throw new Exception("Bad app name: $app" );
+    else if(app == "smartClient") {
+        doIt(devMode,smartClient);
     }
-
-    doIt(devMode);
+    else if(app == "admin") {
+        doIt(devMode,admin);
+    }
+    else{
+      doIt(devMode,gwtDemo);
+      doIt(devMode,smartClient);
+      doIt(devMode,admin);
+    }
 
 }
 
-void doIt(bool devMode) {
-    var modFullName = '${appName}.${modName}';  //threed.smartClient.SmartClient
+class App{
+  
+  String contextPath;
+  String modName;
+  String startupPage;
+  
+  App(this.contextPath, this.modName,this.startupPage);
+  
+}
+
+void doIt(bool devMode,App a) {
+  
+  var modFullName = '${appName}.${a.modName}';  //threed.smartClient.SmartClient
   
   var userHome = '/Users/dford';
   var cvsRoot = '$userHome/cvsCheckouts/CVSROOT';
@@ -96,7 +100,7 @@ void doIt(bool devMode) {
   
   
   var gwtParamsCommon = {
-       'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${contextPath}/',
+       'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${a.contextPath}/',
        'logLevel':        'DEBUG',
        'extra':           '$userHome/temp/gwt/extra',
        'gen':             '$userHome/temp/gwt/gen',
@@ -108,7 +112,7 @@ void doIt(bool devMode) {
        'codeServerPort':     '9998',
   //         'bindAddress':     '10.211.55.2',
   //         'startupUrl':      'http://localhost:8080/${contextPath}/SmartClientTestJs.html',
-       'startupUrl':      'http://localhost:8080/${contextPath}/${startupPage}.html',
+       'startupUrl':      'http://localhost:8080/${a.contextPath}/${a.startupPage}.html',
        'noserver':        '',
        'logdir':          '$userHome/temp/gwt/logdir'
   };
