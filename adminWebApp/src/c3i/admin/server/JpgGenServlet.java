@@ -1,6 +1,5 @@
-package c3i.jpgGen.server;
+package c3i.admin.server;
 
-import c3i.admin.server.ThreedAdminApp;
 import c3i.core.common.shared.BrandKey;
 import c3i.jpgGen.server.taskManager.EquivalentJobAlreadyRunningException;
 import c3i.jpgGen.server.taskManager.JpgGeneratorService;
