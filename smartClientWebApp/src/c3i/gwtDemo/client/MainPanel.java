@@ -1,11 +1,11 @@
-package c3i.smartClient.client.demoGwt;
+package c3i.gwtDemo.client;
 
-import c3i.smartClient.client.demoGwt.tabs.SingleView1Tab;
-import c3i.smartClient.client.demoGwt.tabs.SingleView2Tab;
-import c3i.smartClient.client.demoGwt.tabs.SingleView3Tab;
-import c3i.smartClient.client.demoGwt.tabs.ViewDeck1Tab;
-import c3i.smartClient.client.demoGwt.tabs.ViewDeck2Tab;
-import c3i.smartClient.client.demoGwt.tabs.ViewStackTab;
+import c3i.gwtDemo.client.tabs.SingleView1Tab;
+import c3i.gwtDemo.client.tabs.SingleView2Tab;
+import c3i.gwtDemo.client.tabs.SingleView3Tab;
+import c3i.gwtDemo.client.tabs.ViewDeck1Tab;
+import c3i.gwtDemo.client.tabs.ViewDeck2Tab;
+import c3i.gwtDemo.client.tabs.ViewStackTab;
 import c3i.smartClient.client.model.ThreedSession;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.dom.client.Style;

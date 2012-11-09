@@ -1,4 +1,4 @@
-package c3i.smartClient.client.demoGwt.tabs;
+package c3i.gwtDemo.client.tabs;
 
 import c3i.core.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ThreedSession;

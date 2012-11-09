@@ -13,7 +13,6 @@
     <inherits name="smartsoft.util.Util"/>
     <inherits name="c3i.core.ThreedCore"/>
 
-    <source path="client"/>
     <source path="shared"/>
 
 

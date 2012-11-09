@@ -1,4 +1,4 @@
-package c3i.smartClient.client.demoGwt;
+package c3i.gwtDemo.client;
 
 import c3i.smartClient.client.model.ThreedSessionFuture;
 import c3i.smartClient.client.model.ThreedSessionOnSuccess;

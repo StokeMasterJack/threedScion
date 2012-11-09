@@ -1,4 +1,4 @@
-package c3i.smartClient.client.demoGwt.tabs;
+package c3i.gwtDemo.client.tabs;
 
 import c3i.smartClient.client.model.ThreedSession;
 import c3i.smartClient.client.skins.angleSelectors.simple.SimpleSpinControl;

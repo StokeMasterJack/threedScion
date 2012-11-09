@@ -9,7 +9,7 @@
     <inherits name='org.timepedia.exporter.Exporter'/>
     <set-property name="export" value="yes"/>
 
-    <entry-point class='c3i.smartClient.client.demoGwt.MainEntryPoint'/>
+    <entry-point class='c3i.gwtDemo.client.MainEntryPoint'/>
 
     <collapse-all-properties/>
 

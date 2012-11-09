@@ -26,7 +26,7 @@ void main(){
         }
     });
 
-    App gwtDemo =  new App("smartClient","smartClient.SmartClientDemoGwt","DemoGwt");
+    App gwtDemo =  new App("smartClient","gwtDemo.GwtDemo","GwtDemo");
     App smartClient =  new App("smartClient","smartClient.SmartClientExportJavaScript","demo/widget/toyota/demo");
     App admin =  new App("threed-admin-v2","admin.ThreedAdmin","index");
     
@@ -75,7 +75,8 @@ void doIt(bool devMode,App a) {
   var src1 = '$repo1/nfc/src/java';
   var src2 = '$repo2/util/src/java';
   var src3 = '$repo1/adminWebApp/src';
-  var src = '$src1:$src2:$src3';
+  var src4 = '$repo1/smartClientWebApp/src';
+  var src = '$src1:$src2:$src3:$src4';
   
   //var gwtVersion = '2.5.0.rc1';
   var gwtVersion = '2.4.0';
