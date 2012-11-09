@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class JpgGeneratorService extends AbstractIdleService {
 
-    private final ConcurrentHashMap<JobId, Master> map = new ConcurrentHashMap<JobId, Master>();
+    private final ConcurrentHashMap<JobId, Master> jobQueue = new ConcurrentHashMap<JobId, Master>();
 
     private final Repos repos;
 
@@ -35,12 +35,12 @@ public class JpgGeneratorService extends AbstractIdleService {
 
         jobSpec.getProfile().getBaseImageType();
         Master master = new Master(repos, jobSpec, threadCount, priority);
-        map.put(master.getId(), master);
+        jobQueue.put(master.getId(), master);
         return master;
     }
 
     private boolean isThereAlreadyAnOpenJobWithThisSpec(JobSpec jobSpec) {
-        for (Master master : map.values()) {
+        for (Master master : jobQueue.values()) {
             boolean jobSpecMatch = master.getJobSpec().equals(jobSpec);
 
             JobState state = master.getStatus().getState();
@@ -72,7 +72,7 @@ public class JpgGeneratorService extends AbstractIdleService {
     }
 
     public Master getJob(JobId jobId) {
-        return map.get(jobId);
+        return jobQueue.get(jobId);
     }
 
     public void cancelJob(JobId jobId) {
@@ -88,18 +88,18 @@ public class JpgGeneratorService extends AbstractIdleService {
         if (!job.getFuture().isCancelled()) {
             job.cancel();
         }
-        map.remove(jobId);
+        jobQueue.remove(jobId);
     }
 
 
     public Collection<Master> getMasterJobs() {
-        return map.values();
+        return jobQueue.values();
     }
 
     public void removeTerminal() {
-        for (Master master : map.values()) {
+        for (Master master : jobQueue.values()) {
             if (master.getFuture().isDone()) {
-                map.remove(master.getId());
+                jobQueue.remove(master.getId());
             }
         }
     }
@@ -116,7 +116,7 @@ public class JpgGeneratorService extends AbstractIdleService {
      */
     @Override
     protected void shutDown() throws Exception {
-        for (Master master : map.values()) {
+        for (Master master : jobQueue.values()) {
             master.shutdownNow();
         }
     }
