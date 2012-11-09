@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="jackson-1.7.4">
-    <CLASSES>
-      <root url="jar://$jarRepo$/jackson/1.7.4/jackson-all-1.7.5.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

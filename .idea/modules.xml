@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/adminWebApp/adminWebApp.iml" filepath="$PROJECT_DIR$/adminWebApp/adminWebApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/build/build.iml" filepath="$PROJECT_DIR$/build/build.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/repoService/repoService.iml" filepath="$PROJECT_DIR$/repoService/repoService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tmpPython/tmpPython.iml" filepath="$PROJECT_DIR$/tmpPython/tmpPython.iml" />
+      <module fileurl="file://$PROJECT_DIR$/repoWebApp/repoWebApp.iml" filepath="$PROJECT_DIR$/repoWebApp/repoWebApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartClientWebApp/smartClientWebApp.iml" filepath="$PROJECT_DIR$/smartClientWebApp/smartClientWebApp.iml" />
       <module fileurl="file://$repos$/util/util/util.iml" filepath="$repos$/util/util/util.iml" />
     </modules>
   </component>

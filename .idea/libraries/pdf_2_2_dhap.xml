@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="pdf-2.2-dhap">
-    <CLASSES>
-      <root url="jar://$jarRepo$/pdf/2.2-dhap/bfopdf-2.2-dhap.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

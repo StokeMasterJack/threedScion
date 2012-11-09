@@ -20,7 +20,6 @@ import c3i.repo.server.rt.RtRepo;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.Series;
 import c3i.repo.shared.Settings;
-import c3i.repoWebService.ProfilesCache;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

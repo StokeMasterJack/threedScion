@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="oscache-2.2">
-    <CLASSES>
-      <root url="jar://$jarRepo$/oscache/2.2/oscache-2.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

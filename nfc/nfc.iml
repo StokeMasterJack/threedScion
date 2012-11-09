@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="web" name="admin">
-      <configuration>
-        <descriptors>
-          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/web/admin/WEB-INF/web.xml" />
-        </descriptors>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/web/admin" relative="/" />
-        </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/java" />
-        </sourceRoots>
-      </configuration>
-    </facet>
-    <facet type="web" name="repo">
-      <configuration>
-        <descriptors>
-          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/web/repo/WEB-INF/web.xml" />
-        </descriptors>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/web/repo" relative="/" />
-        </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/java" />
-        </sourceRoots>
-      </configuration>
-    </facet>
     <facet type="gwt" name="GWT">
       <configuration>
         <setting name="compilerMaxHeapSize" value="128" />
         <setting name="gwtScriptOutputStyle" value="DETAILED" />
         <setting name="gwtSdkUrl" value="file://$USER_HOME$/p-java/gwt-2.5.0.rc1" />
-        <setting name="webFacet" value="admin" />
         <packaging>
           <module name="com.tms.threed.previewPaneAdapter.PreviewPaneAdapter" enabled="false" />
         </packaging>
-      </configuration>
-    </facet>
-    <facet type="web" name="smartClient">
-      <configuration>
-        <descriptors>
-          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/web/smartClient/WEB-INF/web.xml" />
-        </descriptors>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/web/smartClient" relative="/" />
-        </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/java" />
-        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -60,7 +20,6 @@
     </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="servlet-api-2.5" level="application" />
     <orderEntry type="library" name="imgscalr-lib-4.2" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="library" name="commons-logging-1" level="application" />
@@ -71,9 +30,8 @@
     <orderEntry type="library" name="log4j" level="application" />
     <orderEntry type="library" name="com.google.guava:guava:13.0.1" level="application" />
     <orderEntry type="library" name="jackson-1.8.1" level="application" />
-    <orderEntry type="library" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
-    <orderEntry type="library" name="gwt-user-2.4" level="application" />
-    <orderEntry type="library" name="gwt-servlet-2.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gwt-user-2.4" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
   </component>
 </module>
 

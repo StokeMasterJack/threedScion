@@ -2,16 +2,8 @@
   <artifact type="exploded-war" build-on-make="true" name="smartClient">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="nfc/web/smartClient" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="nfc" />
-          <element id="module-output" name="util" />
-        </element>
-        <element id="directory" name="lib">
-          <element id="library" level="application" name="guava-11" />
-        </element>
-      </element>
+      <element id="directory" name="WEB-INF" />
+      <element id="javaee-facet-resources" facet="smartClientWebApp/web/Web" />
     </root>
   </artifact>
 </component>

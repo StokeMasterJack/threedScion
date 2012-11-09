@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="SalesLeadProcessor-2.3.2">
-    <CLASSES>
-      <root url="jar://$jarRepo$/SalesLeadProcessor/2.3.2/SalesLeadProcessor-client-2.3.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
