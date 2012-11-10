@@ -182,7 +182,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
         BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
         Repos repos = getRepos(brandKey);
         ThreedModel threedModel = repos.getThreedModel(seriesId);
-        String jsonText = TmToJsonJvm.toJson(threedModel, false);
+        String jsonText = TmToJsonJvm.toJson(threedModel);
         byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -199,7 +199,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
         BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
         Repos repos = getRepos(brandKey);
         ThreedModel threedModel = repos.getThreedModel(seriesId);
-        String jsonText = TmToJsonJvm.toJson(threedModel, false);
+        String jsonText = TmToJsonJvm.toJson(threedModel);
         byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();

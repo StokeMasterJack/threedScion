@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
@@ -30,7 +29,16 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
 
         HttpServletResponse response = r.getResponse();
 
-        response.setContentType("application/json");
+        String callback = r.getRequest().getParameter("callback");
+        String contentType;
+        if (callback == null) {
+            contentType = "application/json";
+        } else {
+            contentType = "text/javascript";
+        }
+
+
+        response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
 
         CacheUtil.addCacheNeverResponseHeaders(response);
@@ -44,6 +52,10 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
 
         ObjectNode jsBrandInitData = brandSerializer.toJson(brandInitData);
         String jsonString = jsBrandInitData.toString();
+
+        if (callback != null) {
+            jsonString = callback + "(" + jsonString + ");";
+        }
 
         log.debug("About to server brandInit: ");
         log.debug(jsonString);

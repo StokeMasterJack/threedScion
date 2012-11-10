@@ -26,6 +26,10 @@ public class BrandParser {
         return new BrandParser().parseBrandInit(jsonText);
     }
 
+    public static Brand parse(JSONObject jsBrandInit) {
+        return new BrandParser().parseBrandInit(jsBrandInit);
+    }
+
     private Brand parseBrandInit(String jsonText) {
         JSONObject jsBrandInit = JSONParser.parseStrict(jsonText).isObject();
         Brand brandInitData = parseBrandInit(jsBrandInit);
@@ -43,13 +47,13 @@ public class BrandParser {
         Preconditions.checkNotNull(sBrandKey);
         JSONObject jsVtcMap = jsBrandInit.get("vtcMap").isObject();
         JSONObject jsProfileMap = jsBrandInit.get("profileMap").isObject();
-        VtcMap vtcMap = parseVtcMap(brandKey,jsVtcMap);
+        VtcMap vtcMap = parseVtcMap(brandKey, jsVtcMap);
         Profiles profiles = parseProfileMap(jsProfileMap);
 
         return new Brand(brandKey, vtcMap, profiles);
     }
 
-    private VtcMap parseVtcMap(BrandKey brandKey,JSONObject json) {
+    private VtcMap parseVtcMap(BrandKey brandKey, JSONObject json) {
         ImmutableMap.Builder<SeriesKey, RootTreeId> builder = ImmutableMap.builder();
         Set<String> sSeriesKeys = json.keySet();
         for (String sSeriesKey : sSeriesKeys) {

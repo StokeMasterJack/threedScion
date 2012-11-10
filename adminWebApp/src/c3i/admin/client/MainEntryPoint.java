@@ -1,13 +1,17 @@
 package c3i.admin.client;
 
-import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
 import c3i.admin.client.jpgGen.JpgGenClient;
 import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
+import c3i.admin.shared.BrandInit;
+import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
+import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.SeriesCommit;
+import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.OnSuccess;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style;
@@ -150,8 +154,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
     }
 
 
-
-
     public int addTab(final TabAware tabAware) {
         final TabLabel tabLabel = tabAware.getTabLabel();
         tab.add(tabAware, tabLabel);
@@ -183,6 +185,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
         MenuBar mb = new MenuBar();
         mb.addItem("Purge Admin Tool Repo Cache", purgeRepoCacheCommand);
+        mb.addItem("jsonpCommand", jsonpCommand);
         return mb;
     }
 
@@ -255,6 +258,31 @@ public class MainEntryPoint implements EntryPoint, UiContext {
         }
     };
 
+
+    private final Command jsonpCommand = new Command() {
+        @Override
+        public void execute() {
+            ThreedModelClient threedModelClient = new ThreedModelClient();
+            SeriesId seriesId = new SeriesId(SeriesKey.AVALON_2011, new RootTreeId("caf5025938ca0aa5c8d687bffe7ba41b25779376"));
+            Req<ThreedModel> r = threedModelClient.fetchThreedModel(seriesId);
+            r.onSuccess = new SuccessCallback<ThreedModel>() {
+                @Override
+                public void call(Req<ThreedModel> request) {
+                    Console.log(request.result + "");
+                }
+            };
+
+            r.onFailure = new FailureCallback() {
+                @Override
+                public void call(Req request) {
+                    request.exception.printStackTrace();
+                    Console.error(request.exception);
+                }
+            };
+        }
+    };
+
+
     private int isJpgQueueMasterStatusAlreadyOpen() {
         for (int i = 0; i < tab.getWidgetCount(); i++) {
             Widget w = tab.getWidget(i);
@@ -266,7 +294,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
         return -1;
 
     }
-
 
 
     public static native void open(String url) /*-{

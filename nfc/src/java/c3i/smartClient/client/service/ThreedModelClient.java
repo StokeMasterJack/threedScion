@@ -3,6 +3,7 @@ package c3i.smartClient.client.service;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.client.JsThreedModel;
 import c3i.core.threedModel.client.JsonUnmarshallerTm;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
@@ -11,11 +12,17 @@ import c3i.util.shared.futures.AsyncFunction;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
@@ -74,6 +81,12 @@ public class ThreedModelClient {
         return getThreedModelUrl(seriesId.getSeriesKey(), seriesId.getRootTreeId());
     }
 
+//    public Path getThreedModelUrlJsonp(final SeriesId seriesId) {
+//        Path url = getThreedModelUrl(seriesId);
+//        String jsUrl = url.toString().replaceFirst("\\.json", "\\.js");
+//        return new Path(jsUrl);
+//    }
+
     public Path getVtcMapUrl(BrandKey brandKey) {
         if (repoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
@@ -119,8 +132,49 @@ public class ThreedModelClient {
         return f.getFuture();
     }
 
+    public void fetchThreedModel4(final SeriesId seriesId) {
+        String src = "http://smartsoftdev.net/configurator-content-v2/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.js";
+
+
+        Document doc = Document.get();
+        ScriptElement scriptElement = doc.createScriptElement();
+        scriptElement.setSrc(src);
+        doc.getBody().appendChild(scriptElement);
+    }
 
     public Req<ThreedModel> fetchThreedModel(final SeriesId seriesId) {
+        return fetchThreedModelJsonp(seriesId);
+    }
+
+    public Req<ThreedModel> fetchThreedModelJsonp(final SeriesId seriesId) {
+
+        final Req<ThreedModel> r = newRequest("fetchThreedModel");
+
+        Path url = getThreedModelUrl(seriesId);
+        Console.log("Requesting threedModel: " + url);
+
+        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+        jsonp.setPredeterminedId(seriesId.getSeriesKey().getName());
+
+        jsonp.requestObject(url.toString(),
+                new AsyncCallback<JsThreedModel>() {
+                    public void onFailure(Throwable e) {
+                        e.printStackTrace();
+                        r.onFailure(e);
+                    }
+
+                    public void onSuccess(JsThreedModel jsThreedModel) {
+//                        Console.log(jsThreedModel);
+                        ThreedModel threedModel = JsonUnmarshallerTm.createModelFromJs(jsThreedModel);
+                        r.onSuccess(threedModel);
+                    }
+                });
+
+
+        return r;
+    }
+
+    public Req<ThreedModel> fetchThreedModelXhr(final SeriesId seriesId) {
         final Req<ThreedModel> r = newRequest("fetchThreedModel");
 
         Path url = getThreedModelUrl(seriesId);
@@ -215,6 +269,30 @@ public class ThreedModelClient {
     }
 
     public AsyncFunction<BrandKey, Brand> brandLoaderFunction = new AsyncFunction<BrandKey, Brand>() {
+
+        @Override
+        public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
+            Path vtcMapUrl = getVtcMapUrl(brandKey);
+            JsonpRequestBuilder requestBuilder = new JsonpRequestBuilder();
+            requestBuilder.requestObject(vtcMapUrl.toString(), new AsyncCallback<JavaScriptObject>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    f.setException(new RuntimeException("getVtcMap return non-200 response[" + caught + "]"));
+                }
+
+                @Override
+                public void onSuccess(JavaScriptObject result) {
+                    JSONObject jsonObject = new JSONObject(result);
+                    Brand brandInitData = BrandParser.parse(jsonObject);
+                    f.setResult(brandInitData);
+                }
+            });
+
+
+        }
+    };
+
+    public AsyncFunction<BrandKey, Brand> brandLoaderFunction2 = new AsyncFunction<BrandKey, Brand>() {
 
         @Override
         public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {

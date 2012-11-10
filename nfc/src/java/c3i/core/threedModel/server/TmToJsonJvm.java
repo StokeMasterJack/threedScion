@@ -14,24 +14,25 @@ public class TmToJsonJvm {
     private static final JsonNodeFactory f = JsonNodeFactory.instance;
 
     public static String toJson(ThreedModel threedModel) {
-        return toJson(threedModel, false);
+        return toJson(threedModel, null);
 
     }
 
-    public static String toJson(ThreedModel threedModel, boolean jsonp) {
+    public static String toJson(ThreedModel threedModel, String jsonpCallback) {
         String json = new TmToJsonJvm().toJsonString(threedModel);
-        if (jsonp) {
-            return jsonpDecorate(json);
+        if (jsonpCallback!=null) {
+            return jsonpDecorate(jsonpCallback,json);
         } else {
             return json;
         }
 
     }
 
-    private static String jsonpDecorate(String json) {
+
+
+    private static String jsonpDecorate(String callback,String json) {
         StringBuilder sb = new StringBuilder();
-        sb.append("var jsonpThreedModel = " + json + ";");
-        sb.append("if(window.onThreedModel) window.onThreedModel(jsonpThreedModel);");
+        sb.append(callback).append("(").append(json).append(");");
         return sb.toString();
     }
 

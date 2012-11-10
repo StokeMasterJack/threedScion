@@ -173,7 +173,7 @@ public class RepoServlet extends HttpServlet {
 
     private boolean isVtcMapRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        return uri.endsWith("/vtcMap.txt") || uri.endsWith("/vtcMap.json");
+        return uri.endsWith("/vtcMap.txt") || uri.endsWith("/vtcMap.json") || uri.endsWith("/vtcMap.js");
     }
 
 
@@ -219,12 +219,16 @@ public class RepoServlet extends HttpServlet {
 
     private boolean isThreedModelRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
+        String callback = request.getParameter("callback");
+        if(callback!=null) return false;
         return uri.endsWith(".json") && uri.contains("/3d/models/");
     }
 
     private boolean isThreedModelJsonpRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        return uri.endsWith(".js") && uri.contains("/3d/models/");
+        String callback = request.getParameter("callback");
+        if(callback==null) return false;
+        return uri.endsWith(".json") && uri.contains("/3d/models/");
     }
 
     private boolean isObjectRequest(HttpServletRequest request) {

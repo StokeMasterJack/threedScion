@@ -20,6 +20,7 @@ public class BrandLoader extends Loader<BrandKey,Brand> {
         super(input, new AsyncFunction<BrandKey, Brand>() {
             @Override
             public void start(BrandKey input, final Completer<Brand> brandCompleter) throws Exception {
+                Console.log("BrandLoader.start");
                 Future<Brand> f = client.getBrandInit(input);
 
                 f.success(new OnSuccess<Brand>() {

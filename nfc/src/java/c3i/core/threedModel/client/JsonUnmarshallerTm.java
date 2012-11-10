@@ -85,7 +85,7 @@ public class JsonUnmarshallerTm {
     }-*/;
 
 
-    private static ThreedModel createModelFromJs(JsThreedModel jsThreedModel) {
+    public static ThreedModel createModelFromJs(JsThreedModel jsThreedModel) {
         JsonUnmarshallerFm jsonFeatureModelBuilder = new JsonUnmarshallerFm();
 
         JsFeatureModel jsFeatureModel = jsThreedModel.getJsFeatureModel();

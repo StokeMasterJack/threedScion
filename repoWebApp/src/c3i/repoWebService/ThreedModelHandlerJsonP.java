@@ -14,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -25,19 +24,56 @@ import java.util.zip.GZIPOutputStream;
 
 public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
 
-    protected final LoadingCache<SeriesId, byte[]> jsonMap;
+    protected final LoadingCache<Key, byte[]> jsonMap;
+
+    public static class Key{
+        SeriesId seriesId;
+        String callback;
+
+        public Key(SeriesId seriesId, String callback) {
+            this.seriesId = seriesId;
+            this.callback = callback;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Key key = (Key) o;
+
+            if (!callback.equals(key.callback)) return false;
+            if (!seriesId.equals(key.seriesId)) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = seriesId.hashCode();
+            result = 31 * result + callback.hashCode();
+            return result;
+        }
+
+        public SeriesId getSeriesId() {
+            return seriesId;
+        }
+
+        public String getCallback() {
+            return callback;
+        }
+    }
 
     public ThreedModelHandlerJsonP(BrandRepos brandRepos) {
         super(brandRepos);
-
 
         jsonMap = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000)
                 .build(
-                        new CacheLoader<SeriesId, byte[]>() {
-                            public byte[] load(SeriesId seriesId) {
-                                return createGzippedJson(seriesId);
+                        new CacheLoader<Key, byte[]>() {
+                            public byte[] load(Key key) {
+                                return createGzippedJson(key);
                             }
                         });
 
@@ -48,10 +84,14 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
     public void handle(ThreedModelRequest repoRequest) {
         SeriesId seriesId = repoRequest.getSeriesId();
 
+        String callback = repoRequest.getRequest().getParameter("callback");
+
+        Key key = new Key(seriesId, callback);
+
         log.debug("ThreedModelHandlerJsonP: Received request for ThreedModel[" + seriesId.toString() + "]");
         byte[] retVal = new byte[0];
         try {
-            retVal = jsonMap.get(seriesId);
+            retVal = jsonMap.get(key);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -80,11 +120,13 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
 
     }
 
-    private byte[] createGzippedJson(SeriesId seriesId) {
+    private byte[] createGzippedJson(Key key) {
+        SeriesId seriesId = key.getSeriesId();
+        String callback = key.getCallback();
         BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
         Repos repos = getRepos(brandKey);
         ThreedModel threedModel = repos.getThreedModel(seriesId);
-        String jsonText = TmToJsonJvm.toJson(threedModel, true);
+        String jsonText = TmToJsonJvm.toJson(threedModel, callback);
         byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
