@@ -185,7 +185,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
         MenuBar mb = new MenuBar();
         mb.addItem("Purge Admin Tool Repo Cache", purgeRepoCacheCommand);
-        mb.addItem("jsonpCommand", jsonpCommand);
+//        mb.addItem("jsonpCommand", jsonpCommand);
         return mb;
     }
 
