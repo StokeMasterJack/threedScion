@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="threed-admin archive">
+  <artifact type="war" name="adminWar">
     <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
     <root id="archive" name="threed-admin-v2.war">
-      <element id="artifact" artifact-name="threed-admin" />
+      <element id="artifact" artifact-name="adminExploded" />
     </root>
   </artifact>
 </component>

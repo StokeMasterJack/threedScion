@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="smartClient archive">
+  <artifact type="war" name="smartClientWar">
     <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
     <root id="archive" name="smartClient.war">
-      <element id="artifact" artifact-name="smartClient" />
+      <element id="artifact" artifact-name="smartClientExploded" />
     </root>
   </artifact>
 </component>

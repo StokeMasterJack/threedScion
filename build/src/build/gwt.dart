@@ -4,8 +4,6 @@
 
 //usage: ./gwt.dart --app=admin|smartClient|gwtDemo|[all] --mode=dev|[compile]
 
-String appName = "c3i";
-
 void main(){
 
     bool devMode = false;
@@ -26,9 +24,9 @@ void main(){
         }
     });
 
-    App gwtDemo =  new App("smartClient","gwtDemo.GwtDemo","GwtDemo");
-    App smartClient =  new App("smartClient","smartClient.SmartClientExportJavaScript","demo/widget/toyota/demo");
-    App admin =  new App("threed-admin-v2","admin.ThreedAdmin","index");
+    App gwtDemo =  new App("smartClient","c3i.gwtDemo.GwtDemo","GwtDemo.html");
+    App smartClient =  new App("smartClient","c3i.smartClient.SmartClientExportJavaScript","demos.html");
+    App admin =  new App("threed-admin-v2","c3i.admin.ThreedAdmin","index.html");
     
     if(app == "gwtDemo") {
         doIt(devMode,gwtDemo);
@@ -59,7 +57,7 @@ class App{
 
 void doIt(bool devMode,App a) {
   
-  var modFullName = '${appName}.${a.modName}';  //threed.smartClient.SmartClient
+  var modFullName = a.modName;  //ex: c3i.smartClient.SmartClient
   
   var userHome = '/Users/dford';
   var cvsRoot = '$userHome/cvsCheckouts/CVSROOT';
@@ -115,7 +113,7 @@ void doIt(bool devMode,App a) {
        'codeServerPort':     '9998',
   //         'bindAddress':     '10.211.55.2',
   //         'startupUrl':      'http://localhost:8080/${contextPath}/SmartClientTestJs.html',
-       'startupUrl':      'http://localhost:8080/${a.contextPath}/${a.startupPage}.html',
+       'startupUrl':      'http://localhost:8080/${a.contextPath}/${a.startupPage}',
        'noserver':        '',
        'logdir':          '$userHome/temp/gwt/logdir'
   };
