@@ -53,7 +53,7 @@ public class SeriesRepo {
     private final SrcWork srcWork;
     private final RtRepo rtRepo;
 
-    SeriesRepo(Repos repos,final File repoBaseDir, final SeriesKey seriesKey) {
+    SeriesRepo(Repos repos, final File repoBaseDir, final SeriesKey seriesKey) {
         Preconditions.checkNotNull(repoBaseDir);
         Preconditions.checkNotNull(seriesKey);
 
@@ -63,7 +63,7 @@ public class SeriesRepo {
         this.seriesDir = initSeriesDir();
 
         this.srcWork = new SrcWork(getSrcWorkDir(), seriesKey);
-        this.srcRepo = new SrcRepo(vtcBaseDir, getSrcRepoDir(), getSrcWorkDir(),seriesKey);
+        this.srcRepo = new SrcRepo(vtcBaseDir, getSrcRepoDir(), getSrcWorkDir(), seriesKey);
         this.rtRepo = new RtRepo(getGenRepoDir(), seriesKey);
 
 
@@ -267,7 +267,9 @@ public class SeriesRepo {
     public ThreedModel createThreedModel(@Nonnull RootTreeId rootTreeId) {
         Preconditions.checkNotNull(rootTreeId);
 
-        log.info("\tBuilding server-side ThreedModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
+        long t1 = System.currentTimeMillis();
+
+        log.info("\tBuilding ThreedModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
         ModelXml modelXml = readModelXml(rootTreeId);
 
         log.info("\t\t Building FeatureModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
@@ -277,7 +279,12 @@ public class SeriesRepo {
         ImSeries im = createImageModel(rootTreeId, fm);
         ThreedModel threedModel = new ThreedModel(fm, im);
 
-        log.info("\tServer-side ThreedModel for [" + seriesKey + "] complete");
+        long t2 = System.currentTimeMillis();
+        long delta = t2 - t1;
+
+        log.info("\t\t ThreedModel complete for [" + seriesKey + "].  ThreedModel created in [" + delta + "]ms");
+
+
         return threedModel;
     }
 
