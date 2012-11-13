@@ -221,14 +221,14 @@ public class RepoServlet extends HttpServlet {
         String uri = request.getRequestURI();
         String callback = request.getParameter("callback");
         if(callback!=null) return false;
-        return uri.endsWith(".json") && uri.contains("/3d/models/");
+        return (uri.endsWith(".json") || uri.endsWith(".js") ) && uri.contains("/3d/models/");
     }
 
     private boolean isThreedModelJsonpRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String callback = request.getParameter("callback");
         if(callback==null) return false;
-        return uri.endsWith(".json") && uri.contains("/3d/models/");
+        return (uri.endsWith(".json") || uri.endsWith(".js") ) && uri.contains("/3d/models/");
     }
 
     private boolean isObjectRequest(HttpServletRequest request) {
