@@ -69,20 +69,21 @@ void doIt(bool devMode,App a) {
   var frameworks = '$cvsRoot/TMS/framework';
   var lib = '/Users/dford/daven-repository';
   
-  var repo1 = '$repos/threedScion';
-  var repo2 = '$repos/util';
+  var threedRepo = '$repos/threedScion';
+  var utilRepo = '$repos/util';
   
-  var src1 = '$repo1/nfc/src/java';
-  var src2 = '$repo2/util/src/java';
-  var src3 = '$repo1/adminWebApp/src';
-  var src4 = '$repo1/smartClientWebApp/src';
-  var src = '$src1:$src2:$src3:$src4';
+  List<String> srcFolders = [
+    '$threedRepo/nfc/src/java',
+    '$threedRepo/adminWebApp/src',
+    '$threedRepo/smartClientWebApp/src',
+    '$utilRepo/util/src/java',
+  ];       
   
   //var gwtVersion = '2.5.0.rc1';
   var gwtVersion = '2.4.0';
   var gwtHome = '${userHome}/p-java/gwt-${gwtVersion}';
   
-  var libs = [
+  List<String> libs = [
     '$gwtHome/gwt-dev.jar',
     '$gwtHome/gwt-user.jar',
     '$gwtHome/gwt-servlet.jar',
@@ -92,13 +93,13 @@ void doIt(bool devMode,App a) {
     '$lib/jsr305/1.0/jsr305.jar',
     '$lib/guava/11.0/guava-11.0.2.jar',
     '$lib/guava/11.0/guava-gwt-11.0.2.jar',
-    '$lib/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar',
-  
-  
+    '$lib/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar', 
   ];
   
-  var cp = "${src}:${Strings.join(libs,':')}";
+  String cpSrc = Strings.join(srcFolders, ":");
+  String cpLibs = Strings.join(libs,':');
   
+  var cp = "${cpSrc}:${cpLibs}";
   
   
   var gwtParamsCommon = {
