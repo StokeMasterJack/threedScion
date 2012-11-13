@@ -144,6 +144,7 @@ public class ThreedModelClient {
 
     public Req<ThreedModel> fetchThreedModel(final SeriesId seriesId) {
         return fetchThreedModelJsonp(seriesId);
+//        return fetchThreedModelXhr(seriesId);
     }
 
     public Req<ThreedModel> fetchThreedModelJsonp(final SeriesId seriesId) {
@@ -154,6 +155,11 @@ public class ThreedModelClient {
         Console.log("Requesting threedModel: " + url);
 
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+
+        //150 seconds: could be very slow the 1st time image model is built
+        //mostly due to the checking for empty pngs
+        //this should only occur for a 3d admin, not an end user app
+        jsonp.setTimeout(1000 * 150);
         jsonp.setPredeterminedId(seriesId.getSeriesKey().getName());
 
         jsonp.requestObject(url.toString(),
