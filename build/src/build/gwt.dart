@@ -2,57 +2,77 @@
 
 #import('dart:io');
 
-//usage: ./gwt.dart --app=admin|smartClient|gwtDemo|[all] --mode=dev|[compile]
+String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo";
+
+Map<String,App> apps = {
+  "gwtDemo":new App("gwtDemo","c3i.gwtDemo.GwtDemo","GwtDemo.html"),
+  "jsDemo":new App("smartClient","c3i.smartClient.SmartClientExportJavaScript","demos.html"),
+  "admin":new App("threed-admin-v2","c3i.admin.ThreedAdmin","index.html")
+};
+
+
+
 
 void main(){
-
-    bool devMode = false;
-    String app = null;
-
-    //process command line args
-    Options options = new Options();
-    List<String> args = options.arguments;
-
-    args.forEach((arg) {
-        if(arg.startsWith("--mode=") && arg.endsWith("dev")){
-           devMode = true;
-        }
-        if(arg.startsWith("--app=") ){
-            if(arg.endsWith("admin")) app = "admin";
-            else if(arg.endsWith("smartClient")) app = "smartClient";
-            else if(arg.endsWith("gwtDemo")) app = "gwtDemo";
-        }
-    });
-
-    App gwtDemo =  new App("smartClient","c3i.gwtDemo.GwtDemo","GwtDemo.html");
-    App smartClient =  new App("smartClient","c3i.smartClient.SmartClientExportJavaScript","demos.html");
-    App admin =  new App("threed-admin-v2","c3i.admin.ThreedAdmin","index.html");
+  
+    List<String> modes = ["dev","compile"];
     
-    if(app == "gwtDemo") {
-        doIt(devMode,gwtDemo);
+    
+    Map<String,String> args = argsToMap(["app","mode"]);
+    
+    String mode = args["mode"];
+    String app = args["app"];
+    
+    try{
+    
+      if(mode==null){
+        throw new IllegalArgumentException("mode is required");
+      }
+     
+      if(app==null){
+        throw new IllegalArgumentException("app is required");
+      }
+  
+      if(!apps.containsKey(app) && app != "all"){
+        throw new IllegalArgumentException("Invalid appName: $app");
+      }
+      
+      if(!modes.contains(mode)){
+        throw new IllegalArgumentException("Invalid mode: $mode");
+      }
+    
+    } on IllegalArgumentException catch(e){
+      print(e.message);
+      print("Usage: ${usage}");
+      return;
     }
-    else if(app == "smartClient") {
-        doIt(devMode,smartClient);
-    }
-    else if(app == "admin") {
-        doIt(devMode,admin);
-    }
-    else{
-      doIt(devMode,gwtDemo);
-      doIt(devMode,smartClient);
-      doIt(devMode,admin);
-    }
+    
+    bool devMode = mode=="dev";
+    Collection<App> appsToProcess = app=="all"?apps.values:[apps[app]]; 
+    appsToProcess.forEach( (App a) => doIt(devMode,a) );
+}
 
+argsToMap(List<String> argNames){
+  Options options = new Options();
+  List<String> args = options.arguments;
+  Map<String,String> retVal = {};
+  args.forEach((arg) {
+    argNames.forEach((argName){
+      String s = "--${argName}=";
+      if(arg.startsWith(s)){
+        String argValue = arg.substring(s.length);
+        retVal[argName] = argValue;
+      }
+    });
+  });
+  return retVal;
 }
 
 class App{
-  
   String contextPath;
   String modName;
   String startupPage;
-  
   App(this.contextPath, this.modName,this.startupPage);
-  
 }
 
 void doIt(bool devMode,App a) {
@@ -70,10 +90,11 @@ void doIt(bool devMode,App a) {
   var threedRepo = '$repos/threedScion';
   var utilRepo = '$repos/util';
   
+  
   List<String> srcFolders = [
     '$threedRepo/nfc/src/java',
     '$threedRepo/adminWebApp/src',
-    '$threedRepo/smartClientWebApp/src',
+    '$threedRepo/gwtDemoWebApp/src',
     '$utilRepo/util/src/java',
   ];       
   
@@ -99,10 +120,9 @@ void doIt(bool devMode,App a) {
   
   var cp = "${cpSrc}:${cpLibs}";
   
-  
   var gwtParamsCommon = {
        'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${a.contextPath}/',
-       'logLevel':        'DEBUG',
+//       'logLevel':        'DEBUG',
        'extra':           '$userHome/temp/gwt/extra',
        'gen':             '$userHome/temp/gwt/gen',
        'workDir':         '$userHome/temp/gwt/workDir'
@@ -133,9 +153,6 @@ void doIt(bool devMode,App a) {
       gwtParamsCompile.forEach( (k,v) => gwtParams[k] = v );
   }
   
-  
-  
-  
   var jvmParams = [
     '-Xms512m',
     '-Xmx2048m',
@@ -162,7 +179,7 @@ void doIt(bool devMode,App a) {
   });
   
   processArgs.add(modFullName);
-  
+
   Process.start('java',processArgs).then((Process p){
     var stdoutStream = new StringInputStream(p.stdout);
     var stderrStream = new StringInputStream(p.stderr);
