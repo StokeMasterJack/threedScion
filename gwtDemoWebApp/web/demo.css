@@ -1,0 +1,47 @@
+table {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+td {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.AngleSelector {
+    margin-top: 10px;
+    width: 180px;
+    /*text-align: center;*/
+}
+
+.AngleSelector.over {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.AngleSelector.over .labelBackground {
+    background-color: black;
+    opacity: .2;
+}
+
+.AngleSelector.over .labelText {
+    color: white;
+}
+
+.ViewSelector {
+    margin-top: 7px;
+}
+
+.ViewPanel.Thumb {
+    float: left;
+    margin-right: 7px;
+}
+
+
+
