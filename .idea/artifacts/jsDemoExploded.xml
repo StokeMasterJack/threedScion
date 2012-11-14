@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="smartClientExploded">
+  <artifact type="exploded-war" build-on-make="true" name="jsDemoExploded">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF" />

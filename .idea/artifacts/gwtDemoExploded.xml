@@ -1,14 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="gwtDemoExploded">
-    <output-path>$tmsOut$/threedScion/artifacts/gwtDemoExploded</output-path>
+  <artifact type="exploded-war" build-on-make="true" name="gwtDemoExploded">
+    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/gwtDemo</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="gwtDemoWebApp/web/Web" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="gwtDemoWebApp" />
-        </element>
-      </element>
-      <element id="gwt-compiler-output" facet="gwtDemo/gwt/GWT" />
+      <element id="directory" name="WEB-INF" />
     </root>
   </artifact>
 </component>
