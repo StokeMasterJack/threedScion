@@ -29,7 +29,7 @@ function onThreedReady() {
     $("#repoBase").val(repoBase);
 
     factory.setRepoBase(repoBase);
-    factory.setSeries("toyota", 2011, "avalon");
+    factory.setSeries("toyota", 2012, "avalon");
 
     factory.createSession().success(function (_threedSession) {
         threedSession = _threedSession;
