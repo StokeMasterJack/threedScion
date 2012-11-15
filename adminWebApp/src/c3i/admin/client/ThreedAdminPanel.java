@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import smartsoft.util.gwt.client.Console;
 
+import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+
 //import c3i.skin.previewPanel.client.chatPanel.ChatInfo;
 
 public class ThreedAdminPanel extends DockLayoutPanel {
@@ -55,8 +57,10 @@ public class ThreedAdminPanel extends DockLayoutPanel {
 
         splitLayoutPanel.addSouth(statusPanel, 150);
         splitLayoutPanel.add(middlePanel);
-
         add(splitLayoutPanel);
+
+
+        addStyleName(getSimpleName(ThreedAdminPanel.class));
 
 //        getElement().getStyle().setBackgroundColor("yellow");
 
@@ -126,6 +130,8 @@ public class ThreedAdminPanel extends DockLayoutPanel {
             getElement().getStyle().setBackgroundColor("#DDDDDD");
             setWidth("100%");
             setHeight("35px");
+
+            addStyleName(getSimpleName(HeaderPanel.class));
 
         }
 
@@ -288,7 +294,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
             addWest(contentPanel, model.profile().get().getImageSize().getWidth() + 12);
             add(layersPanels);
 
-            addStyleName("MiddlePanel");
+            addStyleName(getSimpleName(MiddlePanel.class));
 
             model.getViewsSession().profile().addChangeListener(new ChangeListener<Profile>() {
                 @Override
@@ -296,6 +302,9 @@ public class ThreedAdminPanel extends DockLayoutPanel {
                     MiddlePanel.this.forceLayout();
                 }
             });
+
+
+            addStyleName(getSimpleName(MiddlePanel.class));
         }
     }
 
@@ -307,7 +316,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
                     refresh();
                 }
             });
-            addStyleName("ContentPanel");
+            addStyleName(getSimpleName(ContentPanel.class));
             refresh();
         }
 

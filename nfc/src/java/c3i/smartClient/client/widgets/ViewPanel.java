@@ -20,6 +20,8 @@ import com.google.gwt.user.client.ui.Widget;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.RectSize;
 
+import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+
 public class ViewPanel extends ComplexPanel {
 
     private static final int IMAGE_COUNT = 20;
@@ -47,14 +49,17 @@ public class ViewPanel extends ComplexPanel {
     }
 
     public ViewPanel(final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
-//        Console.log("ViewPanel.ViewPanel  viewIndex[" + viewIndex + "]  viewPanelDebugName["+viewPanelDebugName+"]");
-        setElement(DOM.createDiv());
-//        onAttach();
-        init(pViewModel, viewIndex, fixedSize);
-
+        this(null, pViewModel, viewIndex, fixedSize);
     }
 
-    private void init(ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
+    public ViewPanel(com.google.gwt.dom.client.Element el, final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
+        if (el == null) {
+            setElement(DOM.createDiv());
+        } else {
+            setElement(el);
+            onAttach(); //this is key!!
+        }
+
         if (viewIndex != null) {
             this.viewModel = pViewModel.getViewModel(viewIndex);
         } else {
@@ -92,15 +97,7 @@ public class ViewPanel extends ComplexPanel {
 
         refreshImageStack();
 
-        addStyleName("ViewPanel");
-
-
-    }
-
-    public ViewPanel(com.google.gwt.dom.client.Element el, final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
-        setElement(el);
-        onAttach(); //this is key!!
-        init(pViewModel, viewIndex, fixedSize);
+        addStyleName(getSimpleName(ViewPanel.class));
     }
 
 
@@ -142,6 +139,7 @@ public class ViewPanel extends ComplexPanel {
     private static AbsolutePanel createAbsolutePanel(RectSize initSize) {
         AbsolutePanel p = new AbsolutePanel();
         p.setPixelSize(initSize.getWidth(), initSize.getHeight());
+        p.addStyleName("AbsolutePanel");
         return p;
     }
 

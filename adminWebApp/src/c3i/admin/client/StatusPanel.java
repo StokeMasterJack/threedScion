@@ -35,6 +35,8 @@ import smartsoft.util.lang.shared.Path;
 
 import java.util.Set;
 
+import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+
 //import com.google.gwt.user.client.ui.ScrollPanel;
 
 public class StatusPanel extends ScrollPanel {
@@ -56,6 +58,7 @@ public class StatusPanel extends ScrollPanel {
 
 
     public StatusPanel(Series series) {
+
         this.series = series;
         this.viewsSession = series.getViewsSession();
 
@@ -90,7 +93,7 @@ public class StatusPanel extends ScrollPanel {
         });
 
         t = new FlexTable();
-        t.addStyleName("StatusPanel");
+
 
 
         Style style = t.getElement().getStyle();
@@ -113,8 +116,10 @@ public class StatusPanel extends ScrollPanel {
         setWidget(fp);
 //        setHeight("100%");
 
-        setStyleName("StatusPanel");
+        addStyleName(getSimpleName(StatusPanel.class));
 
+
+        this.setAlwaysShowScrollBars(false);
         refresh();
     }
 
