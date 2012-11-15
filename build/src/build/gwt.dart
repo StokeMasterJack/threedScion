@@ -52,7 +52,7 @@ void main(){
     appsToProcess.forEach( (App a) => doIt(devMode,a) );
 }
 
-argsToMap(List<String> argNames){
+Map<String,String> argsToMap(List<String> argNames){
   Options options = new Options();
   List<String> args = options.arguments;
   Map<String,String> retVal = {};
