@@ -364,7 +364,7 @@ public class ThreedSession implements ViewModel, Exportable {
                 viewIndex = Integer.parseInt(sViewIndex);
             }
 
-            ViewPanel vp = new ViewPanel(element, threedSession, viewIndex, null, null);
+            ViewPanel vp = new ViewPanel(element, threedSession, viewIndex, null);
 
         }
     }

@@ -6,6 +6,7 @@ import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.shared.Slice;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import smartsoft.util.lang.shared.Strings;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -477,5 +478,9 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
             angles.add(a);
         }
         return angles;
+    }
+
+    public String getLabel(){
+        return Strings.capFirstLetter(name) + " View";
     }
 }

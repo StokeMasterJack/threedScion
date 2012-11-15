@@ -1,22 +1,21 @@
 package c3i.smartClient.client.skins;
 
 import c3i.smartClient.client.model.ViewModel;
-import c3i.smartClient.client.skins.angleSelectors.simple.SimpleSpinControl;
+import c3i.smartClient.client.skins.angleSelectors.exterior.BytExteriorAngleSelector;
 import c3i.smartClient.client.widgets.ViewPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
-
-public class ViewStackSkin implements Skin {
+public class BytSummary implements Skin {
 
     @Override
     public IsWidget createPreviewPanel(ViewModel viewModel) {
 
-        ViewPanel viewPanel0 = new ViewPanel(viewModel, 0, "ViewPanel-Exterior");
-        ViewPanel viewPanel1 = new ViewPanel(viewModel, 1, "ViewPanel-Interior");
+        ViewPanel viewPanel0 = new ViewPanel(viewModel, 0);
+        ViewPanel viewPanel1 = new ViewPanel(viewModel, 1);
 
-        SimpleSpinControl spinControl = new SimpleSpinControl(viewModel);
+        BytExteriorAngleSelector spinControl = new BytExteriorAngleSelector(viewModel);
+
         spinControl.addStyleName("over");
         viewPanel0.add(spinControl);
 
@@ -29,6 +28,6 @@ public class ViewStackSkin implements Skin {
 
     @Override
     public String getSkinName() {
-        return getSimpleName(this);
+        return "Byt Summary Page";
     }
 }

@@ -14,7 +14,7 @@ public class SimpleSkin implements Skin {
     @Override
     public IsWidget createPreviewPanel(ViewModel viewModel) {
 
-        ViewPanel viewPanel = new ViewPanel(viewModel, "SimpleViewPanel");
+        ViewPanel viewPanel = new ViewPanel(viewModel);
 
         final SimpleSpinControl spinControl = new SimpleSpinControl(viewModel);
         spinControl.addStyleName("over");

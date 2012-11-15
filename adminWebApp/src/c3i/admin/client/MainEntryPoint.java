@@ -42,13 +42,16 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
     private TabLayoutPanel tab = new TabLayoutPanel(2, Style.Unit.EM);
 
     private UserLog userLog;
+    private SplitLayoutPanel splitLayoutPanel;
+    private UserLogView userLogView;
 
     public void onModuleLoad() {
 
         app = new App(this);
+
+        splitLayoutPanel = new SplitLayoutPanel();
         userLog = app.getUserLog();
-
-
+        userLogView = new UserLogView(userLog);
 
         app.ensureLoaded().success(new OnSuccess<BrandInit>() {
             @Override
@@ -163,14 +166,20 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
             @Override
             public void execute() {
                 ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
-                Console.log("Purging cache..");
-                threedAdminClient.purgeRepoCache(app.getBrandKey());
+                log("Purging cache..");
+                Req<Void> r = threedAdminClient.purgeRepoCache(app.getBrandKey());
+                r.onSuccess = new SuccessCallback<Void>() {
+                    @Override
+                    public void call(Req<Void> request) {
+                        log("Purge complete!");
+                    }
+                };
             }
         };
 
-        MenuBar mb = new MenuBar();
+        MenuBar mb = new MenuBar(true);
         mb.addItem("Purge Admin Tool Repo Cache", purgeRepoCacheCommand);
-//        mb.addItem("jsonpCommand", jsonpCommand);
+        mb.addItem("Toggle Log View", toggleLogView);
         return mb;
     }
 
@@ -243,6 +252,40 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
         }
     };
 
+
+    private final Command toggleLogView = new Command() {
+        @Override
+        public void execute() {
+            toggleClutter();
+        }
+    };
+
+    private boolean logViewMinimized = false;
+
+    public void toggleLogView() {
+        if (logViewMinimized) {
+            splitLayoutPanel.setWidgetSize(userLogView, 50);
+            logViewMinimized = false;
+        } else {
+            splitLayoutPanel.setWidgetSize(userLogView, 0);
+            logViewMinimized = true;
+        }
+    }
+
+    public void toggleStatusPanel()  {
+        int selectedIndex = tab.getSelectedIndex();
+        Widget w = tab.getWidget(selectedIndex);
+        if (w instanceof SeriesPanel) {
+            SeriesPanel seriesPanel = (SeriesPanel) w;
+            seriesPanel.toggleStatusPanel();
+        }
+    }
+
+    public void toggleClutter(){
+        toggleLogView();
+        toggleStatusPanel();
+    }
+
     private int isJpgQueueMasterStatusAlreadyOpen() {
         for (int i = 0; i < tab.getWidgetCount(); i++) {
             Widget w = tab.getWidget(i);
@@ -258,19 +301,15 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
     void buildMainWindow() {
         tab.setSize("100%", "100%");
 
-
-        SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-        splitLayoutPanel.addSouth(createLogWindow(), 50);
+        splitLayoutPanel.addSouth(userLogView, 50);
         splitLayoutPanel.add(tab);
 
         DockLayoutPanel dock = new DockLayoutPanel(Style.Unit.EM);
         dock.addNorth(createHeaderPanel(), 1.8);
         dock.add(splitLayoutPanel);
         RootLayoutPanel.get().add(dock);
-    }
 
-    private Widget createLogWindow() {
-        return new UserLogView(userLog);
+
     }
 
     public void log(String msg) {

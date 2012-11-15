@@ -173,7 +173,7 @@ public class ThreedModelClient {
         //150 seconds: could be very slow the 1st time image model is built
         //mostly due to the checking for empty pngs
         //this should only occur for a 3d admin, not an end user app
-        jsonp.setTimeout(1000 * 150);
+        jsonp.setTimeout(1000 * 500);
         jsonp.setPredeterminedId(seriesId.getSeriesKey().getName());
 
         jsonp.requestObject(url.toString(),

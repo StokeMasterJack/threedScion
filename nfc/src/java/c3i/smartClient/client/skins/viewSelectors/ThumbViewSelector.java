@@ -4,14 +4,18 @@ import c3i.core.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.ViewPanel;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import smartsoft.util.gwt.client.Console;
 import smartsoft.util.lang.shared.RectSize;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class ThumbViewSelector extends ViewSelector {
 
@@ -21,7 +25,7 @@ public class ThumbViewSelector extends ViewSelector {
     private final FlowPanel ap;
     private final RectSize thumbSize;
 
-    private final ViewPanel[] viewPanels;
+    private final ThumbViewPanel[] viewPanels;
     private final RectSize preferredSize;
 
 
@@ -42,13 +46,28 @@ public class ThumbViewSelector extends ViewSelector {
         int viewCount = viewPanelModel.getViews().size();
         this.preferredSize = getPreferredSize(viewCount, this.thumbSize);
 
+//        List<? extends ViewModel> thumbModels = viewPanelModel.getViewModels();
 
-        List<? extends ViewModel> thumbModels = viewPanelModel.getViewModels();
+
+        ArrayList<? extends ViewModel> thumbModels = new ArrayList<ViewModel>(viewPanelModel.getViewModels());
+
+        Collections.sort(thumbModels,new Comparator<ViewModel>() {
+            @Override
+            public int compare(ViewModel o1, ViewModel o2) {
+                Integer i1 = o1.getView().getIndex();
+                Integer i2 = o2.getView().getIndex();
+                return i1.compareTo(i2);
+            }
+        });
+
+        Collections.reverse(thumbModels);
+
+        Console.log("thumbModels = " + thumbModels);
 
         ap = new FlowPanel();
         initWidget(ap);
 
-        viewPanels = new ViewPanel[thumbModels.size()];
+        viewPanels = new ThumbViewPanel[thumbModels.size()];
 
         for (final ViewModel thumbModel : thumbModels) {
             int thumbViewIndex = thumbModel.getViewIndex();
@@ -65,10 +84,16 @@ public class ThumbViewSelector extends ViewSelector {
             }, ClickEvent.getType());
 
 
-            ViewPanel viewPanel = viewPanels[thumbViewIndex];
+            ThumbViewPanel viewPanel = viewPanels[thumbViewIndex];
             viewPanel.setVisible(true);
 
             ap.add(viewPanel);
+
+//            int viewIndex = viewPanelModel.getViewIndex();
+//            if (thumbViewIndex == viewIndex) {
+//                viewPanels[thumbViewIndex].getElement().getStyle().setDisplay(Style.Display.NONE);
+//            }
+
         }
         ap.addStyleName("ViewSelector");
         ap.addStyleName("Thumb");
@@ -82,6 +107,7 @@ public class ThumbViewSelector extends ViewSelector {
 
         refresh();
 
+        ap.getElement().getStyle().setFloat(Style.Float.RIGHT);
 
 
     }
@@ -97,10 +123,27 @@ public class ThumbViewSelector extends ViewSelector {
     }
 
 
-    class ThumbViewPanel extends ViewPanel {
+    class ThumbViewPanel extends FlowPanel {
+
+        ViewPanel viewPanel;
+        HTML label;
 
         ThumbViewPanel(ViewModel thumbModel, RectSize fixedSize) {
-            super(thumbModel, fixedSize, "ThumbViewPanel");
+            viewPanel = new ViewPanel(thumbModel, fixedSize);
+            label = new HTML(thumbModel.getView().getLabel());
+
+            add(viewPanel);
+            add(label);
+
+
+            label.getElement().getStyle().setWidth(fixedSize.getWidth(), Style.Unit.PX);
+            label.getElement().getStyle().setProperty("textAlign", "center");
+
+            getElement().getStyle().setWidth(fixedSize.getWidth(), Style.Unit.PX);
+//            getElement().getStyle().setBackgroundColor("green");
+            getElement().getStyle().setFloat(Style.Float.RIGHT);
+            getElement().getStyle().setMarginLeft(5, Style.Unit.PX);
+//            getElement().getStyle().setMarginRight(5, Style.Unit.PX);
         }
 
         @Override
@@ -110,6 +153,26 @@ public class ThumbViewSelector extends ViewSelector {
     }
 
     private void refresh() {
+
+
+        List<? extends ViewModel> thumbModels = viewPanelModel.getViewModels();
+        for (final ViewModel thumbModel : thumbModels) {
+
+            int thumbViewIndex = thumbModel.getViewIndex();
+            ThumbViewPanel viewPanel = viewPanels[thumbViewIndex];
+
+            boolean selected = thumbModel.getViewIndex() == viewPanelModel.getViewIndex();
+//            viewPanel.setVisible(!selected);
+
+            if (selected) {
+                viewPanel.addStyleName("selected");
+            } else {
+                viewPanel.removeStyleName("selected");
+            }
+
+
+        }
+
 
 //        ImageStack imageStack = viewPanelModel.getImageStack();
 //

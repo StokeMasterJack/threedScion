@@ -19,4 +19,12 @@ public interface Resources extends ClientBundle {
     ImageResource angle3ButtonUp();
 
     ImageResource angle3ButtonDown();
+
+    ImageResource angle4ButtonUp();
+
+    ImageResource angle4ButtonDown();
+
+    ImageResource angle5ButtonUp();
+
+    ImageResource angle5ButtonDown();
 }

@@ -148,4 +148,8 @@ public class SeriesPanel extends SplitLayoutPanel implements TabAware {
     public void afterClose() {
 
     }
+
+    public void toggleStatusPanel(){
+        threedAdminPanel.toggleStatusPanel();
+    }
 }

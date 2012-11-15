@@ -34,34 +34,27 @@ public class ViewPanel extends ComplexPanel {
     private DragToSpin dragToSpin;
 
     public ViewPanel(final ViewModel viewModel) {
-        this(viewModel, null, null, null);
-    }
-
-    public ViewPanel(final ViewModel viewModel, String viewPanelDebugName) {
-        this(viewModel, null, null, viewPanelDebugName);
+        this(viewModel, null, null);
     }
 
     public ViewPanel(final ViewModel viewModel, Integer viewIndex) {
-        this(viewModel, viewIndex, null, null);
+        this(viewModel, viewIndex, null);
     }
 
-    public ViewPanel(final ViewModel viewModel, Integer viewIndex, String viewPanelDebugName) {
-        this(viewModel, viewIndex, null, viewPanelDebugName);
+
+    public ViewPanel(ViewModel viewModel, RectSize fixedSize) {
+        this(viewModel, null, fixedSize);
     }
 
-    public ViewPanel(ViewModel viewModel, RectSize fixedSize, String viewPanelDebugName) {
-        this(viewModel, null, fixedSize, viewPanelDebugName);
-    }
-
-    public ViewPanel(final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize, final String viewPanelDebugName) {
+    public ViewPanel(final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
 //        Console.log("ViewPanel.ViewPanel  viewIndex[" + viewIndex + "]  viewPanelDebugName["+viewPanelDebugName+"]");
         setElement(DOM.createDiv());
 //        onAttach();
-        init(pViewModel, viewIndex, fixedSize, viewPanelDebugName);
+        init(pViewModel, viewIndex, fixedSize);
 
     }
 
-    private void init(ViewModel pViewModel, Integer viewIndex, RectSize fixedSize, String viewPanelDebugName) {
+    private void init(ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
         if (viewIndex != null) {
             this.viewModel = pViewModel.getViewModel(viewIndex);
         } else {
@@ -101,15 +94,13 @@ public class ViewPanel extends ComplexPanel {
 
         addStyleName("ViewPanel");
 
-        if (viewPanelDebugName != null) {
-            getElement().setId(viewPanelDebugName);
-        }
+
     }
 
-    public ViewPanel(com.google.gwt.dom.client.Element el, final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize, final String viewPanelDebugName) {
+    public ViewPanel(com.google.gwt.dom.client.Element el, final ViewModel pViewModel, Integer viewIndex, RectSize fixedSize) {
         setElement(el);
         onAttach(); //this is key!!
-        init(pViewModel, viewIndex, fixedSize, viewPanelDebugName);
+        init(pViewModel, viewIndex, fixedSize);
     }
 
 
@@ -182,7 +173,6 @@ public class ViewPanel extends ComplexPanel {
 
 
     }
-
 
 
     public void setPixelSize(RectSize imageSize) {

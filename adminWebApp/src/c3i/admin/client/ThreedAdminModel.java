@@ -14,20 +14,18 @@ import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.smartClient.client.model.ViewsSession;
+import c3i.smartClient.client.skins.BytSummary;
 import c3i.smartClient.client.skins.SimpleSkin;
 import c3i.smartClient.client.skins.Skin;
-import c3i.smartClient.client.skins.ViewStackSkin;
-import c3i.smartClient.client.skins.bytSkin.BytSkin;
+import c3i.smartClient.client.skins.bytSkin.BytMain;
 import c3i.util.shared.futures.RWValue;
 import c3i.util.shared.futures.Value;
 import com.google.common.collect.ImmutableList;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Window;
-import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
-import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;
 
@@ -130,8 +128,8 @@ public class ThreedAdminModel {
 
     private ImmutableList<Skin> initSkins() {
         ArrayList<Skin> a = new ArrayList<Skin>();
-        a.add(new BytSkin());
-        a.add(new ViewStackSkin());
+        a.add(new BytMain());
+        a.add(new BytSummary());
         a.add(new SimpleSkin());
         return ImmutableList.copyOf(a);
     }

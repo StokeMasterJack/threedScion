@@ -2,7 +2,6 @@ package c3i.admin.client;
 
 import c3i.core.imageModel.shared.Profile;
 import c3i.repo.shared.CommitHistory;
-import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.skins.Skin;
 import c3i.util.shared.events.ChangeListener;
 import com.google.gwt.dom.client.Style;
@@ -27,6 +26,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
 
     private final int previewPanelFrameId = counter++;
 
+    SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
 
     private final ThreedAdminModel model;
 
@@ -53,8 +53,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
 
         addNorth(headerPanel, 35);
 
-        SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-        splitLayoutPanel.addSouth(statusPanel,150);
+        splitLayoutPanel.addSouth(statusPanel, 150);
         splitLayoutPanel.add(middlePanel);
 
         add(splitLayoutPanel);
@@ -318,6 +317,18 @@ public class ThreedAdminPanel extends DockLayoutPanel {
             setWidget(previewPanel);
         }
 
+    }
+
+    private boolean statusPanelMinimized = false;
+
+    public void toggleStatusPanel() {
+        if (statusPanelMinimized) {
+            splitLayoutPanel.setWidgetSize(statusPanel, 150);
+            statusPanelMinimized = false;
+        } else {
+            splitLayoutPanel.setWidgetSize(statusPanel, 0);
+            statusPanelMinimized = true;
+        }
     }
 
 
