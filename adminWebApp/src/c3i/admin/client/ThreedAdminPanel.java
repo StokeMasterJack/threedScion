@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import smartsoft.util.gwt.client.Console;
 
 //import c3i.skin.previewPanel.client.chatPanel.ChatInfo;
@@ -51,8 +52,12 @@ public class ThreedAdminPanel extends DockLayoutPanel {
 
 
         addNorth(headerPanel, 35);
-        addSouth(statusPanel, 150);
-        add(middlePanel);
+
+        SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
+        splitLayoutPanel.addSouth(statusPanel,150);
+        splitLayoutPanel.add(middlePanel);
+
+        add(splitLayoutPanel);
 
 //        getElement().getStyle().setBackgroundColor("yellow");
 

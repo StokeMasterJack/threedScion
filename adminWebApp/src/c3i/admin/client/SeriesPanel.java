@@ -1,14 +1,5 @@
 package c3i.admin.client;
 
-import c3i.smartClient.client.service.ThreedModelClient;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import c3i.util.shared.futures.Future;
-import c3i.util.shared.futures.OnException;
-import c3i.util.shared.futures.OnSuccess;
-import smartsoft.util.gwt.client.Console;
-import c3i.util.shared.events.ChangeListener;
-import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
-import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 import c3i.admin.client.featurePicker.CurrentUiPicks;
 import c3i.admin.client.featurePicker.VarPanel;
 import c3i.admin.client.featurePicker.VarPanelFactory;
@@ -17,9 +8,16 @@ import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.repo.shared.CommitHistory;
+import c3i.util.shared.events.ChangeListener;
+import c3i.util.shared.futures.Future;
+import c3i.util.shared.futures.OnException;
+import c3i.util.shared.futures.OnSuccess;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import smartsoft.util.gwt.client.Console;
+import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
+import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 
 public class SeriesPanel extends SplitLayoutPanel implements TabAware {
 
