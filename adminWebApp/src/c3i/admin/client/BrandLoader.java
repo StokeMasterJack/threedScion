@@ -10,16 +10,18 @@ import smartsoft.util.gwt.client.rpc.SuccessCallback;
 
 public class BrandLoader extends Loader<BrandKey, BrandInit> {
 
-    public BrandLoader(final BrandKey brandKey, final ThreedAdminClient client) {
+    public BrandLoader(final BrandKey brandKey, final ThreedAdminClient threedAdminClient) {
 
         super(brandKey, new AsyncFunction<BrandKey, BrandInit>() {
             @Override
             public void start(final BrandKey brandKey, final Completer<BrandInit> completer) throws Exception {
-                Req<BrandInit> request = client.getInitData(brandKey);
+                threedAdminClient.log("Loading " + brandKey + "...");
+                Req<BrandInit> request = threedAdminClient.getInitData(brandKey);
                 request.onSuccess = new SuccessCallback<BrandInit>() {
 
                     @Override
                     public void call(Req<BrandInit> r) {
+                        threedAdminClient.log("\t Loading " + brandKey + " complete!");
                         completer.setResult(r.result);
                     }
 

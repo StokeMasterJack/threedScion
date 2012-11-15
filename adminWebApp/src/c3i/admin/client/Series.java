@@ -48,7 +48,7 @@ public class Series {
         currentUiPicks = new CurrentUiPicks(threedModel);
 
         AsyncKeyValue<Set<Var>, FixedPicks> fixedPicks = currentUiPicks.getFixedPicks();
-        viewsSession = new ViewsSession(brand.getRepoBaseUrl(), threedModel, defaultProfile, fixedPicks);
+        viewsSession = new ViewsSession(app.getRepoBaseUrl(), threedModel, defaultProfile, fixedPicks);
     }
 
     public CurrentUiPicks getCurrentUiPicks() {
@@ -80,8 +80,7 @@ public class Series {
     }
 
     public Path getThreedModelUrl() {
-        ThreedModelClient threedModelClient = brand.getThreedModelClient();
-        return threedModelClient.getThreedModelUrl(seriesId);
+        return app.getThreedModelClient().getThreedModelUrl(seriesId);
     }
 
     public SeriesId getSeriesId() {
@@ -89,7 +88,9 @@ public class Series {
     }
 
 
-    public Path getRepoBaseURl() {
-        return brand.getRepoBaseUrl();
+
+
+    public void log(String msg) {
+        app.getUserLog().log(msg);
     }
 }

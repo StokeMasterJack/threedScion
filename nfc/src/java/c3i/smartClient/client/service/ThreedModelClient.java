@@ -13,8 +13,6 @@ import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -24,9 +22,12 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import smartsoft.util.gwt.client.Console;
+import smartsoft.util.gwt.client.UserLog;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.lang.shared.Path;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
@@ -41,7 +42,7 @@ import smartsoft.util.lang.shared.Path;
  */
 public class ThreedModelClient {
 
-    private static final Path DEFAULT_REPO_BASE_URL = new Path("/configurator-content");
+    public static final Path DEFAULT_REPO_BASE_URL = new Path("/configurator-content-v2");
 
     private final String urlTemplate = "${repoBase.url}/${brandName}/${seriesName}/${seriesYear}/3d/models/${rootTreeId}.json";
 
@@ -49,20 +50,46 @@ public class ThreedModelClient {
     private final Path repoBaseUrl;
     private final RequestContext requestContext;
 
-    public ThreedModelClient(Path repoBaseUrl) {
-        if (repoBaseUrl == null) {
-            throw new IllegalArgumentException("repoBaseUrl must be non-null");
-        }
+    private boolean jsonp = true;
 
-        this.jsonThreedModelBuilder = new JsonUnmarshallerTm();
-        this.repoBaseUrl = repoBaseUrl;
-        requestContext = new RequestContext();
+    private UserLog userLog = UserLog.DEFAULT;
+
+    public ThreedModelClient(Path repoBaseUrl) {
+        this(null, repoBaseUrl);
     }
 
-    public ThreedModelClient() {
+    public ThreedModelClient(RequestContext requestContext, Path repoBaseUrl) {
+        checkNotNull(repoBaseUrl);
+        if (requestContext == null) {
+            requestContext = new RequestContext();
+        }
+
+        this.requestContext = requestContext;
+        this.repoBaseUrl = repoBaseUrl;
+
         this.jsonThreedModelBuilder = new JsonUnmarshallerTm();
-        requestContext = new RequestContext();
-        repoBaseUrl = null;
+
+    }
+
+//    public ThreedModelClient() {
+//        this.jsonThreedModelBuilder = new JsonUnmarshallerTm();
+//        requestContext = new RequestContext();
+//        repoBaseUrl = null;
+//    }
+
+    public boolean isJsonp() {
+        return jsonp;
+    }
+
+    /**
+     *
+     * If true, jsonp requests are used for all json data
+     * else xhr requests are used. default value is true.
+     *
+     * @param jsonp
+     */
+    public void setJsonp(boolean jsonp) {
+        this.jsonp = jsonp;
     }
 
     private <T> Req<T> newRequest(String opName) {
@@ -73,8 +100,7 @@ public class ThreedModelClient {
         if (repoBaseUrl == null) {
             throw new IllegalArgumentException("repoBaseUrl must be non-null before calling parseJsonThreedModel(..)");
         }
-        ThreedModel threedModel = jsonThreedModelBuilder.createModelFromJsonText(threedModelJsonText);
-        return threedModel;
+        return jsonThreedModelBuilder.createModelFromJsonText(threedModelJsonText);
     }
 
     public Path getThreedModelUrl(final SeriesId seriesId) {
@@ -122,7 +148,7 @@ public class ThreedModelClient {
 
     public Future<Brand> getBrandInit(BrandKey brandKey) throws Exception {
         final Completer<Brand> f = new CompleterImpl<Brand>();
-        brandLoaderFunction.start(brandKey, f);
+        brandLoaderFunctionJsonp.start(brandKey, f);
         return f.getFuture();
     }
 
@@ -132,15 +158,6 @@ public class ThreedModelClient {
         return f.getFuture();
     }
 
-    public void fetchThreedModel4(final SeriesId seriesId) {
-        String src = "http://smartsoftdev.net/configurator-content-v2/toyota/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.js";
-
-
-        Document doc = Document.get();
-        ScriptElement scriptElement = doc.createScriptElement();
-        scriptElement.setSrc(src);
-        doc.getBody().appendChild(scriptElement);
-    }
 
     public Req<ThreedModel> fetchThreedModel(final SeriesId seriesId) {
         return fetchThreedModelJsonp(seriesId);
@@ -148,11 +165,8 @@ public class ThreedModelClient {
     }
 
     public Req<ThreedModel> fetchThreedModelJsonp(final SeriesId seriesId) {
-
         final Req<ThreedModel> r = newRequest("fetchThreedModel");
-
         Path url = getThreedModelUrl(seriesId);
-        Console.log("Requesting threedModel: " + url);
 
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 
@@ -170,7 +184,6 @@ public class ThreedModelClient {
                     }
 
                     public void onSuccess(JsThreedModel jsThreedModel) {
-//                        Console.log(jsThreedModel);
                         ThreedModel threedModel = JsonUnmarshallerTm.createModelFromJs(jsThreedModel);
                         r.onSuccess(threedModel);
                     }
@@ -221,60 +234,19 @@ public class ThreedModelClient {
         return r;
     }
 
-
-    public Path fetchThreedModel2(final BrandKey brandKey, final SeriesId seriesId, final Callback callback) {
-        return fetchThreedModel2(brandKey, seriesId.getSeriesKey(), seriesId.getRootTreeId(), callback);
-    }
-
-    public Path fetchThreedModel2(final BrandKey brandKey, final SeriesKey seriesKey, RootTreeId rootTreeId, final Callback callback) {
-        assert callback != null;
-
-        Path url = getThreedModelUrl(seriesKey, rootTreeId);
-        Console.log("Requesting threedModel: " + url);
-
-        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url.toString());
-
-        requestBuilder.setCallback(new RequestCallback() {
-            @Override
-            public void onResponseReceived(Request request, Response response) {
-                String jsonResponseText = response.getText();
-
-                assert jsonResponseText != null;
-                Console.log("\tParsing ThreedModel[" + seriesKey + "] JSON...");
-                ThreedModel threedModel = parseJsonThreedModel(jsonResponseText);
-                assert threedModel != null;
-                SeriesKey returnedSeriesKey = threedModel.getSeriesKey();
-                assert returnedSeriesKey.equals(seriesKey) : "Returned seriesKey [" + returnedSeriesKey + "] does not match request seriesKey[" + seriesKey + "]";
-                Console.log("\tRefreshAfterThreedModelChange[" + seriesKey + "] ...");
-
-                callback.onThreeModelReceived(threedModel);
-            }
-
-            @Override
-            public void onError(Request request, Throwable e) {
-                e.printStackTrace();
-            }
-        });
-
-        try {
-            requestBuilder.send();
-        } catch (RequestException e) {
-            e.printStackTrace();
-        }
-
-        return url;
-
-    }
-
     public ThreedModel fetchThreedModelFromPage() {
         return jsonThreedModelBuilder.createModelFromJsInPage();
+    }
+
+    public void setUserLog(UserLog userLog) {
+        this.userLog = userLog;
     }
 
     public static interface Callback {
         void onThreeModelReceived(ThreedModel threedModel);
     }
 
-    public AsyncFunction<BrandKey, Brand> brandLoaderFunction = new AsyncFunction<BrandKey, Brand>() {
+    public AsyncFunction<BrandKey, Brand> brandLoaderFunctionJsonp = new AsyncFunction<BrandKey, Brand>() {
 
         @Override
         public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
@@ -298,7 +270,7 @@ public class ThreedModelClient {
         }
     };
 
-    public AsyncFunction<BrandKey, Brand> brandLoaderFunction2 = new AsyncFunction<BrandKey, Brand>() {
+    public AsyncFunction<BrandKey, Brand> brandLoaderFunctionXhr = new AsyncFunction<BrandKey, Brand>() {
 
         @Override
         public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
@@ -368,5 +340,9 @@ public class ThreedModelClient {
 
         }
     };
+
+    public void log(String msg){
+        userLog.log(msg);
+    }
 
 }

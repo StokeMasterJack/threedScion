@@ -47,7 +47,7 @@ public class StatusPanel extends ScrollPanel {
     private final ThreedModel threedModel;
     private final FeatureModel featureModel;
     private final CurrentUiPicks currentUiPicks;
-    private final ThreedModelClient threedModelClient;
+//    private final ThreedModelClient threedModelClient;
 
     private ViewSession viewSession;
     private StatusPanelModel model;
@@ -64,7 +64,7 @@ public class StatusPanel extends ScrollPanel {
         this.threedModel = viewsSession.getThreedModel();
         this.featureModel = threedModel.getFeatureModel();
         this.currentUiPicks = series.getCurrentUiPicks();
-        threedModelClient = new ThreedModelClient(viewsSession.getRepoBaseUrl());
+//        this.threedModelClient = threedModelClient;
 
         currentUiPicks.addChangeListener(new ChangeListener<FixedPicks>() {
             @Override
@@ -177,7 +177,8 @@ public class StatusPanel extends ScrollPanel {
             t.setWidget(2, 1, imageStackWidget);
 
 
-            String threedModelUrl = threedModelClient.getThreedModelUrl(seriesId).toString();
+//            String threedModelUrl = threedModelClient.getThreedModelUrl(seriesId).toString();
+            Path threedModelUrl = series.getThreedModelUrl();
             t.setWidget(3, 0, new HTML("<b>3D Model: </b>"));
             t.setHTML(3, 1, "<a href='" + threedModelUrl + "' target='_blank'>" + threedModelUrl + "</a>");
         }

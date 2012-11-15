@@ -2,6 +2,7 @@ package c3i.admin.client;
 
 import c3i.core.imageModel.shared.Profile;
 import c3i.repo.shared.CommitHistory;
+import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.skins.Skin;
 import c3i.util.shared.events.ChangeListener;
 import com.google.gwt.dom.client.Style;
@@ -40,7 +41,6 @@ public class ThreedAdminPanel extends DockLayoutPanel {
     public ThreedAdminPanel(ThreedAdminModel model) {
         super(Style.Unit.PX);
         this.model = model;
-
 
         contentPanel = new ContentPanel();
         layersPanels = new LayersPanels(model);

@@ -21,12 +21,11 @@ public class BrandInit implements Serializable {
 
     private /* final */ ArrayList<BrandKey> visibleBrandsForUser;
 
-    private  /* final */ Path repoContextPath;
+//    private  /* final */ Path repoContextPath;
 
     private  /* final */ Profiles profiles;
 
     private transient SeriesPickList seriesPickList;
-    private transient ThreedModelClient threedModelClient;
 
     public BrandInit(BrandKey brandKey, ArrayList<Series> seriesNameWithYears,  String userName, ArrayList<BrandKey> visibleBrandsForUser, Path repoContextPath, Profiles profiles) {
         if (seriesNameWithYears == null) {
@@ -42,7 +41,6 @@ public class BrandInit implements Serializable {
         this.seriesNameWithYears = seriesNameWithYears;
         this.userName = userName;
         this.visibleBrandsForUser = visibleBrandsForUser;
-        this.repoContextPath = repoContextPath;
         this.profiles = profiles;
     }
 
@@ -68,13 +66,6 @@ public class BrandInit implements Serializable {
         return visibleBrandsForUser;
     }
 
-    public Path getRepoContextPath() {
-        return repoContextPath;
-    }
-
-    public Path getRepoBaseUrl() {
-        return repoContextPath;
-    }
 
     public Profiles getProfiles() {
         return profiles;
@@ -86,7 +77,6 @@ public class BrandInit implements Serializable {
                 "seriesNameWithYears=" + seriesNameWithYears +
                 ", userName='" + userName + '\'' +
                 ", visibleBrandsForUser=" + visibleBrandsForUser +
-                ", repoContextPath=" + repoContextPath +
                 '}';
     }
 
@@ -94,10 +84,4 @@ public class BrandInit implements Serializable {
         return brandKey;
     }
 
-    public ThreedModelClient getThreedModelClient() {
-        if(threedModelClient==null){
-            threedModelClient = new ThreedModelClient(getRepoBaseUrl());
-        }
-        return threedModelClient;
-    }
 }

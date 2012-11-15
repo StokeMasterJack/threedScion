@@ -52,12 +52,10 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabAware {
     List<MasterJobStatus> masterRowData = new ArrayList<MasterJobStatus>();
 
 
-    private final TabCreator tabCreator;
     private final Timer timer;
 
     public JpgQueueMasterPanel(final JpgGenClient service, final TabCreator tabCreator) {
         super(Style.Unit.EM);
-        this.tabCreator = tabCreator;
         this.service = service;
 
         refreshContent();

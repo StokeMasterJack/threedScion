@@ -2,16 +2,13 @@ package c3i.admin.client;
 
 import c3i.admin.client.jpgGen.JpgGenClient;
 import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
+import c3i.admin.client.messageLog.UserLog;
+import c3i.admin.client.messageLog.UserLogView;
 import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.SeriesCommit;
-import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.OnSuccess;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style;
@@ -24,52 +21,38 @@ import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.FailureCallback;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
-import smartsoft.util.gwt.client.ui.UiContext;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
+import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 
 import javax.annotation.Nonnull;
 
-import static smartsoft.util.date.shared.StringUtil.isEmpty;
-
-public class MainEntryPoint implements EntryPoint, UiContext {
+public class MainEntryPoint implements EntryPoint, TabCreator {
 
     private App app;
 
     private MainMenu mainMenuBar;
     private TabLayoutPanel tab = new TabLayoutPanel(2, Style.Unit.EM);
 
-    //    private MessageLog messageLog;
-
-    private BrandKey brandKey;
-    private BrandSession brandSession;
+    private UserLog userLog;
 
     public void onModuleLoad() {
 
-//        messageLog = new MessageLog();
-
-        String brand = Window.Location.getParameter("brand");
-        if (isEmpty(brand)) {
-            this.brandKey = BrandKey.TOYOTA;
-        } else {
-            this.brandKey = BrandKey.fromString(brand);
-        }
+        app = new App(this);
+        userLog = app.getUserLog();
 
 
-        app = new App(this, brandKey);
-        brandSession = new BrandSession(app, brandKey);
 
-        Console.log("Waiting for Brand to load...");
-        brandSession.ensureLoaded().success(new OnSuccess<BrandInit>() {
+        app.ensureLoaded().success(new OnSuccess<BrandInit>() {
             @Override
             public void onSuccess(@Nonnull BrandInit brand) {
-                Console.log("Brand Loaded");
                 mainMenuBar = createMainMenuBar(brand);
                 buildMainWindow();
                 Place place = Place.createFromToken(History.getToken());
@@ -88,18 +71,20 @@ public class MainEntryPoint implements EntryPoint, UiContext {
     private void gotoPlace(BrandInit brand, Place place) {
         final SeriesKey sk = place.getSeriesKey();
         if (sk != null) {
-            openSeriesVersionSelector(brand, sk);
+            openSeriesHead(brand, sk);
         }
     }
 
 
     private void openSeriesCommitDialog(final BrandInit brand, final SeriesKey seriesKey) {
 
+        log("Loading " + seriesKey.getShortName() + " commit history...");
         Req<CommitHistory> request = app.getThreedAdminClient().getCommitHistory(seriesKey);
 
         request.onSuccess = new SuccessCallback<CommitHistory>() {
             @Override
             public void call(Req<CommitHistory> r) {
+                log("Loading " + seriesKey.getShortName() + " commit history complete!");
                 assert r.result != null;
                 final SeriesCommitDialog dlg = new SeriesCommitDialog(seriesKey, r.result);
                 dlg.onSeriesCommitSelected = new Command() {
@@ -107,7 +92,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
                     public void execute() {
                         CommitHistory selectedCommit = dlg.getSelectedCommit();
                         SeriesCommit seriesCommit = new SeriesCommit(seriesKey, selectedCommit);
-                        openSeries(brand, seriesCommit);
+                        openSeriesVersion(brand, seriesCommit);
                     }
                 };
             }
@@ -134,20 +119,20 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
     }
 
-
-    private void openSeriesVersionSelector(final BrandInit brandInit, final SeriesKey seriesKey) {
+    private void openSeriesHead(final BrandInit brand, final SeriesKey seriesKey) {
         Req<CommitHistory> r1 = app.getThreedAdminClient().getCommitHistory(seriesKey);
+
         r1.onSuccess = new SuccessCallback<CommitHistory>() {
             @Override
             public void call(Req<CommitHistory> request) {
                 CommitHistory commitHistory = request.result;
                 SeriesCommit seriesCommit = new SeriesCommit(seriesKey, commitHistory);
-                openSeries(brandInit, seriesCommit);
+                openSeriesVersion(brand, seriesCommit);
             }
         };
     }
 
-    private void openSeries(BrandInit brand, final SeriesCommit seriesCommit) {
+    private void openSeriesVersion(BrandInit brand, final SeriesCommit seriesCommit) {
         assert seriesCommit != null;
         SeriesPanel seriesPanel = new SeriesPanel(new SeriesSession(app, brand, seriesCommit));
         addTab(seriesPanel);
@@ -179,7 +164,7 @@ public class MainEntryPoint implements EntryPoint, UiContext {
             public void execute() {
                 ThreedAdminClient threedAdminClient = app.getThreedAdminClient();
                 Console.log("Purging cache..");
-                threedAdminClient.purgeRepoCache(brandKey);
+                threedAdminClient.purgeRepoCache(app.getBrandKey());
             }
         };
 
@@ -258,31 +243,6 @@ public class MainEntryPoint implements EntryPoint, UiContext {
         }
     };
 
-
-    private final Command jsonpCommand = new Command() {
-        @Override
-        public void execute() {
-            ThreedModelClient threedModelClient = new ThreedModelClient();
-            SeriesId seriesId = new SeriesId(SeriesKey.AVALON_2011, new RootTreeId("caf5025938ca0aa5c8d687bffe7ba41b25779376"));
-            Req<ThreedModel> r = threedModelClient.fetchThreedModel(seriesId);
-            r.onSuccess = new SuccessCallback<ThreedModel>() {
-                @Override
-                public void call(Req<ThreedModel> request) {
-                    Console.log(request.result + "");
-                }
-            };
-
-            r.onFailure = new FailureCallback() {
-                @Override
-                public void call(Req request) {
-                    request.exception.printStackTrace();
-                    Console.error(request.exception);
-                }
-            };
-        }
-    };
-
-
     private int isJpgQueueMasterStatusAlreadyOpen() {
         for (int i = 0; i < tab.getWidgetCount(); i++) {
             Widget w = tab.getWidget(i);
@@ -295,45 +255,32 @@ public class MainEntryPoint implements EntryPoint, UiContext {
 
     }
 
-
-    public static native void open(String url) /*-{
-        $wnd.open(url);
-    }-*/;
-
-
     void buildMainWindow() {
         tab.setSize("100%", "100%");
 
 
-//        SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-//        splitLayoutPanel.addSouth(createLogWindow(), 50);
-//        splitLayoutPanel.add(tab);
+        SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
+        splitLayoutPanel.addSouth(createLogWindow(), 50);
+        splitLayoutPanel.add(tab);
 
         DockLayoutPanel dock = new DockLayoutPanel(Style.Unit.EM);
         dock.addNorth(createHeaderPanel(), 1.8);
-        dock.add(tab);
+        dock.add(splitLayoutPanel);
         RootLayoutPanel.get().add(dock);
     }
 
-//    private Widget createLogWindow() {
-//        final MessageLogView messageLogView = new MessageLogView(messageLog);
-//        return messageLogView;
-//    }
+    private Widget createLogWindow() {
+        return new UserLogView(userLog);
+    }
 
-
-//    @Override
-//    public void log(String msg) {
-//        messageLog.log(msg);
-//    }
+    public void log(String msg) {
+        userLog.log(msg);
+    }
 
     private Widget createHeaderPanel() {
         DockLayoutPanel dock = new DockLayoutPanel(Style.Unit.EM);
         dock.addNorth(mainMenuBar, 1.7);
         return dock;
     }
-
-//    public void showMessage(String msg) {
-//        messageLog.log(msg);
-//    }
 
 }

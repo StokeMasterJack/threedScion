@@ -312,7 +312,6 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     }
 
     private void doCacheAhead(final FixedPicks fixedPicks, final int currentAngle) {
-        Console.log("doCacheAhead " + toString());
         PrefetchRepeatingCommand cmd = new PrefetchRepeatingCommand(fixedPicks, currentAngle);
         Scheduler.get().scheduleIncremental(cmd);
     }

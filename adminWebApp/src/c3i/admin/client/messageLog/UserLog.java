@@ -2,30 +2,31 @@ package c3i.admin.client.messageLog;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MessageLog implements Iterable<MessageLog.LogMessage> {
+public class UserLog implements Iterable<UserLog.LogMessage>, smartsoft.util.gwt.client.UserLog {
 
     private final ValueChangeHandlers valueChangeHandlers;
     private ArrayList<LogMessage> messages = new ArrayList<LogMessage>();
 
-    private static MessageLog INSTANCE;
+    private static UserLog INSTANCE;
 
-    public MessageLog() {
+    private UserLog() {
         this.valueChangeHandlers = new ValueChangeHandlers(this);
     }
 
-    public static MessageLog get() {
+    public static UserLog get() {
         if (INSTANCE == null) {
-            INSTANCE = new MessageLog();
+            INSTANCE = new UserLog();
         }
         return INSTANCE;
     }
 
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<MessageLog> messageLogValueChangeHandler) {
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<UserLog> messageLogValueChangeHandler) {
         return valueChangeHandlers.addValueChangeHandler(messageLogValueChangeHandler);
     }
 
@@ -61,5 +62,10 @@ public class MessageLog implements Iterable<MessageLog.LogMessage> {
     public void clearLog() {
         messages.clear();
         valueChangeHandlers.fire(this);
+    }
+
+    @Override
+    public String toString() {
+        return messages.toString();
     }
 }

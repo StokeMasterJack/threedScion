@@ -12,20 +12,21 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import smartsoft.util.gwt.client.Console;
 
 import javax.annotation.Nonnull;
 
-public class MessageLogView extends Composite {
+public class UserLogView extends Composite {
 
     @Nonnull
-    private final MessageLog messageLog;
+    private final UserLog messageLog;
     @Nonnull
     private final HTML html;
 
     private PopupPanel popupPanel;
     private ScrollPanel scrollPanel;
 
-    public MessageLogView(@Nonnull MessageLog messageLog) {
+    public UserLogView(@Nonnull final UserLog messageLog) {
         this.messageLog = messageLog;
 
         popupPanel = createPopupPanel();
@@ -42,9 +43,9 @@ public class MessageLogView extends Composite {
         initWidget(scrollPanel);
 
 
-        messageLog.addValueChangeHandler(new ValueChangeHandler<MessageLog>() {
+        messageLog.addValueChangeHandler(new ValueChangeHandler<UserLog>() {
             @Override
-            public void onValueChange(ValueChangeEvent<MessageLog> messageLogValueChangeEvent) {
+            public void onValueChange(ValueChangeEvent<UserLog> ev) {
                 refresh();
             }
         });
@@ -60,6 +61,8 @@ public class MessageLogView extends Composite {
                         popupPanel.show();
                     }
                 }, ContextMenuEvent.getType());
+
+        refresh();
     }
 
     private PopupPanel createPopupPanel() {
@@ -83,7 +86,7 @@ public class MessageLogView extends Composite {
     private void refresh() {
         SafeHtmlBuilder sb = new SafeHtmlBuilder();
 
-        for (MessageLog.LogMessage logMessage : messageLog) {
+        for (UserLog.LogMessage logMessage : messageLog) {
             sb.appendHtmlConstant("<li>");
             sb.appendEscaped(logMessage.getText());
             sb.appendHtmlConstant("</li>");

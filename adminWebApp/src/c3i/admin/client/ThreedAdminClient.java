@@ -22,7 +22,8 @@ public class ThreedAdminClient {
     private final ThreedAdminServiceAsync service;
     private final RequestContext requestContext;
 
-    public ThreedAdminClient() {
+    public ThreedAdminClient(RequestContext requestContext) {
+        this.requestContext = requestContext;
         Path url = ThreedAdminClient.getUrlOfThreedAdminService();
         service = GWT.create(ThreedAdminService.class);
         ((ServiceDefTarget) service).setServiceEntryPoint(url.toString());
@@ -85,9 +86,12 @@ public class ThreedAdminClient {
 
     public Req<Void> purgeRepoCache(BrandKey brandKey) {
         Req<Void> r = newRequest("purgeRepoCache");
-        service.purgeRepoCache(brandKey,r);
+        service.purgeRepoCache(brandKey, r);
         return r;
     }
 
+    public void log(String msg) {
+        requestContext.log(msg);
+    }
 
 }

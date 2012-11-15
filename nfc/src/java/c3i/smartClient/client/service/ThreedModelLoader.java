@@ -16,15 +16,18 @@ public class ThreedModelLoader extends Loader<SeriesId, ThreedModel> {
     private final SeriesId seriesId;
 
 
-    public ThreedModelLoader(final ThreedModelClient client, final SeriesId seriesId) {
+    public ThreedModelLoader(final ThreedModelClient threedModelClient, final SeriesId seriesId) {
         super(seriesId, new AsyncFunction<SeriesId, ThreedModel>() {
             @Override
             public void start(SeriesId input, final Completer<ThreedModel> completer) throws Exception {
-                Req<ThreedModel> r1 = client.fetchThreedModel(seriesId);
+
+                threedModelClient.log("Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "]...");
+                Req<ThreedModel> r1 = threedModelClient.fetchThreedModel(seriesId);
 
                 r1.onSuccess = new SuccessCallback<ThreedModel>() {
                     @Override
                     public void call(Req<ThreedModel> request) {
+                        threedModelClient.log("\t Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "] complete!");
                         completer.setResult(request.result);
                     }
                 };
@@ -39,7 +42,7 @@ public class ThreedModelLoader extends Loader<SeriesId, ThreedModel> {
         });
 
 
-        this.client = client;
+        this.client = threedModelClient;
         this.seriesId = seriesId;
 
     }

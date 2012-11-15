@@ -40,7 +40,6 @@ public class LayersPanel extends FlowPanel {
     private final ViewsSession viewsSession;
 
     public LayersPanel(LayersPanelModel model) {
-        Console.log("LayersPanel.LayersPanel");
         this.model = model;
         this.viewSession = model.getViewSession();
         this.viewsSession = viewSession.getParent();

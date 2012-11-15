@@ -37,7 +37,6 @@ public class SeriesSession {
     //cache
     private final SeriesId seriesId;
     private final App app;
-    private final Path repoBaseUrl;
 
     public SeriesSession(final App app, final BrandInit brand, final SeriesCommit seriesCommit) {
 
@@ -49,9 +48,8 @@ public class SeriesSession {
 
         //cache
         this.seriesId = new SeriesId(seriesKey, seriesCommit.getRootTreeId());
-        this.repoBaseUrl = brand.getRepoContextPath();
 
-        this.threedModelLoader = new ThreedModelLoader(brand.getThreedModelClient(), seriesId);
+        this.threedModelLoader = new ThreedModelLoader(app.getThreedModelClient(), seriesId);
 
         this.seriesLoader = new Loader<SeriesId, Series>(seriesId, new AsyncFunction<SeriesId, Series>() {
             @Override
@@ -102,9 +100,6 @@ public class SeriesSession {
         return app;
     }
 
-    public Path getRepoBaseUrl() {
-        return repoBaseUrl;
-    }
 
     public int getSeriesViewId() {
         return seriesViewId;

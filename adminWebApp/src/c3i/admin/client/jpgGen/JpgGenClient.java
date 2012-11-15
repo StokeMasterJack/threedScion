@@ -7,11 +7,12 @@ import c3i.admin.shared.jpgGen.JobStatusItem;
 import c3i.admin.shared.jpgGen.JpgGenService;
 import c3i.admin.shared.jpgGen.JpgGenServiceAsync;
 import c3i.core.common.shared.BrandKey;
+import c3i.jpgGen.shared.Stats;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import c3i.jpgGen.shared.*;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
+import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;
@@ -29,12 +30,13 @@ public class JpgGenClient {
 
     private final BrandKey brandKey;
 
-    public JpgGenClient(BrandKey brandKey) {
+    public JpgGenClient(RequestContext requestContext, BrandKey brandKey) {
+        this.requestContext = requestContext;
         this.brandKey = brandKey;
         Path baseUrl = JpgGenClient.getUrlOfJpgGenService();
         service = GWT.create(JpgGenService.class);
         ((ServiceDefTarget) service).setServiceEntryPoint(baseUrl.toString());
-        requestContext = new RequestContext();
+
     }
 
     private <T> Req<T> newRequest(String opName) {
@@ -95,6 +97,10 @@ public class JpgGenClient {
         Req<Stats> r = newRequest("getJpgGenFinalStats");
         service.getJpgGenFinalStats(brandKey, jobId, r);
         return r;
+    }
+
+    public void log(String msg) {
+        requestContext.log(msg);
     }
 
 

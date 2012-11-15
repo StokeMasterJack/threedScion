@@ -1,5 +1,6 @@
 package c3i.admin.client;
 
+import c3i.smartClient.client.service.ThreedModelClient;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.OnException;
@@ -30,15 +31,11 @@ public class SeriesPanel extends SplitLayoutPanel implements TabAware {
     public SeriesPanel(final SeriesSession seriesSession) {
         this.seriesSession = seriesSession;
 
-        Console.log("Waiting for ThreedModel[" + seriesSession.getSeriesKey() + "] to load...");
-
         Future<Series> seriesFuture = seriesSession.ensureSeries();
 
         seriesFuture.success(new OnSuccess<Series>() {
             @Override
             public void onSuccess(@Nonnull Series series) {
-
-                Console.log("ThreedModel[" + seriesSession.getSeriesKey() + "] loaded!");
 
                 featurePickerPanel = initFeaturePickerPanel(series);
                 threedAdminPanel = new ThreedAdminPanel(series.getThreedAdminModel());

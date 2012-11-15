@@ -1,16 +1,9 @@
 package c3i.admin.client;
 
-import c3i.smartClient.client.skins.bytSkin.BytSkin;
-import c3i.smartClient.client.skins.SimpleSkin;
-import com.google.common.collect.ImmutableList;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.user.client.Window;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.gwt.client.rpc.Req;
-import smartsoft.util.gwt.client.rpc.SuccessCallback;
-import smartsoft.util.gwt.client.ui.UiContext;
-import smartsoft.util.lang.shared.Path;
 import c3i.admin.client.featurePicker.CurrentUiPicks;
+import c3i.admin.client.jpgGen.JpgGenClient;
+import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
+import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
@@ -19,15 +12,22 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.admin.client.jpgGen.JpgGenClient;
-import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
-import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.repo.shared.CommitHistory;
+import c3i.smartClient.client.model.ViewsSession;
+import c3i.smartClient.client.skins.SimpleSkin;
 import c3i.smartClient.client.skins.Skin;
 import c3i.smartClient.client.skins.ViewStackSkin;
-import c3i.smartClient.client.model.ViewsSession;
+import c3i.smartClient.client.skins.bytSkin.BytSkin;
 import c3i.util.shared.futures.RWValue;
 import c3i.util.shared.futures.Value;
+import com.google.common.collect.ImmutableList;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.user.client.Window;
+import smartsoft.util.gwt.client.Console;
+import smartsoft.util.gwt.client.rpc.Req;
+import smartsoft.util.gwt.client.rpc.SuccessCallback;
+import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
+import smartsoft.util.lang.shared.Path;
 
 import java.util.ArrayList;
 
@@ -35,19 +35,14 @@ import static smartsoft.util.lang.shared.Strings.getSimpleName;
 
 public class ThreedAdminModel {
 
-
-    private final UiContext uiContext;
     private final ViewsSession viewsSession;
     private final Profiles profiles;
 
     //cache
-    private final Path repoBaseUrl;
     private final ThreedModel threedModel;
     private final SeriesKey seriesKey;
     private final FeatureModel featureModel;
 
-
-    //    private final List<Skin> skins;
     private final ThreedAdminClient threedAdminClient;
     private final ImmutableList<Skin> skins;
 
@@ -65,13 +60,11 @@ public class ThreedAdminModel {
 
     public ThreedAdminModel(Series series, ViewsSession viewsSession, RWValue<CommitHistory> commitHistory, Profiles profiles) {
         this.series = series;
-        this.uiContext = series.getApp().getUiContext();
         this.viewsSession = viewsSession;
         this.profiles = profiles;
 
-        this.jpgGenClient = new JpgGenClient(series.getBrandKey());
+        this.jpgGenClient = series.getApp().getJpgGenClient();
 
-        this.repoBaseUrl = viewsSession.getRepoBaseUrl();
         this.threedModel = viewsSession.getThreedModel();
         this.seriesKey = threedModel.getSeriesKey();
         this.featureModel = threedModel.getFeatureModel();
@@ -89,6 +82,10 @@ public class ThreedAdminModel {
 
     }
 
+    public void log(String msg) {
+        series.log(msg);
+    }
+
     public CurrentUiPicks getCurrentUiPicks() {
         return currentUiPicks;
     }
@@ -97,8 +94,6 @@ public class ThreedAdminModel {
         Profile profile = viewsSession.profile().get();
         profile.getBaseImageType();
 
-        Console.log("OK");
-
         CommitKey commitKey = commitHistory.get().getCommitKey();
         if (commitKey == null) {
             throw new IllegalStateException("Cannot run jpgs with no commitKey");
@@ -106,18 +101,26 @@ public class ThreedAdminModel {
         SeriesId seriesId = new SeriesId(seriesKey, commitKey.getRootTreeId());
         profile.getBaseImageType();
         JobSpec jobSpec = new JobSpec(seriesId, profile);
-        jpgGenClient.startJpgJob(jobSpec);
-        Console.log("Jpg job started");
-
+        log("Starting jpg job...");
+        jpgGenClient.startJpgJob(jobSpec).onSuccess = new SuccessCallback<Boolean>() {
+            @Override
+            public void call(Req<Boolean> request) {
+                log("Jpg job started!");
+            }
+        };
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
-                JpgQueueMasterPanel d = new JpgQueueMasterPanel(jpgGenClient, uiContext);
-                uiContext.addTab(d);
+                JpgQueueMasterPanel d = new JpgQueueMasterPanel(jpgGenClient, getTabCreator());
+                getTabCreator().addTab(d);
             }
         });
 
+    }
+
+    public TabCreator getTabCreator() {
+        return series.getApp().getTabCreator();
     }
 
 
@@ -185,7 +188,7 @@ public class ThreedAdminModel {
         if (commitHistory.get().isTagged()) {
             throw new IllegalStateException();
         }
-        Console.log("Creating tag[" + newTagName + "] ...");
+        log("Creating tag[" + newTagName + "] ...");
 
         CommitKey commitKey = commitHistory.get().getCommitKey();
         if (commitKey == null) {
@@ -195,7 +198,7 @@ public class ThreedAdminModel {
         r.onSuccess = new SuccessCallback<CommitHistory>() {
             @Override
             public void call(Req<CommitHistory> request) {
-                Console.log("Tag[" + newTagName + "] created");
+                log("Tag[" + newTagName + "] created!");
                 commitHistory.set(request.result);
             }
         };
@@ -207,7 +210,7 @@ public class ThreedAdminModel {
             throw new IllegalStateException();
         }
 
-        Console.log("Marking vtc...");
+        log("Marking vtc...");
         CommitKey commitKey = commitHistory.get().getCommitKey();
 
         Req<CommitHistory> r = threedAdminClient.setVtc(seriesKey, commitKey);
@@ -215,7 +218,7 @@ public class ThreedAdminModel {
         r.onSuccess = new SuccessCallback<CommitHistory>() {
             @Override
             public void call(Req<CommitHistory> request) {
-                Console.log("Marking vtc complete");
+                log("Marking vtc complete!");
                 commitHistory.set(request.result);
             }
         };
