@@ -5,12 +5,10 @@
 String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo";
 
 Map<String,App> apps = {
-  "gwtDemo":new App("gwtDemo","c3i.gwtDemo.GwtDemo","GwtDemo.html"),
-  "jsDemo":new App("smartClient","c3i.smartClient.SmartClientExportJavaScript","demos.html"),
-  "admin":new App("threed-admin-v2","c3i.admin.ThreedAdmin","index.html")
+  "gwtDemo":new App(contextPath:"gwtDemo",module:"c3i.gwtDemo.GwtDemo",startupPage:"GwtDemo.html"),
+  "jsDemo":new App(contextPath:"smartClient",module:"c3i.smartClient.SmartClientExportJavaScript",startupPage:"demos.html"),
+  "admin":new App(contextPath:"threed-admin-v2",module:"c3i.admin.ThreedAdmin",startupPage:"index.html")
 };
-
-
 
 
 void main(){
@@ -70,14 +68,14 @@ Map<String,String> argsToMap(List<String> argNames){
 
 class App{
   String contextPath;
-  String modName;
+  String module;
   String startupPage;
-  App(this.contextPath, this.modName,this.startupPage);
+  App({this.contextPath, this.module,this.startupPage});
 }
 
 void doIt(bool devMode,App a) {
   
-  var modFullName = a.modName;  //ex: c3i.smartClient.SmartClient
+  var modFullName = a.module;  //ex: c3i.smartClient.SmartClient
   
   var userHome = '/Users/dford';
   var cvsRoot = '$userHome/cvsCheckouts/CVSROOT';
@@ -98,8 +96,8 @@ void doIt(bool devMode,App a) {
     '$utilRepo/util/src/java',
   ];       
   
-  //var gwtVersion = '2.5.0.rc1';
-  var gwtVersion = '2.4.0';
+  var gwtVersion = '2.5.0';
+//  var gwtVersion = '2.4.0';
   var gwtHome = '${userHome}/p-java/gwt-${gwtVersion}';
   
   List<String> libs = [
@@ -122,21 +120,33 @@ void doIt(bool devMode,App a) {
   
   var gwtParamsCommon = {
        'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${a.contextPath}/',
-//       'logLevel':        'DEBUG',
+       'logLevel':        'DEBUG',
        'extra':           '$userHome/temp/gwt/extra',
        'gen':             '$userHome/temp/gwt/gen',
        'workDir':         '$userHome/temp/gwt/workDir'
   
   };
   
-  var gwtParamsDevMode = {
-       'codeServerPort':     '9998',
+  bool jetty = true;
+  
+  String startupUrl;
+  if(jetty){
+      startupUrl = '/${a.startupPage}';
+  }else{ //tomcat
+    startupUrl = 'http://localhost:8080//${a.contextPath}/${a.startupPage}';
+  }
+  
+  Map<String,String> gwtParamsDevMode = {
+//       'codeServerPort':     '9998',
   //         'bindAddress':     '10.211.55.2',
   //         'startupUrl':      'http://localhost:8080/${contextPath}/SmartClientTestJs.html',
-       'startupUrl':      'http://localhost:8080/${a.contextPath}/${a.startupPage}',
-       'noserver':        '',
+       'startupUrl':      startupUrl,
        'logdir':          '$userHome/temp/gwt/logdir'
   };
+  
+  if(!jetty){
+    gwtParamsDevMode['noserver'] = '';
+  }
   
   var gwtParamsCompile = {
   //        'style':                   'PRETTY'
