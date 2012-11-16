@@ -1,0 +1,10 @@
+Bugs:
+    Unneeded Horiz scrollbar on StatusPanel
+ava.lang.IndexOutOfBoundsException loading xd 2012
+Undercarriage View
+interior buttons not centered
+
+features
+improve image quality of jpgs
+    tms to identify particular jpgs that are sucky
+    give power user a way to "try out" various quality vs image size trade offs
