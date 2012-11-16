@@ -20,7 +20,6 @@
     </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.google.gwt:gwt-user:2.5.0" level="application" />
     <orderEntry type="library" name="imgscalr-lib-4.2" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="library" name="jsr305" level="application" />
@@ -31,6 +30,7 @@
     <orderEntry type="library" name="jackson-1.8.1" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
     <orderEntry type="module" module-name="ut" />
+    <orderEntry type="library" name="gwt-user-2.4" level="application" />
   </component>
 </module>
 

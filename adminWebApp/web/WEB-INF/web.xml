@@ -33,18 +33,6 @@
         <url-pattern>/jpgGenService</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>repoServlet</servlet-name>
-        <servlet-class>c3i.repoWebService.RepoServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>repoServlet</servlet-name>
-        <url-pattern>/configurator-content-v2/*</url-pattern>
-    </servlet-mapping>
-
-
-
     <security-constraint>
 
         <web-resource-collection>
