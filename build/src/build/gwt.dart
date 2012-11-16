@@ -93,11 +93,11 @@ void doIt(bool devMode,App a) {
     '$threedRepo/nfc/src/java',
     '$threedRepo/adminWebApp/src',
     '$threedRepo/gwtDemoWebApp/src',
-    '$utilRepo/util/src/java',
+    '$utilRepo/ut/src/java',
   ];       
   
-  var gwtVersion = '2.5.0';
-//  var gwtVersion = '2.4.0';
+//  var gwtVersion = '2.5.0';
+  var gwtVersion = '2.4.0';
   var gwtHome = '${userHome}/p-java/gwt-${gwtVersion}';
   
   List<String> libs = [
@@ -120,7 +120,8 @@ void doIt(bool devMode,App a) {
   
   var gwtParamsCommon = {
        'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${a.contextPath}/',
-       'logLevel':        'DEBUG',
+//       'logLevel':        'DEBUG',
+       'logLevel':        'WARN',
        'extra':           '$userHome/temp/gwt/extra',
        'gen':             '$userHome/temp/gwt/gen',
        'workDir':         '$userHome/temp/gwt/workDir'
