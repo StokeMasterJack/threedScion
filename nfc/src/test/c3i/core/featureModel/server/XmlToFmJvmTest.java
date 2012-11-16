@@ -4,15 +4,12 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.repo.server.ModelXml;
 import junit.framework.TestCase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
-import java.util.Collection;
 
 public class XmlToFmJvmTest extends TestCase {
 
@@ -21,7 +18,6 @@ public class XmlToFmJvmTest extends TestCase {
         FeatureModel fm = createFeatureModel(modelXml);
 
         System.out.println(fm.getSeriesKey());
-
 
 
     }
@@ -95,8 +91,5 @@ public class XmlToFmJvmTest extends TestCase {
         return XmlToFmJvm.create(seriesKey, seriesDisplayName, seriesYear, featureModel);
     }
 
-
-
-    private static Log log = LogFactory.getLog(XmlToFmJvmTest.class);
 
 }
