@@ -2,8 +2,8 @@ package c3i.repo.server.vnode;
 
 import com.google.common.base.Preconditions;
 import org.eclipse.jgit.lib.ObjectId;
-import smartsoft.util.lang.shared.Path;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Path;
+import smartsoft.util.shared.Strings;
 
 import java.util.List;
 import java.util.Properties;

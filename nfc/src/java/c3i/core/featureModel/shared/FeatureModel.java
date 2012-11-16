@@ -2,13 +2,13 @@ package c3i.core.featureModel.shared;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import smartsoft.util.lang.shared.Strings;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.boolExpr.*;
 import c3i.core.featureModel.shared.picks.Picks;
 import c3i.core.featureModel.shared.picks.PicksContextFm;
 import c3i.core.threedModel.shared.SubSeries;
+import smartsoft.util.shared.Strings;
 
 import java.util.*;
 

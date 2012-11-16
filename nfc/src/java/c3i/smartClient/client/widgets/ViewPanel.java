@@ -17,10 +17,10 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.RectSize;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.RectSize;
 
-import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+import static smartsoft.util.shared.GwtSafe.getSimpleName;
 
 public class ViewPanel extends ComplexPanel {
 
@@ -90,7 +90,7 @@ public class ViewPanel extends ComplexPanel {
         this.viewModel.addLayerStateListener(new ChangeListener<LayerState>() {
             @Override
             public void onChange(LayerState newValue) {
-                Console.log("LayerState.onChange. HiddenLayers: " + newValue.getHiddenLayers());
+                log.log(Level.INFO, "LayerState.onChange. HiddenLayers: " + newValue.getHiddenLayers());
                 refreshImageStack();
             }
         });
@@ -227,5 +227,7 @@ public class ViewPanel extends ComplexPanel {
     public void insert(Widget w, int beforeIndex) {
         insert(w, getElement(), beforeIndex, true);
     }
+
+    private static Logger log = Logger.getLogger(ViewPanel.class.getName());
 
 }

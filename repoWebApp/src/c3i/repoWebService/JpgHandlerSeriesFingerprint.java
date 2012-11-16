@@ -13,8 +13,8 @@ import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
@@ -34,7 +34,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
     @Override
     public void handle(JpgRequestSeriesFingerprint r) {
 
-        log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
+        log.fine("Received request for [" + r.getRequest().getRequestURI() + "]");
 
         Repos repos = r.getRepos();
         ThreedModel threedModel = repos.getThreedModel(r.getSeriesId());
@@ -80,7 +80,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
     }
 
 
-    private static Log log = LogFactory.getLog(JpgHandlerSeriesFingerprint.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

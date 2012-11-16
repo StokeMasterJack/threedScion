@@ -5,8 +5,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Image;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.RectSize;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.RectSize;
 
 public class ClearGif extends Image {
 

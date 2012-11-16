@@ -1,6 +1,6 @@
 package c3i.util.shared.futures;
 
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 public class Loader<K, V> {
 
@@ -13,7 +13,7 @@ public class Loader<K, V> {
         try {
             asyncFunction.start(input, completer);
         } catch (Throwable e) {
-            Console.error(e);
+            log.log(Level.SEVERE, "error", e);
             completer.setException(e);
         }
     }
@@ -21,5 +21,7 @@ public class Loader<K, V> {
     public Future<V> ensureLoaded() {
         return completer.getFuture();
     }
+
+    private static Logger log = Logger.getLogger(Loader.class.getName());
 
 }

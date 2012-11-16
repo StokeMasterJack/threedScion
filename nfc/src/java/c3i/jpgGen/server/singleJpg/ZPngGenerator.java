@@ -8,8 +8,8 @@ import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
 
@@ -125,7 +125,7 @@ public class ZPngGenerator {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    log.warn("Problem closing file [" + outputFile + "]");
+                    log.warning("Problem closing file [" + outputFile + "]");
                 }
             }
         }
@@ -133,7 +133,7 @@ public class ZPngGenerator {
 
     }
 
-    private static Log log = LogFactory.getLog(ZPngGenerator.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     private File getOutputFile() {
         return genRepo.getZPngFileName(pngKey);

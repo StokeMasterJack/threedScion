@@ -24,8 +24,8 @@ import com.google.common.base.Preconditions;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
 import org.timepedia.exporter.client.Export;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.Path;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -281,7 +281,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         @Override
         public boolean execute() {
             executeCount++;
-//            Console.log("executeCount = " + executeCount + " " + ViewSession.this.toString());
+//            log.log(Level.INFO, "executeCount = " + executeCount + " " + ViewSession.this.toString());
 
             if (anglesToCache == null) {
                 if (prefetchPicks == null) {
@@ -409,7 +409,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     private ImageStack.Key getImageStackKey(AngleKey angleKey) {
         if (viewsSession.picks.get() == null) {
-            Console.log("picks are null");
+            log.log(Level.INFO, "picks are null");
             return null;
         }
 
@@ -463,4 +463,6 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     public void addLayerStateListener(ChangeListener<LayerState> l) {
         layerState.addChangeListener(l);
     }
+
+    private static Logger log = Logger.getLogger(ViewSession.class.getName());
 }

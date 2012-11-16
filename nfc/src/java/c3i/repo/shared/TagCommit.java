@@ -5,7 +5,7 @@ import c3i.core.threedModel.shared.RootTreeId;
 
 import java.io.Serializable;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class TagCommit implements Comparable<TagCommit>, Serializable {
 

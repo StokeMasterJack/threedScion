@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 
 /**

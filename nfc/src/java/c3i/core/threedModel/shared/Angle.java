@@ -1,6 +1,6 @@
 package c3i.core.threedModel.shared;
 
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import javax.annotation.Nonnull;
 

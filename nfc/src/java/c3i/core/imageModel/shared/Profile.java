@@ -2,7 +2,7 @@ package c3i.core.imageModel.shared;
 
 import c3i.core.threedModel.shared.JpgWidth;
 import com.google.common.base.Preconditions;
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.RectSize;
 
 import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;

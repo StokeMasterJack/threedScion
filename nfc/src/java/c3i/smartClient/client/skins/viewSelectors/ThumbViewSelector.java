@@ -9,8 +9,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.RectSize;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.RectSize;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +62,7 @@ public class ThumbViewSelector extends ViewSelector {
 
         Collections.reverse(thumbModels);
 
-        Console.log("thumbModels = " + thumbModels);
+        log.log(Level.INFO, "thumbModels = " + thumbModels);
 
         ap = new FlowPanel();
         initWidget(ap);
@@ -183,5 +183,7 @@ public class ThumbViewSelector extends ViewSelector {
 //        }
 
     }
+
+    private static Logger log = Logger.getLogger(ThumbViewSelector.class.getName());
 
 }

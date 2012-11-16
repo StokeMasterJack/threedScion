@@ -1,6 +1,6 @@
 package c3i.smartClient.client.service;
 
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.RectSize;
 import c3i.core.threedModel.shared.JpgWidth;
 import junit.framework.TestCase;
 

@@ -21,11 +21,11 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.UserLog;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -197,7 +197,7 @@ public class ThreedModelClient {
         final Req<ThreedModel> r = newRequest("fetchThreedModel");
 
         Path url = getThreedModelUrl(seriesId);
-        Console.log("Requesting threedModel: " + url);
+        log.log(Level.INFO, "Requesting threedModel: " + url);
 
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url.toString());
 
@@ -207,12 +207,12 @@ public class ThreedModelClient {
             public void onResponseReceived(Request request, Response response) {
                 String jsonResponseText = response.getText();
                 assert jsonResponseText != null;
-                Console.log("\tParsing ThreedModel[" + seriesId.getSeriesKey() + "] JSON...");
+                log.log(Level.INFO, "\tParsing ThreedModel[" + seriesId.getSeriesKey() + "] JSON...");
                 ThreedModel threedModel = parseJsonThreedModel(jsonResponseText);
                 assert threedModel != null;
                 SeriesKey returnedSeriesKey = threedModel.getSeriesKey();
                 assert returnedSeriesKey.equals(seriesId.getSeriesKey()) : "Returned seriesKey [" + returnedSeriesKey + "] does not match request seriesKey[" + seriesId.getSeriesKey() + "]";
-                Console.log("\tRefreshAfterThreedModelChange[" + seriesId.getSeriesKey() + "] ...");
+                log.log(Level.INFO, "\tRefreshAfterThreedModelChange[" + seriesId.getSeriesKey() + "] ...");
                 r.onSuccess(threedModel);
             }
 
@@ -344,5 +344,7 @@ public class ThreedModelClient {
     public void log(String msg){
         userLog.log(msg);
     }
+
+    private static Logger log = Logger.getLogger(ThreedModelClient.class.getName());
 
 }

@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 

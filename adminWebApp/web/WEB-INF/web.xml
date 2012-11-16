@@ -33,8 +33,20 @@
         <url-pattern>/jpgGenService</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>repoServlet</servlet-name>
+        <servlet-class>c3i.repoWebService.RepoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>repoServlet</servlet-name>
+        <url-pattern>/configurator-content-v2/*</url-pattern>
+    </servlet-mapping>
+
+
 
     <security-constraint>
+
         <web-resource-collection>
             <web-resource-name>All Stuff</web-resource-name>
             <!--<url-pattern>/</url-pattern>-->
@@ -47,6 +59,7 @@
     </security-constraint>
     <login-config>
         <auth-method>BASIC</auth-method>
+        <realm-name>daveRealm</realm-name>
     </login-config>
     <security-role>
         <role-name>configuratorAdmin</role-name>

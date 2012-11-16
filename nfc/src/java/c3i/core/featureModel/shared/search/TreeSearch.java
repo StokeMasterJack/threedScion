@@ -7,7 +7,7 @@ import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.decision.Decision;
 import c3i.core.featureModel.shared.search.decision.Decisions;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import java.util.Set;
 

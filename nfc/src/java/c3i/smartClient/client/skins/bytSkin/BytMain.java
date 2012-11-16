@@ -13,7 +13,7 @@ import c3i.smartClient.client.widgets.ViewPanel;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 public class BytMain implements Skin {
 

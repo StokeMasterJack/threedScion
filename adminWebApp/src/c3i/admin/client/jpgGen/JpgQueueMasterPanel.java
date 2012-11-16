@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 import smartsoft.util.gwt.client.rpc.Req;
@@ -37,7 +37,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 
 public class JpgQueueMasterPanel extends DockLayoutPanel implements TabAware {
@@ -207,7 +207,7 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabAware {
 
                 if (o.isTerminal()) {
 
-                    Console.log("Removing job[" + o.jobId + "]");
+                    log.log(Level.INFO, "Removing job[" + o.jobId + "]");
                     masterRowData.remove(index);
                     table1.setRowCount(masterRowData.size());
                     table1.setRowData(0, masterRowData);
@@ -216,7 +216,7 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabAware {
                     service.removeJob(o.jobId);
 
                 } else {
-                    Console.log("Canceling job[" + o.jobId + "] ...");
+                    log.log(Level.INFO, "Canceling job[" + o.jobId + "] ...");
                     service.cancelJob(o.jobId);
                 }
             }
@@ -479,6 +479,7 @@ public class JpgQueueMasterPanel extends DockLayoutPanel implements TabAware {
     }
 
 
+    private static Logger log = Logger.getLogger(JpgQueueMasterPanel.class.getName());
 
 
 }

@@ -3,17 +3,16 @@ package c3i.repoWebService;
 import c3i.repo.server.BrandRepos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +38,7 @@ import java.io.InputStream;
 public class RepoServlet extends HttpServlet {
 
     private ThreedRepoApp app;
-    private Log log;
+    private Logger log;
 
     private PngHandler pngHandler;
     private VtcHandler vtcHandler;
@@ -57,7 +56,7 @@ public class RepoServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        log = LogFactory.getLog(RepoServlet.class);
+        log = Logger.getLogger(RepoServlet.class.getName());
         log.info("Initializing " + getClass().getSimpleName());
 
         try {
@@ -67,7 +66,7 @@ public class RepoServlet extends HttpServlet {
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
-            log.error(msg, e);
+            log.log(Level.SEVERE, msg, e);
             throw new RuntimeException(msg, e);
         }
 
@@ -110,39 +109,39 @@ public class RepoServlet extends HttpServlet {
             }
 
             if (isIndexHtmlRequest(request, response)) {
-                log.debug("isIndexHtmlRequest");
+                log.fine("isIndexHtmlRequest");
                 InputStream is = getServletContext().getResourceAsStream("index.html");
                 response.setContentType("text/html");
                 ByteStreams.copy(is, response.getOutputStream());
             } else if (isVtcRequest(request)) {
-                log.debug("isVtcRequest");
+                log.fine("isVtcRequest");
                 vtcHandler.handle(new SeriesBasedRepoRequest(brandRepos, request, response));
             } else if (isVtcMapRequest(request)) {
-                log.debug("isVtcMapRequest");
+                log.fine("isVtcMapRequest");
                 vtcMapHandler.handle(new RepoRequest(brandRepos, request, response));
             } else if (isJpgRequestSeriesFingerprintRequest(request)) {
-                log.debug("isJpgRequestSeriesFingerprintRequest");
+                log.fine("isJpgRequestSeriesFingerprintRequest");
                 jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos, request, response));
             } else if (isJpgRequestNoFingerprintRequest(request)) {
-                log.debug("isJpgRequestNoFingerprintRequest");
+                log.fine("isJpgRequestNoFingerprintRequest");
                 jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(brandRepos, request, response));
             } else if (isPngRequest(request)) {
-                log.debug("isPngRequest");
+                log.fine("isPngRequest");
                 pngHandler.handle(new PngRequest(brandRepos, request, response));
             } else if (isJpgRequest(request)) {
-                log.debug("isJpgRequest");
+                log.fine("isJpgRequest");
                 jpgHandler.handle(new JpgRequest(brandRepos, request, response));
             } else if (isBlinkRequest(request)) {
-                log.debug("isBlinkRequest");
+                log.fine("isBlinkRequest");
                 blinkHandler.handle(new SeriesBasedRepoRequest(brandRepos, request, response));
             } else if (isThreedModelRequest(request)) {
-                log.debug("isThreedModelRequest");
+                log.fine("isThreedModelRequest");
                 threedModelHandler.handle(new ThreedModelRequest(brandRepos, request, response));
             } else if (isThreedModelJsonpRequest(request)) {
-                log.debug("isThreedModelJsonpRequest");
+                log.fine("isThreedModelJsonpRequest");
                 threedModelHandlerJsonP.handle(new ThreedModelRequest(brandRepos, request, response));
             } else if (isObjectRequest(request)) {
-                log.debug("isObjectRequest");
+                log.fine("isObjectRequest");
                 gitObjectHandler.handle(new GitObjectRequest(brandRepos, request, response));
             } else {
                 throw new NotFoundException("No handler for this URL: [" + request.getRequestURI() + "]");
@@ -152,15 +151,15 @@ public class RepoServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             if (!response.isCommitted()) {
-                log.error(e.getMessage(), e);
+                log.log(Level.SEVERE, e.getMessage(), e);
                 try {
                     response.sendError(404, e.getMessage());
                 } catch (Exception e1) {
-                    log.error("Exception sending error response to client", e);
+                    log.log(Level.SEVERE, "Exception sending error response to client", e);
                 }
             } else {
-                log.error("Response committed. Could not send error response back to client for exception [" + e.toString() + "]");
-                log.error(e.getMessage(), e);
+                log.severe("Response committed. Could not send error response back to client for exception [" + e.toString() + "]");
+                log.log(Level.SEVERE, e.getMessage(), e);
             }
         }
 
@@ -220,15 +219,15 @@ public class RepoServlet extends HttpServlet {
     private boolean isThreedModelRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String callback = request.getParameter("callback");
-        if(callback!=null) return false;
-        return (uri.endsWith(".json") || uri.endsWith(".js") ) && uri.contains("/3d/models/");
+        if (callback != null) return false;
+        return (uri.endsWith(".json") || uri.endsWith(".js")) && uri.contains("/3d/models/");
     }
 
     private boolean isThreedModelJsonpRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String callback = request.getParameter("callback");
-        if(callback==null) return false;
-        return (uri.endsWith(".json") || uri.endsWith(".js") ) && uri.contains("/3d/models/");
+        if (callback == null) return false;
+        return (uri.endsWith(".json") || uri.endsWith(".js")) && uri.contains("/3d/models/");
     }
 
     private boolean isObjectRequest(HttpServletRequest request) {

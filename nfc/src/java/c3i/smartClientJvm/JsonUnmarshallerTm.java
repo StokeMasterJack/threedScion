@@ -1,8 +1,10 @@
 package c3i.smartClientJvm;
 
 import com.google.common.io.Closeables;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import c3i.core.common.shared.SeriesKey;
@@ -33,7 +35,7 @@ public class JsonUnmarshallerTm {
         try {
             urlConnection.connect();
         } catch (IOException e) {
-            log.error("RepoClient - urlConnection.connect() failed for url[" + url + "] ", e);
+            log.log(Level.SEVERE,"RepoClient - urlConnection.connect() failed for url[" + url + "] ", e);
             throw e;
         }
 
@@ -74,7 +76,7 @@ public class JsonUnmarshallerTm {
 
     }
 
-    private static Log log = LogFactory.getLog(JsonUnmarshallerTm.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

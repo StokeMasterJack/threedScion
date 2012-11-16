@@ -8,7 +8,7 @@ import c3i.core.threedModel.shared.*;
 
 import c3i.smartClientJvm.JsonUnmarshallerTm;
 import c3i.smartClientJvm.RepoClient;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 import org.junit.Test;
 
 import java.net.URL;

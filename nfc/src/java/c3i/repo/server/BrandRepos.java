@@ -2,8 +2,8 @@ package c3i.repo.server;
 
 import c3i.core.common.shared.BrandKey;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 
 import java.io.File;
 import java.util.Map;
@@ -34,6 +34,6 @@ public class BrandRepos {
     }
 
 
-    private static Log log = LogFactory.getLog(BrandRepos.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 }

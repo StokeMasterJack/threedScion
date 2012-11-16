@@ -1,7 +1,7 @@
 package c3i.repo.server.rt;
 
 
-import smartsoft.util.date.Date;
+import smartsoft.util.Date;
 
 public class CommitTime {
 

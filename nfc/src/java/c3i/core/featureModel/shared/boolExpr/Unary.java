@@ -1,7 +1,7 @@
 package c3i.core.featureModel.shared.boolExpr;
 
 import c3i.core.featureModel.shared.AutoAssignContext;
-import smartsoft.util.lang.shared.ImmutableCollection;
+import smartsoft.util.shared.ImmutableCollection;
 
 import java.util.Collection;
 import java.util.Iterator;

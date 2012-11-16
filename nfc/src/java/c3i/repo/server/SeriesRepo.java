@@ -19,8 +19,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.InputSupplier;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -28,7 +28,7 @@ import org.dom4j.io.SAXReader;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.revwalk.RevCommit;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
@@ -321,5 +321,5 @@ public class SeriesRepo {
         return srcRepo.getInputSupplier(objectId);
     }
 
-    private static Log log = LogFactory.getLog(SeriesRepo.class);
+    private static Logger log = Logger.getLogger("c3i");
 }

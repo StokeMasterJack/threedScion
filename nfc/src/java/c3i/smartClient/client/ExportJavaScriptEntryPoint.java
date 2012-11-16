@@ -2,7 +2,7 @@ package c3i.smartClient.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import org.timepedia.exporter.client.ExporterUtil;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 public class ExportJavaScriptEntryPoint implements EntryPoint {
 
@@ -11,14 +11,14 @@ public class ExportJavaScriptEntryPoint implements EntryPoint {
         try {
             ExporterUtil.exportAll();
         } catch (Exception e) {
-            Console.log("Problem with gwt-export: " + e.toString());
+            log.log(Level.INFO, "Problem with gwt-export: " + e.toString());
             e.printStackTrace();
         }
 
         try {
             doOnThreedReady();
         } catch (Exception e) {
-            Console.log("Error in initThreed: " + e.toString());
+            log.log(Level.INFO, "Error in initThreed: " + e.toString());
             e.printStackTrace();
         }
 
@@ -37,5 +37,7 @@ public class ExportJavaScriptEntryPoint implements EntryPoint {
         }
     }-*/;
 
+
+    private static Logger log = Logger.getLogger(ExportJavaScriptEntryPoint.class.getName());
 
 }

@@ -1,7 +1,7 @@
 package c3i.util.shared.futures;
 
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.ExceptionRenderer;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.ExceptionRenderer;
 
 public class DefaultOnFailureFactory implements OnFailureFactory {
     @Override
@@ -10,7 +10,7 @@ public class DefaultOnFailureFactory implements OnFailureFactory {
             @Override
             public boolean onException(Throwable e) {
                 FutureFailure ee = new FutureFailure(exception);
-                Console.error(ExceptionRenderer.render(ee));
+                log.severe(ExceptionRenderer.render(ee));
                 ee.printStackTrace();
                 return true;
             }
@@ -22,4 +22,6 @@ public class DefaultOnFailureFactory implements OnFailureFactory {
             super(cause);
         }
     }
+
+    private static Logger log = Logger.getLogger(DefaultOnFailureFactory.class.getName());
 }

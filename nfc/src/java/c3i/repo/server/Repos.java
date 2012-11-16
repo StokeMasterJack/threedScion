@@ -25,15 +25,13 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.jgit.lib.ObjectId;
 import smartsoft.util.FileUtil;
-import smartsoft.util.lang.shared.RectSize;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.RectSize;
+import smartsoft.util.shared.Strings;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -46,8 +44,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class Repos {
 
@@ -190,9 +190,9 @@ public class Repos {
                 RootTreeId vtcRootTreeId = getVtcRootTreeId(seriesKey);
                 builder.put(seriesKey, vtcRootTreeId);
             } catch (UnableToResolveRevisionParameterException e) {
-                log.warn("Problem getting vtc RootTreeId for seriesKey[" + seriesKey + "]  - unable to resolve HEAD");
+                log.warning("Problem getting vtc RootTreeId for seriesKey[" + seriesKey + "]  - unable to resolve HEAD");
             } catch (Exception e) {
-                log.warn("Problem getting vtc RootTreeId for seriesKey[" + seriesKey + "]", e);
+                log.log(Level.WARNING, "Problem getting vtc RootTreeId for seriesKey[" + seriesKey + "]", e);
             }
 
         }
@@ -237,7 +237,7 @@ public class Repos {
                             baseImageType = BaseImageType.valueOf(sBaseImageType);
                         }
                     } catch (IllegalArgumentException e) {
-                        log.error("Problem reading baseImageType", e);
+                        log.log(Level.SEVERE,"Problem reading baseImageType", e);
                         baseImageType = BaseImageType.JPG;
                     }
                 } else {
@@ -318,7 +318,7 @@ public class Repos {
                     Integer seriesYear = new Integer(sSeriesYear);
                     seriesNameWithYears.addYear(seriesYear);
                 } catch (NumberFormatException e) {
-                    log.warn("Found a non-int directory name [" + sSeriesYear + "] for a seriesYear in folder [" + seriesNameDir + "]");
+                    log.warning("Found a non-int directory name [" + sSeriesYear + "] for a seriesYear in folder [" + seriesNameDir + "]");
                 }
             }
 
@@ -329,7 +329,7 @@ public class Repos {
         return seriesNamesWithYears;
     }
 
-    private static Log log = LogFactory.getLog(Repos.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     private static FileFilter seriesDirFilter = new FileFilter() {
         @Override
@@ -351,7 +351,7 @@ public class Repos {
         File pngFile = genRepo.getZPngFileName(pngKey);
 
         if (!pngFile.exists()) {
-            log.warn("Creating fallback zPng on the fly: " + pngFile);
+            log.warning("Creating fallback zPng on the fly: " + pngFile);
             createZPngOnTheFly(width, sk, pngKey);
 
             if (!pngFile.exists()) {
@@ -373,7 +373,7 @@ public class Repos {
         File jpgFile = genRepo.getBaseImageFileName(jpgKey);
 
         if (!jpgFile.exists()) {
-            log.warn("Creating fallback jpg on the fly: " + jpgFile);
+            log.warning("Creating fallback jpg on the fly: " + jpgFile);
             createJpgOnTheFly(jpgKey);
 
             if (!jpgFile.exists()) {

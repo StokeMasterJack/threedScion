@@ -8,6 +8,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class BlinkCheckin {
 
@@ -25,12 +26,12 @@ public class BlinkCheckin {
     }
 
     private static void indexBlinks(Repository repository, File blinksDir, File workDir, RevCommit revCommit) throws IOException {
-        log.debug("Indexing blinks from dir [" + workDir + "]");
+        log.fine("Indexing blinks from dir [" + workDir + "]");
         for (File file : workDir.listFiles()) {
             if (file.isDirectory() && !file.getName().contains(".git")) {
                 indexBlinks(repository, blinksDir, file, revCommit);
             } else if (file.getName().endsWith("_w.png")) {
-                log.debug("Found blink png [" + file + "]");
+                log.fine("Found blink png [" + file + "]");
                 saveBlink(repository, blinksDir, revCommit, file);
             }
         }
@@ -55,11 +56,11 @@ public class BlinkCheckin {
             File newCopy = new File(blinksDir, pngShortSha.stringValue() + ".png");
 
             if (!newCopy.exists()) {
-                log.debug("Copying blink png from [" + wPngFileFromWork + "] to [" + newCopy + "]");
+                log.fine("Copying blink png from [" + wPngFileFromWork + "] to [" + newCopy + "]");
                 Files.copy(wPngFileFromWork, newCopy);
             }
         } else {
-            log.error("Could not resolve blink png revisionParameter [" + revisionParameter + "]");
+            log.severe("Could not resolve blink png revisionParameter [" + revisionParameter + "]");
         }
     }
 
@@ -67,5 +68,5 @@ public class BlinkCheckin {
         return in.substring(0, in.length() - 6) + ".png";
     }
 
-    private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(BlinkCheckin.class);
+    private static final Logger log = Logger.getLogger("c3i");
 }

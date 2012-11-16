@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 //import c3i.skin.common.client.PreviewPanelStyles;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;

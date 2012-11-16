@@ -1,7 +1,7 @@
 package c3i.repo.shared;
 
 import c3i.core.threedModel.shared.RootTreeId;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 /**
  * jgit calls this a:

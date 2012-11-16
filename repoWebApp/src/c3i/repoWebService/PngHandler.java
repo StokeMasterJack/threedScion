@@ -5,9 +5,9 @@ import c3i.core.imageModel.shared.PngSegment;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import smartsoft.util.date.Date;
+import java.util.logging.Logger;
+
+import smartsoft.util.Date;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
@@ -33,7 +33,7 @@ public class PngHandler extends RepoHandler<PngRequest> {
     @Override
     public void handle(PngRequest repoRequest) {
 
-        log.debug("Received request for [" + repoRequest.getRequest().getRequestURI() + "]");
+        log.fine("Received request for [" + repoRequest.getRequest().getRequestURI() + "]");
 
         SeriesKey seriesKey = repoRequest.getSeriesKey();
         PngSegment pngKey = repoRequest.getPngKey();
@@ -63,7 +63,7 @@ public class PngHandler extends RepoHandler<PngRequest> {
 
     }
 
-    protected static Log log = LogFactory.getLog(PngHandler.class);
+    protected static Logger log = Logger.getLogger(PngHandler.class.getName());
 
 
 }

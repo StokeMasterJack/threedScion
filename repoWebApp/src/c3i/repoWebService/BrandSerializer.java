@@ -10,7 +10,7 @@ import c3i.core.threedModel.shared.VtcMap;
 import com.google.common.collect.ImmutableList;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.RectSize;
 
 import java.util.List;
 

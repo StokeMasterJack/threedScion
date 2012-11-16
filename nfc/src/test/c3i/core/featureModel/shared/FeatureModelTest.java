@@ -7,7 +7,7 @@ import c3i.core.featureModel.data.Camry2011;
 import c3i.core.featureModel.data.TrimColor;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.picks.Picks;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayOutputStream;

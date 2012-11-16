@@ -13,7 +13,7 @@ import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 
@@ -57,7 +57,7 @@ public class SeriesPanel extends SplitLayoutPanel implements TabAware {
         seriesFuture.failure(new OnException() {
             @Override
             public boolean onException(Throwable e) {
-                Console.error(e);
+                log.log(Level.SEVERE, "error", e);
                 e.printStackTrace();
                 return false;
             }
@@ -152,4 +152,6 @@ public class SeriesPanel extends SplitLayoutPanel implements TabAware {
     public void toggleStatusPanel(){
         threedAdminPanel.toggleStatusPanel();
     }
+
+    private static Logger log = Logger.getLogger(SeriesPanel.class.getName());
 }

@@ -1,6 +1,6 @@
 package c3i.admin.shared;
 
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 import c3i.admin.client.SeriesPickList;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.imageModel.shared.Profiles;

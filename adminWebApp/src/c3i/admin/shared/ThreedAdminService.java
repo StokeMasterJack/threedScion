@@ -1,17 +1,18 @@
 package c3i.admin.shared;
 
-import com.google.gwt.rpc.client.RpcService;
 import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
-import c3i.repo.shared.*;
 import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.common.shared.SeriesKey;
+import c3i.repo.shared.CommitHistory;
+import c3i.repo.shared.RepoHasNoHeadException;
+import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * These are the ThreedAdminService remote calls that use gwt-rpc
  */
-public interface ThreedAdminService extends RpcService {
+public interface ThreedAdminService extends RemoteService {
 
     BrandInit getInitData(BrandKey brandKey);
 

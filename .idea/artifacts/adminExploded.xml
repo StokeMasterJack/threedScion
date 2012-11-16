@@ -5,19 +5,21 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="nfc" />
-          <element id="module-output" name="util" />
           <element id="module-output" name="adminWebApp" />
+          <element id="module-output" name="ut" />
+          <element id="module-output" name="repoWebApp" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="application" name="imgscalr-lib-4.2" />
           <element id="library" level="application" name="org.eclipse.jgit-1.1.0" />
           <element id="library" level="application" name="dom4j-1.6.1" />
           <element id="library" level="application" name="jsr305" />
-          <element id="library" level="application" name="commons-logging-1" />
           <element id="library" level="application" name="com.google.guava:guava:13.0.1" />
-          <element id="library" level="application" name="gwt-servlet-2.4" />
-          <element id="library" level="application" name="log4j" />
           <element id="library" level="application" name="jackson-1.8.1" />
+          <element id="library" level="application" name="com.google.gwt:gwt-servlet:2.5.0" />
+          <element id="file-copy" path="$daven$/mvn/gwt-user-2.5.0.jar" />
+          <element id="file-copy" path="$daven$/mvn/json-20090211.jar" />
+          <element id="file-copy" path="$daven$/mvn/validation-api-1.0.0.GA.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="adminWebApp/web/Web" />

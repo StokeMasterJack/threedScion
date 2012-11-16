@@ -4,13 +4,12 @@ import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.Brand;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 /**
  * <repo-base>/configurator-content/avalon/2011/vtc.txt
@@ -57,8 +56,8 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
             jsonString = callback + "(" + jsonString + ");";
         }
 
-        log.debug("About to server brandInit: ");
-        log.debug(jsonString);
+        log.fine("About to server brandInit: ");
+        log.fine(jsonString);
 
         try {
             PrintWriter out = response.getWriter();
@@ -69,7 +68,7 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
     }
 
 
-    private static Log log = LogFactory.getLog(VtcMapHandler.class);
+    private static Logger log = Logger.getLogger(VtcMapHandler.class.toString());
 
 
 }

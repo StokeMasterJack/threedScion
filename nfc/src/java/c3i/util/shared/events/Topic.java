@@ -1,6 +1,6 @@
 package c3i.util.shared.events;
 
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public abstract class Topic<LT> {
                 try {
                     sendInternal(listener, args);
                 } catch (Throwable e) {
-                    Console.error(e);
+                    log.log(Level.SEVERE, "error", e);
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
@@ -62,5 +62,6 @@ public abstract class Topic<LT> {
         return listeners.size();
     }
 
+    private static Logger log = Logger.getLogger(Topic.class.getName());
 
 }

@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import c3i.util.shared.futures.Completer;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import c3i.util.shared.events.ChangeListener;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
@@ -149,7 +149,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
             Preconditions.checkNotNull(newKey);
             fixedPicks.setKey(newKey);
         } catch (Throwable e) {
-            Console.error(e);
+            log.log(Level.SEVERE, "error", e);
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -233,4 +233,6 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
     public boolean isEmpty() {
         return fixedPicks.isEmpty();
     }
+
+    private static Logger log = Logger.getLogger(CurrentUiPicks.class.getName());
 }

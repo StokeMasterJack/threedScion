@@ -4,7 +4,7 @@ import c3i.core.featureModel.shared.boolExpr.*;
 
 import java.util.LinkedHashSet;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 /**
  *

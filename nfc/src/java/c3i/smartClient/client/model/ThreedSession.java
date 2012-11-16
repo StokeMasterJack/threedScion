@@ -21,11 +21,11 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
 import smartsoft.util.gwt.client.Browser;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import java.util.List;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 /**
  * A threedSession maintains current values for user picks, view and angle.

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Profiles implements Serializable {
 

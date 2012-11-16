@@ -19,8 +19,8 @@ import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.admin.shared.jpgGen.JobState;
 import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.repo.server.Repos;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.junit.Before;
 import org.junit.Test;
 import sun.misc.VM;
@@ -250,7 +250,7 @@ public class MasterTest implements TestConstants {
 
     }
 
-    private static Log log = LogFactory.getLog(MasterTest.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

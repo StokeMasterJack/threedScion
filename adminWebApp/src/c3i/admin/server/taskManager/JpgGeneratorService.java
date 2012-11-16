@@ -10,8 +10,8 @@ import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import com.google.common.util.concurrent.AbstractIdleService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 
@@ -31,7 +31,7 @@ public class JpgGeneratorService extends AbstractIdleService {
 
     public Master startNewJpgJob(JobSpec jobSpec, int threadCount, int priority) throws EquivalentJobAlreadyRunningException {
         if (isThereAlreadyAnOpenJobWithThisSpec(jobSpec)) {
-            log.error("AlreadyRunningException");
+            log.severe("AlreadyRunningException");
             throw new EquivalentJobAlreadyRunningException();
         }
 
@@ -113,7 +113,7 @@ public class JpgGeneratorService extends AbstractIdleService {
         }
     }
 
-    private static Log log = LogFactory.getLog(JpgGeneratorService.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     @Override
     protected void startUp() throws Exception {

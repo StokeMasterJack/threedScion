@@ -1,6 +1,6 @@
 package c3i.core.imageModel.shared;
 
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 import c3i.core.threedModel.shared.Angle;
 
 import javax.annotation.Nonnull;

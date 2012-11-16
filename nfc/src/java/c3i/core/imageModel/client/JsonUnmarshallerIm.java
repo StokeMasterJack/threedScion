@@ -14,9 +14,9 @@ import c3i.core.threedModel.shared.SeriesInfo;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Logger;
+
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class JsonUnmarshallerIm {
     ImView parseView(JSONObject jsView, int iv) {
         JSONValue jsName = jsView.get("name");
         if(jsName==null){
-            Console.error("jsView json node does not have a viewName: " + jsView);
+            log.severe("jsView json node does not have a viewName: " + jsView);
             throw new IllegalStateException("jsView json node does not have a viewName: " + jsView);
         }
         String name = jsName.isString().stringValue();
@@ -112,9 +112,9 @@ public class JsonUnmarshallerIm {
         } else if (jsFeatureOrPng.isArray() != null) {
             return parsePng(depth, jsFeatureOrPng.isArray());
         } else {
-            Console.error("jsFeatureOrPng should be a Object or an Array. This is not either: ");
-            Console.error("\t jsFeatureOrPng: [" + jsFeatureOrPng + "]");
-            Console.error("\t jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
+            log.log(Level.SEVERE,"jsFeatureOrPng should be a Object or an Array. This is not either: ");
+            log.log(Level.SEVERE,"\t jsFeatureOrPng: [" + jsFeatureOrPng + "]");
+            log.log(Level.SEVERE,"\t jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
             throw new IllegalArgumentException("jsFeatureOrPng should be a Object or an Array: ");
         }
 
@@ -141,5 +141,6 @@ public class JsonUnmarshallerIm {
         return new ImFeature(depth, var, imFeatureOrPngs);
     }
 
+    private static Logger log = Logger.getLogger(JsonUnmarshallerIm.class.getName());
 
 }

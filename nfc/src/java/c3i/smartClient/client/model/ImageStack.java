@@ -8,7 +8,7 @@ import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.imageModel.shared.AngleKey;
 import c3i.core.imageModel.shared.CoreImageStack;

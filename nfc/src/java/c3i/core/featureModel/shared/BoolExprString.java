@@ -1,12 +1,11 @@
 package c3i.core.featureModel.shared;
 
 
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import java.util.ArrayList;
 
-import static smartsoft.util.lang.shared.Strings.containsWhitespace;
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 
 public class BoolExprString {
@@ -44,7 +43,7 @@ public class BoolExprString {
 
         if (defaultOperator == null) {
             this.expr = normalizeWhitespace(expr);
-            assert !contansWhitespace();
+            assert !containsWhitespace();
         } else {
             this.expr = normalizeWhitespace(expr).replace(' ', defaultOperator.getSymbol());
         }
@@ -83,8 +82,8 @@ public class BoolExprString {
         return retVal;
     }
 
-    public boolean contansWhitespace() {
-        return smartsoft.util.lang.shared.Strings.containsWhitespace(expr);
+    public boolean containsWhitespace() {
+        return smartsoft.util.shared.Strings.containsWhitespace(expr);
     }
 
 
@@ -159,7 +158,7 @@ public class BoolExprString {
 
     public Literal parseLiteral() {
         assert !isEmpty(expr);
-        assert !containsWhitespace(expr);
+        assert !Strings.containsWhitespace(expr);
 
         if (expr.startsWith("!")) {
             if (expr.length() < 2) throw new IllegalArgumentException();

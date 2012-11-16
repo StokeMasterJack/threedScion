@@ -21,14 +21,14 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 public class LayersPanel extends FlowPanel {
 
@@ -70,7 +70,7 @@ public class LayersPanel extends FlowPanel {
         viewsSession.imageMode().addChangeListener(new ChangeListener<ImageMode>() {
             @Override
             public void onChange(ImageMode newValue) {
-                Console.log("ImageMode changed");
+                log.log(Level.INFO, "ImageMode changed");
                 refresh();
                 //                statusPanel.refresh();
             }
@@ -87,7 +87,7 @@ public class LayersPanel extends FlowPanel {
         viewSession.getLayerState().addChangeListener(new ChangeListener<LayerState>() {
             @Override
             public void onChange(LayerState newValue) {
-                Console.log("LayerState changed");
+                log.log(Level.INFO, "LayerState changed");
                 refresh();
             }
         });
@@ -256,6 +256,8 @@ public class LayersPanel extends FlowPanel {
     private void refreshInvalidBuild() {
         assert model.isInvalidBuild();
     }
+
+    private static Logger log = Logger.getLogger(LayersPanel.class.getName());
 
 }
 

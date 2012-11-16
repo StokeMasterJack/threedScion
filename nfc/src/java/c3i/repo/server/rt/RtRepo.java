@@ -16,8 +16,8 @@ import c3i.repo.server.TwoThirty8;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectStream;
 import smartsoft.util.FileUtil;
@@ -113,7 +113,7 @@ public class RtRepo implements BlinkChecker {
 //                    }
 
 
-    private static Log log = LogFactory.getLog(RtRepo.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
     public boolean isEmptyPng(String fullFileName, ObjectId fullPngSha, InputSupplier<? extends InputStream> content) {
@@ -124,7 +124,7 @@ public class RtRepo implements BlinkChecker {
             File notEmptyPngFile = new File(notEmptyPngDir, fullPngSha.getName());
 
             if (emptyPngFile.exists()) {
-                log.debug("emptyPngFile exists for[" + fullFileName + "]");
+                log.fine("emptyPngFile exists for[" + fullFileName + "]");
                 return true;
             } else if (notEmptyPngFile.exists()) {
                 return false;
@@ -132,7 +132,7 @@ public class RtRepo implements BlinkChecker {
                 boolean emptyPng = ImageUtil.isEmptyPng(fullFileName, content);
 
                 if (emptyPng) {
-                    log.debug("ImageUtil.isEmptyPng for[" + fullFileName + "]");
+                    log.fine("ImageUtil.isEmptyPng for[" + fullFileName + "]");
                     Files.createParentDirs(emptyPngFile);
                     Files.touch(emptyPngFile);
                     return true;

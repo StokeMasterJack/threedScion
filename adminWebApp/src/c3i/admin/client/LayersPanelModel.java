@@ -2,7 +2,7 @@ package c3i.admin.client;
 
 import c3i.core.imageModel.shared.PngSpec;
 import c3i.smartClient.client.model.LayerState;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.imageModel.shared.ImLayer;
 import c3i.core.imageModel.shared.ImView;
@@ -58,7 +58,7 @@ public class LayersPanelModel {
     }
 
     public void toggleLayer(final ImLayer layer) {
-        Console.log("LayersPanelModel.toggleLayer");
+        log.log(Level.INFO, "LayersPanelModel.toggleLayer");
         LayerState m = viewSession.getLayerState();
         m.toggleLayer(layer);
     }
@@ -80,4 +80,6 @@ public class LayersPanelModel {
     public boolean isValidBuild() {
         return !isInvalidBuild();
     }
+
+    private static Logger log = Logger.getLogger(LayersPanelModel.class.getName());
 }

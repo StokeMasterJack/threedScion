@@ -31,11 +31,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import java.util.Set;
 
-import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+import static smartsoft.util.shared.GwtSafe.getSimpleName;
 
 //import com.google.gwt.user.client.ui.ScrollPanel;
 

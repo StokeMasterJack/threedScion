@@ -13,7 +13,7 @@ import c3i.smartClient.client.model.ViewsSession;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.AsyncKeyValue;
 import c3i.util.shared.futures.RWValue;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import java.util.Set;
 

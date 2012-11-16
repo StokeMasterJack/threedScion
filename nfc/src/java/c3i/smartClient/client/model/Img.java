@@ -14,7 +14,7 @@ import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -62,7 +62,7 @@ public class Img implements Exportable {
             imageElement = Document.get().createImageElement();
             Event.setEventListener(imageElement, domEventListener);
             Event.sinkEvents(imageElement, Event.ONLOAD | Event.ONERROR);
-//            Console.log("loading: " + url);
+//            log.log(Level.INFO, "loading: " + url);
             cache.put(url,imageElement);
             this.imageElement.setSrc(url.toString());  //start loading
         }

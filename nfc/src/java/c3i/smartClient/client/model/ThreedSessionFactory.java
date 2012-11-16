@@ -18,8 +18,8 @@ import com.google.common.base.Preconditions;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.Path;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 
@@ -44,12 +44,12 @@ public class ThreedSessionFactory implements Exportable {
 
     @Export
     public ThreedSessionFactory() {
-        Console.log("ThreedSessionFactory.ThreedSessionFactory");
+        log.log(Level.INFO, "ThreedSessionFactory.ThreedSessionFactory");
     }
 
     @Export
     public void setProfileKey(String profileKey) {
-        Console.log("profileKey = " + profileKey);
+        log.log(Level.INFO, "profileKey = " + profileKey);
         Preconditions.checkArgument(notEmpty(profileKey));
         this.profileKey = profileKey;
     }
@@ -96,7 +96,7 @@ public class ThreedSessionFactory implements Exportable {
             SeriesKey sk = new SeriesKey(brandKey, seriesYear + "", seriesName);
             this.setSeriesKey(sk);
         } catch (IllegalArgumentException e) {
-            Console.error("Problem calling setSeries", e);
+            log.log(Level.SEVERE,"Problem calling setSeries", e);
             throw e;
         }
     }
@@ -112,11 +112,11 @@ public class ThreedSessionFactory implements Exportable {
      */
     @Export
     public ThreedSessionFuture createSession() {
-        Console.log("ThreedSessionFactory.createSession start");
+        log.log(Level.INFO, "ThreedSessionFactory.createSession start");
 
-        Console.log("seriesKey = " + seriesKey);
-        Console.log("profileKey = " + profileKey);
-        Console.log("repoBaseUrl = " + repoBaseUrl);
+        log.log(Level.INFO, "seriesKey = " + seriesKey);
+        log.log(Level.INFO, "profileKey = " + profileKey);
+        log.log(Level.INFO, "repoBaseUrl = " + repoBaseUrl);
 
         try {
             if (seriesKey == null)
@@ -167,7 +167,7 @@ public class ThreedSessionFactory implements Exportable {
 //            return new ForwardingFuture<ThreedSession>(future);
             return new ThreedSessionFuture(future);
         } catch (Exception e) {
-            Console.error("Problem in createSession", e);
+            log.log(Level.SEVERE,"Problem in createSession", e);
             throw new RuntimeException(e);
         }
 
@@ -198,5 +198,5 @@ public class ThreedSessionFactory implements Exportable {
         }
     }
 
-
+    private static Logger log = Logger.getLogger(ThreedSessionFactory.class.getName());
 }

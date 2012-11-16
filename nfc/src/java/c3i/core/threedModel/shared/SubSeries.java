@@ -1,6 +1,6 @@
 package c3i.core.threedModel.shared;
 
-import static smartsoft.util.lang.shared.Strings.nullNormalize;
+import static smartsoft.util.shared.Strings.nullNormalize;
 
 public class SubSeries {
 

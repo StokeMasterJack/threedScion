@@ -25,8 +25,10 @@ import c3i.repo.server.rt.RtRepo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import smartsoft.util.servlet.ExceptionRenderer;
 
 import java.io.File;
@@ -165,12 +167,12 @@ public class Master {
                         masterTask.awaitDoneDeep();
                         return TerminalStatus.Complete;
                     } catch (ExecutionException e) {
-                        log.error("ExecutionException", e.getCause());
+                        log.log(Level.SEVERE, "ExecutionException", e.getCause());
                         return TerminalStatus.exception(e);
                     } catch (InterruptedException e) {
                         return TerminalStatus.Cancelled;
                     } catch (Throwable e) {
-                        log.error("Unexpected exception", e);
+                        log.log(Level.SEVERE, "Unexpected exception", e);
                         return TerminalStatus.exception(e);
                     }
                 }
@@ -515,7 +517,7 @@ public class Master {
     }
 
 
-    private static Log log = LogFactory.getLog(Master.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     public SeriesId getSeriesId() {
         return seriesId;

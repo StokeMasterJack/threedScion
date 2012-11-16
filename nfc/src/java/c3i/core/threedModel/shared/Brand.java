@@ -7,7 +7,7 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.Profiles;
 import com.google.common.base.Preconditions;
 
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Brand {
 

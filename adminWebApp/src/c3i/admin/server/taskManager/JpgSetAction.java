@@ -2,8 +2,8 @@ package c3i.admin.server.taskManager;
 
 import c3i.admin.server.JpgSet;
 import c3i.repo.server.Repos;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 
 import java.io.File;
 
@@ -49,7 +49,7 @@ public class JpgSetAction {
     }
 
 
-    private static Log log = LogFactory.getLog(JpgSetAction.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

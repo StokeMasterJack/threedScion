@@ -10,18 +10,19 @@ import c3i.core.featureModel.shared.boolExpr.Iff;
 import c3i.core.featureModel.shared.boolExpr.Imp;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.common.shared.SeriesKey;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.dom4j.Element;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
+
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 /**
  * Not thread safe. Use and throw away
@@ -73,7 +74,7 @@ public class XmlToFmJvm {
     }
 
     private FeatureModel buildModel(SeriesKey seriesKey, String seriesDisplayName, int seriesYear, Element featuresElement) {
-        //log.debug("creating FeatureModel from XML Document");
+        //log.fine("creating FeatureModel from XML Document");
         this.seriesKey = seriesKey;
         this.seriesDisplayName = seriesDisplayName;
         this.seriesYear = seriesYear;
@@ -247,7 +248,7 @@ public class XmlToFmJvm {
 
         if (isEmpty(varCode)) {
             String msg = "FeatureElement [" + childElement.getPath() + "] is missing required attribute 'code'";
-            log.error(msg);
+            log.severe(msg);
             throw new IllegalStateException(msg);
         }
 
@@ -288,6 +289,6 @@ public class XmlToFmJvm {
     }
 
 
-    private static final Log log = LogFactory.getLog(XmlToFmJvm.class);
+    private final static Logger log = Logger.getLogger("c3i");
 
 }

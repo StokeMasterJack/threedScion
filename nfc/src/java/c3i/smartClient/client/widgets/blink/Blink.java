@@ -3,7 +3,7 @@ package c3i.smartClient.client.widgets.blink;
 import c3i.core.threedModel.shared.JpgWidth;
 import c3i.smartClient.client.skins.bytSkin.chatPanel.ChatInfo;
 import smartsoft.util.gwt.client.Browser;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;

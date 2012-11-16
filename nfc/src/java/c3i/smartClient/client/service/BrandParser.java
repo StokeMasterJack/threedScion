@@ -14,11 +14,11 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.RectSize;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class BrandParser {
 
@@ -81,13 +81,13 @@ public class BrandParser {
     private RectSize parseImage(JSONObject json) {
         JSONValue jsWidth = json.get("w");
         if (jsWidth == null) {
-            Console.error("imageSize.w is null in profile");
+            log.severe("imageSize.w is null in profile");
             throw new IllegalStateException();
         }
 
         JSONValue jsHeight = json.get("h");
         if (jsHeight == null) {
-            Console.error("imageSize.h is null in profile");
+            log.severe("imageSize.h is null in profile");
             throw new IllegalStateException();
         }
 
@@ -100,5 +100,7 @@ public class BrandParser {
         String s = json.stringValue();
         return BaseImageType.valueOf(s);
     }
+
+    private static Logger log = Logger.getLogger(BrandParser.class.getName());
 
 }

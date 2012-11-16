@@ -3,7 +3,7 @@ package c3i.core.featureModel.shared;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.ReassignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;

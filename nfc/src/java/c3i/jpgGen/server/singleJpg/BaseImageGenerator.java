@@ -10,8 +10,8 @@ import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
 import org.imgscalr.Scalr;
@@ -178,7 +178,7 @@ public class BaseImageGenerator {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    log.warn("Problem closing file [" + getOutputFile() + "]");
+                    log.warning("Problem closing file [" + getOutputFile() + "]");
                 }
             }
         }
@@ -209,7 +209,7 @@ public class BaseImageGenerator {
 
     }
 
-    private static Log log = LogFactory.getLog(BaseImageGenerator.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     private File getOutputFile() {
         RtRepo genRepo = seriesRepo.getRtRepo();

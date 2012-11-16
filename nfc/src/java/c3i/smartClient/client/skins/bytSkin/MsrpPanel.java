@@ -4,11 +4,11 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.InlineLabel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class MsrpPanel extends FlowPanel {
 
@@ -51,7 +51,7 @@ public class MsrpPanel extends FlowPanel {
         } else {
             msrpValue.setText("$??,???");
             this.setVisible(false);
-            Console.log("Invalid MSRP[" + msrp + "]");
+            log.log(Level.INFO, "Invalid MSRP[" + msrp + "]");
         }
     }
 
@@ -59,4 +59,6 @@ public class MsrpPanel extends FlowPanel {
         assert msrp != null;
         return msrp.length() > 3;
     }
+
+    private static Logger log = Logger.getLogger(MsrpPanel.class.getName());
 }

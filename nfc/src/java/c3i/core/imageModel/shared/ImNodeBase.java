@@ -1,7 +1,7 @@
 package c3i.core.imageModel.shared;
 
-import smartsoft.util.lang.shared.Path;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Path;
+import smartsoft.util.shared.Strings;
 
 abstract public class ImNodeBase implements ImNode {
 

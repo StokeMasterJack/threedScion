@@ -6,7 +6,7 @@ import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.shared.Slice;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

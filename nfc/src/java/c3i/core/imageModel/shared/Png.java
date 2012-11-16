@@ -1,6 +1,6 @@
 package c3i.core.imageModel.shared;
 
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
 

@@ -1,7 +1,7 @@
 package c3i.core.threedModel.client;
 
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.Path;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.Path;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.core.featureModel.client.JsonUnmarshallerFm;
 import c3i.core.featureModel.shared.FeatureModel;
@@ -21,7 +21,7 @@ public class JsonUnmarshallerTm {
         if (jsModelFromJsInPage == null) {
             throw new IllegalStateException("getJsModelFromJsInPage() returned null. See html comments for more details.");
         } else {
-            Console.log("Pulled jsModelFromJsInPage from jsp page");
+            log.log(Level.INFO, "Pulled jsModelFromJsInPage from jsp page");
         }
 
         ThreedModel threedModel = createModelFromJs(jsModelFromJsInPage);
@@ -46,7 +46,7 @@ public class JsonUnmarshallerTm {
         if (jsRepoBaseUrl == null) {
             throw new IllegalStateException("getJsRepoBaseUrl() returned null. See html comments for more details.");
         } else {
-            Console.log("Pulled repoBaseDir[" + jsRepoBaseUrl + "] from jsp page");
+            log.log(Level.INFO, "Pulled repoBaseDir[" + jsRepoBaseUrl + "] from jsp page");
         }
 
         return new Path(jsRepoBaseUrl);
@@ -103,5 +103,6 @@ public class JsonUnmarshallerTm {
         return new ThreedModel(featureModel, imSeries);
     }
 
+    private static Logger log = Logger.getLogger(JsonUnmarshallerTm.class.getName());
 
 }

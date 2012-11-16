@@ -8,7 +8,7 @@ import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
@@ -68,14 +68,14 @@ public class FinalStatsDialog extends MyDialogBox {
 
         setWidget(fp);
 
-        Console.log("Fetching stats...");
+        log.log(Level.INFO, "Fetching stats...");
 
         Req<Stats> request = service.getJpgGenFinalStats(jobId);
         request.onSuccess = new SuccessCallback<Stats>() {
 
             @Override
             public void call(Req<Stats> r) {
-                Console.log("Fetching stats complete!");
+                log.log(Level.INFO, "Fetching stats complete!");
                 refresh(r.result);
             }
         };
@@ -112,4 +112,5 @@ public class FinalStatsDialog extends MyDialogBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getDecimalFormat();
 
 
+    private static Logger log = Logger.getLogger(FinalStatsDialog.class.getName());
 }

@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.GwtEvent;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
 

@@ -14,8 +14,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.JGitText;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
@@ -58,7 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class SrcRepo {
 
@@ -313,7 +315,7 @@ public class SrcRepo {
             headId = repo.resolve(Constants.HEAD);
             if (headId == null) return null;
         } catch (IOException e) {
-            log.error("Problem resolving HEAD commit for repo[" + seriesKey + "]");
+            log.severe("Problem resolving HEAD commit for repo[" + seriesKey + "]");
             throw new RuntimeException(e);
         }
 
@@ -398,7 +400,7 @@ public class SrcRepo {
 
         RevCommit startRevCommit = getRevCommitEager(startCommitId);
         if (startRevCommit == null) {
-            log.error("Problem retrieving RevCommit for repo[" + seriesKey + "]");
+            log.severe("Problem retrieving RevCommit for repo[" + seriesKey + "]");
             throw new RuntimeException("Problem retrieving RevCommit for repo[" + seriesKey + "]  getRevCommitEager returned null");
         }
 
@@ -428,7 +430,8 @@ public class SrcRepo {
                 throw new RuntimeException("Problem reading vtcVersion from file [" + vtcFile.getAbsolutePath() + "]", e);
             }
         } else {
-            log.warn("No vtc file for [" + this.seriesKey + "]");
+            log.warning("No vtc file for [" + this.seriesKey + "]");
+
             RootTreeId rootTreeId = resolveHeadRootTreeId();
             setVtcRootTreeId(rootTreeId);
             return rootTreeId;
@@ -844,15 +847,16 @@ public class SrcRepo {
     }
 
     public RevCommit addAllAndCommit(String commitMessage) throws NoFilepatternException, NoHeadException, UnmergedPathException, NoMessageException, ConcurrentRefUpdateException, WrongRepositoryStateException {
-        log.debug("addAllAndCommit   seriesKey[" + seriesKey + "]  commitMessage[" + commitMessage + "]");
+        log.fine("addAllAndCommit   seriesKey[" + seriesKey + "]  commitMessage[" + commitMessage + "]");
 
-        log.debug("\t addAll....");
+        log.fine("\t addAll....");
         addAll();
-        log.debug("\t addAll complete!");
+        log.fine("\t addAll complete!");
 
-        log.debug("\t commitAll....");
+        log.fine("\t commitAll....");
         RevCommit revCommit = commitAll(commitMessage);
-        log.debug("\t commitAll complete!");
+        log.fine("\t commitAll complete!");
+
 
         return revCommit;
     }
@@ -865,7 +869,7 @@ public class SrcRepo {
 //    }
 
 
-    private static Log log = LogFactory.getLog(SrcRepo.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     public ObjectId toGitObjectId(FullSha objectId) {
         return ObjectId.fromString(objectId.getName());

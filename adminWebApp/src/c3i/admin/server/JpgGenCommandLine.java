@@ -15,8 +15,8 @@ import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import smartsoft.util.CommandLineArgs;
 import smartsoft.util.Sys;
 
@@ -125,7 +125,7 @@ public class JpgGenCommandLine {
 
     }
 
-    private static Log log = LogFactory.getLog(JpgGenCommandLine.class);
+
 
 
     public static class Args extends CommandLineArgs {
@@ -205,6 +205,8 @@ public class JpgGenCommandLine {
 
 
     }
+
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

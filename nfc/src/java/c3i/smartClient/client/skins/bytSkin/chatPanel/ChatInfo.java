@@ -1,6 +1,6 @@
 package c3i.smartClient.client.skins.bytSkin.chatPanel;
 
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 public class ChatInfo {
 

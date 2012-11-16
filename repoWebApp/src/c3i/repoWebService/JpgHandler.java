@@ -1,21 +1,18 @@
 package c3i.repoWebService;
 
-import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.BaseImageType;
 import c3i.core.threedModel.shared.BaseImageKey;
 import c3i.repo.server.BrandRepos;
+import c3i.repo.server.Repos;
 import com.google.common.io.Files;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
-import c3i.repo.server.Repos;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class JpgHandler extends RepoHandler<JpgRequest> {
 
@@ -25,7 +22,7 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
     @Override
     public void handle(JpgRequest r) {
-        log.debug("Received request for [" + r.getRequest().getRequestURI() + "]");
+        log.fine("Received request for [" + r.getRequest().getRequestURI() + "]");
 
         BaseImageKey jpgKey = r.getBaseImageKey();
 
@@ -76,7 +73,7 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
     }
 
 
-    protected static Log log = LogFactory.getLog(JpgHandler.class);
+    protected static Logger log = Logger.getLogger(JpgHandler.class.getName());
 
 
 }

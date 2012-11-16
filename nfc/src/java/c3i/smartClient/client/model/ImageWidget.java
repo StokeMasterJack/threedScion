@@ -6,8 +6,8 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
-import smartsoft.util.lang.shared.Path;
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.Path;
+import smartsoft.util.shared.RectSize;
 
 public class ImageWidget extends Widget {
 

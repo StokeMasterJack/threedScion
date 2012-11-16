@@ -13,7 +13,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 public class ThreedAdminClient {
 

@@ -5,8 +5,8 @@ import smartsoft.util.servlet.shared.QueryString;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Place {
 

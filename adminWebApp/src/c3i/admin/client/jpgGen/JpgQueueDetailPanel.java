@@ -6,7 +6,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 import c3i.admin.shared.jpgGen.ExecutorStatus;
@@ -136,7 +136,7 @@ public class JpgQueueDetailPanel extends DockLayoutPanel implements TabAware{
             public void call(Req<ArrayList<ExecutorStatus>> r) {
                 ArrayList<ExecutorStatus> result = r.result;
                 if (result == null || result.size() == 0) {
-                    Console.log("Job no longer valid");
+                    log.log(Level.INFO, "Job no longer valid");
                     afterClose();
                 } else {
                     table.setRowCount(result.size());
@@ -168,4 +168,6 @@ public class JpgQueueDetailPanel extends DockLayoutPanel implements TabAware{
     public TabLabel getTabLabel() {
         return new TabLabel("Job Detail");
     }
+
+    private static Logger log = Logger.getLogger(JpgQueueDetailPanel.class.getName());
 }

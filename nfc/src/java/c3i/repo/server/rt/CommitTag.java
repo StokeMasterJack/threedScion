@@ -1,6 +1,6 @@
 package c3i.repo.server.rt;
 
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 public class CommitTag {
 

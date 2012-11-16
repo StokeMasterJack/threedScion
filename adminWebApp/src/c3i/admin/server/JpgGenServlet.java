@@ -1,6 +1,5 @@
 package c3i.admin.server;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.admin.server.taskManager.EquivalentJobAlreadyRunningException;
 import c3i.admin.server.taskManager.JpgGeneratorService;
 import c3i.admin.server.taskManager.Master;
@@ -9,12 +8,11 @@ import c3i.admin.shared.jpgGen.JobId;
 import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.admin.shared.jpgGen.JobStatusItem;
 import c3i.admin.shared.jpgGen.JpgGenService;
+import c3i.core.common.shared.BrandKey;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
-import com.google.gwt.rpc.server.RpcServlet;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import javax.servlet.ServletException;
 import java.awt.*;
@@ -22,16 +20,17 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  *
  * <repo-base>/threed-admin/jpgGeneratorService
  *
  */
-public class JpgGenServlet extends RpcServlet implements JpgGenService {
+public class JpgGenServlet extends RemoteServiceServlet implements JpgGenService {
 
     private ThreedAdminApp app;
-    private Log log;
+    private Logger log;
 
     private BrandRepos brandRepos;
     private JpgGeneratorService jpgGen;
@@ -44,7 +43,7 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
     @Override
     public void init() throws ServletException {
         super.init();
-        log = LogFactory.getLog(JpgGenServlet.class);
+        log = Logger.getLogger("c3i");
         log.info("Initializing " + getClass().getSimpleName());
 
         try {
@@ -73,7 +72,7 @@ public class JpgGenServlet extends RpcServlet implements JpgGenService {
 
     @Override
     public void cancelJob(BrandKey brandKey, JobId jobId) {
-        log.warn("Cancelling jpg job: " + jobId);
+        log.warning("Cancelling jpg job: " + jobId);
         jpgGen.cancelJob(jobId);
     }
 

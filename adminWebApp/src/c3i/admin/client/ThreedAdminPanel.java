@@ -16,9 +16,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
-import static smartsoft.util.date.shared.GwtUtil.getSimpleName;
+import static smartsoft.util.shared.GwtSafe.getSimpleName;
 
 //import c3i.skin.previewPanel.client.chatPanel.ChatInfo;
 
@@ -170,7 +170,7 @@ public class ThreedAdminPanel extends DockLayoutPanel {
             model.commitHistory().addChangeListener(new ChangeListener<CommitHistory>() {
                 @Override
                 public void onChange(CommitHistory newValue) {
-                    Console.log("commitHistory.change: " + newValue.isTagged());
+                    log.log(Level.INFO, "commitHistory.change: " + newValue.isTagged());
                     refresh();
                 }
             });
@@ -340,5 +340,5 @@ public class ThreedAdminPanel extends DockLayoutPanel {
         }
     }
 
-
+    private static Logger log = Logger.getLogger(ThreedAdminPanel.class.getName());
 }

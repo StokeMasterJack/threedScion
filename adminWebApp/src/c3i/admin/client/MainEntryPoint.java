@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.rpc.FailureCallback;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
@@ -114,7 +114,7 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
                     };
                 } else {
                     String msg = "Could not fetch list of versions (i.e. commits) for series [" + seriesKey + "].  Error: [" + r.exception.toString() + "]. ";
-                    Console.log(msg);
+                    log.log(Level.INFO, msg);
                     r.exception.printStackTrace();
                 }
             }
@@ -322,4 +322,5 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
         return dock;
     }
 
+    private static Logger log = Logger.getLogger(MainEntryPoint.class.getName());
 }

@@ -2,7 +2,7 @@ package c3i.admin.client.messageLog;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.events2.ValueChangeHandlers;
 
 import java.util.ArrayList;

@@ -10,8 +10,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.Closeables;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
 import javax.servlet.ServletOutputStream;
@@ -88,7 +88,7 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
 
         Key key = new Key(seriesId, callback);
 
-        log.debug("ThreedModelHandlerJsonP: Received request for ThreedModel[" + seriesId.toString() + "]");
+        log.fine("ThreedModelHandlerJsonP: Received request for ThreedModel[" + seriesId.toString() + "]");
         byte[] retVal = new byte[0];
         try {
             retVal = jsonMap.get(key);
@@ -152,7 +152,7 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
         return os.toByteArray();
     }
 
-    protected static Log log = LogFactory.getLog(ThreedModelHandler.class);
+    protected static Logger log = Logger.getLogger(ThreedModelHandler.class.getName());
 
 
 }

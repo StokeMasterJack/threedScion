@@ -4,7 +4,7 @@ import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.events.ExceptionHandler;
 import c3i.util.shared.events.ExceptionTopic;
 import com.google.common.base.Objects;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -38,7 +38,7 @@ public class AsyncKeyValue<K, V> implements RValue<V> {
                             try {
                                 value.set(result);
                             } catch (Throwable e) {
-                                Console.error(e);
+                                log.log(Level.SEVERE, "error", e);
                                 e.printStackTrace();
                                 throw new RuntimeException(e);
                             }
@@ -48,7 +48,7 @@ public class AsyncKeyValue<K, V> implements RValue<V> {
                     f.failure(new OnException() {
                         @Override
                         public boolean onException(Throwable e) {
-                            Console.error(e);
+                            log.log(Level.SEVERE, "error", e);
                             e.printStackTrace();
                             value.set(null);
                             exceptionTopic.fire(e);
@@ -160,6 +160,8 @@ public class AsyncKeyValue<K, V> implements RValue<V> {
     public void setKeyGetter(KeyGetter<K, V> keyGetter) {
         this.keyGetter = keyGetter;
     }
+
+    private static Logger log = Logger.getLogger(AsyncKeyValue.class.getName());
 
 
 }

@@ -13,7 +13,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import java.util.ArrayList;
 

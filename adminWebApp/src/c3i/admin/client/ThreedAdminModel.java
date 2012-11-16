@@ -29,7 +29,7 @@ import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
 
 import java.util.ArrayList;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 public class ThreedAdminModel {
 

@@ -7,11 +7,9 @@
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
         </descriptors>
         <webroots>
-          <root url="file://$repos$/threedScion/gwtDemo/web" relative="/" />
+          <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$repos$/threedScion/gwtDemo/src" />
-        </sourceRoots>
+        <sourceRoots />
       </configuration>
     </facet>
     <facet type="gwt" name="GWT">
@@ -30,12 +28,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="module" module-name="nfc" />
-    <orderEntry type="module" module-name="util" />
+    <orderEntry type="library" name="com.google.gwt:gwt-user:2.5.0" level="application" />
     <orderEntry type="library" name="com.google.guava:guava-gwt:13.0.1" level="application" />
     <orderEntry type="library" name="com.google.guava:guava:13.0.1" level="application" />
     <orderEntry type="library" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
+    <orderEntry type="module" module-name="ut" />
   </component>
 </module>
 

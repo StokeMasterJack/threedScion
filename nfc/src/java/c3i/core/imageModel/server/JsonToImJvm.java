@@ -2,14 +2,18 @@ package c3i.core.imageModel.server;
 
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.*;
+import c3i.core.imageModel.shared.ImFeature;
+import c3i.core.imageModel.shared.ImFeatureOrPng;
+import c3i.core.imageModel.shared.ImLayer;
+import c3i.core.imageModel.shared.ImSeries;
+import c3i.core.imageModel.shared.ImView;
+import c3i.core.imageModel.shared.PngShortSha;
 import c3i.core.imageModel.shared.SrcPng;
-import c3i.core.threedModel.shared.SeriesInfo;
-import smartsoft.util.gwt.client.Console;
 import org.codehaus.jackson.JsonNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class JsonToImJvm {
 
@@ -52,10 +56,10 @@ public class JsonToImJvm {
 
 
                 List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(3, jsFeaturesOrPngs);
-                ImLayer imLayer = new ImLayer(2, layerName, imFeatureOrPngs,false);   //todo df: lift is not being serialized
+                ImLayer imLayer = new ImLayer(2, layerName, imFeatureOrPngs, false);   //todo df: lift is not being serialized
                 imLayers.add(imLayer);
             }
-            ImView imView = new ImView(1, viewName, iv,imLayers,null);   //todo df: lift is not being serialized
+            ImView imView = new ImView(1, viewName, iv, imLayers, null);   //todo df: lift is not being serialized
             imViews.add(imView);
         }
         return imViews;
@@ -79,9 +83,9 @@ public class JsonToImJvm {
         } else if (jsFeatureOrPng.isArray()) {
             return parsePng(depth, jsFeatureOrPng);
         } else {
-            Console.error("jsFeatureOrPng should be a Object or an Array. This is not either: ");
-            Console.error("jsFeatureOrPng: [" + jsFeatureOrPng + "]");
-            Console.error("jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
+            log.severe("jsFeatureOrPng should be a Object or an Array. This is not either: ");
+            log.severe("jsFeatureOrPng: [" + jsFeatureOrPng + "]");
+            log.severe("jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
             throw new IllegalArgumentException("jsFeatureOrPng should be a Object or an Array");
         }
 
@@ -110,5 +114,7 @@ public class JsonToImJvm {
         List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(depth, jsFeaturesOrPngs);
         return new ImFeature(depth, var, imFeatureOrPngs);
     }
+
+    private static Logger log = Logger.getLogger(JsonToImJvm.class.getName());
 
 }

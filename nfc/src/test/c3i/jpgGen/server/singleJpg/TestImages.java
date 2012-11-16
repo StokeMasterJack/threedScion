@@ -8,7 +8,7 @@ import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import org.junit.Before;
 import org.junit.Test;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

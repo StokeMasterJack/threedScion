@@ -8,7 +8,7 @@ import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.Loader;
 import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -24,7 +24,7 @@ public class VtcLoader extends Loader<SeriesKey, String> {
                 f.success(new OnSuccess<String>() {
                     @Override
                     public void onSuccess(@Nonnull String result) {
-                        Console.log("getVtc success: " + result);
+                        log.log(Level.INFO, "getVtc success: " + result);
                         vtcCompleter.setResult(result);
                     }
                 });
@@ -32,8 +32,8 @@ public class VtcLoader extends Loader<SeriesKey, String> {
                 f.failure(new OnException() {
                     @Override
                     public boolean onException(Throwable e) {
-                        Console.log("getBrandInit failed: " + e.toString());
-                        Console.error(e);
+                        log.log(Level.INFO, "getBrandInit failed: " + e.toString());
+                        log.log(Level.SEVERE, "error", e);
                         vtcCompleter.setException(e);
                         return false;
                     }
@@ -42,6 +42,8 @@ public class VtcLoader extends Loader<SeriesKey, String> {
         });
 
 
-        Console.log("BrandLoader.BrandLoader");
+        log.log(Level.INFO, "BrandLoader.BrandLoader");
     }
+
+    private static Logger log = Logger.getLogger(VtcLoader.class.getName());
 }

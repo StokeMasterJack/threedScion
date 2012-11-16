@@ -2,7 +2,7 @@ package c3i.smartClient.client.widgets.blink;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Image;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 public class BlinkOverlay extends Image {
 

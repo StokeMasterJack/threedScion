@@ -4,7 +4,7 @@ import c3i.core.common.shared.BrandKey;
 import c3i.repo.server.BrandRepos;
 import com.google.common.collect.ImmutableMap;
 import smartsoft.util.config.App;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.servlet.ServletContext;
 import java.io.File;

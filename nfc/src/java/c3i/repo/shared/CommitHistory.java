@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static smartsoft.util.lang.shared.Strings.prindent;
+import static smartsoft.util.shared.Console.prindent;
 
 public class CommitHistory implements Serializable {
 

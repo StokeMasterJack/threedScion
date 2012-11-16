@@ -9,7 +9,7 @@ import c3i.core.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ImageStack;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 public class SimpleViewSelector extends ViewSelector {
 

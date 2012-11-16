@@ -4,14 +4,14 @@ import com.google.common.collect.ImmutableSet;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.UnknownVarCodeException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class VarPicksSnapshot {
 
@@ -136,7 +136,7 @@ public class VarPicksSnapshot {
             if (var != null) {
                 set.add(var);
             } else {
-                Console.log("Ignoring unknown " + varCodeType + " varCode[" + varCode + "]");
+                log.log(Level.INFO, "Ignoring unknown " + varCodeType + " varCode[" + varCode + "]");
             }
         }
         return set;
@@ -165,5 +165,7 @@ public class VarPicksSnapshot {
             return varCodeType + " " + super.getMessage();
         }
     }
+
+    private static Logger log = Logger.getLogger(VarPicksSnapshot.class.getName());
 
 }

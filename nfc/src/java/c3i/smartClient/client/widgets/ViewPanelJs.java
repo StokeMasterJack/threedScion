@@ -4,7 +4,7 @@ import c3i.smartClient.client.model.ThreedSession;
 import com.google.gwt.user.client.ui.RootPanel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 @Export("ViewPanel")
 public class ViewPanelJs implements Exportable {
@@ -19,7 +19,7 @@ public class ViewPanelJs implements Exportable {
         viewPanel = new ViewPanel(threedSession, viewIndex == -1 ? null : viewIndex);
         RootPanel container = RootPanel.get(elementId);
         container.add(viewPanel);
-        Console.log("viewIndex = " + viewIndex);
+        log.log(Level.INFO, "viewIndex = " + viewIndex);
 
 
     }
@@ -37,6 +37,7 @@ public class ViewPanelJs implements Exportable {
     }
 
 
+    private static Logger log = Logger.getLogger(ViewPanelJs.class.getName());
 
 
 }

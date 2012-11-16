@@ -2,7 +2,7 @@ package c3i.core.threedModel.shared;
 
 import javax.annotation.Nonnull;
 
-import static smartsoft.util.lang.shared.Strings.isInt;
+import static smartsoft.util.shared.Strings.isInt;
 
 /**
  *

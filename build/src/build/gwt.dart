@@ -86,7 +86,7 @@ void doIt(bool devMode,App a) {
   var lib = '/Users/dford/daven-repository';
   
   var threedRepo = '$repos/threedScion';
-  var utilRepo = '$repos/util';
+  var utilRepo = '$repos/ut';
   
   
   List<String> srcFolders = [

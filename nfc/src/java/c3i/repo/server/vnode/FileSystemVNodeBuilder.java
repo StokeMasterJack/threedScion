@@ -3,8 +3,8 @@ package c3i.repo.server.vnode;
 import com.google.common.io.Files;
 import c3i.core.imageModel.server.ImageUtil;
 import c3i.repo.server.rt.RtRepo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectId;
 
 import javax.annotation.Nullable;
@@ -88,7 +88,7 @@ public class FileSystemVNodeBuilder extends VNodeBuilder {
         return a;
     }
 
-    private static Log log = LogFactory.getLog(FileSystemVNodeBuilder.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     private ContentDetail getFileDetails(File f) {
         ObjectId fullSha = ImageUtil.getFingerprintGitStyle(f);

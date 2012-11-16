@@ -8,9 +8,11 @@ import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.ThreedModel;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import smartsoft.util.lang.shared.Path;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import smartsoft.util.shared.Path;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -136,7 +138,7 @@ public class RepoClient {
         try {
             rootTreeId = Resources.toString(vtcUrl, Charset.defaultCharset());
         } catch (IOException e) {
-            log.error("RepoClient - failed to load url [" + vtcUrl + "]", e);
+            log.log(Level.SEVERE,"RepoClient - failed to load url [" + vtcUrl + "]", e);
             throw e;
         }
         return new RootTreeId(rootTreeId);
@@ -173,7 +175,7 @@ public class RepoClient {
     }
 
 
-    private static Log log = LogFactory.getLog(RepoClient.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
     public Path getRepoBaseUrl() {

@@ -10,7 +10,7 @@ import c3i.util.shared.events.ChangeListener;
 import c3i.core.imageModel.shared.ImageMode;
 import c3i.util.shared.futures.RWValue;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 class ModeSelector extends FlowPanel {
 

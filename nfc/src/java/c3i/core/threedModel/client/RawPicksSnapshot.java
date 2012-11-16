@@ -3,7 +3,7 @@ package c3i.core.threedModel.client;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static smartsoft.util.lang.shared.Strings.isEmpty;
+import static smartsoft.util.shared.Strings.isEmpty;
 
 public class RawPicksSnapshot {
 

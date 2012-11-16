@@ -18,7 +18,7 @@ import c3i.util.shared.futures.RWValue;
 import c3i.util.shared.futures.Value;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.List;

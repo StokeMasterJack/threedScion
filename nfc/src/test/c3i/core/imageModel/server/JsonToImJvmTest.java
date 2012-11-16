@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import java.net.URL;
+import java.util.logging.Logger;
 
 public class JsonToImJvmTest {
 
@@ -39,6 +40,8 @@ public class JsonToImJvmTest {
 
 
     }
+
+    private static Logger log = Logger.getLogger(JsonToImJvmTest.class.getName());
 
 
 }

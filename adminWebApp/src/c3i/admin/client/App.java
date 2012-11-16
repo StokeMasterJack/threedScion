@@ -10,14 +10,13 @@ import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.Loader;
 import com.google.gwt.user.client.Window;
-import smartsoft.util.gwt.client.Console;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
-import static smartsoft.util.date.shared.StringUtil.isEmpty;
+import static smartsoft.util.shared.StringUtil.isEmpty;
 
 /**
  * Note: the repoContextPath in configFile is never used

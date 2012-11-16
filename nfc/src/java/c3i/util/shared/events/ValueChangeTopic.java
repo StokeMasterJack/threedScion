@@ -1,7 +1,7 @@
 package c3i.util.shared.events;
 
 import com.google.common.base.Objects;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 public class ValueChangeTopic<VT> extends Topic1<ChangeListener<VT>, VT> {
 
@@ -15,7 +15,7 @@ public class ValueChangeTopic<VT> extends Topic1<ChangeListener<VT>, VT> {
         try {
             listener.onChange(newValue);
         } catch (Throwable e) {
-            Console.error(e);
+            log.log(Level.SEVERE, "error", e);
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -28,5 +28,7 @@ public class ValueChangeTopic<VT> extends Topic1<ChangeListener<VT>, VT> {
             fire(newValue);
         }
     }
+
+    private static Logger log = Logger.getLogger(ValueChangeTopic.class.getName());
 
 }

@@ -5,8 +5,8 @@ import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.base.Strings;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,7 +70,7 @@ public class SeriesBasedRepoRequest extends RepoRequest {
         return seriesKey;
     }
 
-    private static Log log = LogFactory.getLog(SeriesBasedRepoRequest.class);
+    private static Logger log = Logger.getLogger("c3i");
 
 
 }

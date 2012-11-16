@@ -15,7 +15,7 @@ import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;
 import c3i.util.shared.futures.RWValue;
 import c3i.util.shared.futures.Value;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 

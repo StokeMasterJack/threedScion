@@ -10,8 +10,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.Closeables;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
 import javax.servlet.ServletContext;
@@ -134,7 +134,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
     public void handle(ThreedModelRequest repoRequest) {
         SeriesId seriesId = repoRequest.getSeriesId();
 
-        log.debug("Received request for ThreedModel[" + seriesId.toString() + "]");
+        log.fine("Received request for ThreedModel[" + seriesId.toString() + "]");
 
 
         boolean gzip = clientAcceptsGzip(repoRequest);
@@ -225,7 +225,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
         return os.toByteArray();
     }
 
-    protected static Log log = LogFactory.getLog(ThreedModelHandler.class);
+    protected static Logger log = Logger.getLogger(ThreedModelHandler.class.getName());
 
 
 }

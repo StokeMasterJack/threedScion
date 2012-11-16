@@ -3,12 +3,12 @@ package c3i.core.featureModel.shared.boolExpr;
 import com.google.common.collect.ImmutableSet;
 import c3i.core.featureModel.shared.*;
 import c3i.core.featureModel.shared.picks.Picks;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 import java.util.*;
 
-import static smartsoft.util.lang.shared.Strings.capFirstLetter;
-import static smartsoft.util.lang.shared.Strings.notEmpty;
+import static smartsoft.util.shared.Strings.capFirstLetter;
+import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Var extends NonConstant {
 

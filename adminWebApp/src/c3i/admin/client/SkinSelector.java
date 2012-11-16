@@ -12,7 +12,7 @@ import c3i.smartClient.client.skins.Skin;
 
 import java.util.List;
 
-import static smartsoft.util.lang.shared.Strings.getSimpleName;
+import static smartsoft.util.shared.Strings.getSimpleName;
 
 public class SkinSelector extends FlowPanel {
 

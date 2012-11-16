@@ -1,9 +1,5 @@
 package c3i.core.threedModel.shared;
 
-import c3i.core.imageModel.shared.PngSpec;
-import com.google.common.collect.ImmutableSet;
-import smartsoft.util.gwt.client.Console;
-import smartsoft.util.lang.shared.Path;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.FeatureModel;
@@ -12,15 +8,21 @@ import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImLayer;
 import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.ImView;
+import c3i.core.imageModel.shared.PngSpec;
 import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.imageModel.shared.ViewKeyOld;
 import c3i.core.imageModel.shared.ViewSlice;
+import com.google.common.collect.ImmutableSet;
+import java.util.logging.Level;import java.util.logging.Logger;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //import threed.core.imageModel.shared.slice.ImageSlice;
 
@@ -37,9 +39,7 @@ public class ThreedModel {
 //    private final
 
 
-
     public final Slice heroSlice;
-
 
 
     public ThreedModel(FeatureModel featureModel, ImSeries imageModel) {
@@ -86,7 +86,9 @@ public class ThreedModel {
         ImView view = getView(slice.getView());
         PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
 
-        Console.log("accessoryPng = " + accessoryPng);
+        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
+
+        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
 
         if (accessoryPng == null) {
             return null;
@@ -282,5 +284,6 @@ public class ThreedModel {
         return imageModel.getViewCount();
     }
 
+    private static Logger log = Logger.getLogger(ThreedModel.class.getName());
 
 }

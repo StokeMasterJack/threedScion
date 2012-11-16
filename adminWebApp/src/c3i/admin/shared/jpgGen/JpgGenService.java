@@ -2,11 +2,11 @@ package c3i.admin.shared.jpgGen;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.jpgGen.shared.Stats;
-import com.google.gwt.rpc.client.RpcService;
+import com.google.gwt.user.client.rpc.RemoteService;
 
 import java.util.ArrayList;
 
-public interface JpgGenService extends RpcService {
+public interface JpgGenService extends RemoteService {
 
     /**
      * @return true if started, false if already running

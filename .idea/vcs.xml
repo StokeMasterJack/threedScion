@@ -5,6 +5,7 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$repos$/ut/ut" vcs="Git" />
   </component>
 </project>
 

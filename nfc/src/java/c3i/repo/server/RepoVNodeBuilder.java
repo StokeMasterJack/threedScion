@@ -8,8 +8,8 @@ import c3i.repo.server.vnode.VNodeBuilder;
 import c3i.repo.server.vnode.VNodeHeader;
 import c3i.repo.server.vnode.VNodeRepo;
 import com.google.common.base.Preconditions;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -115,7 +115,7 @@ public class RepoVNodeBuilder extends VNodeBuilder {
         stack.pop();
 
         if (childNodes.size() == 0) {
-            log.debug("ImageModel folder[" + name + "] has no child nodes");
+            log.fine("ImageModel folder[" + name + "] has no child nodes");
             return null;
 //            throw new IllegalStateException("ImageModel folder[" + name + "] has no child nodes: " + stack);
         }
@@ -124,12 +124,12 @@ public class RepoVNodeBuilder extends VNodeBuilder {
 
     }
 
-    private static Log log = LogFactory.getLog(RepoVNodeBuilder.class);
+    private static Logger log = Logger.getLogger("c3i");
 
     private VNode buildBlobNode(ObjectId objectId, String name, Stack<String> path, int depth) {
         boolean emptyPng = seriesRepo.isEmptyPng(path.toString() + "\t" + name, objectId);
         if (emptyPng) {
-            log.debug("Skipping empty png[" + stack + "\t" + name);
+            log.fine("Skipping empty png[" + stack + "\t" + name);
             return null;
         }
         return new VNodeRepo(name, objectId, depth, seriesRepo);

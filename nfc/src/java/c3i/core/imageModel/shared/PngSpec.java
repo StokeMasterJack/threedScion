@@ -1,7 +1,7 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.featureModel.shared.boolExpr.Var;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import java.util.HashSet;
 import java.util.Set;

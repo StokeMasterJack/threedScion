@@ -6,7 +6,7 @@ import c3i.core.imageModel.shared.NodeLevel;
 import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.threedModel.shared.SeriesInfo;
 import c3i.core.threedModel.shared.SeriesInfoBuilder;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.Strings;
 
 public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 

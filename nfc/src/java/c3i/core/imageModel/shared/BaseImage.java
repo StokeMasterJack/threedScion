@@ -2,7 +2,7 @@ package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.Slice2;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
 

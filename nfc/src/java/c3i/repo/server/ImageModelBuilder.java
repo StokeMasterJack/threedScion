@@ -16,8 +16,8 @@ import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.imageModel.shared.ViewLiftSpec;
 import c3i.repo.server.vnode.VNode;
 import com.google.common.base.Preconditions;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
+
 import org.eclipse.jgit.lib.ObjectId;
 
 import javax.annotation.Nonnull;
@@ -239,6 +239,6 @@ public class ImageModelBuilder {
         return new ImFeature(featureDir.getDepth(), var, childNodes);
     }
 
-    private static final Log log = LogFactory.getLog(ImageModelBuilder.class);
+    private final static Logger log = Logger.getLogger("c3i");
 
 }

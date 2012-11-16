@@ -1,6 +1,6 @@
 package c3i.core.threedModel.shared;
 
-import smartsoft.util.lang.shared.RectSize;
+import smartsoft.util.shared.RectSize;
 
 public class ImageProfile {
 

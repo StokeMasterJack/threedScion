@@ -17,12 +17,10 @@ import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.Series;
 import com.google.common.base.Preconditions;
-import com.google.gwt.rpc.server.RpcServlet;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
-import smartsoft.util.lang.shared.Path;
+import smartsoft.util.shared.Path;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -30,9 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static smartsoft.util.StringUtil.notEmpty;
-import static smartsoft.util.date.shared.StringUtil.isEmpty;
+import static smartsoft.util.shared.StringUtil.isEmpty;
 
 
 /**
@@ -41,17 +41,17 @@ import static smartsoft.util.date.shared.StringUtil.isEmpty;
  * POST requests are handled in this servlet as gwt-rpc calls
  * GET requests are handled by RestHandler
  */
-public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService {
+public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAdminService {
 
     private ThreedAdminApp app;
-    private Log log;
+    private Logger log;
     private BrandRepos brandRepos;
     private String initErrorMessage;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        log = LogFactory.getLog(ThreedAdminFilter.class);
+        log = Logger.getLogger("c3i");
         log.info("Initializing " + getClass().getSimpleName());
 
         try {
@@ -61,7 +61,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             this.initErrorMessage = "Problem initializing ThreedAdminServletJson: " + e;
-            log.error(initErrorMessage, e);
+            log.log(Level.SEVERE, initErrorMessage, e);
         }
 
     }
@@ -102,7 +102,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
         Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);
 
-        BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears,userName, visibleBrandsForUser, repoContextPath, profiles);
+        BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears, userName, visibleBrandsForUser, repoContextPath, profiles);
         return brandInit;
     }
 
@@ -188,7 +188,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
         } catch (Exception e) {
             e.printStackTrace();
             final String msg = "Error in ThreedAdminServlet.addAllAndCommit(" + seriesKey + "," + commitMessage + "," + tag + "). See server log for details.";
-            log.error(msg, e);
+            log.log(Level.SEVERE, msg, e);
             throw new RuntimeException(msg, e);
         }
 
@@ -203,7 +203,7 @@ public class ThreedAdminServlet extends RpcServlet implements ThreedAdminService
 
     @Override
     protected void doUnexpectedFailure(Throwable e) {
-        log.error("Problem in RPC method", e);
+        log.log(Level.SEVERE, "Problem in RPC method", e);
         super.doUnexpectedFailure(e);
     }
 

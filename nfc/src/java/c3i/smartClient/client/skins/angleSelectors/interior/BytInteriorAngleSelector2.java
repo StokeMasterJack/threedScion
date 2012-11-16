@@ -9,7 +9,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import smartsoft.util.gwt.client.Console;
+import java.util.logging.Level;import java.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class BytInteriorAngleSelector2 extends AngleSelector {
     public BytInteriorAngleSelector2(ViewModel model) {
         super(model);
 
-        Console.log("BytInteriorAngleSelector2.BytInteriorAngleSelector2");
+        log.log(Level.INFO, "BytInteriorAngleSelector2.BytInteriorAngleSelector2");
         int angleCount = model.getView().getAngleCount();
         buttons = initButtons(angleCount);
 
@@ -121,4 +121,6 @@ public class BytInteriorAngleSelector2 extends AngleSelector {
 //    public RectSize getPreferredSize() {
 //        return new RectSize(WIDTH_PX, PREFERRED_HEIGHT_PX);
 //    }
+
+    private static Logger log = Logger.getLogger(BytInteriorAngleSelector2.class.getName());
 }

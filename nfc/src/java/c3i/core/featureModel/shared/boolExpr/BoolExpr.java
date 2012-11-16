@@ -3,14 +3,15 @@ package c3i.core.featureModel.shared.boolExpr;
 import c3i.core.featureModel.shared.AutoAssignContext;
 import c3i.core.featureModel.shared.EvalContext;
 import c3i.core.featureModel.shared.Tri;
-import smartsoft.util.lang.shared.Strings;
+import smartsoft.util.shared.GwtSafe;
+import smartsoft.util.shared.Strings;
 
 import javax.annotation.Nonnull;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-import static smartsoft.util.lang.shared.Strings.prindent;
+import static smartsoft.util.shared.Console.prindent;
 
 
 /**
@@ -493,7 +494,7 @@ public abstract class BoolExpr implements Tri {
 //    public abstract void replaceVarsWithConstants(SimplifyContext ctx);
 
     public String getSimpleName() {
-        return Strings.getSimpleName(getClass());
+        return GwtSafe.getSimpleName(getClass());
     }
 
     public static boolean allConstants(Tri... expressions) {
