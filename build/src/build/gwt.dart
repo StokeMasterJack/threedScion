@@ -128,13 +128,13 @@ void doIt(bool devMode,App a) {
   
   };
   
-  bool jetty = true;
+  bool jetty = false;
   
   String startupUrl;
   if(jetty){
       startupUrl = '/${a.startupPage}';
   }else{ //tomcat
-    startupUrl = 'http://localhost:8080//${a.contextPath}/${a.startupPage}';
+    startupUrl = 'http://localhost:8080/${a.contextPath}/${a.startupPage}';
   }
   
   Map<String,String> gwtParamsDevMode = {
