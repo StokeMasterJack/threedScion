@@ -23,6 +23,9 @@
 
     <inherits name='com.google.gwt.debug.Debug'/>
 
+    <stylesheet src="../index.css" />
+
+
     <entry-point class='c3i.admin.client.MainEntryPoint'/>
 
     <source path="client"/>

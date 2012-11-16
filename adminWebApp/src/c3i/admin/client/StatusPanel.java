@@ -37,8 +37,6 @@ import java.util.Set;
 
 import static smartsoft.util.shared.GwtSafe.getSimpleName;
 
-//import com.google.gwt.user.client.ui.ScrollPanel;
-
 public class StatusPanel extends ScrollPanel {
 
 
@@ -49,7 +47,6 @@ public class StatusPanel extends ScrollPanel {
     private final ThreedModel threedModel;
     private final FeatureModel featureModel;
     private final CurrentUiPicks currentUiPicks;
-//    private final ThreedModelClient threedModelClient;
 
     private ViewSession viewSession;
     private StatusPanelModel model;
@@ -67,7 +64,6 @@ public class StatusPanel extends ScrollPanel {
         this.threedModel = viewsSession.getThreedModel();
         this.featureModel = threedModel.getFeatureModel();
         this.currentUiPicks = series.getCurrentUiPicks();
-//        this.threedModelClient = threedModelClient;
 
         currentUiPicks.addChangeListener(new ChangeListener<FixedPicks>() {
             @Override
