@@ -481,6 +481,6 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     public String getLabel(){
-        return Strings.capFirstLetter(name) + " View";
+        return Strings.capFirstLetter(name);
     }
 }
