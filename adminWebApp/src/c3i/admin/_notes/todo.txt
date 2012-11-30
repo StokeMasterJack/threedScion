@@ -1,8 +1,11 @@
 Bugs:
-    Unneeded Horiz scrollbar on StatusPanel
-ava.lang.IndexOutOfBoundsException loading xd 2012
-Undercarriage View
-interior buttons not centered
+    X Unneeded Horizontal scrollbar on StatusPanel
+    todo Single View models crash on multi-view skins
+        fixed - BytMain skin
+        todo fix BytSummary skin
+
+    X Undercarriage View
+    todo interior buttons not centered
 
 features
 improve image quality of jpgs
