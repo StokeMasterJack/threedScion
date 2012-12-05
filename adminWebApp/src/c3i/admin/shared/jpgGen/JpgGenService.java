@@ -13,12 +13,6 @@ public interface JpgGenService extends RemoteService {
      */
     boolean startJob(JobSpec jobSpec);
 
-    ArrayList<JobStatusItem> getQueueStatus(BrandKey brandKey);
-
-    ArrayList<ExecutorStatus> getQueueDetails(BrandKey brandKey, JobId jobId);
-
-    Stats getJpgGenFinalStats(BrandKey brandKey, JobId jobId);
-
     /**
      * Cancels a job if running but leaves it in the job queue
      */
@@ -30,8 +24,18 @@ public interface JpgGenService extends RemoteService {
     void removeJob(BrandKey brandKey, JobId jobId);
 
     /**
-     * Removes all jobs in the terminal state
+     * Removes all terminal (completed or canceled) jobs
      */
     void removeTerminal(BrandKey brandKey);
+
+
+
+
+
+    ArrayList<JobStatusItem> getQueueStatus(BrandKey brandKey);
+
+    ArrayList<ExecutorStatus> getQueueDetails(BrandKey brandKey, JobId jobId);
+
+    Stats getJpgGenFinalStats(BrandKey brandKey, JobId jobId);
 
 }
