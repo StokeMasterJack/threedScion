@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 //import threed.core.imageModel.shared.slice.ImageSlice;
 //import threed.core.imageModel.shared.slice.Layer;
@@ -424,15 +425,19 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     public int getNext(int currentAngle) {
         boolean isLast = currentAngle == angleCount;
         int retVal;
-        if (isLast) retVal = initialAngle;
+        if (isLast) {
+            retVal = 1;
+        }
         else retVal = currentAngle + 1;
+//        log.warning("retVal = " + retVal);
+        System.out.println("retVal = " + retVal);
         return retVal;
     }
 
+    private static Logger log = Logger.getLogger(ImView.class.getName());
+
     public int getPrevious(int currentAngle) {
-
-
-        boolean isFirst = currentAngle == initialAngle;
+        boolean isFirst = currentAngle == 1;
         int retVal;
         if (isFirst) retVal = angleCount;
         else retVal = currentAngle - 1;
