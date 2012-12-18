@@ -45,6 +45,9 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
     private SplitLayoutPanel splitLayoutPanel;
     private UserLogView userLogView;
 
+    private BrandInit brandInit;
+    private Place initialPlace;
+
     public void onModuleLoad() {
 
         app = new App(this);
@@ -58,8 +61,9 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
             public void onSuccess(@Nonnull BrandInit brand) {
                 mainMenuBar = createMainMenuBar(brand);
                 buildMainWindow();
-                Place place = Place.createFromToken(History.getToken());
-                gotoToInitialPlace(brand, place);
+                brandInit = brand;
+                initialPlace = Place.createFromToken(History.getToken());
+                gotoToInitialPlace();
             }
         });
 
@@ -67,14 +71,14 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
     }
 
 
-    private void gotoToInitialPlace(BrandInit brand, Place place) {
-        gotoPlace(brand, place);
+    private void gotoToInitialPlace() {
+        gotoPlace(brandInit, initialPlace);
     }
 
     private void gotoPlace(BrandInit brand, Place place) {
         final SeriesKey sk = place.getSeriesKey();
         if (sk != null) {
-            openSeriesHead(brand, sk);
+            openSeriesHead(brand, sk,place);
         }
     }
 
@@ -122,7 +126,7 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
 
     }
 
-    private void openSeriesHead(final BrandInit brand, final SeriesKey seriesKey) {
+    private void openSeriesHead(final BrandInit brand, final SeriesKey seriesKey, final Place place) {
         Req<CommitHistory> r1 = app.getThreedAdminClient().getCommitHistory(seriesKey);
 
         r1.onSuccess = new SuccessCallback<CommitHistory>() {
@@ -130,14 +134,19 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
             public void call(Req<CommitHistory> request) {
                 CommitHistory commitHistory = request.result;
                 SeriesCommit seriesCommit = new SeriesCommit(seriesKey, commitHistory);
-                openSeriesVersion(brand, seriesCommit);
+                openSeriesVersion(brand, seriesCommit,place.getViewName());
             }
         };
     }
 
     private void openSeriesVersion(BrandInit brand, final SeriesCommit seriesCommit) {
+        openSeriesVersion(brand, seriesCommit,null);
+
+    }
+    private void openSeriesVersion(BrandInit brand, final SeriesCommit seriesCommit, String viewName) {
         assert seriesCommit != null;
-        SeriesPanel seriesPanel = new SeriesPanel(new SeriesSession(app, brand, seriesCommit));
+        SeriesSession seriesSession = new SeriesSession(app, brand, seriesCommit,viewName);
+        SeriesPanel seriesPanel = new SeriesPanel(seriesSession);
         addTab(seriesPanel);
     }
 

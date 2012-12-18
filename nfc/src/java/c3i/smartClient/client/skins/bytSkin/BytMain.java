@@ -1,5 +1,6 @@
 package c3i.smartClient.client.skins.bytSkin;
 
+import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
@@ -14,13 +15,18 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 public class BytMain implements Skin {
 
+    ViewModel viewModel;
+    BytExteriorAngleSelector exteriorAngleSelector;
+    BytInteriorAngleSelector2 interiorAngleSelector;
+
     @Override
     public IsWidget createPreviewPanel(ViewModel viewModel) {
+        this.viewModel = viewModel;
         ViewPanel viewPanel = new ViewPanel(viewModel);
 
-        final BytExteriorAngleSelector exteriorAngleSelector = new BytExteriorAngleSelector(viewModel.getViewModel(0));
 
-        final BytInteriorAngleSelector2 interiorAngleSelector;
+        exteriorAngleSelector = new BytExteriorAngleSelector(viewModel.getViewModel(0));
+
         if (viewModel.getViews().size() > 1) {
             interiorAngleSelector = new BytInteriorAngleSelector2(viewModel.getViewModel(1));
         } else {
@@ -46,10 +52,7 @@ public class BytMain implements Skin {
         viewModel.addViewChangeListener(new ViewChangeListener() {
             @Override
             public void onChange(ViewKey view) {
-                exteriorAngleSelector.setVisible(view.getViewIndex() == 0);
-                if (interiorAngleSelector != null) {
-                    interiorAngleSelector.setVisible(view.getViewIndex() == 1);
-                }
+                refreshAngleSelectors();
             }
         });
 
@@ -62,7 +65,18 @@ public class BytMain implements Skin {
         p.add(viewSelector);
         p.getElement().getStyle().setWidth(viewPanel.getPreferredSize().getWidth(), Style.Unit.PX);
 
+        refreshAngleSelectors();
+
         return p;
+    }
+
+    private void refreshAngleSelectors() {
+        ImView view = viewModel.getView();
+        ViewKey viewKey = view.getViewKey();
+        exteriorAngleSelector.setVisible(viewKey.getViewIndex() == 0);
+        if (interiorAngleSelector != null) {
+            interiorAngleSelector.setVisible(viewKey.getViewIndex() == 1);
+        }
     }
 
     @Override

@@ -1,11 +1,7 @@
 package c3i.smartClient.client.model;
 
 import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.AngleKey;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ImageMode;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.core.imageModel.shared.*;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
@@ -45,7 +41,8 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
 
     private final Value<ViewKey> viewKey;
 
-    @Nonnull private ViewSession viewSession; //current (aka selected aka main) view
+    @Nonnull
+    private ViewSession viewSession; //current (aka selected aka main) view
 
     public ViewsSession(final Path repoBaseUrl, final ThreedModel threedModel, Profile initialProfile, RValue<FixedPicks> picks) {
 
@@ -219,6 +216,13 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
         viewKey.set(newViewKey);
     }
 
+    public void setView(String viewName) {
+        System.out.println("ViewsSession.setView");
+        ViewKey newViewKey = threedModel.getView(viewName).getViewKey();
+        viewSession = getViewSession(viewName);
+        viewKey.set(newViewKey);
+    }
+
     public AngleKey getAngleKey() {
         return viewSession.getAngleKey();
     }
@@ -314,5 +318,9 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     @Override
     public ViewModel getViewModel(int viewIndex) {
         return getViewSession(viewIndex);
+    }
+
+    public boolean isValidViewName(String viewName) {
+        return threedModel.getImageModel().isValidViewName(viewName);
     }
 }

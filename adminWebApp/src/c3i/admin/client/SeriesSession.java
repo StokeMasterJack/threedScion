@@ -7,15 +7,7 @@ import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.SeriesCommit;
 import c3i.smartClient.client.service.ThreedModelLoader;
-import c3i.util.shared.futures.AsyncFunction;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.Future;
-import c3i.util.shared.futures.Loader;
-import c3i.util.shared.futures.OnException;
-import c3i.util.shared.futures.OnSuccess;
-import c3i.util.shared.futures.RWValue;
-import c3i.util.shared.futures.Value;
-import smartsoft.util.shared.Path;
+import c3i.util.shared.futures.*;
 
 import javax.annotation.Nonnull;
 
@@ -34,17 +26,20 @@ public class SeriesSession {
     private final Loader<SeriesId, ThreedModel> threedModelLoader;
     private final Loader<SeriesId, Series> seriesLoader;
 
+    private final String initView;
+
     //cache
     private final SeriesId seriesId;
     private final App app;
 
-    public SeriesSession(final App app, final BrandInit brand, final SeriesCommit seriesCommit) {
+    public SeriesSession(final App app, final BrandInit brand, final SeriesCommit seriesCommit, final String initView) {
 
         //core state
         this.app = app;
         this.brand = brand;
         this.seriesKey = seriesCommit.getSeriesKey();
         this.commit = new Value<CommitHistory>(seriesCommit.getCommitHistory());
+        this.initView = initView;
 
         //cache
         this.seriesId = new SeriesId(seriesKey, seriesCommit.getRootTreeId());
@@ -58,8 +53,8 @@ public class SeriesSession {
                 Future<ThreedModel> ff = threedModelLoader.ensureLoaded();
                 ff.success(new OnSuccess<ThreedModel>() {
                     @Override
-                    public void onSuccess(@Nonnull ThreedModel result) {
-                        Series series = new Series(app, brand, result, commit);
+                    public void onSuccess(@Nonnull ThreedModel threedModel) {
+                        Series series = new Series(app, brand, threedModel, commit,initView);
                         completer.setResult(series);
                     }
                 });
@@ -75,6 +70,7 @@ public class SeriesSession {
         });
 
     }
+
 
     public BrandInit getBrand() {
         return brand;

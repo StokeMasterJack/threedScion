@@ -1,9 +1,9 @@
 package c3i.admin.client;
 
-import com.google.common.collect.ImmutableMap;
-import smartsoft.util.servlet.shared.QueryString;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
+import com.google.common.collect.ImmutableMap;
+import smartsoft.util.servlet.shared.QueryString;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 import static smartsoft.util.shared.Strings.notEmpty;
@@ -32,6 +32,14 @@ public class Place {
 
     public String get(String name) {
         return queryString.get(name);
+    }
+
+    public String getViewName() {
+        String view = queryString.get("view");
+        if (isEmpty(view)) {
+            return "exterior";
+        }
+        return view;
     }
 
     public BrandKey getBrandKey() {

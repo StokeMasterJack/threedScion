@@ -14,8 +14,7 @@ Map<String,App> apps = {
 void main(){
   
     List<String> modes = ["dev","compile"];
-    
-    
+
     Map<String,String> args = argsToMap(["app","mode"]);
     
     String mode = args["mode"];

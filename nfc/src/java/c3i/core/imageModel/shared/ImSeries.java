@@ -1,9 +1,9 @@
 package c3i.core.imageModel.shared;
 
-import smartsoft.util.shared.Path;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.threedModel.shared.*;
+import c3i.core.threedModel.shared.Slice;
+import smartsoft.util.shared.Path;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +42,15 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
 
     public ImView getView(ViewKeyOld viewKey) {
         return getView(viewKey.getName());
+    }
+
+    public boolean isValidViewName(String viewName) {
+        try {
+            getView(viewName);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public ImView getView(String viewName) {

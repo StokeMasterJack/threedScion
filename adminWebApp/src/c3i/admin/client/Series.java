@@ -10,7 +10,6 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.smartClient.client.model.ViewsSession;
-import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.AsyncKeyValue;
 import c3i.util.shared.futures.RWValue;
 import smartsoft.util.shared.Path;
@@ -33,7 +32,7 @@ public class Series {
     //cache
     private final SeriesId seriesId;
 
-    public Series(App app, BrandInit brand, ThreedModel threedModel, final RWValue<CommitHistory> commit) {
+    public Series(App app, BrandInit brand, ThreedModel threedModel, final RWValue<CommitHistory> commit, String initView) {
         this.app = app;
         this.brand = brand;
         this.threedModel = threedModel;
@@ -49,6 +48,9 @@ public class Series {
 
         AsyncKeyValue<Set<Var>, FixedPicks> fixedPicks = currentUiPicks.getFixedPicks();
         viewsSession = new ViewsSession(app.getRepoBaseUrl(), threedModel, defaultProfile, fixedPicks);
+        if (initView != null  && viewsSession.isValidViewName(initView)) {
+            viewsSession.setView(initView);
+        }
     }
 
     public CurrentUiPicks getCurrentUiPicks() {
@@ -86,8 +88,6 @@ public class Series {
     public SeriesId getSeriesId() {
         return seriesId;
     }
-
-
 
 
     public void log(String msg) {
