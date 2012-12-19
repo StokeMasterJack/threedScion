@@ -28,7 +28,9 @@ public class BytMain implements Skin {
         exteriorAngleSelector = new BytExteriorAngleSelector(viewModel.getViewModel(0));
 
         if (viewModel.getViews().size() > 1) {
-            interiorAngleSelector = new BytInteriorAngleSelector2(viewModel.getViewModel(1));
+            ViewModel viewModel1 = viewModel.getViewModel(1);
+            interiorAngleSelector = new BytInteriorAngleSelector2(viewModel1);
+
         } else {
             interiorAngleSelector = null;
         }
@@ -66,6 +68,7 @@ public class BytMain implements Skin {
         p.getElement().getStyle().setWidth(viewPanel.getPreferredSize().getWidth(), Style.Unit.PX);
 
         refreshAngleSelectors();
+
 
         return p;
     }

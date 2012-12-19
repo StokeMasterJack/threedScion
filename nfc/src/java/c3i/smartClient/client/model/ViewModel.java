@@ -3,6 +3,7 @@ package c3i.smartClient.client.model;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ImageMode;
 import c3i.core.imageModel.shared.Profile;
+import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.dragToSpin.DragToSpinModel;
 import c3i.util.shared.events.ChangeListener;
@@ -46,4 +47,5 @@ public interface ViewModel extends DragToSpinModel {
 
     void addLayerStateListener(ChangeListener<LayerState> l);
 
+    void addAngleChangeListener(AngleChangeListener listener);
 }

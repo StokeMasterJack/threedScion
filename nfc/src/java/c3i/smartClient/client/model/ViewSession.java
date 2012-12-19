@@ -49,11 +49,13 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     private final LayerState layerState;
 
-    private boolean scrollReverse = true;
+    private boolean scrollReverse;
 
     public ViewSession(@Nonnull ViewsSession parent, @Nonnull final ImView view) {
         Preconditions.checkNotNull(parent);
         Preconditions.checkNotNull(view);
+
+        scrollReverse = view.isExterior();
 
         this.viewsSession = parent;
         this.view = view;
@@ -138,6 +140,21 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     private ViewSession() {
         throw new UnsupportedOperationException("required by gwt export");
+    }
+
+    @Export
+    public boolean isScrollReverse() {
+        return scrollReverse;
+    }
+
+    /**
+     * This is here because, for historical reasons, the current inventory of 3d png files have
+     * the angles reversed for exterior view. That is, increasing the angle, moves the care the left.
+     * @param scrollReverse
+     */
+    @Export
+    public void setScrollReverse(boolean scrollReverse) {
+        this.scrollReverse = scrollReverse;
     }
 
     public boolean isActive() {
@@ -346,6 +363,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         imageStack.removeChangeListener(listener);
     }
 
+    @Override
     public void addAngleChangeListener(AngleChangeListener listener) {
         angle.addChangeListener(listener);
     }

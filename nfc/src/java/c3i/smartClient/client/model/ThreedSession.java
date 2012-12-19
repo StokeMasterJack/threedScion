@@ -6,6 +6,7 @@ import c3i.core.imageModel.shared.ImageMode;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.ViewPanel;
 import c3i.util.shared.events.ChangeListener;
@@ -397,6 +398,12 @@ public class ThreedSession implements ViewModel, Exportable {
     @Override
     public void addLayerStateListener(ChangeListener<LayerState> listener) {
         viewsSession.addLayerStateListener(listener);
+    }
+
+    @Override
+    public void addAngleChangeListener(AngleChangeListener listener) {
+        viewsSession.addAngleChangeListener(listener);
+
     }
 
     @Override

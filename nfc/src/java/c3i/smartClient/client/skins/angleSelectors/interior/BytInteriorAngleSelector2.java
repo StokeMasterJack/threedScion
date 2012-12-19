@@ -1,6 +1,8 @@
 package c3i.smartClient.client.skins.angleSelectors.interior;
 
+import c3i.core.imageModel.shared.AngleKey;
 import c3i.smartClient.client.model.ViewModel;
+import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.widgets.AngleSelector;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,6 +50,14 @@ public class BytInteriorAngleSelector2 extends AngleSelector {
 //        table.getElement().getStyle().setBackgroundColor("yellow");
 
         table.setWidth(WIDTH_PX + "px");
+
+        model.addAngleChangeListener(new AngleChangeListener() {
+            @Override
+            public void onChange(AngleKey newValue) {
+                selectButton(newValue.getAngle());
+            }
+        });
+
 
     }
 
