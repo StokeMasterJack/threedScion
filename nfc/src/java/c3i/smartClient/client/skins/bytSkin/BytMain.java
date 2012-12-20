@@ -6,7 +6,7 @@ import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.skins.Skin;
 import c3i.smartClient.client.skins.angleSelectors.exterior.BytExteriorAngleSelector;
-import c3i.smartClient.client.skins.angleSelectors.interior.BytInteriorAngleSelector2;
+import c3i.smartClient.client.skins.angleSelectors.interior.BytInteriorAngleSelector3;
 import c3i.smartClient.client.skins.viewSelectors.ThumbViewSelector;
 import c3i.smartClient.client.widgets.ViewPanel;
 import com.google.gwt.dom.client.Style;
@@ -15,21 +15,22 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 public class BytMain implements Skin {
 
+    ViewPanel viewPanel;
+    FlowPanel flowPanel;
     ViewModel viewModel;
     BytExteriorAngleSelector exteriorAngleSelector;
-    BytInteriorAngleSelector2 interiorAngleSelector;
+    BytInteriorAngleSelector3 interiorAngleSelector;
 
     @Override
     public IsWidget createPreviewPanel(ViewModel viewModel) {
         this.viewModel = viewModel;
-        ViewPanel viewPanel = new ViewPanel(viewModel);
-
+        viewPanel = new ViewPanel(viewModel);
 
         exteriorAngleSelector = new BytExteriorAngleSelector(viewModel.getViewModel(0));
 
         if (viewModel.getViews().size() > 1) {
             ViewModel viewModel1 = viewModel.getViewModel(1);
-            interiorAngleSelector = new BytInteriorAngleSelector2(viewModel1);
+            interiorAngleSelector = new BytInteriorAngleSelector3(viewModel1);
 
         } else {
             interiorAngleSelector = null;
@@ -61,24 +62,30 @@ public class BytMain implements Skin {
         ThumbViewSelector viewSelector = new ThumbViewSelector(viewModel);
 
 
-        FlowPanel p = new FlowPanel();
-        p.add(viewPanel);
+        flowPanel = new FlowPanel();
+        flowPanel.add(viewPanel);
 
-        p.add(viewSelector);
-        p.getElement().getStyle().setWidth(viewPanel.getPreferredSize().getWidth(), Style.Unit.PX);
+        flowPanel.add(viewSelector);
+        flowPanel.getElement().getStyle().setWidth(viewPanel.getPreferredSize().getWidth(), Style.Unit.PX);
 
         refreshAngleSelectors();
 
-
-        return p;
+        return flowPanel;
     }
 
-    private void refreshAngleSelectors() {
+    public void refreshAngleSelectors() {
         ImView view = viewModel.getView();
         ViewKey viewKey = view.getViewKey();
         exteriorAngleSelector.setVisible(viewKey.getViewIndex() == 0);
         if (interiorAngleSelector != null) {
             interiorAngleSelector.setVisible(viewKey.getViewIndex() == 1);
+
+//            interiorAngleSelector.getElement().getStyle().setBackgroundColor("red");
+            interiorAngleSelector.getElement().getStyle().setProperty("textAlign","center");
+            int offsetWidth = viewPanel.getOffsetWidth();
+            int offsetHeight = viewPanel.getOffsetHeight();
+            interiorAngleSelector.setWidth(offsetWidth + "px");
+
         }
     }
 

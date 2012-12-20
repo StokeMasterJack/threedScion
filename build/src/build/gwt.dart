@@ -2,14 +2,13 @@
 
 #import('dart:io');
 
-String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo";
+String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo|all";
 
 Map<String,App> apps = {
   "gwtDemo":new App(contextPath:"gwtDemo",module:"c3i.gwtDemo.GwtDemo",startupPage:"GwtDemo.html"),
   "jsDemo":new App(contextPath:"smartClient",module:"c3i.smartClient.SmartClientExportJavaScript",startupPage:"demos.html"),
   "admin":new App(contextPath:"threed-admin-v2",module:"c3i.admin.ThreedAdmin",startupPage:"index.html")
 };
-
 
 void main(){
   

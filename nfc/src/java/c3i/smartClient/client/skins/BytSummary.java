@@ -14,7 +14,7 @@ public class BytSummary implements Skin {
         ViewPanel viewPanel0 = new ViewPanel(viewModel, 0);
         ViewPanel viewPanel1 = new ViewPanel(viewModel, 1);
 
-        BytExteriorAngleSelector spinControl = new BytExteriorAngleSelector(viewModel);
+        BytExteriorAngleSelector spinControl = new BytExteriorAngleSelector(viewModel.getViewModel(0));
 
         spinControl.addStyleName("over");
         viewPanel0.add(spinControl);
