@@ -5,6 +5,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *  This class represents a stack of images such that:
@@ -30,7 +32,8 @@ public class RawImageStack {
 
     public RawImageStack(Key spec, ImView imView, ImmutableList<PngSpec> allPngs) {
         Preconditions.checkNotNull(allPngs);
-        Preconditions.checkArgument(!allPngs.isEmpty());
+        Preconditions.checkArgument(!allPngs.isEmpty(),"ImageStack has no pngs for [" + imView + "] angle[" + spec.getAngle() + "]");
+
         this.spec = spec;
         this.imView = imView;
         this.allPngs = allPngs;
@@ -172,5 +175,6 @@ public class RawImageStack {
         return jpgFingerprint;
     }
 
+    private static Logger log = Logger.getLogger(RawImageStack.class.getName());
 
 }

@@ -59,6 +59,8 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
 
         angleCount = getMaxAngle(layers);
 
+        log.info("angleCount for view["+getName() + "] is [" + angleCount + "]");
+
         this.initialAngle = getInitialAngle(initialAngle, name);
 
     }
@@ -429,8 +431,6 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
             retVal = 1;
         }
         else retVal = currentAngle + 1;
-//        log.warning("retVal = " + retVal);
-        System.out.println("retVal = " + retVal);
         return retVal;
     }
 
