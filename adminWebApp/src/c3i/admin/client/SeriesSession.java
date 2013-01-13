@@ -38,7 +38,7 @@ public class SeriesSession {
         this.app = app;
         this.brand = brand;
         this.seriesKey = seriesCommit.getSeriesKey();
-        this.commit = new Value<CommitHistory>(seriesCommit.getCommitHistory());
+        this.commit = new Value<CommitHistory>("commit",seriesCommit.getCommitHistory());
         this.initView = initView;
 
         //cache

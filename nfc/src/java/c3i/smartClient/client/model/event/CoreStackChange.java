@@ -8,6 +8,10 @@ import c3i.core.imageModel.shared.CoreImageStack;
 
 public class CoreStackChange extends Topic1<CoreStackChange.Listener, CoreImageStack> {
 
+    public CoreStackChange() {
+        super("CoreStackChangeTopic");
+    }
+
     @Override
     public void add(CoreStackChange.Listener listener) {
         super.add(listener);

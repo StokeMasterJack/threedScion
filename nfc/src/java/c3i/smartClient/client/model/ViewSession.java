@@ -24,26 +24,32 @@ import com.google.common.base.Preconditions;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
 import org.timepedia.exporter.client.Export;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ViewSession implements DragToSpinModel, ViewModel {
 
     private static final String FIXED_VIEW_ERROR_MESSAGE = "This viewModel impl (ViewSession) represents a single, fixed view and cannot be changed at runtime.";
     //fixed init state
-    @Nonnull private final ViewsSession viewsSession;
-    @Nonnull private final ImView view;
-    @Nonnull private final RWValue<Boolean> dragToSpin; // doesn't actually change
+    @Nonnull
+    private final ViewsSession viewsSession;
+    @Nonnull
+    private final ImView view;
+    @Nonnull
+    private final RWValue<Boolean> dragToSpin; // doesn't actually change
 
     //owned state
-    @Nonnull private final RWValue<AngleKey> angle; //value @Nonnull
+    @Nonnull
+    private final RWValue<AngleKey> angle; //value @Nonnull
 
     //computed
-    @Nonnull private final AsyncKeyValue<ImageStack.Key, ImageStack> imageStack;  //value @Nullable
+    @Nonnull
+    private final AsyncKeyValue<ImageStack.Key, ImageStack> imageStack;  //value @Nullable
 
     private Scheduler.ScheduledCommand refreshImageStackKeyCommand;
 
@@ -59,16 +65,20 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
         this.viewsSession = parent;
         this.view = view;
-        this.imageStack = new AsyncKeyValue<ImageStack.Key, ImageStack>(createAsyncFunction());
-        this.angle = new Value<AngleKey>(view.getInitialAngleKey());
-        this.dragToSpin = new Value<Boolean>(view.isDragToSpin());
+        this.imageStack = new AsyncKeyValue<ImageStack.Key, ImageStack>("ImageStack.Key", "ImageStack", createAsyncFunction());
+        this.angle = new Value<AngleKey>("angle", view.getInitialAngleKey());
+        this.dragToSpin = new Value<Boolean>("dragToSpin", view.isDragToSpin());
 
         layerState = new LayerState(this);
 
         this.viewsSession.picks.addChangeListener(new ChangeListener<FixedPicks>() {
             @Override
             public void onChange(FixedPicks newValue) {
-                recalcImageStackAsync();
+                if (newValue.isValidBuild()) {
+                    recalcImageStackAsync();
+                } else {
+                    log.severe("Skipping 3D image refresh for view[" + getView().getName() + "] because picks are invalid");
+                }
             }
         });
         this.viewsSession.imageMode.addChangeListener(new ChangeListener<ImageMode>() {
@@ -150,6 +160,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     /**
      * This is here because, for historical reasons, the current inventory of 3d png files have
      * the angles reversed for exterior view. That is, increasing the angle, moves the care the left.
+     *
      * @param scrollReverse
      */
     @Export
@@ -171,6 +182,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
                     completer.setResult(null);
                 } else {
 
+
                     AngleKey angleKey = angle.get();
                     int a = angleKey.getAngle();
                     RawImageStack rawImageStack = view.getRawImageStack(fixedPicks, a);
@@ -184,6 +196,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
                     }
 
                     completer.setResult(imageStack);
+
 
                 }
             }
@@ -222,9 +235,28 @@ public class ViewSession implements DragToSpinModel, ViewModel {
             refreshImageStackKeyCommand = new Scheduler.ScheduledCommand() {
                 @Override
                 public void execute() {
-                    ImageStack.Key imageStackKey = getImageStackKey();
-                    imageStack.setKey(imageStackKey);
-                    refreshImageStackKeyCommand = null;
+
+                    try {
+                        FixedPicks fixedPicks = viewsSession.picks.get();
+
+                        if (fixedPicks == null) {
+                            log.severe("Skipping 3D image refresh fixedPicks was null");
+                            return;
+                        }
+
+                        if (fixedPicks.isInvalidBuild()) {
+                            log.severe("Skipping 3D image refresh because picks are invalid");
+                            return;
+                        }
+
+                        ImageStack.Key imageStackKey = getImageStackKey();
+                        imageStack.setKey(imageStackKey);
+
+                    } finally {
+                        refreshImageStackKeyCommand = null;
+                    }
+
+
                 }
             };
             Scheduler.get().scheduleFinally(refreshImageStackKeyCommand);
@@ -329,6 +361,10 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     }
 
     private void doCacheAhead(final FixedPicks fixedPicks, final int currentAngle) {
+        if (fixedPicks.isInvalidBuild()) {
+            log.severe("Skipping 3D image CacheAhead because picks are invalid");
+            return;
+        }
         PrefetchRepeatingCommand cmd = new PrefetchRepeatingCommand(fixedPicks, currentAngle);
         Scheduler.get().scheduleIncremental(cmd);
     }
@@ -339,9 +375,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         imageStack.addChangeListener(listener);
     }
 
-    /**
-     * Same as addImageStackChangeListener except the listener isn't called until the imageStack is fully loaded.
-     */
+    /** Same as addImageStackChangeListener except the listener isn't called until the imageStack is fully loaded. */
     @Export
     @Override
     public void addImageStackChangeListener2(final ImageStackChangeListener listener) {

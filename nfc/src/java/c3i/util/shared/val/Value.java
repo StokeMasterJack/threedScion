@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 public class Value<T> implements WVal<T> {
 
-    private final ValueChangeTopic<T> valueChange = new ValueChangeTopic<T>();
+    private final ValueChangeTopic<T> valueChange = new ValueChangeTopic<T>("ValueValueChangeTopic");
     private T value;
 
     public Value(T value) {

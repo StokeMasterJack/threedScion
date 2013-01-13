@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class LayerState {
 
-    private final ValueChangeTopic<LayerState> change = new ValueChangeTopic<LayerState>();
+    private final ValueChangeTopic<LayerState> change = new ValueChangeTopic<LayerState>("LayerStateChangeTopic");
 
     private final Set<ImLayer> hiddenLayers = Sets.newHashSet();
 

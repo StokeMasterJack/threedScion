@@ -5,8 +5,12 @@ import java.util.logging.Level;import java.util.logging.Logger;
 
 public abstract class Topic0<LT> extends Topic<LT> {
 
+    protected Topic0(String name) {
+        super(name);
+    }
+
     public void fire() {
-        this.fireInternal();
+        this._fireInternal();
     }
 
     @Override
@@ -16,9 +20,8 @@ public abstract class Topic0<LT> extends Topic<LT> {
         try {
             send(listener);
         } catch (Exception e) {
-            log.log(Level.SEVERE, "Error in exception handler", e);
-            e.printStackTrace();
-            throw new RuntimeException("Error in exception handler", e);
+            log.log(Level.SEVERE, "Error in Topic[" + name + "] event listener", e);
+            throw new RuntimeException("Error in Topic[" + name + "] event listener", e);
         }
     }
 

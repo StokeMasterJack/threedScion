@@ -1,12 +1,18 @@
 package c3i.util.shared.events;
 
 import com.google.common.base.Preconditions;
-import java.util.logging.Level;import java.util.logging.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Topic1<LT, ARG> extends Topic<LT> {
 
+    protected Topic1(String name) {
+        super(name);
+    }
+
     public void fire(ARG arg) {
-        this.fireInternal(arg);
+        this._fireInternal(arg);
     }
 
     @Override
@@ -18,9 +24,7 @@ public abstract class Topic1<LT, ARG> extends Topic<LT> {
         try {
             send(listener, arg);
         } catch (Throwable e) {
-            log.log(Level.SEVERE,"Error in exception handler", e);
-            e.printStackTrace();
-            throw new RuntimeException("Error in exception handler", e);
+            log.log(Level.SEVERE, "Error in Topic[" + name + "] event listener", e);
         }
     }
 

@@ -74,7 +74,7 @@ public class ThreedAdminModel {
 
         skins = initSkins();
 
-        skin = new Value<Skin>(skins.get(0));
+        skin = new Value<Skin>("skin",skins.get(0));
 
         this.currentUiPicks = new CurrentUiPicks(threedModel);
 

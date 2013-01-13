@@ -1,16 +1,16 @@
 package c3i.smartClient.client.model;
 
-import c3i.util.shared.futures.AsyncKeyValue;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.google.gwt.core.client.Scheduler;
-import c3i.util.shared.events.ChangeListener;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.util.shared.events.ChangeListener;
+import c3i.util.shared.futures.AsyncFunction;
+import c3i.util.shared.futures.AsyncKeyValue;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.RValue;
-import c3i.util.shared.futures.AsyncFunction;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.gwt.core.client.Scheduler;
 
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class PicksSession implements RValue<FixedPicks> {
         this.threedModel = threedModel;
         Set<Var> initPicks = threedModel.getFeatureModel().getInitiallyTruePickableVars();
         AsyncFunction<Set<Var>, FixedPicks> asyncFunction = createAsyncFunction(threedModel);
-        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>(asyncFunction,initPicks);
+        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>("RawPicks", "FixedPicks", asyncFunction, initPicks);
     }
 
     private static AsyncFunction<Set<Var>, FixedPicks> createAsyncFunction(final ThreedModel threedModel) {

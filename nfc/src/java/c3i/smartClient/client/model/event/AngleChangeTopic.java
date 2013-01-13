@@ -5,6 +5,10 @@ import c3i.core.imageModel.shared.AngleKey;
 
 public class AngleChangeTopic extends Topic1<AngleChangeListener, AngleKey> {
 
+    public AngleChangeTopic() {
+        super("AngleChangeTopic");
+    }
+
     @Override
     protected void send(AngleChangeListener listener, AngleKey arg) {
         listener.onChange(arg);

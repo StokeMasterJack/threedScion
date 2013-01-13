@@ -1,7 +1,12 @@
 package c3i.smartClient.client.model;
 
 import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.*;
+import c3i.core.featureModel.shared.boolExpr.AssignmentException;
+import c3i.core.imageModel.shared.AngleKey;
+import c3i.core.imageModel.shared.ImView;
+import c3i.core.imageModel.shared.ImageMode;
+import c3i.core.imageModel.shared.Profile;
+import c3i.core.imageModel.shared.ViewKey;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
@@ -18,12 +23,14 @@ import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ViewsSession implements DragToSpinModel, ViewModel {
 
-    private final ValueChangeTopic<ImageStack> imageStackChange = new ValueChangeTopic<ImageStack>();
-    private final ValueChangeTopic<LayerState> layerStateChange = new ValueChangeTopic<LayerState>();
-    private final ValueChangeTopic<AngleKey> angleChange = new ValueChangeTopic<AngleKey>();
+    private final ValueChangeTopic<ImageStack> imageStackChange = new ValueChangeTopic<ImageStack>("ImageStackChangeTopic");
+    private final ValueChangeTopic<LayerState> layerStateChange = new ValueChangeTopic<LayerState>("LayerStateChangeTopic");
+    private final ValueChangeTopic<AngleKey> angleChange = new ValueChangeTopic<AngleKey>("AngleChangeTopic");
 
     //fixed init state
     private final Path repoBaseUrl;
@@ -44,6 +51,7 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     @Nonnull
     private ViewSession viewSession; //current (aka selected aka main) view
 
+
     public ViewsSession(final Path repoBaseUrl, final ThreedModel threedModel, Profile initialProfile, RValue<FixedPicks> picks) {
 
         Preconditions.checkNotNull(initialProfile);
@@ -54,8 +62,18 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
 
         this.picks = picks;
 
-        imageMode = new Value<ImageMode>();
-        profile = new Value<Profile>(initialProfile);
+        this.picks.addChangeListener(new ChangeListener<FixedPicks>() {
+            @Override
+            public void onChange(FixedPicks newValue) {
+                if (newValue.isInvalidBuild()) {
+                    AssignmentException ex = newValue.getException();
+                    log.log(Level.SEVERE, "Invalid Picks: " + ex.getMessage());
+                }
+            }
+        });
+
+        imageMode = new Value<ImageMode>("imageMode");
+        profile = new Value<Profile>("profile", initialProfile);
 
 
         ImmutableList.Builder<ViewSession> builder = ImmutableList.builder();
@@ -72,9 +90,9 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
 
 
         viewSession = getViewSession(threedModel.getInitialViewIndex());
-        viewKey = new Value<ViewKey>(viewSession.getViewKey());
+        viewKey = new Value<ViewKey>("viewKey", viewSession.getViewKey());
 
-        dragToSpin = new Value<Boolean>(viewSession.isDragToSpin());
+        dragToSpin = new Value<Boolean>("dragToSpin", viewSession.isDragToSpin());
 
         for (ViewSession viewSession : viewSessions) {
 
@@ -280,9 +298,7 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
         imageStackChange.add(listener);
     }
 
-    /**
-     * Same as addImageStackChangeListener except the listener isn't called until the imageStack is fully loaded.
-     */
+    /** Same as addImageStackChangeListener except the listener isn't called until the imageStack is fully loaded. */
     @Override
     public void addImageStackChangeListener2(final ImageStackChangeListener listener) {
         addImageStackChangeListener(new ImageStackChangeListener() {
@@ -323,4 +339,6 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     public boolean isValidViewName(String viewName) {
         return threedModel.getImageModel().isValidViewName(viewName);
     }
+
+    private static Logger log = Logger.getLogger(ViewsSession.class.getName());
 }

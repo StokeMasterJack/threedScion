@@ -7,6 +7,9 @@ import c3i.util.shared.events.Topic1;
 import c3i.smartClient.client.model.ImageStack;
 
 public class ImageStackChange extends Topic1<ImageStackChange.Listener, ImageStack> {
+    public ImageStackChange() {
+        super("ImageStackChangeTopic");
+    }
 
     @Override
     public void add(ImageStackChange.Listener listener) {

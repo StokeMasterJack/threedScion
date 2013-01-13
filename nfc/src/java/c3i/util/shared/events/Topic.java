@@ -1,10 +1,16 @@
 package c3i.util.shared.events;
 
-import java.util.logging.Level;import java.util.logging.Logger;
-
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Topic<LT> {
+
+    protected final String name;
+
+    protected Topic(String name) {
+        this.name = name;
+    }
 
     protected final ArrayList<LT> listeners = new ArrayList<LT>();
 
@@ -24,16 +30,14 @@ public abstract class Topic<LT> {
         listeners.clear();
     }
 
-    protected void fireInternal(Object... args) {
+    protected void _fireInternal(Object... args) {
         if (args == null) throw new IllegalArgumentException();
         if (!suspended) {
             for (LT listener : listeners) {
                 try {
                     sendInternal(listener, args);
                 } catch (Throwable e) {
-                    log.log(Level.SEVERE, "error", e);
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
+                    log.log(Level.SEVERE, "Should never occur");
                 }
             }
         }

@@ -38,7 +38,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
         currentTrueUiVars = Sets.newHashSet(featureModel.getInitiallyTruePickableVars());
 
-        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>(createAsyncFunction(threedModel));
+        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>("RawPicks","FixedPicks",createAsyncFunction(threedModel));
 
         updateFixedPicksKey();
 

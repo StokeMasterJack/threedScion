@@ -1,9 +1,15 @@
 package c3i.util.shared.events;
 
 import com.google.common.base.Objects;
-import java.util.logging.Level;import java.util.logging.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ValueChangeTopic<VT> extends Topic1<ChangeListener<VT>, VT> {
+
+    public ValueChangeTopic(String name) {
+        super(name);
+    }
 
     @Override
     public void fire(VT newValue) {

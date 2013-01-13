@@ -4,9 +4,11 @@ import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.events.ExceptionHandler;
 import c3i.util.shared.events.ExceptionTopic;
 import com.google.common.base.Objects;
-import java.util.logging.Level;import java.util.logging.Logger;
+import com.google.common.base.Preconditions;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AsyncKeyValue<K, V> implements RValue<V> {
 
@@ -15,14 +17,19 @@ public class AsyncKeyValue<K, V> implements RValue<V> {
     private final Value<K> key;
     private final Value<V> value;
 
-    private final ExceptionTopic exceptionTopic = new ExceptionTopic();
+    private final ExceptionTopic exceptionTopic;
 
 
     private Loader<K, V> loader;
 
-    public AsyncKeyValue(final AsyncFunction<K, V> asyncFunction) {
-        this.key = new Value<K>(null);
-        this.value = new Value<V>(null);
+    public AsyncKeyValue(String keyName, String valueName, final AsyncFunction<K, V> asyncFunction) {
+        Preconditions.checkNotNull(keyName);
+        Preconditions.checkNotNull(valueName);
+
+        this.key = new Value<K>(keyName, null);
+        this.value = new Value<V>(valueName, null);
+
+        exceptionTopic = new ExceptionTopic("ExceptionTopic for AsyncKeyValue[keyName:" + keyName + ",valueName:" + valueName + "]");
 
         this.key.addChangeListener(new ChangeListener<K>() {
             @Override
@@ -60,8 +67,8 @@ public class AsyncKeyValue<K, V> implements RValue<V> {
         });
     }
 
-    public AsyncKeyValue(final AsyncFunction<K, V> asyncFunction, K initialKey) {
-        this(asyncFunction);
+    public AsyncKeyValue(String keyName, String valueName, final AsyncFunction<K, V> asyncFunction, K initialKey) {
+        this(keyName, valueName, asyncFunction);
         setKey(initialKey);
     }
 

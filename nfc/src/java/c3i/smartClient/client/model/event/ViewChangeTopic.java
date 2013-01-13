@@ -5,6 +5,10 @@ import c3i.core.imageModel.shared.ViewKey;
 
 public class ViewChangeTopic extends Topic1<ViewChangeListener, ViewKey> {
 
+    public ViewChangeTopic() {
+        super("ViewChangeTopic");
+    }
+
     @Override
     protected void send(ViewChangeListener listener, ViewKey arg) {
         listener.onChange(arg);
