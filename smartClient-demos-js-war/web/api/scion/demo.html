@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script type="text/javascript" language="javascript" src="/smartClient/api/api.nocache.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="../../jquery.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../AngleSelector.css"/>
+    <link rel="stylesheet" type="text/css" href="demo.css"/>
+
+</head>
+<body style="padding: 1em">
+
+<div>
+    <div class="ColorSelector">
+        <div><input type="radio" name="color" onclick="threedSession.setPicks(['37J']);" checked="checked"/> Whiteout
+        </div>
+        <div><input type="radio" name="color" onclick="threedSession.setPicks(['61K']);"/> Asphalt</div>
+        <div><input type="radio" name="color" onclick="threedSession.setPicks(['C7P']);"/> Firestorm</div>
+        <div><input type="radio" name="color" onclick="threedSession.setPicks(['H8R']);"/> Hot lava</div>
+    </div>
+
+
+    <div class="ViewPanel">
+        <table class="AngleSelector over">
+                  <tr>
+                      <td align="left">
+                          <button onclick="threedSession.anglePrevious()">&lt;&lt;</button>
+                      </td>
+                      <td align="right">
+                          <button onclick="threedSession.angleNext()">&gt;&gt;</button>
+                      </td>
+                  </tr>
+              </table>
+
+
+        <div id="imageStack">
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+            <img>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

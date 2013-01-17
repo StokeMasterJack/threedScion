@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="smartClient-demos-gwt-war">
+    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient-demos-gwt</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="gwtDemoWebApp/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ut" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="application" name="com.google.guava:guava:13.0.1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="smartClient-demos-gwt-war/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="smartClient-demos-js-war">
+    <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient-demos-js</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF" />
+      <element id="javaee-facet-resources" facet="jsDemoWebApp/web/Web" />
+      <element id="javaee-facet-resources" facet="smartClient-demos-js-war/web/Web" />
+    </root>
+  </artifact>
+</component>

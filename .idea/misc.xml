@@ -149,7 +149,7 @@
   </component>
   <component name="IdProvider" IDEtalkID="3AA234F3284B11A001C2C7AFDD0424F1" />
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient/apidocs" />
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient-api/api" />
     <option name="OPTION_SCOPE" value="protected" />
     <option name="OPTION_HIERARCHY" value="true" />
     <option name="OPTION_NAVIGATOR" value="true" />

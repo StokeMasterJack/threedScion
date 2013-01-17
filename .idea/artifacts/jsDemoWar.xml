@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="jsDemoWar">
-    <output-path>$USER_HOME$/Google Drive/shares/js/</output-path>
-    <root id="archive" name="smartClient.war">
-      <element id="artifact" artifact-name="jsDemoExploded" />
-    </root>
-  </artifact>
-</component>
