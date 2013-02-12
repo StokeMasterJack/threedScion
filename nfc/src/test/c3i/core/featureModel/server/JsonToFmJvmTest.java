@@ -12,9 +12,7 @@ public class JsonToFmJvmTest {
     @Test public void testAvalon() throws Exception {
 
         SeriesKey seriesKey = SeriesKey.AVALON_2011;
-
         URL resource = Resources.getResource(this.getClass(), "avalon-fm.json");
-
         JsonToFmJvm u = new JsonToFmJvm();
         FeatureModel fm = u.parseJson(seriesKey, resource);
 

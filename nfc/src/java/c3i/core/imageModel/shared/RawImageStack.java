@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.concurrent.Immutable;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +22,8 @@ public class RawImageStack {
     protected final ImmutableList<PngSpec> allPngs;
     protected final int zCount;
 
+    private String jpgFingerprint;
+
     private ImmutableList<PngSpec> blinkPngs;
 
     public RawImageStack(SimplePicks fixedPicks, int angle, ImView view, ImmutableList<PngSpec> allPngs) {
@@ -31,7 +32,7 @@ public class RawImageStack {
 
     public RawImageStack(Key spec, ImView imView, ImmutableList<PngSpec> allPngs) {
         Preconditions.checkNotNull(allPngs);
-        Preconditions.checkArgument(!allPngs.isEmpty(),"ImageStack has no pngs for [" + imView + "] angle[" + spec.getAngle() + "]");
+        Preconditions.checkArgument(!allPngs.isEmpty(), "ImageStack has no pngs for [" + imView + "] angle[" + spec.getAngle() + "]");
 
         this.spec = spec;
         this.imView = imView;
@@ -164,7 +165,6 @@ public class RawImageStack {
         return new CoreImageStack(this, profile, imageMode);
     }
 
-    private String jpgFingerprint;
 
     public String getJpgFingerprint() {
         if (jpgFingerprint == null) {
@@ -176,4 +176,9 @@ public class RawImageStack {
 
     private static Logger log = Logger.getLogger(RawImageStack.class.getName());
 
+    @Override
+    public String toString() {
+        ImmutableList<PngSpec> allPngs1 = getAllPngs();
+        return allPngs1.toString();
+    }
 }

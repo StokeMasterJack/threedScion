@@ -4,7 +4,7 @@ import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.client.JsThreedModel;
-import c3i.core.threedModel.client.JsonUnmarshallerTm;
+import c3i.core.threedModel.client.JsonToTmGwt;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
@@ -46,7 +46,7 @@ public class ThreedModelClient {
 
     private final String urlTemplate = "${repoBase.url}/${brandName}/${seriesName}/${seriesYear}/3d/models/${rootTreeId}.json";
 
-    private final JsonUnmarshallerTm jsonThreedModelBuilder;
+    private final JsonToTmGwt jsonThreedModelBuilder;
     private final Path repoBaseUrl;
     private final RequestContext requestContext;
 
@@ -67,7 +67,7 @@ public class ThreedModelClient {
         this.requestContext = requestContext;
         this.repoBaseUrl = repoBaseUrl;
 
-        this.jsonThreedModelBuilder = new JsonUnmarshallerTm();
+        this.jsonThreedModelBuilder = new JsonToTmGwt();
 
     }
 
@@ -184,7 +184,7 @@ public class ThreedModelClient {
                     }
 
                     public void onSuccess(JsThreedModel jsThreedModel) {
-                        ThreedModel threedModel = JsonUnmarshallerTm.createModelFromJs(jsThreedModel);
+                        ThreedModel threedModel = JsonToTmGwt.createModelFromJs(jsThreedModel);
                         r.onSuccess(threedModel);
                     }
                 });

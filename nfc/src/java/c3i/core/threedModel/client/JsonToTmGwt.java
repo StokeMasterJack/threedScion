@@ -1,23 +1,22 @@
 package c3i.core.threedModel.client;
 
-import java.util.logging.Level;import java.util.logging.Logger;
-
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.SimpleFeatureModel;
-import smartsoft.util.shared.Path;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.core.featureModel.client.JsonUnmarshallerFm;
 import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.client.JsImageModel;
-import c3i.core.imageModel.client.JsonUnmarshallerIm;
+import c3i.core.imageModel.client.JsonToImGwt;
 import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.threedModel.shared.SeriesInfo;
-import c3i.core.threedModel.shared.SeriesInfoBuilder;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import c3i.core.threedModel.shared.SubSeries;
 import c3i.core.threedModel.shared.ThreedModel;
+import smartsoft.util.shared.Path;
 
-public class JsonUnmarshallerTm {
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class JsonToTmGwt {
 
     public static ThreedModel createModelFromJsInPage() {
         JsThreedModel jsModelFromJsInPage = getJsModelFromJsInPage();
@@ -95,32 +94,26 @@ public class JsonUnmarshallerTm {
         JsFeatureModel jsFeatureModel = jsThreedModel.getJsFeatureModel();
         final FeatureModel featureModel = jsonFeatureModelBuilder.createFeatureModelFromJson(jsFeatureModel);
 
-//        SeriesInfo seriesInfo = SeriesInfoBuilder.createSeriesInfo(featureModel.getSeriesKey());
-
-
         SimpleFeatureModel fm = new SimpleFeatureModel() {
-                   @Override
-                   public Var get(String varCode) {
-                       return featureModel.get(varCode);
-                   }
+            @Override
+            public Var get(String varCode) {
+                return featureModel.get(varCode);
+            }
 
-                   @Override
-                   public SeriesKey getSeriesKey() {
-                       return featureModel.getSeriesKey();
-                   }
-               };
+            @Override
+            public SeriesKey getSeriesKey() {
+                return featureModel.getSeriesKey();
+            }
+        };
 
-        JsonUnmarshallerIm imJsonParser = new JsonUnmarshallerIm(fm);
 
         JsImageModel jsImageModel = jsThreedModel.getJsImageModel();
-
-        ImSeries imSeries = imJsonParser.parseSeries(jsImageModel);
-
+        ImSeries imSeries = JsonToImGwt.parse(fm, jsImageModel);
 
 
         return new ThreedModel(featureModel, imSeries);
     }
 
-    private static Logger log = Logger.getLogger(JsonUnmarshallerTm.class.getName());
+    private static Logger log = Logger.getLogger(JsonToTmGwt.class.getName());
 
 }

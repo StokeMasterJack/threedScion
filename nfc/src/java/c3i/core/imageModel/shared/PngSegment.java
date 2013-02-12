@@ -76,10 +76,7 @@ public class PngSegment {
 
     @Override
     public String toString() {
-        return "PngSegment{" +
-                "shortSha='" + shortSha + '\'' +
-                ", transform=" + deltaY +
-                '}';
+        return serializeToUrlSegment();
     }
 
 

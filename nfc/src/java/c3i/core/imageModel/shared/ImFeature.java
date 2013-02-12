@@ -13,8 +13,6 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
     private final Var var;
     private final List<ImFeatureOrPng> childNodes;
 
-    transient private ImmutableList<FeatureOrPngSlice> slices;
-
     public ImFeature(int depth, @Nonnull Var var, List<ImFeatureOrPng> childNodes) {
         super(depth);
         if (var == null) throw new IllegalArgumentException("var must be non-null");

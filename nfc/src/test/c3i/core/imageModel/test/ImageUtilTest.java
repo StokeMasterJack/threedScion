@@ -1,5 +1,6 @@
-package c3i.core.imageModel.server;
+package c3i.core.imageModel.test;
 
+import c3i.core.imageModel.server.ImageUtil;
 import junit.framework.TestCase;
 
 import java.util.Set;

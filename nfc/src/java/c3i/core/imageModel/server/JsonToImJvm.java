@@ -15,15 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class JsonToImJvm {
 
     private final SimpleFeatureModel featureModel;
 
-    public JsonToImJvm(SimpleFeatureModel featureModel) {
+    public static ImSeries parse(SimpleFeatureModel featureModel, JsonNode imageModeAsJsonNode) {
+        JsonToImJvm parser = new JsonToImJvm(featureModel);
+        return parser.parseSeries(imageModeAsJsonNode);
+    }
+
+    private JsonToImJvm(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 
-    public ImSeries parseSeries(JsonNode jsImageModel) {
+    private ImSeries parseSeries(JsonNode jsImageModel) {
         JsonNode jsonArray = jsImageModel.get("views");
         assert jsonArray != null;
         List<ImView> imViews = parseViews(jsonArray);
@@ -39,20 +46,19 @@ public class JsonToImJvm {
 
             JsonNode jsView = jsViews.get(iv);
 
-            String viewName = jsView.getFieldNames().next();
-
+            String viewName = jsView.get("name").getValueAsText();
 
             ArrayList<ImLayer> imLayers = new ArrayList<ImLayer>();
 
-            JsonNode jsLayers = jsView.get(viewName);
+            JsonNode jsLayers = jsView.get("layers");
 
             for (int il = 0; il < jsLayers.size(); il++) {
 
                 JsonNode jsLayer = jsLayers.get(il);
 
 
-                String layerName = jsLayer.getFieldNames().next();
-                JsonNode jsFeaturesOrPngs = jsLayer.get(layerName);
+                String layerName = jsLayer.get("name").getValueAsText();
+                JsonNode jsFeaturesOrPngs = jsLayer.get("children");
 
 
                 List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(3, jsFeaturesOrPngs);
@@ -66,6 +72,7 @@ public class JsonToImJvm {
     }
 
     public List<ImFeatureOrPng> parseFeaturesOrPngs(int depth, JsonNode jsFeaturesOrPngs) {
+        checkNotNull(jsFeaturesOrPngs);
         List<ImFeatureOrPng> imFeatureOrPngs = new ArrayList<ImFeatureOrPng>();
         for (int i = 0; i < jsFeaturesOrPngs.size(); i++) {
             JsonNode jsFeatureOrPng = jsFeaturesOrPngs.get(i);

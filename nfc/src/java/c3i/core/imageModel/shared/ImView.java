@@ -44,6 +44,11 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         if (name == null) throw new IllegalArgumentException();
         if (layers == null) throw new IllegalArgumentException();
 
+        if(name.equals("name")){
+            throw new IllegalArgumentException();
+
+        }
+
         this.name = name;
         this.index = index;
 

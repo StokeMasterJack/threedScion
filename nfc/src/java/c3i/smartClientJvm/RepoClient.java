@@ -79,7 +79,7 @@ public class RepoClient {
     public ThreedModel getThreedModel(SeriesId seriesId) throws IOException {
         URL threedModelUrl = getThreedModelUrl(seriesId);
         log.info("RepoClient - Using threedModelUrl[" + threedModelUrl + "]");
-        JsonUnmarshallerTm u = new JsonUnmarshallerTm();
+        JsonToTmJvm u = new JsonToTmJvm();
         ThreedModel threedModel = u.createModelFromJs(seriesId.getSeriesKey(), threedModelUrl);
         return threedModel;
     }

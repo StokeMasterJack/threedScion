@@ -6,7 +6,7 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.repo.server.Repos;
 import c3i.core.threedModel.shared.*;
 
-import c3i.smartClientJvm.JsonUnmarshallerTm;
+import c3i.smartClientJvm.JsonToTmJvm;
 import c3i.smartClientJvm.RepoClient;
 import smartsoft.util.shared.Path;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class RepoClientTest {
         //read ThreedModel from JSON
 //        URL url = Resources.getResource(this.getClass(), "avalon-threed-model.json");
         URL url = new URL("http://localhost:8080/configurator-content/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json");
-        JsonUnmarshallerTm u = new JsonUnmarshallerTm();
+        JsonToTmJvm u = new JsonToTmJvm();
         ThreedModel threedModel1 = u.createModelFromJs(SeriesKey.AVALON_2011, url);
 
         //read from local repo using XML file - just to have something to compare against

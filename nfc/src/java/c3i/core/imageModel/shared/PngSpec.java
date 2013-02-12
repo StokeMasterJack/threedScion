@@ -92,4 +92,8 @@ public class PngSpec {
         return srcPng;
     }
 
+    @Override
+    public String toString() {
+        return getSegmentString();
+    }
 }

@@ -1,6 +1,5 @@
 package c3i.core.imageModel.client;
 
-//import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImFeature;
 import c3i.core.imageModel.shared.ImFeatureOrPng;
@@ -14,22 +13,37 @@ import c3i.core.imageModel.shared.ViewLiftSpec;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
-import java.util.logging.Logger;
-
-import java.util.logging.Level;import java.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class JsonUnmarshallerIm {
+public class JsonToImGwt {
 
     private final SimpleFeatureModel featureModel;
 
-    public JsonUnmarshallerIm(SimpleFeatureModel featureModel) {
+    private JsonToImGwt(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 
-    public ImSeries parseSeries(JsImageModel jsImageModel) {
+    public static ImSeries parse(SimpleFeatureModel featureModel, JsImageModel jsImageModel) {
+        JsonToImGwt parser = new JsonToImGwt(featureModel);
+        return parser.parseSeries(jsImageModel);
+    }
+
+    public static ImSeries parse(SimpleFeatureModel featureModel, String imageModelAsJsonText) {
+        JsonToImGwt parser = new JsonToImGwt(featureModel);
+        JsImageModel jsImageModel = getJsImageModelFromJsonText(imageModelAsJsonText);
+        return parser.parseSeries(jsImageModel);
+    }
+
+    private static native JsImageModel getJsImageModelFromJsonText(String jsonText) /*-{
+        eval("var xTmp = " + jsonText);
+        return xTmp;
+    }-*/;
+
+    private ImSeries parseSeries(JsImageModel jsImageModel) {
         JSONArray jsonArray = jsImageModel.getViews();
         assert jsonArray != null;
         List<ImView> imViews = parseViews(jsonArray);
@@ -41,7 +55,7 @@ public class JsonUnmarshallerIm {
         ArrayList<ImView> imViews = new ArrayList<ImView>();
         for (int iv = 0; iv < jsViews.size(); iv++) {
             JSONObject jsView = jsViews.get(iv).isObject();
-            ImView view = parseView(jsView,iv);
+            ImView view = parseView(jsView, iv);
             imViews.add(view);
         }
         return imViews;
@@ -49,7 +63,7 @@ public class JsonUnmarshallerIm {
 
     ImView parseView(JSONObject jsView, int iv) {
         JSONValue jsName = jsView.get("name");
-        if(jsName==null){
+        if (jsName == null) {
             log.severe("jsView json node does not have a viewName: " + jsView);
             throw new IllegalStateException("jsView json node does not have a viewName: " + jsView);
         }
@@ -62,7 +76,7 @@ public class JsonUnmarshallerIm {
         } else {
             viewLiftSpec = null;
         }
-        return new ImView(1, name, iv,parseLayers(jsLayers), viewLiftSpec);
+        return new ImView(1, name, iv, parseLayers(jsLayers), viewLiftSpec);
     }
 
     List<ImLayer> parseLayers(JSONArray jsLayers) {
@@ -80,11 +94,8 @@ public class JsonUnmarshallerIm {
         boolean lift = jsLayer.get("lift").isBoolean().booleanValue();
         JSONArray jsFeaturesOrPngs = jsLayer.get("children").isArray();
         List<ImFeatureOrPng> featureOrPngs = parseFeaturesOrPngs(3, jsFeaturesOrPngs);
-        return new ImLayer(2, layerName, featureOrPngs,lift);
+        return new ImLayer(2, layerName, featureOrPngs, lift);
     }
-
-
-
 
 
     ViewLiftSpec parseViewLiftSpec(JSONObject jsLift) {
@@ -112,9 +123,9 @@ public class JsonUnmarshallerIm {
         } else if (jsFeatureOrPng.isArray() != null) {
             return parsePng(depth, jsFeatureOrPng.isArray());
         } else {
-            log.log(Level.SEVERE,"jsFeatureOrPng should be a Object or an Array. This is not either: ");
-            log.log(Level.SEVERE,"\t jsFeatureOrPng: [" + jsFeatureOrPng + "]");
-            log.log(Level.SEVERE,"\t jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
+            log.log(Level.SEVERE, "jsFeatureOrPng should be a Object or an Array. This is not either: ");
+            log.log(Level.SEVERE, "\t jsFeatureOrPng: [" + jsFeatureOrPng + "]");
+            log.log(Level.SEVERE, "\t jsFeatureOrPng.toString(): [" + jsFeatureOrPng.toString() + "]");
             throw new IllegalArgumentException("jsFeatureOrPng should be a Object or an Array: ");
         }
 
@@ -141,6 +152,6 @@ public class JsonUnmarshallerIm {
         return new ImFeature(depth, var, imFeatureOrPngs);
     }
 
-    private static Logger log = Logger.getLogger(JsonUnmarshallerIm.class.getName());
+    private static Logger log = Logger.getLogger(JsonToImGwt.class.getName());
 
 }

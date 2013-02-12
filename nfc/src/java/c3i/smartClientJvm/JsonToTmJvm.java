@@ -22,7 +22,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
-public class JsonUnmarshallerTm {
+public class JsonToTmJvm {
 
     /**
      * null rootTreeId implies "created from workDir"
@@ -79,8 +79,7 @@ public class JsonUnmarshallerTm {
         };
 
 
-        JsonToImJvm uIm = new JsonToImJvm(fm);
-        ImSeries im = uIm.parseSeries(jsIm);
+        ImSeries im = JsonToImJvm.parse(fm, jsIm);
 
         ThreedModel threedModel = new ThreedModel(featureModel, im);
         return threedModel;
