@@ -7,11 +7,17 @@ public interface IImageModel {
 
     void init(String imageModelJson);
 
-    IImageStack getImageStack(
+
+    String[] getImageStack(
             String viewId,
             int angle,
             String[] picks,
-            String profileId
+            String profileId ,//size,PngOrJpg
+            String imageMode , //Collapse | Expanded
+            boolean skipZLayers,
+            String repoBase
+
+
     );
 
 }

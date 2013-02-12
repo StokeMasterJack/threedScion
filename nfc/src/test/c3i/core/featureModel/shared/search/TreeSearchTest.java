@@ -15,6 +15,7 @@ import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ImageMode;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.RawImageStack;
+import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.imageModel.shared.ViewKeyOld;
 import c3i.core.imageModel.shared.ViewSlice;
 import c3i.core.imageModel.shared.BaseImageKey;
@@ -201,7 +202,7 @@ public class TreeSearchTest extends TestCase {
         final Profile profile = new Profile(JpgWidth.W_STD);
         long totalJpgCount = 0;
         FeatureModel fm = threedModel.getFeatureModel();
-        for (ImView view : threedModel.getImageModel().getViews()) {
+        for (final ImView view : threedModel.getImageModel().getViews()) {
             System.err.println(view.getName());
             for (int angle = 1; angle <= view.getAngleCount(); angle++) {
                 final Set<String> jpgs = new HashSet<String>();
@@ -216,10 +217,15 @@ public class TreeSearchTest extends TestCase {
                 CspForTreeSearch csp = fm.createCspForTreeSearch(careVars);
                 csp.propagateSimplify();
                 final TreeSearch treeSearch = new TreeSearch();
+
+                final int aAngle = angle;
+
                 treeSearch.setProductHandler(new ProductHandler() {
+
                     @Override
-                    public void onProduct(AssignmentsForTreeSearch product) {
-                        RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
+                    public void onProduct(SimplePicks product) {
+                        RawImageStack rawImageStack = view.getRawImageStack(product,aAngle);
+//                        RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
                         String jpgFingerprint = coreImageStack.getBaseImageFingerprint();
                         if (jpgs.add(jpgFingerprint)) {
@@ -270,7 +276,7 @@ public class TreeSearchTest extends TestCase {
 
     public long countJpgsForSlice(ThreedModel threedModel, final Slice slice) {
         FeatureModel fm = threedModel.getFeatureModel();
-        ImView view = threedModel.getView(slice.getViewName());
+        final ImView view = threedModel.getView(slice.getViewName());
         final ViewSlice viewSlice = threedModel.getViewSlice(slice);
 
         Set<Var> careVars = new HashSet<Var>();
@@ -283,10 +289,13 @@ public class TreeSearchTest extends TestCase {
         final TreeSearch treeSearch = new TreeSearch();
 
         final HashSet<String> set = new HashSet<String>();
+
+        final int aAngle = slice.getAngle();
         treeSearch.setProductHandler(new ProductHandler() {
             @Override
-            public void onProduct(AssignmentsForTreeSearch product) {
-                RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
+            public void onProduct(SimplePicks product) {
+                RawImageStack rawImageStack = view.getRawImageStack(product,aAngle);
+//                RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                 String jpgFingerprint = rawImageStack.getJpgFingerprint();
                 set.add(jpgFingerprint);
             }

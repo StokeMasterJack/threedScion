@@ -1,9 +1,6 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.Vars;
 import c3i.core.featureModel.shared.boolExpr.Var;
-
-import java.util.Properties;
 
 
 public class ViewLiftSpec {

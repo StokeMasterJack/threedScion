@@ -10,6 +10,7 @@ import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngSegments;
+import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
 import com.google.common.collect.ImmutableSet;
@@ -100,11 +101,10 @@ public class JpgSet implements Serializable {
 
         final HashSet<PngSegments> set = new HashSet<PngSegments>();
         treeSearch.setProductHandler(new ProductHandler() {
+
             @Override
-            public void onProduct(AssignmentsForTreeSearch product) {
-                //                pukeIfCanceled();
-                FixedPicks fixedPicks = new FixedPicks(product);
-                PngSegments pngSegments = view.getPngSegments(fixedPicks, key.getAngle());
+            public void onProduct(SimplePicks product) {
+                PngSegments pngSegments = view.getPngSegments(product, key.getAngle());
                 set.add(pngSegments);
             }
         });

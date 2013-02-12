@@ -1,6 +1,10 @@
 package c3i.core.threedModel.client;
 
 import java.util.logging.Level;import java.util.logging.Logger;
+
+import c3i.core.common.shared.SeriesKey;
+import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import smartsoft.util.shared.Path;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.core.featureModel.client.JsonUnmarshallerFm;
@@ -89,10 +93,24 @@ public class JsonUnmarshallerTm {
         JsonUnmarshallerFm jsonFeatureModelBuilder = new JsonUnmarshallerFm();
 
         JsFeatureModel jsFeatureModel = jsThreedModel.getJsFeatureModel();
-        FeatureModel featureModel = jsonFeatureModelBuilder.createFeatureModelFromJson(jsFeatureModel);
+        final FeatureModel featureModel = jsonFeatureModelBuilder.createFeatureModelFromJson(jsFeatureModel);
 
 //        SeriesInfo seriesInfo = SeriesInfoBuilder.createSeriesInfo(featureModel.getSeriesKey());
-        JsonUnmarshallerIm imJsonParser = new JsonUnmarshallerIm(featureModel);
+
+
+        SimpleFeatureModel fm = new SimpleFeatureModel() {
+                   @Override
+                   public Var get(String varCode) {
+                       return featureModel.get(varCode);
+                   }
+
+                   @Override
+                   public SeriesKey getSeriesKey() {
+                       return featureModel.getSeriesKey();
+                   }
+               };
+
+        JsonUnmarshallerIm imJsonParser = new JsonUnmarshallerIm(fm);
 
         JsImageModel jsImageModel = jsThreedModel.getJsImageModel();
 

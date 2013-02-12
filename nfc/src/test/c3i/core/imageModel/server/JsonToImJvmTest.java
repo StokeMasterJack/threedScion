@@ -1,12 +1,13 @@
 package c3i.core.imageModel.server;
 
-import com.google.common.io.Resources;
+import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.JsonToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.threedModel.shared.SeriesInfoBuilder;
-import c3i.core.common.shared.SeriesKey;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import c3i.core.threedModel.shared.ThreedModel;
+import com.google.common.io.Resources;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
@@ -16,7 +17,8 @@ import java.util.logging.Logger;
 
 public class JsonToImJvmTest {
 
-    @Test public void test1() throws Exception {
+    @Test
+    public void test1() throws Exception {
 
         SeriesKey seriesKey = SeriesKey.AVALON_2011;
 
@@ -24,19 +26,29 @@ public class JsonToImJvmTest {
 
 
         JsonToFmJvm uFm = new JsonToFmJvm();
-        FeatureModel fm = uFm.parseJson(seriesKey, urlFm);
-
+        final FeatureModel fm = uFm.parseJson(seriesKey, urlFm);
 
 
         URL urlIm = Resources.getResource(this.getClass(), "avalon-im.json");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsImageModel = mapper.readValue(urlIm, JsonNode.class);
 
+        SimpleFeatureModel sfm = new SimpleFeatureModel() {
+            @Override
+            public Var get(String varCode) {
+                return fm.get(varCode);
+            }
 
-        JsonToImJvm uIm = new JsonToImJvm(fm);
+            @Override
+            public SeriesKey getSeriesKey() {
+                return fm.getSeriesKey();
+            }
+        };
+
+        JsonToImJvm uIm = new JsonToImJvm(sfm);
         ImSeries im = uIm.parseSeries(jsImageModel);
 
-        ThreedModel threedModel = new ThreedModel(fm,im);
+        ThreedModel threedModel = new ThreedModel(fm, im);
 
 
     }

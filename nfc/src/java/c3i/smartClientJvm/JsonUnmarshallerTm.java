@@ -1,24 +1,23 @@
 package c3i.smartClientJvm;
 
-import com.google.common.io.Closeables;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.JsonToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.server.JsonToImJvm;
 import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.threedModel.shared.SeriesInfoBuilder;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import c3i.core.threedModel.shared.ThreedModel;
+import com.google.common.io.Closeables;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -35,7 +34,7 @@ public class JsonUnmarshallerTm {
         try {
             urlConnection.connect();
         } catch (IOException e) {
-            log.log(Level.SEVERE,"RepoClient - urlConnection.connect() failed for url[" + url + "] ", e);
+            log.log(Level.SEVERE, "RepoClient - urlConnection.connect() failed for url[" + url + "] ", e);
             throw e;
         }
 
@@ -65,13 +64,25 @@ public class JsonUnmarshallerTm {
 
 
         JsonToFmJvm uFm = new JsonToFmJvm();
-        FeatureModel fm = uFm.parseJson(seriesKey, jsFm);
+        final FeatureModel featureModel = uFm.parseJson(seriesKey, jsFm);
+
+        SimpleFeatureModel fm = new SimpleFeatureModel() {
+            @Override
+            public Var get(String varCode) {
+                return featureModel.get(varCode);
+            }
+
+            @Override
+            public SeriesKey getSeriesKey() {
+                return featureModel.getSeriesKey();
+            }
+        };
 
 
         JsonToImJvm uIm = new JsonToImJvm(fm);
         ImSeries im = uIm.parseSeries(jsIm);
 
-        ThreedModel threedModel = new ThreedModel(fm, im);
+        ThreedModel threedModel = new ThreedModel(featureModel, im);
         return threedModel;
 
     }

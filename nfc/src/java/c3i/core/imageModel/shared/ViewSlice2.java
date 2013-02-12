@@ -1,7 +1,5 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
-import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
 
 import java.util.Set;
@@ -34,9 +32,8 @@ public class ViewSlice2 implements ViewSlice {
         return angle;
     }
 
-    @Override
-    public RawImageStack getRawImageStack(AssignmentsForTreeSearch product) {
-        FixedPicks fixedPicks = new FixedPicks(null, product, null);
-        return view.getRawImageStack(fixedPicks, angle);
-    }
+//    @Override
+//    public RawImageStack getRawImageStack(SimplePicks product) {
+//        return view.getRawImageStack(product, angle);
+//    }
 }

@@ -1,6 +1,5 @@
 package c3i.core.imageModel.server;
 
-import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImFeature;
 import c3i.core.imageModel.shared.ImFeatureOrPng;
@@ -8,6 +7,7 @@ import c3i.core.imageModel.shared.ImLayer;
 import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngShortSha;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import c3i.core.imageModel.shared.SrcPng;
 import org.codehaus.jackson.JsonNode;
 
@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 
 public class JsonToImJvm {
 
-    private final FeatureModel featureModel;
+    private final SimpleFeatureModel featureModel;
 
-    public JsonToImJvm(FeatureModel featureModel) {
+    public JsonToImJvm(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 

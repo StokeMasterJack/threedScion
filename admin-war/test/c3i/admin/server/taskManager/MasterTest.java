@@ -1,9 +1,12 @@
 package c3i.admin.server.taskManager;
 
+import c3i.admin.server.JpgSet;
+import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.admin.shared.jpgGen.JobState;
+import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
@@ -11,16 +14,10 @@ import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.SimplePicks;
-import c3i.core.threedModel.server.TestConstants;
 import c3i.core.imageModel.shared.Slice2;
+import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.admin.server.JpgSet;
-import c3i.admin.shared.jpgGen.JobSpec;
-import c3i.admin.shared.jpgGen.JobState;
-import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.repo.server.Repos;
-import java.util.logging.Logger;
-
 import org.junit.Before;
 import org.junit.Test;
 import sun.misc.VM;
@@ -33,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class MasterTest implements TestConstants {
 
@@ -87,9 +85,10 @@ public class MasterTest implements TestConstants {
 
         final HashSet<String> all = new HashSet<String>();
         csp.findAll(new ProductHandler() {
+
             @Override
-            public void onProduct(AssignmentsForTreeSearch product) {
-                all.add(product.getTrueOutputVars().toString());
+            public void onProduct(SimplePicks product) {
+                all.add(product.toString());
             }
         });
 
@@ -246,7 +245,6 @@ public class MasterTest implements TestConstants {
 
     @Test
     public void test4() throws Exception {
-
 
 
         System.out.println(VM.maxDirectMemory());

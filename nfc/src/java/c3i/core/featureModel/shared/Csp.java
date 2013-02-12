@@ -6,6 +6,7 @@ import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
+import c3i.core.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -332,42 +333,6 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         return cp;
     }
 
-
-    public Assignments findFirst() {
-        TreeSearch treeSearch = new TreeSearch();
-
-        class Ph implements ProductHandler {
-
-            Assignments product;
-
-            @Override
-            public void onProduct(AssignmentsForTreeSearch product) {
-                this.product = product;
-                throw new RuntimeException("STOP");
-            }
-        }
-
-
-        Ph ph = new Ph();
-
-        treeSearch.setProductHandler(ph);
-        try {
-
-            CspForTreeSearch cspForTreeSearch;
-            if (this instanceof CspForTreeSearch) {
-                cspForTreeSearch = (CspForTreeSearch) this;
-            } else {
-                cspForTreeSearch = new CspForTreeSearch(vars, constraint);
-            }
-
-            treeSearch.start(cspForTreeSearch);
-            return null;
-        } catch (Exception e) {
-            return ph.product;
-        }
-
-
-    }
 
 
 }

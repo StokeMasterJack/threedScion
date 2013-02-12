@@ -1,6 +1,5 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.FixedPicks;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 

@@ -1,6 +1,6 @@
 package c3i.core.imageModel.client;
 
-import c3i.core.featureModel.shared.FeatureModel;
+//import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImFeature;
 import c3i.core.imageModel.shared.ImFeatureOrPng;
@@ -8,6 +8,7 @@ import c3i.core.imageModel.shared.ImLayer;
 import c3i.core.imageModel.shared.ImSeries;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngShortSha;
+import c3i.core.imageModel.shared.SimpleFeatureModel;
 import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.imageModel.shared.ViewLiftSpec;
 import com.google.gwt.json.client.JSONArray;
@@ -22,9 +23,9 @@ import java.util.List;
 
 public class JsonUnmarshallerIm {
 
-    private final FeatureModel featureModel;
+    private final SimpleFeatureModel featureModel;
 
-    public JsonUnmarshallerIm(FeatureModel featureModel) {
+    public JsonUnmarshallerIm(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 

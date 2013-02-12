@@ -1,7 +1,7 @@
 package c3i.core.featureModel.shared.search;
 
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
+import c3i.core.imageModel.shared.SimplePicks;
 
 public interface ProductHandler {
-    void onProduct(AssignmentsForTreeSearch product);
+    void onProduct(SimplePicks product);
 }

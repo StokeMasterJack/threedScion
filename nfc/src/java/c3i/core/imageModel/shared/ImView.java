@@ -1,7 +1,6 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -265,7 +264,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     @Nullable
-    public PngSpec getAccessorySrcPng(int angle, FixedPicks picks, Var accessory) {
+    public PngSpec getAccessorySrcPng(int angle, SimplePicks picks, Var accessory) {
 
         assert picks != null;
         assert accessory != null;
