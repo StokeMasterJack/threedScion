@@ -1,7 +1,6 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.threedModel.shared.Angle;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;

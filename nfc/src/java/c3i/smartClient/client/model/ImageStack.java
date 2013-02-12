@@ -201,7 +201,7 @@ public class ImageStack implements Exportable, HasKey {
         return key.getImageMode();
     }
 
-    public FixedPicks getFixedPicks() {
+    public SimplePicks getFixedPicks() {
         return coreImageStack.getFixedPicks();
     }
 

@@ -604,4 +604,9 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
     public AutoAssignContext copy() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isValidBuild() {
+        throw new UnsupportedOperationException();
+    }
 }

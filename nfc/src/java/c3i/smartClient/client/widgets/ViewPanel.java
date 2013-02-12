@@ -145,7 +145,7 @@ public class ViewPanel extends ComplexPanel {
 
     private void refreshImageStack() {
         ImageStack imageStack = this.viewModel.getImageStack();
-        if (imageStack == null || imageStack.getFixedPicks() == null || imageStack.getFixedPicks().isInvalidBuild()) {
+        if (imageStack == null || imageStack.getFixedPicks() == null || !imageStack.getFixedPicks().isValidBuild()) {
             setVisible(false);
             for (ImageWidget imageWidget : imageWidgets) {
                 imageWidget.setUrl(null);

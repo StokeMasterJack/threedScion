@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.imageModel.shared.BaseImageType;
-import c3i.core.threedModel.shared.BaseImageKey;
+import c3i.core.imageModel.shared.BaseImageKey;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;

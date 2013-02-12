@@ -4,7 +4,7 @@ import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
-import c3i.core.threedModel.shared.JpgWidth;
+import c3i.core.imageModel.shared.JpgWidth;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.admin.server.taskManager.JpgGeneratorService;
 import c3i.admin.server.taskManager.Master;

@@ -3,7 +3,7 @@ package c3i.jpgGen.server.singleJpg;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
-import c3i.core.threedModel.shared.BaseImageKey;
+import c3i.core.imageModel.shared.BaseImageKey;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import org.junit.Before;

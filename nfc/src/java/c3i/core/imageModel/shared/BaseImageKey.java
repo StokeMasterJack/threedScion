@@ -1,12 +1,7 @@
-package c3i.core.threedModel.shared;
+package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngSegment;
-import c3i.core.imageModel.shared.PngSegments;
-import c3i.core.imageModel.shared.Profile;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 
 public class BaseImageKey implements IBaseImageKey{
 

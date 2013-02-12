@@ -3,7 +3,6 @@ package c3i.core.imageModel.shared;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.threedModel.shared.Slice;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import smartsoft.util.shared.Strings;
@@ -216,12 +215,12 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     public RawImageStack getRawImageStack(RawImageStack.Key spec) {
-        ImmutableList<PngSpec> srcPngs = getPngSpecs(spec.getFixedPicks(), spec.getAngle());
+        ImmutableList<PngSpec> srcPngs = getPngSpecs(spec.getPicks(), spec.getAngle());
         return new RawImageStack(spec, this, srcPngs);
 
     }
 
-    public RawImageStack getRawImageStack(FixedPicks picks, int angle) {
+    public RawImageStack getRawImageStack(SimplePicks picks, int angle) {
         if (picks.isValidBuild()) {
             ImmutableList<PngSpec> srcPngs = getPngSpecs(picks, angle);
             return new RawImageStack(picks, angle, this, srcPngs);

@@ -1,4 +1,4 @@
-package c3i.core.threedModel.shared;
+package c3i.core.imageModel.shared;
 
 import smartsoft.util.shared.Strings;
 

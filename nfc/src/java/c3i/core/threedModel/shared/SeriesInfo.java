@@ -1,6 +1,7 @@
 package c3i.core.threedModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.imageModel.shared.Slice;
 import c3i.core.imageModel.shared.ViewKeyOld;
 
 import javax.annotation.Nonnull;

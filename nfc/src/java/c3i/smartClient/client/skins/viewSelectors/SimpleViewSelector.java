@@ -63,7 +63,7 @@ public class SimpleViewSelector extends ViewSelector {
         int viewIndex = viewPanelModel.getViewIndex();
         setValue(viewIndex);
         ImageStack imageStack = viewPanelModel.getImageStack();
-        if (imageStack == null || imageStack.getFixedPicks() == null || imageStack.getFixedPicks().isInvalidBuild()) {
+        if (imageStack == null || imageStack.getFixedPicks() == null || !imageStack.getFixedPicks().isValidBuild()) {
             asWidget().setVisible(true);
         } else {
             asWidget().setVisible(true);

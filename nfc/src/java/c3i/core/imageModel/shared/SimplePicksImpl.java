@@ -29,4 +29,9 @@ public class SimplePicksImpl implements SimplePicks {
     public int hashCode() {
         return assignments.hashCode();
     }
+
+    @Override
+    public boolean isValidBuild() {
+        throw new UnsupportedOperationException();
+    }
 }

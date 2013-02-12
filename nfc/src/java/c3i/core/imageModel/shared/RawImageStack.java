@@ -26,7 +26,7 @@ public class RawImageStack {
 
     private ImmutableList<PngSpec> blinkPngs;
 
-    public RawImageStack(FixedPicks fixedPicks, int angle, ImView view, ImmutableList<PngSpec> allPngs) {
+    public RawImageStack(SimplePicks fixedPicks, int angle, ImView view, ImmutableList<PngSpec> allPngs) {
         this(new Key(new AngleKey(view.getViewKey(), angle), fixedPicks), view, allPngs);
     }
 
@@ -118,9 +118,9 @@ public class RawImageStack {
     public static class Key {
 
         private final AngleKey angleKey;
-        private final FixedPicks fixedPicks;
+        private final SimplePicks fixedPicks;
 
-        public Key(AngleKey angleKey, FixedPicks fixedPicks) {
+        public Key(AngleKey angleKey, SimplePicks fixedPicks) {
             this.angleKey = angleKey;
             this.fixedPicks = fixedPicks;
         }
@@ -133,7 +133,7 @@ public class RawImageStack {
             return getAngleKey().getAngle();
         }
 
-        public FixedPicks getFixedPicks() {
+        public SimplePicks getPicks() {
             return fixedPicks;
         }
 

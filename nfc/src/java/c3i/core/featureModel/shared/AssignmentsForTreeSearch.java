@@ -95,4 +95,9 @@ public class AssignmentsForTreeSearch extends AbstractAssignments<AssignmentsFor
     public AutoAssignContext copy() {
         return new AssignmentsForTreeSearch(this, this.openVars);
     }
+
+    @Override
+    public boolean isValidBuild() {
+        throw new UnsupportedOperationException();
+    }
 }

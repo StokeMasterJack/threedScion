@@ -1,23 +1,16 @@
-package c3i.core.threedModel.shared;
+package c3i.core.imageModel.shared;
 
 import javax.annotation.Nonnull;
 
-public final class Slice {
+public final class Slice2 {
 
-    private final String view;
+    private final ImView view;
     private final int angle;
 
-    public Slice(@Nonnull String view, int angle) {
+    public Slice2(@Nonnull ImView view, int angle) {
         assert view != null;
         this.angle = angle;
         this.view = view;
-    }
-
-    public Slice(@Nonnull String slice) {
-        assert slice != null;
-        String[] a = slice.split("-");
-        this.angle = new Integer(a[1]);
-        this.view = a[0];
     }
 
     public int getAngle() {
@@ -33,12 +26,12 @@ public final class Slice {
         else return angle + "";
     }
 
-    public String getView() {
+    public ImView getView() {
         return view;
     }
 
     public String getViewName() {
-        return view;
+        return view.getName();
     }
 
     @Override
@@ -46,7 +39,7 @@ public final class Slice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Slice viewSnap = (Slice) o;
+        Slice2 viewSnap = (Slice2) o;
 
         if (angle != viewSnap.angle) return false;
         if (!view.equals(viewSnap.view)) return false;

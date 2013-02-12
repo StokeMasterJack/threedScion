@@ -10,7 +10,6 @@ import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngShortSha;
 import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.imageModel.shared.ViewLiftSpec;
-import c3i.core.threedModel.shared.SeriesInfo;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;

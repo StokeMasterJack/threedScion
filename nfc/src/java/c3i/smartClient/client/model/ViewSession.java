@@ -8,6 +8,7 @@ import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ImageMode;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.RawImageStack;
+import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
@@ -119,7 +120,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
                     @Override
                     public void execute() {
                         if (newImageStack != null) {
-                            FixedPicks fixedPicks = newImageStack.getFixedPicks();
+                            SimplePicks fixedPicks = newImageStack.getFixedPicks();
                             if (fixedPicks != null && fixedPicks.isValidBuild()) {
                                 AngleKey angleKey = newImageStack.getKey().getAngleKey();
                                 if (!angleKey.getViewKey().equals(getViewKey())) {
@@ -177,7 +178,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
             @Override
             public void start(ImageStack.Key key, Completer<ImageStack> completer) throws Exception {
 
-                FixedPicks fixedPicks = key.getCoreKey().getRawKey().getFixedPicks();
+                SimplePicks fixedPicks = key.getCoreKey().getRawKey().getPicks();
                 if (fixedPicks == null) {
                     completer.setResult(null);
                 } else {
@@ -302,7 +303,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         private int executeCount = 0;
 
 
-        private final FixedPicks prefetchPicks;
+        private final SimplePicks prefetchPicks;
         private final int prefetchCurrentAngle;
         private final ImageMode prefetchImageMode;
         private final Profile prefetchProfile;
@@ -310,7 +311,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
         private CacheAheadPolicy.AngleList anglesToCache;
 
-        PrefetchRepeatingCommand(final FixedPicks prefetchPicks, final int prefetchCurrentAngle) {
+        PrefetchRepeatingCommand(final SimplePicks prefetchPicks, final int prefetchCurrentAngle) {
             Preconditions.checkNotNull(view);
             Preconditions.checkNotNull(prefetchPicks);
             this.prefetchPicks = prefetchPicks;
@@ -360,8 +361,8 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
     }
 
-    private void doCacheAhead(final FixedPicks fixedPicks, final int currentAngle) {
-        if (fixedPicks.isInvalidBuild()) {
+    private void doCacheAhead(final SimplePicks fixedPicks, final int currentAngle) {
+        if (!fixedPicks.isValidBuild()) {
             log.severe("Skipping 3D image CacheAhead because picks are invalid");
             return;
         }

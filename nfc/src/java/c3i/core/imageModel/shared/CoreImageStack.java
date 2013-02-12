@@ -1,9 +1,6 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.threedModel.shared.BaseImageKey;
-import c3i.core.threedModel.shared.Slice2;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.concurrent.Immutable;
@@ -181,8 +178,8 @@ public class CoreImageStack {
             return imageMode;
         }
 
-        public FixedPicks getFixedPicks() {
-            return rawKey.getFixedPicks();
+        public SimplePicks getFixedPicks() {
+            return rawKey.getPicks();
         }
 
         public ViewKey getViewKey() {
@@ -222,7 +219,7 @@ public class CoreImageStack {
 
     }
 
-    public FixedPicks getFixedPicks() {
+    public SimplePicks getFixedPicks() {
         return getKey().getFixedPicks();
     }
 

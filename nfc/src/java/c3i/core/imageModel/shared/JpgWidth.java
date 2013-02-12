@@ -1,4 +1,4 @@
-package c3i.core.threedModel.shared;
+package c3i.core.imageModel.shared;
 
 import com.google.common.base.Preconditions;
 import smartsoft.util.shared.RectSize;

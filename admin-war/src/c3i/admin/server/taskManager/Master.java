@@ -6,7 +6,7 @@ import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.PngSegments;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.Slice2;
+import c3i.core.imageModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.admin.server.JpgSet;
 import c3i.jpgGen.server.singleJpg.BaseImageGenerator;

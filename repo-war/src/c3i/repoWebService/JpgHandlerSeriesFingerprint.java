@@ -1,6 +1,5 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.CoreImageStack;
@@ -8,7 +7,7 @@ import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ImageMode;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.RawImageStack;
-import c3i.core.threedModel.shared.Slice;
+import c3i.core.imageModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;

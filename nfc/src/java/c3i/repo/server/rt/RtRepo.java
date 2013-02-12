@@ -10,7 +10,7 @@ import c3i.core.imageModel.shared.PngSegment;
 import c3i.core.imageModel.shared.PngShortSha;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.Slice;
+import c3i.core.imageModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.TwoThirty8;
 import com.google.common.io.Closeables;
