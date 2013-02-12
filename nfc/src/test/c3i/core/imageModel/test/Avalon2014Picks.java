@@ -1,6 +1,5 @@
 package c3i.core.imageModel.test;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.SimplePicks;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
@@ -17,8 +16,8 @@ public class Avalon2014Picks implements SimplePicks {
     }
 
     @Override
-    public boolean isPicked(Var var) {
-        return setPicks.contains(var.getCode());
+    public boolean isPicked(Object var) {
+        return setPicks.contains(var.toString());
     }
 
     @Override

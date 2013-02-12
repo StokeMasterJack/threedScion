@@ -14,14 +14,16 @@ import c3i.core.imageModel.shared.SrcPng;
 import c3i.core.imageModel.shared.ViewKeyOld;
 import c3i.core.imageModel.shared.ViewSlice;
 import com.google.common.collect.ImmutableSet;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //import threed.core.imageModel.shared.slice.ImageSlice;
 
@@ -83,21 +85,24 @@ public class ThreedModel {
         assert blinkFeature != null;
 
         ImView view = getView(slice.getView());
-        PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
+//        PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
+//        PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
 
-        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
+        return null;
 
-        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
-
-        if (accessoryPng == null) {
-            return null;
-        }
-
-        String urlSegment = accessoryPng.serializeToUrlSegment();
-
-        Path threedBaseUrl = view.getSeries().getThreedBaseUrl(repoBaseUrl);
-        Path blinkBase = threedBaseUrl.append("blink");
-        return blinkBase.append(urlSegment).appendName(".png");
+//        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
+//
+//        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
+//
+//        if (accessoryPng == null) {
+//            return null;
+//        }
+//
+//        String urlSegment = accessoryPng.serializeToUrlSegment();
+//
+//        Path threedBaseUrl = view.getSeries().getThreedBaseUrl(repoBaseUrl);
+//        Path blinkBase = threedBaseUrl.append("blink");
+//        return blinkBase.append(urlSegment).appendName(".png");
     }
 
 
@@ -204,7 +209,7 @@ public class ThreedModel {
 //        return interiorViewKey;
 //    }
 
-    public Collection<Var> getPngVarsForSlice1(Slice slice) {
+    public Collection<Object> getPngVarsForSlice1(Slice slice) {
         String viewName = slice.getView();
         ImView view = imageModel.getView(viewName);
         return view.getPngVars(slice.getAngle());
@@ -281,6 +286,15 @@ public class ThreedModel {
 
     public int getViewCount() {
         return imageModel.getViewCount();
+    }
+
+    public static Set<Var> objectSetToVarSet(Set<Object> pngVars) {
+        HashSet<Var> vars = new HashSet<Var>();
+        for (Object pngVar : pngVars) {
+            Var var = (Var) pngVar;
+            vars.add(var);
+        }
+        return vars;
     }
 
     private static Logger log = Logger.getLogger(ThreedModel.class.getName());

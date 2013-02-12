@@ -94,7 +94,7 @@ public interface Assignments<A extends Assignments> extends EvalContext, AutoAss
     boolean anyOpenVars();
 
     @Override
-    boolean isPicked(Var var);
+    boolean isPicked(Object var);
 
 
     Var get(int i);

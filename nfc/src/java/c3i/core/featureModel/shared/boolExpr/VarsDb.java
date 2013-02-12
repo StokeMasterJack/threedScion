@@ -95,7 +95,7 @@ public class VarsDb implements Vars, Iterable<Var> {
         boolean a1 = list.add(var);
         Var a2 = map.put(var.getCode(), var);
         assert a1 && (a2 == null);
-        assert var.index == list.size() - 1;
+        assert var.getIndex() == list.size() - 1;
     }
 
 

@@ -1,7 +1,6 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.boolExpr.Var;
 import smartsoft.util.shared.Path;
 
 import java.util.HashSet;
@@ -106,13 +105,13 @@ public class ImSeries extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return false;
     }
 
-    public Set<Var> getVars() {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<Object> getVars() {
+        HashSet<Object> vars = new HashSet<Object>();
         getVars(vars);
         return vars;
     }
 
-    public void getVars(Set<Var> varSet) {
+    public void getVars(Set<Object> varSet) {
         for (int i = 0; i < imViews.size(); i++) {
             ImView imView = imViews.get(i);
             imView.getPngVars(varSet);

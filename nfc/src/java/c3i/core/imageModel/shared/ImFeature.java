@@ -1,7 +1,6 @@
 package c3i.core.imageModel.shared;
 
-import com.google.common.collect.ImmutableList;
-import c3i.core.featureModel.shared.boolExpr.Var;
+
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -10,10 +9,10 @@ import java.util.Set;
 
 public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrFeature, IsChild, IsParent<ImFeatureOrPng> {
 
-    private final Var var;
+    private final Object var;
     private final List<ImFeatureOrPng> childNodes;
 
-    public ImFeature(int depth, @Nonnull Var var, List<ImFeatureOrPng> childNodes) {
+    public ImFeature(int depth, @Nonnull Object var, List<ImFeatureOrPng> childNodes) {
         super(depth);
         if (var == null) throw new IllegalArgumentException("var must be non-null");
         if (childNodes == null) throw new IllegalArgumentException("childNodes must be non-null");
@@ -25,24 +24,22 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
         }
     }
 
-
     @Override
     public String getName() {
-        return var.getCode();
+        return var.toString();
     }
 
-    public Var getVar() {
+    public Object getVar() {
         return var;
     }
 
-    public boolean is(Var var) {
+    public boolean is(Object var) {
         return this.var == var;
     }
 
     public List<ImFeatureOrPng> getChildNodes() {
         return childNodes;
     }
-
 
     @Override
     public boolean isFeature() {
@@ -92,31 +89,8 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
         return new ImFeature(depth, var, a);
     }
 
-//    public FeatureOrPngSlice getSlice(int angle) {
-//
-//        ArrayList<FeatureOrPng> a = new ArrayList<FeatureOrPng>();
-//
-//        for (ImFeatureOrPng childNode : childNodes) {
-//            if (childNode.containsAngle(angle)) {
-//                FeatureOrPng simple = childNode.getSlice(angle);
-//                if (simple != null) {
-//                    a.add(simple);
-//                }
-//            }
-//        }
-//
-//        if (a.size() == 0) return null;
-//
-////        if (a.size() == 1) {
-////            return new SimpleFeature(var, a.get(0));
-////        } else {
-//        return new Feature(var, a);
-////        }
-//
-//    }
-
     @Override
-    public void getVarSet(Set<Var> varSet) {
+    public void getVarSet(Set varSet) {
         varSet.add(var);
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
@@ -125,11 +99,11 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
     }
 
     @Override
-    public void getVarSet(Set<Var> varSet, int angle) {
+    public void getVarSet(Set<Object> varSet, int angle) {
         varSet.add(var);
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
-            featureOrPng.getVarSet(varSet,angle);
+            featureOrPng.getVarSet(varSet, angle);
         }
     }
 

@@ -1,7 +1,6 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.boolExpr.Var;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import smartsoft.util.shared.Strings;
@@ -44,7 +43,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         if (name == null) throw new IllegalArgumentException();
         if (layers == null) throw new IllegalArgumentException();
 
-        if(name.equals("name")){
+        if (name.equals("name")) {
             throw new IllegalArgumentException();
 
         }
@@ -62,7 +61,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
 
         angleCount = getMaxAngle(layers);
 
-        log.info("angleCount for view["+getName() + "] is [" + angleCount + "]");
+        log.info("angleCount for view[" + getName() + "] is [" + angleCount + "]");
 
         this.initialAngle = getInitialAngle(initialAngle, name);
 
@@ -268,48 +267,48 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return layers;
     }
 
-    @Nullable
-    public PngSpec getAccessorySrcPng(int angle, SimplePicks picks, Var accessory) {
-
-        assert picks != null;
-        assert accessory != null;
-
-        RawImageStack rawImageStack = getRawImageStack(picks, angle);
-
-        ImmutableList<PngSpec> blinkPngs = rawImageStack.getBlinkPngs();
-
-        class FeaturePng {
-            PngSpec png;
-            int featureIndex;
-
-            FeaturePng(PngSpec png, int featureIndex) {
-                this.png = png;
-                this.featureIndex = featureIndex;
-            }
-        }
-
-        FeaturePng bestMatch = null;
-
-        for (PngSpec blinkPng : blinkPngs) {
-            int featureIndex = blinkPng.indexOf(accessory);
-            if (featureIndex == -1) continue;
-
-            if (bestMatch == null) {
-                bestMatch = new FeaturePng(blinkPng, featureIndex);
-            } else if (featureIndex < bestMatch.featureIndex) {
-                bestMatch.featureIndex = featureIndex;
-                bestMatch.png = blinkPng;
-            }
-        }
-
-        if (bestMatch == null) {
-            //accessory not visible for this angle
-            return null;
-        } else {
-            return bestMatch.png;
-        }
-
-    }
+//    @Nullable
+//    public PngSpec getAccessorySrcPng(int angle, SimplePicks picks, Var accessory) {
+//
+//        assert picks != null;
+//        assert accessory != null;
+//
+//        RawImageStack rawImageStack = getRawImageStack(picks, angle);
+//
+//        ImmutableList<PngSpec> blinkPngs = rawImageStack.getBlinkPngs();
+//
+//        class FeaturePng {
+//            PngSpec png;
+//            int featureIndex;
+//
+//            FeaturePng(PngSpec png, int featureIndex) {
+//                this.png = png;
+//                this.featureIndex = featureIndex;
+//            }
+//        }
+//
+//        FeaturePng bestMatch = null;
+//
+//        for (PngSpec blinkPng : blinkPngs) {
+//            int featureIndex = blinkPng.indexOf(accessory);
+//            if (featureIndex == -1) continue;
+//
+//            if (bestMatch == null) {
+//                bestMatch = new FeaturePng(blinkPng, featureIndex);
+//            } else if (featureIndex < bestMatch.featureIndex) {
+//                bestMatch.featureIndex = featureIndex;
+//                bestMatch.png = blinkPng;
+//            }
+//        }
+//
+//        if (bestMatch == null) {
+//            //accessory not visible for this angle
+//            return null;
+//        } else {
+//            return bestMatch.png;
+//        }
+//
+//    }
 
 //    public ImView copy(int angle) {
 //        ArrayList<ImLayer> a;
@@ -326,13 +325,13 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
 //        return copy;
 //    }
 
-    public Set<Var> getPngVars() {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<Object> getPngVars() {
+        HashSet<Object> vars = new HashSet<Object>();
         getPngVars(vars);
         return vars;
     }
 
-    public void getPngVars(Set<Var> varSet) {
+    public void getPngVars(Set<Object> varSet) {
         for (int i = 0; i < layers.size(); i++) {
             ImLayer imLayer = layers.get(i);
             if (imLayer.isZLayer()) continue;
@@ -340,11 +339,11 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         }
     }
 
-    public Set<Var> getPngVars(int angle) {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<Object> getPngVars(int angle) {
+        HashSet<Object> vars = new HashSet<Object>();
 
         if (liftSpec != null) {
-            Var triggerFeature = liftSpec.getTriggerFeature();
+            Object triggerFeature = liftSpec.getTriggerFeature();
             vars.add(triggerFeature);
         }
 
@@ -352,7 +351,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return vars;
     }
 
-    public void getPngVars(Set<Var> varSet, int angle) {
+    public void getPngVars(Set<Object> varSet, int angle) {
         for (int i = 0; i < layers.size(); i++) {
             ImLayer imLayer = layers.get(i);
             if (imLayer.isZLayer()) continue;
@@ -432,8 +431,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         int retVal;
         if (isLast) {
             retVal = 1;
-        }
-        else retVal = currentAngle + 1;
+        } else retVal = currentAngle + 1;
         return retVal;
     }
 
@@ -488,7 +486,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return angles;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return Strings.capFirstLetter(name);
     }
 }

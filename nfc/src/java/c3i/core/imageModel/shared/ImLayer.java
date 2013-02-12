@@ -1,6 +1,5 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class ImLayer extends ImChildBase implements ImLayerOrFeature, IsChild, I
         }
         ImView view = getView();
         ViewLiftSpec liftSpec = view.getLiftSpec();
-        Var triggerFeature = liftSpec.getTriggerFeature();
+        Object triggerFeature = liftSpec.getTriggerFeature();
         if (picks.isPicked(triggerFeature)) {
             return liftSpec.getDeltaY();
         } else {
@@ -189,22 +188,22 @@ public class ImLayer extends ImChildBase implements ImLayerOrFeature, IsChild, I
     }
 
 
-    public void getVars(Set<Var> varSet) {
+    public void getVars(Set<Object> varSet) {
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
             featureOrPng.getVarSet(varSet);
         }
     }
 
-    public void getVars(Set<Var> varSet, int angle) {
+    public void getVars(Set<Object> varSet, int angle) {
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
             featureOrPng.getVarSet(varSet, angle);
         }
     }
 
-    public Set<Var> getVars() {
-        HashSet<Var> set = new HashSet<Var>();
+    public Set<Object> getVars() {
+        HashSet<Object> set = new HashSet<Object>();
         getVars(set);
         return set;
     }

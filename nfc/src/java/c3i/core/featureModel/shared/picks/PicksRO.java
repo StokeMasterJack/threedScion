@@ -55,7 +55,7 @@ public interface PicksRO extends EvalContext,SimplePicks {
 
     boolean isFalse(Var var);
 
-    boolean isPicked(Var var);
+    boolean isPicked(Object var);
 
     boolean isPicked(String code);
 

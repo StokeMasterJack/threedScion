@@ -21,15 +21,11 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     protected final Bit[] assignments;   //index is var.index
 
     public AbstractAssignments(Vars vars) {
-
         this.allVars = vars;
-
         assignments = new Bit[vars.size()];
-
         for (int i = 0; i < assignments.length; i++) {
             assignments[i] = Bit.OPEN;
         }
-
     }
 
     /**
@@ -92,29 +88,9 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
         return Arrays.deepHashCode(assignments);
     }
 
-//    @Override
-//    public String toString() {
-//        assert allVarsState != null;
-//        assert allVars != null;
-//        StringBuilder sb = new StringBuilder(10 * allVarsState.length);
-//        for (int i = 0; i < allVarsState.length; i++) {
-//            Var var = allVars.get(i);
-//            assert var != null;
-//            VarState varState = allVarsState[i];
-//            assert varState != null;
-//            Bit val = varState.getValue();
-//            assert val != null;
-//            sb.append(var.getCode());
-//            sb.append("[");
-//            sb.append(val.toChar());
-//            sb.append("],");
-//        }
-//        return sb.toString();
-//    }
-
     @Override
     public boolean isTrue(Var var) {
-        return assignments[var.index].isTrue();
+        return assignments[var.getIndex()].isTrue();
     }
 
     @Override
@@ -124,7 +100,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
 
     @Override
     public boolean isFalse(Var var) {
-        return assignments[var.index].isFalse();
+        return assignments[var.getIndex()].isFalse();
     }
 
     @Override
@@ -134,7 +110,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
 
     @Override
     public boolean isOpen(Var var) {
-        return assignments[var.index].isOpen();
+        return assignments[var.getIndex()].isOpen();
     }
 
     @Override
@@ -197,7 +173,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
         } else if (isOpen(var)) {
             logAssignTrue(var, depth);
 //            System.err.println("Assign [" + var + "] true");
-            assignments[var.index] = Bit.TRUE;
+            assignments[var.getIndex()] = Bit.TRUE;
             boolean removed = removeFromOpenVars(var);
             assert removed;
             dirty();
@@ -217,7 +193,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
         } else if (isOpen(var)) {
             logAssignFalse(var, depth);
 //            System.err.println("Assign [" + var + "] false");
-            assignments[var.index] = Bit.FALSE;
+            assignments[var.getIndex()] = Bit.FALSE;
             boolean removed = removeFromOpenVars(var);
             assert removed : this.getClass() + " varName: " + var;
             dirty();
@@ -238,7 +214,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
 
     @Override
     public Bit getValue(Var var) {
-        return assignments[var.index];
+        return assignments[var.getIndex()];
     }
 
     @Override
@@ -408,8 +384,8 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     }
 
     @Override
-    public boolean isPicked(Var var) {
-        return isTrue(var);
+    public boolean isPicked(Object var) {
+        return isTrue((Var) var);
     }
 
 

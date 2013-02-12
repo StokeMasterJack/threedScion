@@ -14,7 +14,7 @@ public class Var extends NonConstant {
 
     public static final Type TYPE = Type.Var;
 
-    public final int index;
+    private final int index;
 
     private final String name;
 
@@ -631,8 +631,8 @@ public class Var extends NonConstant {
 //    }
 
     public Var findVar(int varIndex) {
-        if (this.index == -1) throw new IllegalStateException();
-        if (this.index == varIndex) return this;
+        if (this.getIndex() == -1) throw new IllegalStateException();
+        if (this.getIndex() == varIndex) return this;
         if (childVars != null) {
             for (Var var : childVars) {
                 Var v = var.findVar(varIndex);
@@ -703,6 +703,10 @@ public class Var extends NonConstant {
     public boolean isInteriorColorXorChild() {
         if (parent == null) return false;
         return (parent.isInteriorColorXorParent());
+    }
+
+    public int getIndex() {
+        return index;
     }
 
 //    public short getBddVar() {
@@ -933,8 +937,8 @@ public class Var extends NonConstant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Var that = (Var) o;
-        assert (index == that.index) == (code.equals(that.code));
-        return (index == that.index);
+        assert (getIndex() == that.getIndex()) == (code.equals(that.code));
+        return (getIndex() == that.getIndex());
     }
 
     @Override

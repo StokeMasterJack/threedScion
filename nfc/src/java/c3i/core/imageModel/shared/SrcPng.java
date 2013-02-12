@@ -1,6 +1,5 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
@@ -22,14 +21,12 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     public static final String BLINK_SUFFIX = "_w" + PNG_SUFFIX;
 
 
-
-
     @Override
     public String toString() {
         return super.toString() + "  " + shortSha + "  Z:" + (isZLayer() ? "T" : "F");
     }
 
-    public SrcPng(int depth, int angle, PngShortSha shortSha,boolean blink) {
+    public SrcPng(int depth, int angle, PngShortSha shortSha, boolean blink) {
         super(depth);
         this.angle = angle;
         this.shortSha = shortSha;
@@ -117,35 +114,37 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return layer.getDeltaY(picks, angle);
     }
 
-    public int indexOf(Var accessory) {
-        IsParent p = parent;
-        while (p.isFeature()) {
-            ImFeature imFeature = (ImFeature) p;
-            if (imFeature.is(accessory)) {
-                return imFeature.getDepth();
-            } else {
-                p = imFeature.getParent();
-            }
-        }
-        return -1;
-    }
+//    public int indexOf(Var accessory) {
+//        IsParent p = parent;
+//        while (p.isFeature()) {
+//            ImFeature imFeature = (ImFeature) p;
+//            if (imFeature.is(accessory)) {
+//                return imFeature.getDepth();
+//            } else {
+//                p = imFeature.getParent();
+//            }
+//        }
+//        return -1;
+//    }
 
-    public boolean hasFeature(Var accessory) {
-        IsParent p = parent;
-        while (p.isFeature()) {
-            ImFeature imFeature = (ImFeature) p;
-            if (imFeature.is(accessory)) return true;
-            p = imFeature.getParent();
-        }
-
-        return false;
-    }
+//    public boolean hasFeature(Var accessory) {
+//        IsParent p = parent;
+//        while (p.isFeature()) {
+//            ImFeature imFeature = (ImFeature) p;
+//            if (imFeature.is(accessory)) return true;
+//            p = imFeature.getParent();
+//        }
+//
+//        return false;
+//    }
 
     public boolean hasFeature(String varCode) {
         IsParent p = parent;
         while (p.isFeature()) {
             ImFeature imFeature = (ImFeature) p;
-            if (imFeature.getVar().getCode().equals(varCode)) return true;
+            Object var = imFeature.getVar();
+            String code = var.toString();
+            if (code.equals(varCode)) return true;
             p = imFeature.getParent();
         }
 
@@ -164,17 +163,18 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return new Path(getBlinkName());
     }
 
-    public Set<Var> getFeatures() {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<Object> getFeatures() {
+        HashSet<Object> vars = new HashSet<Object>();
         getFeatures(vars);
         return vars;
     }
 
-    public void getFeatures(Set<Var> features) {
+    public void getFeatures(Set<Object> features) {
         IsParent p = parent;
         while (p.isFeature()) {
             ImFeature f = p.asFeature();
-            features.add(f.getVar());
+            Object var = f.getVar();
+            features.add(var);
             p = p.getParent();
         }
     }
@@ -221,15 +221,15 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return this.angle == angle;
     }
 
-    public static SrcPng bestMatch(SrcPng png1, SrcPng png2, Var accessory) {
-        int featureIndex1 = png1.indexOf(accessory);
-        int featureIndex2 = png2.indexOf(accessory);
-        if (featureIndex1 < featureIndex2) return png1;
-        else return png2;
-    }
+//    public static SrcPng bestMatch(SrcPng png1, SrcPng png2, Var accessory) {
+//        int featureIndex1 = png1.indexOf(accessory);
+//        int featureIndex2 = png2.indexOf(accessory);
+//        if (featureIndex1 < featureIndex2) return png1;
+//        else return png2;
+//    }
 
     public SrcPng copy(int angle) {
-        if (this.angle == angle) return new SrcPng(depth, angle, shortSha,blink);
+        if (this.angle == angle) return new SrcPng(depth, angle, shortSha, blink);
         else throw new IllegalStateException();
     }
 
@@ -240,15 +240,15 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
 //    }
 
     @Override
-    public void getVarSet(Set<Var> varSet) {
+    public void getVarSet(Set<Object> varSet) {
         //intentionally blank
     }
 
     @Override
-    public void getVarSet(Set<Var> varSet, int angle) {
+    public void getVarSet(Set<Object> varSet, int angle) {
         //intentionally blank
         if (this.angle == angle) {
-            Set<Var> features = getFeatures();
+            Set<Object> features = getFeatures();
             varSet.addAll(features);
         }
     }
@@ -348,7 +348,7 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return shortSha.hashCode();
     }
 
-    public Var getLiftTrigger() {
+    public Object getLiftTrigger() {
         return getLayer().getView().getLiftSpec().getTriggerFeature();
     }
 

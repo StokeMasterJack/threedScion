@@ -6,21 +6,20 @@ import c3i.core.featureModel.data.Camry2011;
 import c3i.core.featureModel.data.Trim;
 import c3i.core.featureModel.data.TrimColor;
 import c3i.core.featureModel.data.TrimColorOption;
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.imageModel.shared.BaseImageKey;
 import c3i.core.imageModel.shared.CoreImageStack;
 import c3i.core.imageModel.shared.ImView;
 import c3i.core.imageModel.shared.ImageMode;
+import c3i.core.imageModel.shared.JpgWidth;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.RawImageStack;
 import c3i.core.imageModel.shared.SimplePicks;
+import c3i.core.imageModel.shared.Slice;
 import c3i.core.imageModel.shared.ViewKeyOld;
 import c3i.core.imageModel.shared.ViewSlice;
-import c3i.core.imageModel.shared.BaseImageKey;
-import c3i.core.imageModel.shared.JpgWidth;
-import c3i.core.imageModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
@@ -210,9 +209,12 @@ public class TreeSearchTest extends TestCase {
 
                 final ViewSlice viewSlice = view.getViewSlice(angle);
 
-                Set<Var> pngVars = viewSlice.getPngVars();
+                Set<Object> pngVars = viewSlice.getPngVars();
                 Set<Var> careVars = new HashSet<Var>();
-                careVars.addAll(pngVars);
+                for (Object pngVar : pngVars) {
+                    careVars.add((Var) pngVar);
+                }
+
 
                 CspForTreeSearch csp = fm.createCspForTreeSearch(careVars);
                 csp.propagateSimplify();
@@ -224,7 +226,7 @@ public class TreeSearchTest extends TestCase {
 
                     @Override
                     public void onProduct(SimplePicks product) {
-                        RawImageStack rawImageStack = view.getRawImageStack(product,aAngle);
+                        RawImageStack rawImageStack = view.getRawImageStack(product, aAngle);
 //                        RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
                         String jpgFingerprint = coreImageStack.getBaseImageFingerprint();
@@ -279,8 +281,12 @@ public class TreeSearchTest extends TestCase {
         final ImView view = threedModel.getView(slice.getViewName());
         final ViewSlice viewSlice = threedModel.getViewSlice(slice);
 
+
+        Set<Object> pngVars = viewSlice.getPngVars();
         Set<Var> careVars = new HashSet<Var>();
-        careVars.addAll(viewSlice.getPngVars());
+        for (Object pngVar : pngVars) {
+            careVars.add((Var) pngVar);
+        }
 
         final CspForTreeSearch csp = fm.createCspForTreeSearch(careVars);
 
@@ -294,7 +300,7 @@ public class TreeSearchTest extends TestCase {
         treeSearch.setProductHandler(new ProductHandler() {
             @Override
             public void onProduct(SimplePicks product) {
-                RawImageStack rawImageStack = view.getRawImageStack(product,aAngle);
+                RawImageStack rawImageStack = view.getRawImageStack(product, aAngle);
 //                RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                 String jpgFingerprint = rawImageStack.getJpgFingerprint();
                 set.add(jpgFingerprint);
@@ -347,7 +353,7 @@ public class TreeSearchTest extends TestCase {
 
         Slice slice = threedModel.getSlice(ViewKeyOld.EXTERIOR, 2);
 
-        Collection<Var> outputVars1 = threedModel.getPngVarsForSlice1(slice);
+        Collection<Object> outputVars1 = threedModel.getPngVarsForSlice1(slice);
 //        Collection<Var> outputVars2 = threedModel.getPngVarsForSlice2(slice);
 
 //        assert outputVars1.size() == outputVars2.size() : "outputVars1.size() == outputVars2.size() failed. " + outputVars1.size() + " " + outputVars2.size();
@@ -380,8 +386,9 @@ public class TreeSearchTest extends TestCase {
 
 
         Set<Var> outputVars = new HashSet<Var>();
-        outputVars.addAll(viewSlice.getPngVars());
-
+        for (Object pngVar : viewSlice.getPngVars()) {
+            outputVars.add((Var) pngVar);
+        }
 
         CspForTreeSearch csp;
         csp = fm.createCspForTreeSearch(outputVars);
@@ -452,7 +459,12 @@ public class TreeSearchTest extends TestCase {
         fm = threedModel.getFeatureModel();
 
 
-        Set<Var> careVars = imageSlice.getPngVars();
+        Set<Object> pngVars = imageSlice.getPngVars();
+
+        Set<Var> careVars = new HashSet<Var>();
+        for (Object pngVar : pngVars) {
+            careVars.add((Var) pngVar);
+        }
 
 
         System.out.println(careVars);
@@ -492,7 +504,7 @@ public class TreeSearchTest extends TestCase {
     public void test1() throws Exception {
         ThreedModel threedModel = repos.getThreedModel(BrandKey.TOYOTA, "camry", 2011);
         ImView view = threedModel.getView("exterior");
-        Set<Var> pngVars = view.getPngVars(2);
+        Set<Object> pngVars = view.getPngVars(2);
         System.out.println(pngVars);
     }
 

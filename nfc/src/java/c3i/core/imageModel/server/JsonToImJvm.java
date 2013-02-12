@@ -1,6 +1,5 @@
 package c3i.core.imageModel.server;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.ImFeature;
 import c3i.core.imageModel.shared.ImFeatureOrPng;
 import c3i.core.imageModel.shared.ImLayer;
@@ -116,7 +115,7 @@ public class JsonToImJvm {
         String varCode = jsFeature.getFieldNames().next();
 
 
-        Var var = featureModel.get(varCode);
+        Object var = featureModel.get(varCode);
         JsonNode jsFeaturesOrPngs = jsFeature.get(varCode);
         List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(depth, jsFeaturesOrPngs);
         return new ImFeature(depth, var, imFeatureOrPngs);

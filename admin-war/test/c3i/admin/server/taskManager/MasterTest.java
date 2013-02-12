@@ -45,7 +45,7 @@ public class MasterTest implements TestConstants {
         }
 
         @Override
-        public boolean isPicked(Var var) {
+        public boolean isPicked(Object var) {
             return set.contains(var);
         }
 

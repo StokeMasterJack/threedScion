@@ -1,10 +1,8 @@
 package c3i.admin.server;
 
 import c3i.core.common.shared.SeriesId;
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
@@ -94,8 +92,11 @@ public class JpgSet implements Serializable {
 
         FeatureModel fm = threedModel.getFeatureModel();
         final ImView view = threedModel.getView(key.getView());
-        Set<Var> pngVars = view.getPngVars(key.getAngle());
-        final CspForTreeSearch csp = fm.createCspForTreeSearch(pngVars);
+        Set<Object> pngVars = view.getPngVars(key.getAngle());
+
+        Set<Var> pngVarsAsVar = ThreedModel.objectSetToVarSet(pngVars);
+
+        final CspForTreeSearch csp = fm.createCspForTreeSearch(pngVarsAsVar);
         csp.propagateSimplify();
         final TreeSearch treeSearch = new TreeSearch();
 
@@ -110,8 +111,9 @@ public class JpgSet implements Serializable {
         });
 
         treeSearch.start(csp);
-        return new JpgSet(ImmutableSet.copyOf(set),key);
+        return new JpgSet(ImmutableSet.copyOf(set), key);
     }
+
 
     @Override
     public String toString() {

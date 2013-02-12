@@ -64,7 +64,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
         }
     }
 
-    public boolean isPicked(Var var) {
+    public boolean isPicked(Object var) {
         assert assignments != null;
         return assignments.isPicked(var);
     }

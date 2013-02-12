@@ -22,6 +22,7 @@
     <inherits name="smartsoft.util.Util"/>
     <inherits name='org.timepedia.exporter.Exporter'/>
     <inherits name="com.google.common.collect.Collect"/>
+    <inherits name="c3i.util.C3iUtil"/>
 
     <source path="common/shared"/>
 

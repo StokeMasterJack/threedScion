@@ -1,6 +1,10 @@
 package c3i.core.featureModel.shared.picks;
 
-import c3i.core.featureModel.shared.*;
+import c3i.core.featureModel.shared.AutoAssignContext;
+import c3i.core.featureModel.shared.Bit;
+import c3i.core.featureModel.shared.PicksAssignment;
+import c3i.core.featureModel.shared.Source;
+import c3i.core.featureModel.shared.Tri;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.imageModel.shared.SimplePicks;
@@ -110,10 +114,10 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
     public boolean assign(Var var, boolean newValue) {
 
         Bit newVal = newValue ? Bit.TRUE : Bit.FALSE;
-        Bit oldValue = map[var.index].getValue();
+        Bit oldValue = map[var.getIndex()].getValue();
         if (oldValue.equals(newVal)) return false;
 
-        map[var.index] = PicksAssignment.create(newVal, Source.Fixup);
+        map[var.getIndex()] = PicksAssignment.create(newVal, Source.Fixup);
 
         dirty = true;
         return true;
@@ -125,7 +129,7 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
 
     public void initialAssign(Var var, boolean newValue) {
         Bit newVal = newValue ? Bit.TRUE : Bit.FALSE;
-        map[var.index] = PicksAssignment.create(newVal, Source.Initial);
+        map[var.getIndex()] = PicksAssignment.create(newVal, Source.Initial);
     }
 
     public void pick(Var var) {
@@ -133,7 +137,7 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
     }
 
     public void userAssign(Var var, Bit newValue) {
-        Bit oldValue = map[var.index].getValue();
+        Bit oldValue = map[var.getIndex()].getValue();
         if (oldValue.equals(newValue)) {
             mostRecentSinglePick = null;
             return;
@@ -144,11 +148,11 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
             if (newValue.isOpen()) throw new IllegalArgumentException();
             Var pickOneGroup = var.getParent();
             for (Var childVar : pickOneGroup.getChildVars()) {
-                map[childVar.index] = PicksAssignment.create(Bit.FALSE, Source.User);
+                map[childVar.getIndex()] = PicksAssignment.create(Bit.FALSE, Source.User);
             }
 
         }
-        map[var.index] = PicksAssignment.create(newValue, Source.User);
+        map[var.getIndex()] = PicksAssignment.create(newValue, Source.User);
         dirty = true;
         mostRecentSinglePick = var;
 
@@ -317,7 +321,7 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
 
     @Override
     public Bit getValue(Var var) {
-        return map[var.index].getValue();
+        return map[var.getIndex()].getValue();
     }
 
     @Override
@@ -522,9 +526,9 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
     }
 
     @Override
-    public boolean isPicked(Var var) {
-        assert var.index <= map.length;
-        return isTrue(var);
+    public boolean isPicked(Object var) {
+//        assert var.index <= map.length;
+        return isTrue((Var) var);
     }
 
     @Override
@@ -570,7 +574,7 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
 
     @Override
     public PicksAssignment getAssignment(Var var) {
-        return map[var.index];
+        return map[var.getIndex()];
     }
 
 
@@ -609,4 +613,5 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
     public boolean isValidBuild() {
         throw new UnsupportedOperationException();
     }
+
 }

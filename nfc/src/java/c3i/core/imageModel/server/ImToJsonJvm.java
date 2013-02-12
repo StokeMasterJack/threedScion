@@ -58,7 +58,7 @@ public class ImToJsonJvm {
 
     private JsonNode toJson(ViewLiftSpec liftSpec) {
         ObjectNode n = f.objectNode();
-        n.put("triggerFeature", liftSpec.getTriggerFeature().getCode());
+        n.put("triggerFeature", liftSpec.getTriggerFeature().toString());
         n.put("deltaY", liftSpec.getDeltaY());
         return n;
     }
@@ -73,9 +73,9 @@ public class ImToJsonJvm {
 
     private JsonNode toJson(ImLayer imLayer) {
         ObjectNode n = f.objectNode();
-        n.put("name",imLayer.getName());
+        n.put("name", imLayer.getName());
         n.put("children", jsonForFeaturesOrPngs(imLayer.getChildNodes()));
-        n.put("lift",imLayer.isLiftLayer());
+        n.put("lift", imLayer.isLiftLayer());
         return n;
     }
 

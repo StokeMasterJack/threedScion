@@ -1,6 +1,5 @@
 package c3i.core.imageModel.shared;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
 
 import java.util.Set;
 
@@ -10,9 +9,9 @@ public interface ImFeatureOrPng extends IsChild {
 
     ImFeatureOrPng copy(int angle);
 
-    void getVarSet(Set<Var> varSet);
+    void getVarSet(Set<Object> varSet);
 
-    void getVarSet(Set<Var> varSet, int angle);
+    void getVarSet(Set<Object> varSet, int angle);
 
     void getPngs(Set<SrcPng> pngs);
 

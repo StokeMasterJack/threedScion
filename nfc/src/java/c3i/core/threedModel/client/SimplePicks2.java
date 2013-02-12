@@ -6,7 +6,7 @@ import c3i.core.imageModel.shared.SimplePicks;
 
 public interface SimplePicks2 extends SimplePicks {
 
-    boolean isPicked(Var var);
+    boolean isPicked(Object var);
 
     boolean isInvalidBuild();
 

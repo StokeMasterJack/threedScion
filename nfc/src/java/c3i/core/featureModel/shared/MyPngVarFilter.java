@@ -23,7 +23,7 @@ public class MyPngVarFilter implements VarFilter {
 
     @Override
     public boolean accept(Var var) {
-        return isPngArray[var.index];
+        return isPngArray[var.getIndex()];
     }
 
     @Override
