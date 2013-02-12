@@ -1,0 +1,57 @@
+ImageStack1
+    series/year
+    view
+    fixedPicks
+    lift: boolean //lift is active on a per-view bases
+
+    //layerIndex -> SubLayer mapping
+    //  array index: layerIndex
+    //  element val: SubLayer (null: this layer is not-active for picks)
+    //  array length = view.layerCount
+    layerState: SubLayer[]
+
+    Path getUrls(
+        profile: Profile (or profile name)
+        collapse: true | false
+        skipZLayers: boolean
+
+SubLayer
+    //one array element per angle
+    //  array index: angle
+    //  element val:
+    //array length = view.angleCount
+    //null: this layer is not-active for this picks/angle
+    shortSha:String[]
+
+
+
+
+
+
+RawImageStack (shared)
+    key:
+        series/year
+        view
+        angle
+        fixed picks
+
+    computed:
+        pngSpecs: PngSpec[] (see below)
+
+
+Core Image Stack (shared)
+    rawImageStack
+    profile
+    imageMode: ImageMode {JPG | JPG_SKIP_Z_LAYERS | PNG};
+
+ImageStack
+    coreImageStack
+    repoBase: Path
+
+PngSpec
+    pngShortSha
+    deltaY: int
+    blink: boolean
+
+=====
+Level 1:
