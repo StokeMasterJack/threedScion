@@ -1,0 +1,16 @@
+ImageModel (stand-alone)
+    no external deps
+    See IImageModel
+
+
+JpgGen  (stand-alone - server-only )
+    deals with one image (or image stack) at a time
+
+    no deps on:
+        git/repo arch
+        job management
+        no deps on IM or FM
+
+    IO will be based on "Input-Supplier" Pattern
+
+Job Manager (stand-alone)
