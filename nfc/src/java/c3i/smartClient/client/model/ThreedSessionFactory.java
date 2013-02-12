@@ -2,15 +2,13 @@ package c3i.smartClient.client.model;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.Brand;
-import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.service.ThreedModelLoader;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
-import c3i.util.shared.futures.ForwardingFuture;
 import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;

@@ -1,6 +1,6 @@
 package c3i.repo.server;
 
-import c3i.core.imageModel.server.ImageUtil;
+import c3i.imageModel.server.ImageUtil;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.ThreedModel;

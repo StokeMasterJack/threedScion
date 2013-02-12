@@ -3,9 +3,8 @@ package c3i.admin.shared;
 import smartsoft.util.shared.Path;
 import c3i.admin.client.SeriesPickList;
 import c3i.core.common.shared.BrandKey;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profiles;
 import c3i.repo.shared.Series;
-import c3i.smartClient.client.service.ThreedModelClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;

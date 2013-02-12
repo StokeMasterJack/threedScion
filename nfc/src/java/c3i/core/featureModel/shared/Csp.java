@@ -6,7 +6,6 @@ import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
-import c3i.core.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.HashSet;

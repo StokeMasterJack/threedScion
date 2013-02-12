@@ -1,6 +1,6 @@
 package c3i.smartClient.client.widgets.blink;
 
-import c3i.core.imageModel.shared.JpgWidth;
+import c3i.imageModel.shared.JpgWidth;
 import c3i.smartClient.client.skins.bytSkin.chatPanel.ChatInfo;
 import smartsoft.util.gwt.client.Browser;
 import smartsoft.util.shared.Path;
@@ -8,7 +8,7 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.Slice;
+import c3i.imageModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 
 public class Blink {

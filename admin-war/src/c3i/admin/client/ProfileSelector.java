@@ -1,14 +1,13 @@
 package c3i.admin.client;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.ListBox;
 import c3i.util.shared.events.ChangeListener;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import c3i.util.shared.futures.RWValue;
 
 import java.util.List;

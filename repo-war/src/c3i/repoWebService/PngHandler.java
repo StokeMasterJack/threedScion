@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.PngSegment;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
@@ -11,7 +11,6 @@ import smartsoft.util.Date;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;

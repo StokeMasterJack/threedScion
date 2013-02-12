@@ -4,7 +4,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.events.Topic1;
-import c3i.core.imageModel.shared.CoreImageStack;
+import c3i.imageModel.shared.CoreImageStack;
 
 public class CoreStackChange extends Topic1<CoreStackChange.Listener, CoreImageStack> {
 

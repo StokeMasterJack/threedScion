@@ -1,7 +1,6 @@
 package c3i.core.common.shared;
 
 
-
 import smartsoft.util.shared.Path;
 import smartsoft.util.shared.Strings;
 
@@ -37,7 +36,11 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     }
 
 
-    public SeriesKey(@Nonnull final String brandKey ,@Nonnull final String seriesYear, @Nonnull final String seriesName) throws IllegalArgumentException {
+    public SeriesKey(@Nonnull final String brandKey, @Nonnull final int seriesYear, @Nonnull final String seriesName) throws IllegalArgumentException {
+        this(brandKey, seriesYear + "", seriesName);
+    }
+
+    public SeriesKey(@Nonnull final String brandKey, @Nonnull final String seriesYear, @Nonnull final String seriesName) throws IllegalArgumentException {
         if (Strings.isEmpty(brandKey)) throw new IllegalArgumentException("brandKey is required");
         if (Strings.isEmpty(seriesName)) throw new IllegalArgumentException("seriesName is required");
         if (Strings.isEmpty(seriesYear)) throw new IllegalArgumentException("seriesYear is required");
@@ -68,7 +71,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     }
 
     public SeriesKey(BrandKey brandKey, String seriesYear, String seriesName) {
-       this(brandKey,parseInt(seriesYear),seriesName);
+        this(brandKey, parseInt(seriesYear), seriesName);
     }
 
     public BrandKey getBrandKey() {

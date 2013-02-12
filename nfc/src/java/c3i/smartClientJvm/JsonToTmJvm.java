@@ -3,10 +3,9 @@ package c3i.smartClientJvm;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.JsonToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.server.JsonToImJvm;
-import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.imageModel.shared.SimpleFeatureModel;
+import c3i.imageModel.server.JsonToImJvm;
+import c3i.imageModel.shared.ImageModel;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.ThreedModel;
 import com.google.common.io.Closeables;
 import org.codehaus.jackson.JsonNode;
@@ -66,20 +65,9 @@ public class JsonToTmJvm {
         JsonToFmJvm uFm = new JsonToFmJvm();
         final FeatureModel featureModel = uFm.parseJson(seriesKey, jsFm);
 
-        SimpleFeatureModel fm = new SimpleFeatureModel() {
-            @Override
-            public Var get(String varCode) {
-                return featureModel.get(varCode);
-            }
+        ImFeatureModel imFeatureModel = new ImFeatureModel(featureModel);
 
-            @Override
-            public SeriesKey getSeriesKey() {
-                return featureModel.getSeriesKey();
-            }
-        };
-
-
-        ImSeries im = JsonToImJvm.parse(fm, jsIm);
+        ImageModel im = JsonToImJvm.parse(imFeatureModel, jsIm);
 
         ThreedModel threedModel = new ThreedModel(featureModel, im);
         return threedModel;

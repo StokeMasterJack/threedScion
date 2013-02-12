@@ -1,7 +1,7 @@
 package c3i.smartClient.client.model.event;
 
 import c3i.util.shared.events.Topic1;
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.imageModel.shared.ViewKey;
 
 public class ViewChangeTopic extends Topic1<ViewChangeListener, ViewKey> {
 

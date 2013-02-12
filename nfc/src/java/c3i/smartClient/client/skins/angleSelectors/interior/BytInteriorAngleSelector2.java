@@ -1,6 +1,6 @@
 package c3i.smartClient.client.skins.angleSelectors.interior;
 
-import c3i.core.imageModel.shared.AngleKey;
+import c3i.imageModel.shared.AngleKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.widgets.AngleSelector;

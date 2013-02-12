@@ -4,8 +4,10 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.XmlToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.SimpleFeatureModel;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.rt.RtRepo;
@@ -19,8 +21,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.InputSupplier;
-import java.util.logging.Logger;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 public class SeriesRepo {
 
@@ -234,7 +235,7 @@ public class SeriesRepo {
         return XmlToFmJvm.create(seriesKey, seriesDisplayName, seriesYear, featureModel);
     }
 
-    private ImSeries createImageModel(RootTreeId rootTreeId, FeatureModel fm) {
+    private ImageModel createImageModel(RootTreeId rootTreeId, SimpleFeatureModel fm) {
         ObjectId gitObjectId = srcRepo.toGitObjectId(rootTreeId);
         RevCommit revCommit = srcRepo.getRevCommit(gitObjectId);
         RepoVNodeBuilder b = new RepoVNodeBuilder(this, revCommit, rtRepo);
@@ -245,7 +246,7 @@ public class SeriesRepo {
         return imNodeBuilder.buildImageModel();
     }
 
-    private ImSeries createImageModelFromWork(FeatureModel fm) {
+    private ImageModel createImageModelFromWork(SimpleFeatureModel fm) {
         VNodeBuilder vNodeBuilder = new FileSystemVNodeBuilder(srcWork.getSrcWorkDir(), rtRepo);
         vNodeBuilder.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode vNode = vNodeBuilder.buildVNode();
@@ -257,7 +258,8 @@ public class SeriesRepo {
     public ThreedModel createThreedModelFromWork() {
         log.info("\tBuilding server-side ThreedModel for [" + seriesKey + " - from srcWork...");
         FeatureModel fm = createFeatureModelFromWork();
-        ImSeries im = createImageModelFromWork(fm);
+        ImFeatureModel imFm = new ImFeatureModel(fm);
+        ImageModel im = createImageModelFromWork(imFm);
         ThreedModel threedModel = new ThreedModel(fm, im);
 
         log.info("\tServer-side ThreedModel for [" + seriesKey + "] complete");
@@ -276,7 +278,9 @@ public class SeriesRepo {
         FeatureModel fm = createFeatureModel(modelXml);
 
         log.info("\t\t Building ImageModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
-        ImSeries im = createImageModel(rootTreeId, fm);
+
+        ImFeatureModel imFeatureModel = new ImFeatureModel(fm);
+        ImageModel im = createImageModel(rootTreeId, imFeatureModel);
         ThreedModel threedModel = new ThreedModel(fm, im);
 
         long t2 = System.currentTimeMillis();

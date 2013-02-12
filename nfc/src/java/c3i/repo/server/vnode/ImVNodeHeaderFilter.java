@@ -1,21 +1,18 @@
 package c3i.repo.server.vnode;
 
-import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.imageModel.shared.NodeLevel;
-import c3i.core.imageModel.shared.SrcPng;
-import c3i.core.threedModel.shared.SeriesInfo;
-import c3i.core.threedModel.shared.SeriesInfoBuilder;
+import c3i.imageModel.shared.NodeLevel;
+import c3i.imageModel.shared.SimpleFeatureModel;
+import c3i.imageModel.shared.SrcPng;
 import smartsoft.util.shared.Strings;
 
 public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 
-    private final FeatureModel featureModel;
+    private final SimpleFeatureModel featureModel;
     private final String seriesName;
 
-    public ImVNodeHeaderFilter(FeatureModel featureModel) {
+    public ImVNodeHeaderFilter(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
-        this.seriesName = featureModel.getSeriesName();
+        this.seriesName = featureModel.getSeriesKey().getName();
     }
 
     Rejection veto(VNodeHeader vNode, String reason) {

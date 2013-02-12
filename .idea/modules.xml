@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/admin-war/admin-war.iml" filepath="$PROJECT_DIR$/admin-war/admin-war.iml" />
       <module fileurl="file://$PROJECT_DIR$/build/build.iml" filepath="$PROJECT_DIR$/build/build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imageModel/imageModel.iml" filepath="$PROJECT_DIR$/imageModel/imageModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
       <module fileurl="file://$PROJECT_DIR$/repo-war/repo-war.iml" filepath="$PROJECT_DIR$/repo-war/repo-war.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartClient-demos-gwt-war/smartClient-demos-gwt-war.iml" filepath="$PROJECT_DIR$/smartClient-demos-gwt-war/smartClient-demos-gwt-war.iml" />

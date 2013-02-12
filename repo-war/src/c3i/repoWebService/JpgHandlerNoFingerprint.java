@@ -1,13 +1,13 @@
 package c3i.repoWebService;
 
 import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.CoreImageStack;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ImageMode;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.RawImageStack;
-import c3i.core.imageModel.shared.BaseImageKey;
-import c3i.core.imageModel.shared.Slice;
+import c3i.imageModel.shared.CoreImageStack;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.RawImageStack;
+import c3i.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.Slice;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;

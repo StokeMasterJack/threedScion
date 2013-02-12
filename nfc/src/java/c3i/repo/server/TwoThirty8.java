@@ -1,7 +1,7 @@
 package c3i.repo.server;
 
-import c3i.core.imageModel.server.ImageUtil;
-import c3i.core.imageModel.shared.BaseImageType;
+import c3i.imageModel.server.ImageUtil;
+import c3i.imageModel.shared.BaseImageType;
 import com.google.common.base.Preconditions;
 
 import java.io.File;

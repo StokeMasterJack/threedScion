@@ -25,7 +25,7 @@ import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 import c3i.core.common.shared.SeriesId;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import c3i.admin.shared.jpgGen.JobId;
 import c3i.admin.shared.jpgGen.JobState;
 import c3i.admin.shared.jpgGen.JobStatus;

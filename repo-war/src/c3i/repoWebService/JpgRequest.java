@@ -1,8 +1,9 @@
 package c3i.repoWebService;
 
 
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.BaseImageKey;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.repo.server.BrandRepos;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +54,7 @@ public class JpgRequest extends SeriesBasedRepoRequest {
         String fingerprint = a[0];  //1cd92-3e498
 
         Profile profile = brandRepos.getRepos(brandKey).getProfiles().get(profileSegment);
-        baseImageKey = new BaseImageKey(seriesKey, profile, fingerprint);
+        baseImageKey = new BaseImageKey(ImFeatureModel.fmToMmSeriesKey(seriesKey), profile, fingerprint);
 
 
     }

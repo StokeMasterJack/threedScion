@@ -2,7 +2,7 @@ package c3i.admin.server.taskManager;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import c3i.repo.server.rt.RtRepo;
 import c3i.core.threedModel.shared.*;
 import c3i.repo.server.Repos;

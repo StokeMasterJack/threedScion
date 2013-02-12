@@ -1,6 +1,6 @@
 package c3i.admin.client;
 
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import c3i.repo.shared.CommitHistory;
 import c3i.smartClient.client.skins.Skin;
 import c3i.util.shared.events.ChangeListener;

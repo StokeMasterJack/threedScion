@@ -1,6 +1,6 @@
 package c3i.smartClient.client.widgets;
 
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import c3i.smartClient.client.model.ImageStack;
 import c3i.smartClient.client.model.ImageStackChangeListener;
 import c3i.smartClient.client.model.ImageWidget;

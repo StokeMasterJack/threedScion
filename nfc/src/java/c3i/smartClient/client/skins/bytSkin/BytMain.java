@@ -1,7 +1,7 @@
 package c3i.smartClient.client.skins.bytSkin;
 
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.skins.Skin;

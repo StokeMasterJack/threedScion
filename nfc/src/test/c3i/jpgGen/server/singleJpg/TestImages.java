@@ -2,8 +2,9 @@ package c3i.jpgGen.server.singleJpg;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.BaseImageKey;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import org.junit.Before;
@@ -43,12 +44,14 @@ public class TestImages {
     public void test0() throws Exception {
         Stats stats = new Stats();
         SeriesKey sk = SeriesKey.FRS_2013;
+        c3i.imageModel.shared.SeriesKey imSeriesKey = ImFeatureModel.fmToMmSeriesKey(SeriesKey.FRS_2013);
+
         String fp = "f2cd70a-49f9b91-2926eca-0c9f56a-ce22027-01de875-957b422";
 
         List<Profile> profiles = repos.getProfiles().getList();
 
         for (Profile profile : profiles) {
-            BaseImageKey baseImage = new BaseImageKey(sk, profile, fp);
+            BaseImageKey baseImage = new BaseImageKey(imSeriesKey, profile, fp);
             BaseImageGenerator g = new BaseImageGenerator(Repos.get(), baseImage);
             g.generate(stats);
         }

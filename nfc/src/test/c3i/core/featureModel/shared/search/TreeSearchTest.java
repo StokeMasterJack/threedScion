@@ -9,17 +9,18 @@ import c3i.core.featureModel.data.TrimColorOption;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.BaseImageKey;
-import c3i.core.imageModel.shared.CoreImageStack;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ImageMode;
-import c3i.core.imageModel.shared.JpgWidth;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.RawImageStack;
-import c3i.core.imageModel.shared.SimplePicks;
-import c3i.core.imageModel.shared.Slice;
-import c3i.core.imageModel.shared.ViewKeyOld;
-import c3i.core.imageModel.shared.ViewSlice;
+import c3i.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.CoreImageStack;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.JpgWidth;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.RawImageStack;
+import c3i.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.Slice;
+import c3i.imageModel.shared.ViewKeyOld;
+import c3i.imageModel.shared.ViewSlice;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
@@ -257,7 +258,7 @@ public class TreeSearchTest extends TestCase {
         RtRepo genRepo = seriesRepo.getRtRepo();
 
 
-        BaseImageKey jpgKey = new BaseImageKey(seriesKey, Profile.STD, fp);
+        BaseImageKey jpgKey = new BaseImageKey(ImFeatureModel.fmToMmSeriesKey(seriesKey), Profile.STD, fp);
         boolean exists = genRepo.exists(jpgKey);
         System.out.println("exists = " + exists);
 
@@ -324,7 +325,7 @@ public class TreeSearchTest extends TestCase {
         }
 
         public boolean exists(String fingerprint) {
-            BaseImageKey jpgKey = new BaseImageKey(seriesKey, Profile.STD, fingerprint);
+            BaseImageKey jpgKey = new BaseImageKey(ImFeatureModel.fmToMmSeriesKey(seriesKey), Profile.STD, fingerprint);
             return genRepo.exists(jpgKey);
         }
     }

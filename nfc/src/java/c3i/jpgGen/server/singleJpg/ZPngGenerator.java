@@ -2,7 +2,7 @@ package c3i.jpgGen.server.singleJpg;
 
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.PngSegment;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;

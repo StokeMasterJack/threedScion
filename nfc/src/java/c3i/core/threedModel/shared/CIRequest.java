@@ -1,7 +1,7 @@
 package c3i.core.threedModel.shared;
 
-import c3i.core.imageModel.shared.JpgWidth;
-import c3i.core.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.JpgWidth;
+import c3i.imageModel.shared.SimplePicks;
 
 public class CIRequest {
 

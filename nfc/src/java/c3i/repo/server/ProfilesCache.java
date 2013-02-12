@@ -1,8 +1,8 @@
 package c3i.repo.server;
 
 import c3i.core.common.shared.BrandKey;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;

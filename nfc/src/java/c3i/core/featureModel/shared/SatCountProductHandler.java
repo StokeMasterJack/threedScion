@@ -1,7 +1,7 @@
 package c3i.core.featureModel.shared;
 
 import c3i.core.featureModel.shared.search.ProductHandler;
-import c3i.core.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.SimplePicks;
 
 public class SatCountProductHandler implements ProductHandler {
 

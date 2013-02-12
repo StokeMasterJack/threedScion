@@ -2,14 +2,13 @@ package c3i.repoWebService;
 
 import c3i.repo.server.BrandRepos;
 import com.google.common.io.Files;
-import c3i.core.imageModel.shared.PngShortSha;
+import c3i.imageModel.shared.PngShortSha;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;

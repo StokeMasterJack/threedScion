@@ -10,11 +10,11 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
-import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.SimplePicks;
-import c3i.core.imageModel.shared.Slice2;
+import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.Slice2;
 import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
@@ -65,7 +65,7 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = SeriesKey.IQ_2012;
         SeriesId seriesId = repos.getHead(seriesKey);
         ThreedModel threedModel = repos.getThreedModel(seriesId);
-        ImSeries imageModel = threedModel.getImageModel();
+        ImageModel imageModel = threedModel.getImageModel();
 
 
 //        imageModel.getView("exterior").getSrcPngs(simplePicks, 2);

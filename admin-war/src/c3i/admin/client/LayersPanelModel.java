@@ -1,12 +1,12 @@
 package c3i.admin.client;
 
-import c3i.core.imageModel.shared.PngSpec;
+import c3i.imageModel.shared.PngSpec;
 import c3i.smartClient.client.model.LayerState;
 import java.util.logging.Level;import java.util.logging.Logger;
 import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageMode;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.ViewSession;
 import c3i.smartClient.client.model.ViewsSession;

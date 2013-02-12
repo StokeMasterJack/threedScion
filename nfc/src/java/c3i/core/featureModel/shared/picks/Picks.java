@@ -7,7 +7,7 @@ import c3i.core.featureModel.shared.Source;
 import c3i.core.featureModel.shared.Tri;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.HashSet;

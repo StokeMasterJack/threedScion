@@ -1,6 +1,6 @@
 package c3i.smartClient.client.skins.angleSelectors.interior;
 
-import c3i.core.imageModel.shared.AngleKey;
+import c3i.imageModel.shared.AngleKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.widgets.AngleSelector;
@@ -8,8 +8,6 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;

@@ -1,8 +1,8 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.imageModel.shared.ImImage;
-import c3i.core.imageModel.shared.LayerImage;
-import c3i.core.imageModel.shared.PngSpec;
+import c3i.imageModel.shared.ImImage;
+import c3i.imageModel.shared.LayerImage;
+import c3i.imageModel.shared.PngSpec;
 import com.google.common.base.Preconditions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.ImageElement;

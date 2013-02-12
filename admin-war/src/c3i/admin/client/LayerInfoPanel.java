@@ -1,6 +1,6 @@
 package c3i.admin.client;
 
-import c3i.core.imageModel.shared.PngSpec;
+import c3i.imageModel.shared.PngSpec;
 import c3i.core.threedModel.shared.ThreedModel;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.Composite;
@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImLayer;
 
 import java.util.Set;
 

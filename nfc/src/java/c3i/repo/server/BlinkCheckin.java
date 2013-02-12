@@ -1,7 +1,7 @@
 package c3i.repo.server;
 
 import com.google.common.io.Files;
-import c3i.core.imageModel.shared.PngShortSha;
+import c3i.imageModel.shared.PngShortSha;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;

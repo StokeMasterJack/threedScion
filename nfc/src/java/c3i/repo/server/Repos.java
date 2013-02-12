@@ -4,13 +4,14 @@ import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.imageModel.shared.BaseImageType;
-import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngSegment;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.BaseImageType;
+import c3i.imageModel.shared.IBaseImageKey;
+import c3i.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.CommitKey;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.core.threedModel.shared.VtcMap;
@@ -368,7 +369,8 @@ public class Repos {
     }
 
     public File getFileForJpg(IBaseImageKey jpgKey) {
-        SeriesRepo seriesRepo = getSeriesRepo(jpgKey.getSeriesKey());
+        c3i.imageModel.shared.SeriesKey seriesKey = jpgKey.getSeriesKey();
+        SeriesRepo seriesRepo = getSeriesRepo(ImFeatureModel.imToFmSeriesKey(seriesKey));
         RtRepo genRepo = seriesRepo.getRtRepo();
         File jpgFile = genRepo.getBaseImageFileName(jpgKey);
 

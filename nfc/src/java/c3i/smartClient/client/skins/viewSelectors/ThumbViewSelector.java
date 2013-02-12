@@ -1,6 +1,6 @@
 package c3i.smartClient.client.skins.viewSelectors;
 
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.ViewPanel;

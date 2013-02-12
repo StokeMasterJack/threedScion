@@ -1,19 +1,18 @@
 package c3i.repo.server;
 
-import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.UnknownVarCodeException;
-import c3i.core.featureModel.shared.Vars;
-import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.server.BlinkChecker;
-import c3i.core.imageModel.shared.ImFeature;
-import c3i.core.imageModel.shared.ImFeatureOrPng;
-import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.ImNodeType;
-import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.PngShortSha;
-import c3i.core.imageModel.shared.SrcPng;
-import c3i.core.imageModel.shared.ViewLiftSpec;
+import c3i.imageModel.server.BlinkChecker;
+import c3i.imageModel.shared.ImFeature;
+import c3i.imageModel.shared.ImFeatureOrPng;
+import c3i.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImNodeType;
+import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.PngShortSha;
+import c3i.imageModel.shared.SeriesKey;
+import c3i.imageModel.shared.SimpleFeatureModel;
+import c3i.imageModel.shared.SrcPng;
+import c3i.imageModel.shared.ViewLiftSpec;
 import c3i.repo.server.vnode.VNode;
 import com.google.common.base.Preconditions;
 import java.util.logging.Logger;
@@ -29,26 +28,27 @@ import java.util.Properties;
 
 public class ImageModelBuilder {
 
-    private final FeatureModel featureModel;
+    private final SimpleFeatureModel featureModel;
     private final VNode seriesVDir;
 
     private final BlinkChecker blinkChecker;
 
-    public ImageModelBuilder(FeatureModel featureModel, VNode seriesVDir, BlinkChecker blinkChecker) {
+    public ImageModelBuilder(SimpleFeatureModel featureModel, VNode seriesVDir, BlinkChecker blinkChecker) {
         Preconditions.checkNotNull(seriesVDir);
         this.featureModel = featureModel;
         this.seriesVDir = seriesVDir;
         this.blinkChecker = blinkChecker;
     }
 
-    public ImSeries buildImageModel() {
+    public ImageModel buildImageModel() {
         List<VNode> viewDirs = seriesVDir.getChildNodes();
         assert viewDirs != null;
         assert viewDirs.size() > 0;
         List<ImView> imViews = createImViewsFromSeriesDir(seriesVDir);
 
 
-        return new ImSeries(seriesVDir.getDepth(), imViews, featureModel.getSeriesKey());
+        SeriesKey seriesKey = featureModel.getSeriesKey();
+        return new ImageModel(seriesVDir.getDepth(), imViews, seriesKey);
     }
 
 
@@ -114,9 +114,9 @@ public class ImageModelBuilder {
 
         }
 
-        ViewLiftSpec parse(Properties properties, Vars vars) {
+        ViewLiftSpec parse(Properties properties, SimpleFeatureModel vars) {
             String varCode = properties.getProperty("trigger-feature");
-            Var var = vars.get(varCode);
+            Object var = vars.get(varCode);
             int deltaY = Integer.parseInt(properties.getProperty("delta-y"));
             return new ViewLiftSpec(var, deltaY);
         }
@@ -227,7 +227,7 @@ public class ImageModelBuilder {
 
     private ImFeature createImFeatureFromFeatureDir(VNode featureDir) {
         String featureCode = featureDir.getName();
-        Var var = null;
+        Object var = null;
         try {
             var = featureModel.get(featureCode);
         } catch (UnknownVarCodeException e) {

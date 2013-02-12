@@ -8,7 +8,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import c3i.core.imageModel.shared.ViewKeyOld;
+import c3i.imageModel.shared.ViewKeyOld;
 
 public class BytInteriorAngleSelector extends AngleSelector {
 

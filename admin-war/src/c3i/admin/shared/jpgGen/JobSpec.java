@@ -2,7 +2,7 @@ package c3i.admin.shared.jpgGen;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profile;
 import com.google.common.base.Preconditions;
 
 import java.io.Serializable;

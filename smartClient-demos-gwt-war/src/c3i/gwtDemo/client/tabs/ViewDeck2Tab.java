@@ -1,6 +1,6 @@
 package c3i.gwtDemo.client.tabs;
 
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ThreedSession;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.skins.angleSelectors.exterior.BytExteriorAngleSelector;

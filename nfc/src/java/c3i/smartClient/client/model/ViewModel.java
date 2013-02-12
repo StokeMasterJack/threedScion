@@ -1,8 +1,8 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.ImageMode;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.Profile;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.dragToSpin.DragToSpinModel;

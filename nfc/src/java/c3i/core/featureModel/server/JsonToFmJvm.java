@@ -1,12 +1,12 @@
 package c3i.core.featureModel.server;
 
+import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.And;
 import c3i.core.featureModel.shared.boolExpr.BoolExpr;
 import c3i.core.featureModel.shared.boolExpr.Type;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.SeriesKey;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
@@ -39,10 +39,14 @@ public final class JsonToFmJvm {
 
     }
 
-    public FeatureModel parseJson(SeriesKey seriesKey, URL url) throws IOException {
+    public FeatureModel parseJson(SeriesKey seriesKey, URL url) {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readValue(url, JsonNode.class);
-        return parseJson(seriesKey, rootNode);
+        try {
+            JsonNode rootNode = mapper.readValue(url, JsonNode.class);
+            return parseJson(seriesKey, rootNode);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void mapVars(ObjectNode jsRootVar) {

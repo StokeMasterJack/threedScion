@@ -4,7 +4,7 @@ import c3i.admin.shared.BrandInit;
 import c3i.admin.shared.ThreedAdminService;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;

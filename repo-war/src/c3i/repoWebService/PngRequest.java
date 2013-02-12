@@ -1,8 +1,7 @@
 package c3i.repoWebService;
 
-import c3i.core.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.PngSegment;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

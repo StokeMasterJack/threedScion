@@ -1,10 +1,10 @@
 package c3i.admin.client;
 
 import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.ImageMode;
-import c3i.core.imageModel.shared.PngSpec;
-import c3i.core.imageModel.shared.Profile;
+import c3i.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.PngSpec;
+import c3i.imageModel.shared.Profile;
 import c3i.smartClient.client.model.LayerState;
 import c3i.smartClient.client.model.ViewSession;
 import c3i.smartClient.client.model.ViewsSession;

@@ -1,7 +1,7 @@
 package c3i.repo.server.vnode;
 
 import com.google.common.io.Files;
-import c3i.core.imageModel.server.ImageUtil;
+import c3i.imageModel.server.ImageUtil;
 import c3i.repo.server.rt.RtRepo;
 import java.util.logging.Logger;
 

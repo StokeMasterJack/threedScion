@@ -1,9 +1,9 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.PngSpec;
-import c3i.core.imageModel.shared.ViewKey;
+import c3i.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.PngSpec;
+import c3i.imageModel.shared.ViewKey;
 import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.events.ValueChangeTopic;
 import com.google.common.collect.Sets;

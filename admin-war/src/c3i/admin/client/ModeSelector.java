@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.ListBox;
 import c3i.util.shared.events.ChangeListener;
-import c3i.core.imageModel.shared.ImageMode;
+import c3i.imageModel.shared.ImageMode;
 import c3i.util.shared.futures.RWValue;
 
 import static smartsoft.util.shared.Strings.getSimpleName;

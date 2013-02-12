@@ -3,8 +3,8 @@ package c3i.core.threedModel.shared;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import com.google.common.base.Preconditions;
 
 import static smartsoft.util.shared.Strings.notEmpty;

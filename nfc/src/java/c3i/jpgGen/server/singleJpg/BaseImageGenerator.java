@@ -1,9 +1,11 @@
 package c3i.jpgGen.server.singleJpg;
 
 
-import c3i.core.imageModel.shared.IBaseImageKey;
-import c3i.core.imageModel.shared.PngSegment;
-import c3i.core.imageModel.shared.PngSegments;
+import c3i.imageModel.shared.IBaseImageKey;
+import c3i.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.PngSegments;
+import c3i.imageModel.shared.SeriesKey;
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
@@ -40,7 +42,8 @@ public class BaseImageGenerator {
 
     public BaseImageGenerator(final Repos repos, final IBaseImageKey baseImage) {
         this.baseImage = baseImage;
-        this.seriesRepo = repos.getSeriesRepo(baseImage.getSeriesKey());
+        SeriesKey seriesKey = baseImage.getSeriesKey();
+        this.seriesRepo = repos.getSeriesRepo(ImFeatureModel.imToFmSeriesKey(seriesKey));
     }
 
     public void generate() {

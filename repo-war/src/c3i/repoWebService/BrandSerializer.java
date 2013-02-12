@@ -2,12 +2,11 @@ package c3i.repoWebService;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.imageModel.shared.Profile;
-import c3i.core.imageModel.shared.Profiles;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.VtcMap;
-import com.google.common.collect.ImmutableList;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import smartsoft.util.shared.RectSize;

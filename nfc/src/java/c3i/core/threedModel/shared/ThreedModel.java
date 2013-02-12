@@ -5,14 +5,13 @@ import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.imageModel.shared.ImLayer;
-import c3i.core.imageModel.shared.ImSeries;
-import c3i.core.imageModel.shared.ImView;
-import c3i.core.imageModel.shared.PngSpec;
-import c3i.core.imageModel.shared.Slice;
-import c3i.core.imageModel.shared.SrcPng;
-import c3i.core.imageModel.shared.ViewKeyOld;
-import c3i.core.imageModel.shared.ViewSlice;
+import c3i.imageModel.shared.ImLayer;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.Slice;
+import c3i.imageModel.shared.SrcPng;
+import c3i.imageModel.shared.ViewKeyOld;
+import c3i.imageModel.shared.ViewSlice;
 import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Path;
 
@@ -22,7 +21,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 //import threed.core.imageModel.shared.slice.ImageSlice;
@@ -31,7 +29,7 @@ import java.util.logging.Logger;
 public class ThreedModel {
 
     private final FeatureModel featureModel;
-    private final ImSeries imageModel;
+    private final ImageModel imageModel;
 
     private final SeriesKey seriesKey;
 
@@ -43,7 +41,7 @@ public class ThreedModel {
     public final Slice heroSlice;
 
 
-    public ThreedModel(FeatureModel featureModel, ImSeries imageModel) {
+    public ThreedModel(FeatureModel featureModel, ImageModel imageModel) {
         assert featureModel != null;
         assert imageModel != null;
 
@@ -65,7 +63,7 @@ public class ThreedModel {
         return featureModel;
     }
 
-    public ImSeries getImageModel() {
+    public ImageModel getImageModel() {
         return imageModel;
     }
 
@@ -298,5 +296,6 @@ public class ThreedModel {
     }
 
     private static Logger log = Logger.getLogger(ThreedModel.class.getName());
+
 
 }
