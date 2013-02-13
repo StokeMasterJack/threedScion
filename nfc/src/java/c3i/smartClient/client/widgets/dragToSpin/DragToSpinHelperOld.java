@@ -37,14 +37,16 @@ public class DragToSpinHelperOld<T extends UIObject & HasAllMouseHandlers> {
     }
 
     public void setEnabled(boolean enabled) {
-        if(target==null) throw new IllegalStateException("must call attachToTarget before calling setEnabled");
+        if (target == null) throw new IllegalStateException("must call attachToTarget before calling setEnabled");
         this.enabled = enabled;
         target.setVisibility(enabled);
     }
 
     private static native void fixIE(Element img) /*-{
         // ...implemented with JavaScript
-        img.ondragstart=function(e) {return false;}
+        img.ondragstart = function (e) {
+            return false;
+        }
     }-*/;
 
     private HandlesAllMouseEvents mouseHandlers = new HandlesAllMouseEvents() {
@@ -63,16 +65,14 @@ public class DragToSpinHelperOld<T extends UIObject & HasAllMouseHandlers> {
             if (Math.abs(deltaX) >= DELTA_X_FOR_ANGLE_CHANGE) {
                 if (deltaX > 0) {
                     angleScrollListener.angleNext();
-                }
-                else if (deltaX < 0) {
+                } else if (deltaX < 0) {
                     angleScrollListener.anglePrevious();
-                }
-                else {
+                } else {
                     throw new IllegalStateException();
                 }
                 startX = mouseX;
             }
-            
+
         }
 
         public void onMouseDown(MouseDownEvent ev) {
@@ -113,7 +113,8 @@ public class DragToSpinHelperOld<T extends UIObject & HasAllMouseHandlers> {
             target.setCursorDefault();
         }
 
-        @Override public void onMouseWheel(MouseWheelEvent event) {
+        @Override
+        public void onMouseWheel(MouseWheelEvent event) {
             //ignore
         }
     };
@@ -140,7 +141,7 @@ public class DragToSpinHelperOld<T extends UIObject & HasAllMouseHandlers> {
             handlers.handle(target);
         }
 
-        public void setVisibility(boolean b){
+        public void setVisibility(boolean b) {
             target.setVisible(b);
         }
 

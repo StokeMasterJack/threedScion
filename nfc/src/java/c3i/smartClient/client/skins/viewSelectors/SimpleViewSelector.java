@@ -1,13 +1,13 @@
 package c3i.smartClient.client.skins.viewSelectors;
 
-import c3i.smartClient.client.model.ViewModel;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.user.client.ui.ListBox;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ImageStack;
+import c3i.smartClient.client.model.ViewModel;
 import c3i.smartClient.client.model.event.ViewChangeListener;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class SimpleViewSelector extends ViewSelector {
 

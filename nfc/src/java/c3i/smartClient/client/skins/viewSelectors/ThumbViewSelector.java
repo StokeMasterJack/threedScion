@@ -9,13 +9,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.RectSize;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ThumbViewSelector extends ViewSelector {
 
@@ -51,7 +52,7 @@ public class ThumbViewSelector extends ViewSelector {
 
         ArrayList<? extends ViewModel> thumbModels = new ArrayList<ViewModel>(viewPanelModel.getViewModels());
 
-        Collections.sort(thumbModels,new Comparator<ViewModel>() {
+        Collections.sort(thumbModels, new Comparator<ViewModel>() {
             @Override
             public int compare(ViewModel o1, ViewModel o2) {
                 Integer i1 = o1.getView().getIndex();

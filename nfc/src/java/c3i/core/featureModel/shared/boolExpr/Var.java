@@ -1,11 +1,25 @@
 package c3i.core.featureModel.shared.boolExpr;
 
-import com.google.common.collect.ImmutableSet;
-import c3i.core.featureModel.shared.*;
+import c3i.core.featureModel.shared.Assignments;
+import c3i.core.featureModel.shared.AutoAssignContext;
+import c3i.core.featureModel.shared.Cardinality;
+import c3i.core.featureModel.shared.EvalContext;
+import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.PngVarFilter;
+import c3i.core.featureModel.shared.Tri;
+import c3i.core.featureModel.shared.UnknownVarCodeException;
 import c3i.core.featureModel.shared.picks.Picks;
+import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import static smartsoft.util.shared.Strings.capFirstLetter;
 import static smartsoft.util.shared.Strings.notEmpty;

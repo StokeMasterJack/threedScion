@@ -7,6 +7,8 @@ import com.google.gwt.resources.client.ImageResource;
 public interface Resources extends ClientBundle {
 
     Resources INSTANCE = GWT.create(Resources.class);
+
     ImageResource chatIconOut();
+
     ImageResource chatIconOver();
 }

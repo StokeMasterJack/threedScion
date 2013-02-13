@@ -2,12 +2,12 @@ package c3i.smartClient.client.service;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.imageModel.shared.BaseImageType;
-import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.VtcMap;
+import c3i.imageModel.shared.BaseImageType;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.gwt.json.client.JSONObject;

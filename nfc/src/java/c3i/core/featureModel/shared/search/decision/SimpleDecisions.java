@@ -60,7 +60,7 @@ public class SimpleDecisions implements Decisions {
 
     @Override
     public String toString() {
-        return  "SimpleDecisions[" + var + "]";
+        return "SimpleDecisions[" + var + "]";
     }
 
 

@@ -1,8 +1,8 @@
 package c3i.core.threedModel.shared;
 
-import com.google.common.collect.ImmutableMap;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import com.google.common.collect.ImmutableMap;
 
 public class VtcMap {
 

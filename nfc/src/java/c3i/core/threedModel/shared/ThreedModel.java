@@ -5,26 +5,18 @@ import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
-import c3i.imageModel.shared.SrcPng;
 import c3i.imageModel.shared.ViewKeyOld;
 import c3i.imageModel.shared.ViewSlice;
 import com.google.common.collect.ImmutableSet;
-import smartsoft.util.shared.Path;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
-
-//import threed.core.imageModel.shared.slice.ImageSlice;
-
 
 public class ThreedModel {
 
@@ -32,11 +24,6 @@ public class ThreedModel {
     private final ImageModel imageModel;
 
     private final SeriesKey seriesKey;
-
-//    private final Map<Slice, ImageSlice> imageSliceMap = new HashMap<Slice, ImageSlice>();
-
-//    private final
-
 
     public final Slice heroSlice;
 
@@ -55,10 +42,6 @@ public class ThreedModel {
 
     }
 
-//    public SeriesInfo getSeriesInfo() {
-//        return imageModel.getSeriesInfo();
-//    }
-
     public FeatureModel getFeatureModel() {
         return featureModel;
     }
@@ -75,35 +58,6 @@ public class ThreedModel {
         return featureModel.fixup(picks);
     }
 
-
-    @Nullable
-    public Path getBlinkPngUrl(Slice slice, FixedPicks picks, Var blinkFeature, Path repoBaseUrl) {
-        assert picks != null : "Picks is required";
-        assert slice != null;
-        assert blinkFeature != null;
-
-        ImView view = getView(slice.getView());
-//        PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
-//        PngSpec accessoryPng = view.getAccessorySrcPng(slice.getAngle(), picks, blinkFeature);
-
-        return null;
-
-//        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
-//
-//        log.log(Level.INFO, "accessoryPng = " + accessoryPng);
-//
-//        if (accessoryPng == null) {
-//            return null;
-//        }
-//
-//        String urlSegment = accessoryPng.serializeToUrlSegment();
-//
-//        Path threedBaseUrl = view.getSeries().getThreedBaseUrl(repoBaseUrl);
-//        Path blinkBase = threedBaseUrl.append("blink");
-//        return blinkBase.append(urlSegment).appendName(".png");
-    }
-
-
     public ImView getView(ViewKeyOld viewKey) {
         return imageModel.getView(viewKey);
     }
@@ -115,31 +69,6 @@ public class ThreedModel {
     public ImView getView(int viewIndex) {
         return imageModel.getView(viewIndex);
     }
-
-    public boolean equalsHeavy(Object obj) {
-
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (obj.getClass() != ThreedModel.class) return false;
-        ThreedModel that = (ThreedModel) obj;
-
-        boolean fmsEqual = this.featureModel.equals(that.featureModel);
-        boolean imsEqual = this.imageModel.equals(that.imageModel);
-
-        return fmsEqual && imsEqual;
-    }
-
-//    public Slice getInitialSlice() {
-//        return getImageModel().getInitialViewState();
-//    }
-//
-//    public ImView getInitialView() {
-//        return getImageModel().getInitialView();
-//    }
-//
-//    public ViewKey getInitialViewKey() {
-//        return getImageModel().getInitialView().getViewKey();
-//    }
 
     public int getInitialViewIndex() {
         return imageModel.getInitialView().getIndex();
@@ -189,34 +118,12 @@ public class ThreedModel {
         return imageModel.getSliceCount();
     }
 
-//    public ViewKeyOld getViewKey(String viewName) {
-//        ViewKeyOld[] viewKeys = imageModel.getViewKeys();
-//        for (ViewKeyOld viewKey : viewKeys) {
-//            if (viewKey.getName().equals(viewName)) {
-//                return viewKey;
-//            }
-//        }
-//        throw new IllegalArgumentException("No view named [" + viewName + " for this threedMode[" + getSeriesKey() + "]");
-//    }
-
-//    public ViewKeyOld getExteriorViewKey() {
-//        return exteriorViewKey;
-//    }
-//
-//    public ViewKeyOld getInteriorViewKey() {
-//        return interiorViewKey;
-//    }
 
     public Collection<Object> getPngVarsForSlice1(Slice slice) {
         String viewName = slice.getView();
         ImView view = imageModel.getView(viewName);
         return view.getPngVars(slice.getAngle());
     }
-
-//    public Collection<Var> getPngVarsForSlice2(Slice slice) {
-//        ImageSlice imageSlice = getImageSlice(slice);
-//        return imageSlice.getJpgVars();
-//    }
 
 
     public List<Slice> getSlices() {
@@ -228,24 +135,6 @@ public class ThreedModel {
             }
         }
         return slices;
-    }
-
-    public void printBrief() {
-        int fmVarCount = featureModel.size();
-        System.out.println("fmVarCount = " + fmVarCount);
-        int sliceCount = imageModel.getSliceCount();
-        System.out.println("sliceCount = " + sliceCount);
-
-    }
-
-    public void printFirstFivePngs() {
-        Slice slice = imageModel.getFirstSlice();
-        ImView view = imageModel.getView(slice.getViewName());
-        ImLayer imLayer = view.getLayers().get(0);
-        SrcPng imPng = imLayer.getChildNodes().get(0).asPng();
-        System.out.println(imPng.toString());
-
-
     }
 
     public void setSubSeries(SubSeries subSeries) {
@@ -294,8 +183,6 @@ public class ThreedModel {
         }
         return vars;
     }
-
-    private static Logger log = Logger.getLogger(ThreedModel.class.getName());
 
 
 }

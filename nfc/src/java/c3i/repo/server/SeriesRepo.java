@@ -4,12 +4,12 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.XmlToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.imageModel.shared.ImageModel;
-import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.repo.server.rt.RtRepo;
 import c3i.repo.server.vnode.FileSystemVNodeBuilder;
 import c3i.repo.server.vnode.ImVNodeHeaderFilter;
@@ -242,7 +242,7 @@ public class SeriesRepo {
         b.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode seriesVDir = b.buildVNode();
         Preconditions.checkNotNull(seriesVDir);
-        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, seriesVDir, rtRepo);
+        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, seriesVDir);
         return imNodeBuilder.buildImageModel();
     }
 
@@ -251,7 +251,7 @@ public class SeriesRepo {
         vNodeBuilder.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode vNode = vNodeBuilder.buildVNode();
 
-        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, vNode, rtRepo);
+        ImageModelBuilder imNodeBuilder = new ImageModelBuilder(fm, vNode);
         return imNodeBuilder.buildImageModel();
     }
 

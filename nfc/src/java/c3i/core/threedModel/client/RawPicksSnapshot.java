@@ -7,13 +7,19 @@ import static smartsoft.util.shared.Strings.isEmpty;
 
 public class RawPicksSnapshot {
 
-    @Nonnull public final String modelCode;
-    @Nonnull public final String exteriorColor;
-    @Nonnull public final String exteriorColorFixed; //todo, handle this more elegently
-    @Nonnull public final String interiorColor;
+    @Nonnull
+    public final String modelCode;
+    @Nonnull
+    public final String exteriorColor;
+    @Nonnull
+    public final String exteriorColorFixed; //todo, handle this more elegently
+    @Nonnull
+    public final String interiorColor;
 
-    @Nullable public final String packageCodes;
-    @Nullable public final String accessoryCodes;
+    @Nullable
+    public final String packageCodes;
+    @Nullable
+    public final String accessoryCodes;
 
     public RawPicksSnapshot(@Nonnull String modelCode, @Nonnull String exteriorColor, @Nonnull String interiorColor, @Nullable String packageCodes, @Nullable String accessoryCodes) {
 
@@ -40,7 +46,8 @@ public class RawPicksSnapshot {
     }
 
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "modelCode[" + modelCode + "]  exteriorColor[" + exteriorColor + "]  interiorColor[" + interiorColor + "]  packageCodes[" + packageCodes + "]  accessoryCodes[" + accessoryCodes + "]";
     }
 

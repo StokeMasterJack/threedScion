@@ -21,6 +21,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
+import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
+
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 
     public JpgHandlerNoFingerprint(BrandRepos repos) {
@@ -41,7 +43,7 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
 
         ImView view = threedModel.getView(slice.getViewName());
         FixedPicks fixedPicks = threedModel.fixupRaw(rawPicks);
-        RawImageStack rawImageStack = view.getRawImageStack(fixedPicks, slice.getAngle());
+        RawImageStack rawImageStack = view.getRawImageStack(toSimplePicks(fixedPicks), slice.getAngle());
 
         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
 

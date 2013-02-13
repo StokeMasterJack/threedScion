@@ -9,13 +9,13 @@ public interface AutoAssignContext extends EvalContext, AssignContext {
     void assignTrue(Var var) throws AssignmentException;
 
     @Override
-    void assignTrue(Var var,int depth) throws AssignmentException;
+    void assignTrue(Var var, int depth) throws AssignmentException;
 
     @Override
     void assignFalse(Var var) throws AssignmentException;
 
     @Override
-    void assignFalse(Var var,int depth) throws AssignmentException;
+    void assignFalse(Var var, int depth) throws AssignmentException;
 
     AutoAssignContext copy();
 

@@ -1,17 +1,13 @@
 package c3i.smartClientJvm;
 
+import c3i.core.common.shared.SeriesId;
+import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.core.threedModel.shared.ThreedModel;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.Resources;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
-import c3i.core.threedModel.shared.ThreedModel;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import smartsoft.util.shared.Path;
 
 import java.io.IOException;
@@ -20,6 +16,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RepoClient {
 
@@ -85,7 +83,6 @@ public class RepoClient {
     }
 
 
-
     /**
      * http://localhost:8080/configurator-content/avalon/2011/3d/models/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d.json
      */
@@ -138,7 +135,7 @@ public class RepoClient {
         try {
             rootTreeId = Resources.toString(vtcUrl, Charset.defaultCharset());
         } catch (IOException e) {
-            log.log(Level.SEVERE,"RepoClient - failed to load url [" + vtcUrl + "]", e);
+            log.log(Level.SEVERE, "RepoClient - failed to load url [" + vtcUrl + "]", e);
             throw e;
         }
         return new RootTreeId(rootTreeId);

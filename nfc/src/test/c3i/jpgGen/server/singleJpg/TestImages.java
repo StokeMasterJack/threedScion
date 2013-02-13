@@ -2,9 +2,9 @@ package c3i.jpgGen.server.singleJpg;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.BaseImageKey;
 import c3i.core.threedModel.shared.ImFeatureModel;
+import c3i.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.Profile;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import org.junit.Before;
@@ -12,7 +12,8 @@ import org.junit.Test;
 import smartsoft.util.shared.Path;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;

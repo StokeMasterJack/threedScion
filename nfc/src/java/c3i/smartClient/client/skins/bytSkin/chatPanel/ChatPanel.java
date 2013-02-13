@@ -20,13 +20,14 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-//import c3i.skin.common.client.PreviewPanelStyles;
 import smartsoft.util.shared.Path;
 
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 import static com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import static com.google.gwt.user.client.ui.HasVerticalAlignment.ALIGN_MIDDLE;
 import static com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
+
+//import c3i.skin.common.client.PreviewPanelStyles;
 
 /**
  * Chat Graphic: 84w x 43h
@@ -64,7 +65,8 @@ public class ChatPanel extends FlowPanel implements HasMouseOverHandlers, HasMou
         chatGraphic.getElement().getStyle().setMarginRight(7, Style.Unit.PX);
 
         addClickHandler(new ClickHandler() {
-            @Override public void onClick(ClickEvent event) {
+            @Override
+            public void onClick(ClickEvent event) {
                 Path actionUrl = chatInfo.getClickActionUrl();
                 Window.open(actionUrl.toString(), "chat", null);
             }
@@ -97,15 +99,18 @@ public class ChatPanel extends FlowPanel implements HasMouseOverHandlers, HasMou
         }
     }
 
-    @Override public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+    @Override
+    public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
         return this.addDomHandler(handler, MouseOverEvent.getType());
     }
 
-    @Override public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+    @Override
+    public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
         return this.addDomHandler(handler, MouseOutEvent.getType());
     }
 
-    @Override public HandlerRegistration addClickHandler(ClickHandler handler) {
+    @Override
+    public HandlerRegistration addClickHandler(ClickHandler handler) {
         return this.addDomHandler(handler, ClickEvent.getType());
     }
 
@@ -145,13 +150,15 @@ public class ChatPanel extends FlowPanel implements HasMouseOverHandlers, HasMou
             out();
 
             ChatPanel.this.addMouseOverHandler(new MouseOverHandler() {
-                @Override public void onMouseOver(MouseOverEvent event) {
+                @Override
+                public void onMouseOver(MouseOverEvent event) {
                     over();
                 }
             });
 
             ChatPanel.this.addMouseOutHandler(new MouseOutHandler() {
-                @Override public void onMouseOut(MouseOutEvent event) {
+                @Override
+                public void onMouseOut(MouseOutEvent event) {
                     out();
                 }
             });
@@ -228,13 +235,15 @@ public class ChatPanel extends FlowPanel implements HasMouseOverHandlers, HasMou
 
 
             ChatPanel.this.addMouseOverHandler(new MouseOverHandler() {
-                @Override public void onMouseOver(MouseOverEvent event) {
+                @Override
+                public void onMouseOver(MouseOverEvent event) {
                     over();
                 }
             });
 
             ChatPanel.this.addMouseOutHandler(new MouseOutHandler() {
-                @Override public void onMouseOut(MouseOutEvent event) {
+                @Override
+                public void onMouseOut(MouseOutEvent event) {
                     out();
                 }
             });

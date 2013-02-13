@@ -7,7 +7,6 @@ import c3i.core.featureModel.shared.Source;
 import c3i.core.featureModel.shared.Tri;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,11 +15,7 @@ import java.util.Set;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 
-public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePicks {
-
-
-//    protected final FeatureModel fm;
-//    protected final HashMap<Var, Assignment> map = new HashMap<Var, Assignment>();
+public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
 
     protected PicksAssignment[] map;
 
@@ -606,11 +601,6 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
 
     @Override
     public AutoAssignContext copy() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isValidBuild() {
         throw new UnsupportedOperationException();
     }
 

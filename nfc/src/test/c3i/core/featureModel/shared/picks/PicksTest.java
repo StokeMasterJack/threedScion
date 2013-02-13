@@ -1,12 +1,12 @@
 package c3i.core.featureModel.shared.picks;
 
+import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.data.SampleFeatureSet;
 import c3i.core.featureModel.shared.FeatureModel;
-//import com.tms.threed.featureModel.shared.ProposePickResponse;
 import c3i.repo.server.Repos;
-
-import c3i.core.common.shared.SeriesKey;
 import junit.framework.TestCase;
+
+//import com.tms.threed.featureModel.shared.ProposePickResponse;
 
 /**
  *  Venza
@@ -17,7 +17,7 @@ public class PicksTest extends TestCase {
 
     Repos repos = Repos.get();
 
-     public void testFixupVenza() throws Exception {
+    public void testFixupVenza() throws Exception {
 
 
         FeatureModel fm = repos.getFeatureModel(SeriesKey.VENZA_2010);
@@ -27,7 +27,6 @@ public class PicksTest extends TestCase {
         System.out.println("\tRaw: " + picks);
         picks.fixup();
         System.out.println("\tFixed: " + picks);
-
 
 
     }

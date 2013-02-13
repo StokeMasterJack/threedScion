@@ -3,7 +3,7 @@ package c3i.admin.server.taskManager;
 import c3i.core.common.shared.SeriesId;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
-import c3i.imageModel.shared.PngSegments;
+import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.imageModel.shared.Slice2;
@@ -403,7 +403,7 @@ public class Master {
 
                     final ImmutableList.Builder<JpgTask> builder = new ImmutableList.Builder<JpgTask>();
 
-                    for (final PngSegments fingerprint : jpgSet.getJpgSpecs()) {
+                    for (final RawBaseImage fingerprint : jpgSet.getJpgSpecs()) {
                         if (monitorTask.isCancelled()) throw new InterruptedException();
 
 
@@ -469,7 +469,7 @@ public class Master {
 
     private final class JpgTask extends MyFutureTask<JpgState> {
 
-        private JpgTask(final Slice2 slice, final PngSegments fingerprint) {
+        private JpgTask(final Slice2 slice, final RawBaseImage fingerprint) {
             super(new Callable<JpgState>() {
                 @Override
                 public JpgState call() throws Exception {

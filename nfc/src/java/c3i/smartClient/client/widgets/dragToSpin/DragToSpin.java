@@ -2,8 +2,6 @@ package c3i.smartClient.client.widgets.dragToSpin;
 
 import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.futures.RValue;
-import com.google.gwt.dom.client.Style;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.RectSize;
 
 public class DragToSpin extends ClearGif {

@@ -1,10 +1,10 @@
 package c3i.smartClient.client.model;
 
 import c3i.util.shared.futures.ForwardingFuture;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.OnSuccess;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.Exportable;
 
 import javax.annotation.Nonnull;
 
@@ -26,7 +26,7 @@ public class ThreedSessionFuture extends ForwardingFuture<ThreedSession> impleme
     }
 
     @Export
-    public void success(final ThreedSessionOnSuccess successHandler){
+    public void success(final ThreedSessionOnSuccess successHandler) {
         delegate.success(new OnSuccess<ThreedSession>() {
             @Override
             public void onSuccess(@Nonnull ThreedSession result) {

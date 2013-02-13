@@ -15,7 +15,8 @@ public class VNodeHeader {
         this.directory = directory;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return name + "[depth:" + depth + ", directory:" + directory + "]";
     }
 }

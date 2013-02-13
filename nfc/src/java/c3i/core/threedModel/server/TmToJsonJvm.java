@@ -1,8 +1,8 @@
 package c3i.core.threedModel.server;
 
 import c3i.core.featureModel.server.FmToJsonJvm;
-import c3i.imageModel.server.ImToJsonJvm;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.server.ImToJsonJvm;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
@@ -20,8 +20,8 @@ public class TmToJsonJvm {
 
     public static String toJson(ThreedModel threedModel, String jsonpCallback) {
         String json = new TmToJsonJvm().toJsonString(threedModel);
-        if (jsonpCallback!=null) {
-            return jsonpDecorate(jsonpCallback,json);
+        if (jsonpCallback != null) {
+            return jsonpDecorate(jsonpCallback, json);
         } else {
             return json;
         }
@@ -29,8 +29,7 @@ public class TmToJsonJvm {
     }
 
 
-
-    private static String jsonpDecorate(String callback,String json) {
+    private static String jsonpDecorate(String callback, String json) {
         StringBuilder sb = new StringBuilder();
         sb.append(callback).append("(").append(json).append(");");
         return sb.toString();

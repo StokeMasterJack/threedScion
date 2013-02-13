@@ -7,6 +7,7 @@ import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
@@ -85,9 +86,8 @@ public class MasterTest implements TestConstants {
 
         final HashSet<String> all = new HashSet<String>();
         csp.findAll(new ProductHandler() {
-
             @Override
-            public void onProduct(SimplePicks product) {
+            public void onProduct(Assignments product) {
                 all.add(product.toString());
             }
         });

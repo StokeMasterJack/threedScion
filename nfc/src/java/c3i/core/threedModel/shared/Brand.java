@@ -39,6 +39,6 @@ public class Brand {
     }
 
     public SeriesId getSeriesId(SeriesKey seriesKey) {
-          return vtcMap.getSeriesId(seriesKey);
-      }
+        return vtcMap.getSeriesId(seriesKey);
+    }
 }

@@ -14,10 +14,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.JGitText;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
@@ -59,6 +55,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 

@@ -13,7 +13,8 @@ public class UnknownVarCodeException extends RuntimeException {
     }
 
 
-    @Override public String getMessage() {
+    @Override
+    public String getMessage() {
         return "varCode [" + badVarCode + "] is not in FeatureModel";
     }
 }

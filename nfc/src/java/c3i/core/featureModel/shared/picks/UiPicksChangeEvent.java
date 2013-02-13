@@ -13,6 +13,6 @@ public class UiPicksChangeEvent extends GwtEvent<UiPicksChangeHandler> {
 
     @Override
     protected void dispatch(UiPicksChangeHandler handler) {
-       handler.onPicksChange(this);
+        handler.onPicksChange(this);
     }
 }

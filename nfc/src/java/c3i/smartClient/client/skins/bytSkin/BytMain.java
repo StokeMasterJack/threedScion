@@ -81,7 +81,7 @@ public class BytMain implements Skin {
             interiorAngleSelector.setVisible(viewKey.getViewIndex() == 1);
 
 //            interiorAngleSelector.getElement().getStyle().setBackgroundColor("red");
-            interiorAngleSelector.getElement().getStyle().setProperty("textAlign","center");
+            interiorAngleSelector.getElement().getStyle().setProperty("textAlign", "center");
             int offsetWidth = viewPanel.getOffsetWidth();
             int offsetHeight = viewPanel.getOffsetHeight();
             interiorAngleSelector.setWidth(offsetWidth + "px");

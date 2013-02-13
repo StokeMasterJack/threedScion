@@ -128,7 +128,8 @@ public class VarsDb implements Vars, Iterable<Var> {
 
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != VarsDb.class) return false;
 

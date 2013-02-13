@@ -1,7 +1,7 @@
 package c3i.smartClient.client.model.event;
 
-import c3i.util.shared.events.Topic1;
 import c3i.imageModel.shared.AngleKey;
+import c3i.util.shared.events.Topic1;
 
 public class AngleChangeTopic extends Topic1<AngleChangeListener, AngleKey> {
 

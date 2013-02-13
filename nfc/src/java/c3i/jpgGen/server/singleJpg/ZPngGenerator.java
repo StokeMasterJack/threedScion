@@ -8,8 +8,6 @@ import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
 
@@ -18,7 +16,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -26,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Takes multiple pngs and turns them into a single jpg

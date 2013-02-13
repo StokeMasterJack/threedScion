@@ -1,10 +1,10 @@
 package c3i.core.featureModel.data;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.IVarGuesser;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
 
 public class Trim extends FeatureModel implements IVarGuesser {
 
@@ -47,10 +47,9 @@ public class Trim extends FeatureModel implements IVarGuesser {
     public Var t2560 = modelCode.addChild("2560");
 
 
-
     public Trim() {
 
-        super(BrandKey.TOYOTA, 2011, "camry","Camry");
+        super(BrandKey.TOYOTA, 2011, "camry", "Camry");
 
         grade.setCardinality(Cardinality.PickOneGroup);
         engine.setCardinality(Cardinality.PickOneGroup);
@@ -90,7 +89,6 @@ public class Trim extends FeatureModel implements IVarGuesser {
     public void printTree() {
         getRootVar().print();
     }
-
 
 
 }

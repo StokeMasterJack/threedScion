@@ -96,8 +96,4 @@ public class AssignmentsForTreeSearch extends AbstractAssignments<AssignmentsFor
         return new AssignmentsForTreeSearch(this, this.openVars);
     }
 
-    @Override
-    public boolean isValidBuild() {
-        throw new UnsupportedOperationException();
-    }
 }

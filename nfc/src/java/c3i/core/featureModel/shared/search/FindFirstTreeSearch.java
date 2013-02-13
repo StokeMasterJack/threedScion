@@ -14,7 +14,7 @@ public class FindFirstTreeSearch {
     private int decisionCount;
 
     public Assignments findFirst(CspForTreeSearch csp) {
-        if(true) throw new UnsupportedOperationException();
+        if (true) throw new UnsupportedOperationException();
 
         decisionCount = 0;
 

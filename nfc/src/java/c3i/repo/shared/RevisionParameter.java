@@ -58,7 +58,7 @@ public class RevisionParameter {
     }
 
     public boolean isFullSha() {
-        return stringValue.length()==40;
+        return stringValue.length() == 40;
     }
 
     public boolean isRef() {
@@ -76,7 +76,7 @@ public class RevisionParameter {
         return this.equals(HEAD_REVISION_PARAMETER);
     }
 
-     public boolean isUserFriendlyHeadAlias() {
+    public boolean isUserFriendlyHeadAlias() {
         return isUserFriendlyHeadAlias(stringValue);
     }
 

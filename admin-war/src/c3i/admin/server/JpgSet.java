@@ -1,15 +1,15 @@
 package c3i.admin.server;
 
 import c3i.core.common.shared.SeriesId;
+import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
-import c3i.imageModel.shared.ImView;
-import c3i.imageModel.shared.PngSegments;
-import c3i.imageModel.shared.SimplePicks;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.RawBaseImage;
 import c3i.repo.server.Repos;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Closeables;
@@ -25,14 +25,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
+
 public class JpgSet implements Serializable {
 
     private static final long serialVersionUID = 8042356853513828480L;
 
     private JpgSetKey key;
-    private ImmutableSet<PngSegments> jpgSpecs;
+    private ImmutableSet<RawBaseImage> jpgSpecs;
 
-    public JpgSet(ImmutableSet<PngSegments> jpgSpecs, JpgSetKey key) {
+    public JpgSet(ImmutableSet<RawBaseImage> jpgSpecs, JpgSetKey key) {
         this.jpgSpecs = jpgSpecs;
         this.key = key;
     }
@@ -40,7 +42,7 @@ public class JpgSet implements Serializable {
     private JpgSet() {
     }
 
-    public ImmutableSet<PngSegments> getJpgSpecs() {
+    public ImmutableSet<RawBaseImage> getJpgSpecs() {
         return jpgSpecs;
     }
 
@@ -51,12 +53,12 @@ public class JpgSet implements Serializable {
     public static JpgSet readJpgSetFile(File cacheDir, JpgSetKey key) {
         File specFileName = key.getFileName(cacheDir);
         BufferedReader is = null;
-        HashSet<PngSegments> hashSet = new HashSet<PngSegments>();
+        HashSet<RawBaseImage> hashSet = new HashSet<RawBaseImage>();
         try {
             is = new BufferedReader(new FileReader(specFileName));
             String fingerprint = is.readLine();
-            PngSegments pngSegments = new PngSegments(fingerprint);
-            hashSet.add(pngSegments);
+            RawBaseImage rawBaseImage = new RawBaseImage(fingerprint);
+            hashSet.add(rawBaseImage);
             return new JpgSet(ImmutableSet.copyOf(hashSet), key);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,7 +73,7 @@ public class JpgSet implements Serializable {
         try {
             Files.createParentDirs(specFileName);
             out = new PrintWriter(new FileWriter(specFileName));
-            for (PngSegments jpgSpec : jpgSpecs) {
+            for (RawBaseImage jpgSpec : jpgSpecs) {
                 out.println(jpgSpec.getFingerprint());
             }
             out.flush();
@@ -100,13 +102,13 @@ public class JpgSet implements Serializable {
         csp.propagateSimplify();
         final TreeSearch treeSearch = new TreeSearch();
 
-        final HashSet<PngSegments> set = new HashSet<PngSegments>();
+        final HashSet<RawBaseImage> set = new HashSet<RawBaseImage>();
         treeSearch.setProductHandler(new ProductHandler() {
 
             @Override
-            public void onProduct(SimplePicks product) {
-                PngSegments pngSegments = view.getPngSegments(product, key.getAngle());
-                set.add(pngSegments);
+            public void onProduct(Assignments product) {
+                RawBaseImage rawBaseImage = view.getPngSegments(toSimplePicks(product), key.getAngle());
+                set.add(rawBaseImage);
             }
         });
 

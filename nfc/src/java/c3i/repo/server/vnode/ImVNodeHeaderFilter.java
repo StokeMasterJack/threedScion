@@ -30,7 +30,7 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
             if (!vNode.directory) return veto(vNode, "non-dir view");
         } else if (nl.isLayer()) {
             if (vNode.directory || vNode.name.equals("lift.txt")) {
-               return null;
+                return null;
             } else {
                 return veto(vNode, "non-dir layer");
             }

@@ -13,7 +13,8 @@ public class UnknownVarIndexException extends RuntimeException {
     }
 
 
-    @Override public String getMessage() {
+    @Override
+    public String getMessage() {
         return "varId [" + badVarId + "] is not in FeatureModel";
     }
 }

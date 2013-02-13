@@ -22,5 +22,8 @@ public class Rejection {
         System.out.println("VNodeHeader rejected [" + vNode + "]. Reason[" + getReason() + "]");
     }
 
-    @Override public String toString() {return reason + "  " + vNode.name;}
+    @Override
+    public String toString() {
+        return reason + "  " + vNode.name;
+    }
 }

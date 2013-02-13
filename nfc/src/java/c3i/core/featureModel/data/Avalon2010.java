@@ -1,9 +1,9 @@
 package c3i.core.featureModel.data;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.IVarGuesser;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
 
 public class Avalon2010 extends FeatureModel implements IVarGuesser {
 
@@ -111,16 +111,16 @@ public class Avalon2010 extends FeatureModel implements IVarGuesser {
 
     public Avalon2010() {
 
-        super(BrandKey.TOYOTA, 2011,"Avalon","Avalon");
+        super(BrandKey.TOYOTA, 2011, "Avalon", "Avalon");
 
         addConstraint(xor(base, ltd));
         addConstraint(xor(t3544, t3554));
         addConstraint(v6);
         addConstraint(at6);
-        addConstraint(xor(LH02,LH17,LH20,FE02,FE17,LL02,LL17,LL20,LG20,LN02,LN17,LN20));
-        addConstraint(xor(blizzardPearl,silver,gray,black,red,beach,bean,cypressPearl,blue));
-        addConstraint(xor(Ivory,Gray,Black));
-        addConstraint(xor(leather,fabric));
+        addConstraint(xor(LH02, LH17, LH20, FE02, FE17, LL02, LL17, LL20, LG20, LN02, LN17, LN20));
+        addConstraint(xor(blizzardPearl, silver, gray, black, red, beach, bean, cypressPearl, blue));
+        addConstraint(xor(Ivory, Gray, Black));
+        addConstraint(xor(leather, fabric));
 
         addConstraint(iff(t3544, and(base, v6, at6)));
         addConstraint(iff(t3554, and(ltd, v6, at6)));

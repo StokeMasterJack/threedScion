@@ -104,7 +104,7 @@ public class TrimColor extends Trim {
         addConstraint(conflict(base, spruce));
         addConstraint(conflict(base, green));
         addConstraint(conflict(base, blueWhisper));
-        
+
         addConstraint(conflict(le, blueWhisper));
         addConstraint(conflict(se, or(beach, spruce, green, blueWhisper)));
         addConstraint(conflict(xle, blueWhisper));

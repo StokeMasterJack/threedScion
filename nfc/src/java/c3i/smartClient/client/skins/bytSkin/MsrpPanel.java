@@ -4,9 +4,10 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.InlineLabel;
-import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 

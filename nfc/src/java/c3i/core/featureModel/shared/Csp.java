@@ -144,7 +144,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
 //        constraint.print();
 //    }
 
-     public void print(String prefix) {
+    public void print(String prefix) {
         getAssignments().dumpVars(prefix);
         constraint.print(prefix);
     }
@@ -297,7 +297,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
     public void findAll(ProductHandler handler) {
         if (this instanceof CspForTreeSearch) {
             if (isTrue()) {
-                AssignmentsForTreeSearch  assignments = (AssignmentsForTreeSearch) getAssignments();
+                AssignmentsForTreeSearch assignments = (AssignmentsForTreeSearch) getAssignments();
                 handler.onProduct(assignments);
             } else {
                 CspForTreeSearch csp1 = (CspForTreeSearch) this;
@@ -310,7 +310,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         }
     }
 
-     public C reduce(String... varCodes) {
+    public C reduce(String... varCodes) {
 
         HashSet<Var> picks = new HashSet<Var>();
 
@@ -331,7 +331,6 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         cp.propagateSimplify();
         return cp;
     }
-
 
 
 }

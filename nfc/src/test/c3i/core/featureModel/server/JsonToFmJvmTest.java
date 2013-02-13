@@ -1,15 +1,16 @@
 package c3i.core.featureModel.server;
 
-import com.google.common.io.Resources;
-import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.featureModel.shared.FeatureModel;
+import com.google.common.io.Resources;
 import org.junit.Test;
 
 import java.net.URL;
 
 public class JsonToFmJvmTest {
 
-    @Test public void testAvalon() throws Exception {
+    @Test
+    public void testAvalon() throws Exception {
 
         SeriesKey seriesKey = SeriesKey.AVALON_2011;
         URL resource = Resources.getResource(this.getClass(), "avalon-fm.json");
@@ -22,7 +23,8 @@ public class JsonToFmJvmTest {
     }
 
 
-    @Test public void testRav4() throws Exception {
+    @Test
+    public void testRav4() throws Exception {
 
         SeriesKey seriesKey = SeriesKey.RAV4_2011;
 

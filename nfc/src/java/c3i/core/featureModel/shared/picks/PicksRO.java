@@ -1,13 +1,15 @@
 package c3i.core.featureModel.shared.picks;
 
-import c3i.core.featureModel.shared.*;
+import c3i.core.featureModel.shared.Bit;
+import c3i.core.featureModel.shared.EvalContext;
+import c3i.core.featureModel.shared.PicksAssignment;
+import c3i.core.featureModel.shared.Source;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.Set;
 
-public interface PicksRO extends EvalContext,SimplePicks {
+public interface PicksRO extends EvalContext {
 
     PicksContext getPicksContext();
 
@@ -63,11 +65,14 @@ public interface PicksRO extends EvalContext,SimplePicks {
 
     boolean containsAllVars(Collection<Var> features);
 
-    @Override String toString();
+    @Override
+    String toString();
 
-    @Override boolean equals(Object o);
+    @Override
+    boolean equals(Object o);
 
-    @Override int hashCode();
+    @Override
+    int hashCode();
 
     PicksAssignment getAssignment(Var var);
 

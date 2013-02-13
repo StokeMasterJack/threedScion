@@ -4,7 +4,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 public final class JsSeriesId extends JavaScriptObject {
 
-    protected JsSeriesId() {}
+    protected JsSeriesId() {
+    }
 
     public native String getName() /*-{
         return this.name;
@@ -13,8 +14,6 @@ public final class JsSeriesId extends JavaScriptObject {
     public native int getYear() /*-{
         return this.year;
     }-*/;
-
-   
 
 
 }

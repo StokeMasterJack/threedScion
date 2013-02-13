@@ -60,7 +60,6 @@
  * </ul>
  *
  */
-@ParametersAreNonnullByDefault
-package c3i.smartClient.client.service;
+@ParametersAreNonnullByDefault package c3i.smartClient.client.service;
 
 import javax.annotation.ParametersAreNonnullByDefault;

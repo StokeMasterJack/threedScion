@@ -6,9 +6,12 @@ import c3i.core.featureModel.data.Camry2011;
 import c3i.core.featureModel.data.Trim;
 import c3i.core.featureModel.data.TrimColor;
 import c3i.core.featureModel.data.TrimColorOption;
+import c3i.core.featureModel.shared.Assignments;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.threedModel.shared.ImFeatureModel;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.CoreImageStack;
 import c3i.imageModel.shared.ImView;
@@ -20,8 +23,6 @@ import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.ViewKeyOld;
 import c3i.imageModel.shared.ViewSlice;
-import c3i.core.threedModel.shared.ImFeatureModel;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
@@ -226,8 +227,8 @@ public class TreeSearchTest extends TestCase {
                 treeSearch.setProductHandler(new ProductHandler() {
 
                     @Override
-                    public void onProduct(SimplePicks product) {
-                        RawImageStack rawImageStack = view.getRawImageStack(product, aAngle);
+                    public void onProduct(Assignments product) {
+                        RawImageStack rawImageStack = view.getRawImageStack(new SimplePicksAdapter(product), aAngle);
 //                        RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
                         String jpgFingerprint = coreImageStack.getBaseImageFingerprint();
@@ -246,6 +247,26 @@ public class TreeSearchTest extends TestCase {
         }
         System.err.println(threedModel.getSeriesKey() + " - Final jpg count: " + totalJpgCount);
 //        System.err.println();
+
+    }
+
+    static class SimplePicksAdapter implements SimplePicks {
+
+        private Assignments assignments;
+
+        SimplePicksAdapter(Assignments assignments) {
+            this.assignments = assignments;
+        }
+
+        @Override
+        public boolean isPicked(Object var) {
+            return assignments.isPicked((Var) var);
+        }
+
+        @Override
+        public boolean isValidBuild() {
+            return true;
+        }
 
     }
 
@@ -300,8 +321,8 @@ public class TreeSearchTest extends TestCase {
         final int aAngle = slice.getAngle();
         treeSearch.setProductHandler(new ProductHandler() {
             @Override
-            public void onProduct(SimplePicks product) {
-                RawImageStack rawImageStack = view.getRawImageStack(product, aAngle);
+            public void onProduct(Assignments product) {
+                RawImageStack rawImageStack = view.getRawImageStack(new SimplePicksAdapter(product), aAngle);
 //                RawImageStack rawImageStack = viewSlice.getRawImageStack(product);
                 String jpgFingerprint = rawImageStack.getJpgFingerprint();
                 set.add(jpgFingerprint);

@@ -1,7 +1,8 @@
 package c3i.util.shared.futures;
 
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.ExceptionRenderer;
+
+import java.util.logging.Logger;
 
 public class DefaultOnFailureFactory implements OnFailureFactory {
     @Override

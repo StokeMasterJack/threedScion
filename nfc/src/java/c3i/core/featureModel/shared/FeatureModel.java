@@ -1,16 +1,35 @@
 package c3i.core.featureModel.shared;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.boolExpr.*;
+import c3i.core.featureModel.shared.boolExpr.And;
+import c3i.core.featureModel.shared.boolExpr.AssignmentException;
+import c3i.core.featureModel.shared.boolExpr.BoolExpr;
+import c3i.core.featureModel.shared.boolExpr.Conflict;
+import c3i.core.featureModel.shared.boolExpr.False;
+import c3i.core.featureModel.shared.boolExpr.Iff;
+import c3i.core.featureModel.shared.boolExpr.Imp;
+import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
+import c3i.core.featureModel.shared.boolExpr.Not;
+import c3i.core.featureModel.shared.boolExpr.Or;
+import c3i.core.featureModel.shared.boolExpr.True;
+import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.featureModel.shared.boolExpr.VarsDb;
+import c3i.core.featureModel.shared.boolExpr.Xor;
 import c3i.core.featureModel.shared.picks.Picks;
 import c3i.core.featureModel.shared.picks.PicksContextFm;
 import c3i.core.threedModel.shared.SubSeries;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class FeatureModel implements Vars {
 

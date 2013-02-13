@@ -8,11 +8,13 @@ public class ChatInfoChangeEvent extends GwtEvent<ChatInfoChangeHandler> {
 
     public static final Type<ChatInfoChangeHandler> TYPE = new Type<ChatInfoChangeHandler>();
 
-    @Override public Type<ChatInfoChangeHandler> getAssociatedType() {
+    @Override
+    public Type<ChatInfoChangeHandler> getAssociatedType() {
         return TYPE;
     }
 
-    @Override protected void dispatch(ChatInfoChangeHandler handler) {
+    @Override
+    protected void dispatch(ChatInfoChangeHandler handler) {
         handler.onChange(this);
     }
 

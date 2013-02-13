@@ -1,10 +1,15 @@
 package c3i.smartClient.client.skins.bytSkin;
 
+import c3i.smartClient.client.skins.bytSkin.chatPanel.ChatPanel;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.layout.client.Layout;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
+
 //import c3i.skin.common.client.PreviewPanelStyles;
-import c3i.smartClient.client.skins.bytSkin.chatPanel.ChatPanel;
 
 public class HeaderPanel extends LayoutPanel {
 

@@ -2,7 +2,7 @@ package c3i.jpgGen.server.singleJpg;
 
 import c3i.imageModel.shared.PngSegment;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class PngBufferedImage {

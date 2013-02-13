@@ -18,7 +18,7 @@ public class ChatInfo {
         this.clickActionUrl = clickActionUrl;
     }
 
-    public ChatInfo(String  vehicleIconUrl, String  clickActionUrl) {
+    public ChatInfo(String vehicleIconUrl, String clickActionUrl) {
         this.vehicleIconUrl = new Path(vehicleIconUrl);
         this.clickActionUrl = new Path(clickActionUrl);
     }

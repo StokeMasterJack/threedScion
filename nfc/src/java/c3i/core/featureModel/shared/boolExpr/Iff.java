@@ -77,7 +77,7 @@ public class Iff extends Pair {
         } else if (v1.isTrue() && v2.isTrue()) {
             //ignore
         } else if (v1.isFalse() && v2.isTrue()) {
-            throw new IffAutoAssignTrueException(this, false, true,ctx);
+            throw new IffAutoAssignTrueException(this, false, true, ctx);
 
         } else if (v1.isTrue() && v2.isFalse()) {
 
@@ -94,7 +94,7 @@ public class Iff extends Pair {
 
             }
 
-            throw new IffAutoAssignTrueException(this, true, false,ctx);
+            throw new IffAutoAssignTrueException(this, true, false, ctx);
         } else if (v1.isTrue() && v2.isOpen()) {
             v2.autoAssignTrue(ctx, depth + 1);
         } else if (v1.isFalse() && v2.isOpen()) {

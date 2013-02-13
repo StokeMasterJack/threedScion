@@ -114,7 +114,7 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
     }
 
     public Decisions decide2() {
-        if(true) throw new UnsupportedOperationException();
+        if (true) throw new UnsupportedOperationException();
         Var var = getNextDecisionVar();
         if (var == null) return null;
         else return new SimpleDecisions(var);
@@ -158,8 +158,6 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
 
         return maxVar;
     }
-
-
 
 
     public class VarComparator implements Comparator<Var> {

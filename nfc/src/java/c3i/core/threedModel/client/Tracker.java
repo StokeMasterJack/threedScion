@@ -8,7 +8,7 @@ public class Tracker {
     public String title;
 
     public Tracker(String s) {
-       title=s;
+        title = s;
     }
 
     public void addDelta(long delta) {

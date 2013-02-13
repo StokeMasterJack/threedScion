@@ -20,7 +20,8 @@ public class Reduction {
         return value;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return expr + " => " + value;
     }
 }

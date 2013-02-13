@@ -1,6 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.core.featureModel.shared.FixedPicks;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.CoreImageStack;
 import c3i.imageModel.shared.ImView;
@@ -8,12 +9,9 @@ import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
-import java.util.logging.Logger;
-
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
@@ -21,6 +19,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
 
 public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFingerprint> {
 
@@ -47,7 +48,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
         int angle = slice.getAngle();
 
         ImView view = threedModel.getView(viewName);
-        RawImageStack rawImageStack = view.getRawImageStack(fixedPicks, slice.getAngle());
+        RawImageStack rawImageStack = view.getRawImageStack(toSimplePicks(fixedPicks), slice.getAngle());
 
         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
 

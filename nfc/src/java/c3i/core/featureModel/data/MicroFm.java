@@ -1,10 +1,10 @@
 package c3i.core.featureModel.data;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.IVarGuesser;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
 
 public class MicroFm extends FeatureModel implements IVarGuesser {
 
@@ -20,7 +20,7 @@ public class MicroFm extends FeatureModel implements IVarGuesser {
 
     public MicroFm() {
 
-        super(BrandKey.TOYOTA, 2011,"MicroFm", "MicroFm");
+        super(BrandKey.TOYOTA, 2011, "MicroFm", "MicroFm");
 
         grade.setCardinality(Cardinality.PickOneGroup);
         engine.setCardinality(Cardinality.PickOneGroup);

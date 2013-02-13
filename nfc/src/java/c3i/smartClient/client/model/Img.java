@@ -3,6 +3,9 @@ package c3i.smartClient.client.model;
 import c3i.imageModel.shared.ImImage;
 import c3i.imageModel.shared.LayerImage;
 import c3i.imageModel.shared.PngSpec;
+import c3i.util.shared.futures.Completer;
+import c3i.util.shared.futures.CompleterImpl;
+import c3i.util.shared.futures.Future;
 import com.google.common.base.Preconditions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.ImageElement;
@@ -11,9 +14,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.CompleterImpl;
-import c3i.util.shared.futures.Future;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
@@ -63,7 +63,7 @@ public class Img implements Exportable {
             Event.setEventListener(imageElement, domEventListener);
             Event.sinkEvents(imageElement, Event.ONLOAD | Event.ONERROR);
 //            log.log(Level.INFO, "loading: " + url);
-            cache.put(url,imageElement);
+            cache.put(url, imageElement);
             this.imageElement.setSrc(url.toString());  //start loading
         }
 
@@ -168,7 +168,7 @@ public class Img implements Exportable {
     }
 
     public void setVisible(boolean newValue) {
-        imageElement.getStyle().setVisibility(newValue? Style.Visibility.VISIBLE : Style.Visibility.HIDDEN);
+        imageElement.getStyle().setVisibility(newValue ? Style.Visibility.VISIBLE : Style.Visibility.HIDDEN);
     }
 
 //    public LoadState getState(){

@@ -1,10 +1,10 @@
 package c3i.core.featureModel.data;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.IVarGuesser;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
 
 public class TrimLight extends FeatureModel implements IVarGuesser {
 
@@ -24,7 +24,7 @@ public class TrimLight extends FeatureModel implements IVarGuesser {
     public Var v6 = engine.addChild("V6");
 //    public Var hybridEngine = engine.addVar("Hybrid");
 
-//    public Var transmission = trim.addVar(Transmission);
+    //    public Var transmission = trim.addVar(Transmission);
 //    public Var mt6 = transmission.addVar("6MT");
     //    public Var at6 = transmission.addVar("6AT");
 //    public Var ecvt = transmission.addVar("ECVT");
@@ -48,7 +48,7 @@ public class TrimLight extends FeatureModel implements IVarGuesser {
 //    public Var t2560 = modelCode.addVar("2560");
 
     public TrimLight() {
-        super(BrandKey.TOYOTA, 2011,"camry","Camry");
+        super(BrandKey.TOYOTA, 2011, "camry", "Camry");
 
         grade.setCardinality(Cardinality.PickOneGroup);
         engine.setCardinality(Cardinality.PickOneGroup);

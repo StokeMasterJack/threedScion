@@ -6,11 +6,13 @@ public class FullSha {
 
     public FullSha(String shaString) {
         if (shaString == null) throw new NullPointerException();
-        if (shaString.length() !=40) throw new IllegalArgumentException("BadShaString[" + shaString + "]. Must be 40 digits");
+        if (shaString.length() != 40)
+            throw new IllegalArgumentException("BadShaString[" + shaString + "]. Must be 40 digits");
         this.shaString = shaString;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return shaString;
     }
 

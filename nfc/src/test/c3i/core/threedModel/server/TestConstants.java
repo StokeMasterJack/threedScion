@@ -14,5 +14,4 @@ public interface TestConstants {
     Map<BrandKey, File> REPO_BASE_DIR_MAP = ImmutableMap.of(BrandKey.TOYOTA, TOYOTA_REPO_BASE_DIR, BrandKey.SCION, TOYOTA_REPO_BASE_DIR);
 
 
-
 }

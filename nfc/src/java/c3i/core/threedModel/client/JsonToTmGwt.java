@@ -3,12 +3,12 @@ package c3i.core.threedModel.client;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.core.featureModel.client.JsonUnmarshallerFm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.imageModel.client.JsImageModel;
-import c3i.imageModel.client.JsonToImGwt;
-import c3i.imageModel.shared.ImageModel;
 import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.SubSeries;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.client.JsImageModel;
+import c3i.imageModel.client.JsonToImGwt;
+import c3i.imageModel.shared.ImageModel;
 import smartsoft.util.shared.Path;
 
 import java.util.logging.Level;

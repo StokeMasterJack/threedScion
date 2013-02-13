@@ -1,7 +1,6 @@
 package c3i.core.threedModel.shared;
 
 import junit.framework.TestCase;
-import c3i.core.common.shared.SeriesKey;
 
 public class SeriesInfoTest extends TestCase {
 

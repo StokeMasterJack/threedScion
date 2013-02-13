@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ProductSet  {
+public class ProductSet {
 
     protected String name;
 
@@ -46,7 +46,6 @@ public class ProductSet  {
         return varArray;
     }
 
-    
 
     public boolean add(Product p) {
         assert p.getVarCount() == varArray.length;
@@ -87,16 +86,13 @@ public class ProductSet  {
 //        if (products.add(product)) {
 //            return product;
 //        } else {
-            return null;
+        return null;
 //        }
     }
 
 //    @Override public String apply(Integer varIndex) {
 //        return varArray[varIndex];
 //    }
-
-
-
 
 
     public long getProductCount() {
@@ -135,6 +131,8 @@ public class ProductSet  {
         System.out.println(toString());
     }
 
-    public String toString() {return getName() + ": " + getProductCount();}
+    public String toString() {
+        return getName() + ": " + getProductCount();
+    }
 
 }

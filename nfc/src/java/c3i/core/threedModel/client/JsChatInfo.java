@@ -4,7 +4,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 public final class JsChatInfo extends JavaScriptObject {
 
-    protected JsChatInfo() {}
+    protected JsChatInfo() {
+    }
 
     public native String getVehicleIconUrl() /*-{
         return this.vehicleIconUrl;

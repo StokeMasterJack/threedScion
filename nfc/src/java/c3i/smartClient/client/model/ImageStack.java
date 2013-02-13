@@ -1,14 +1,8 @@
 package c3i.smartClient.client.model;
 
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.Exportable;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.CompleterImpl;
-import smartsoft.util.shared.Path;
 import c3i.core.featureModel.shared.FixedPicks;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.AngleKey;
 import c3i.imageModel.shared.CoreImageStack;
 import c3i.imageModel.shared.ImImage;
@@ -17,8 +11,15 @@ import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.ViewKey;
+import c3i.util.shared.futures.Completer;
+import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.HasKey;
 import c3i.util.shared.futures.OnComplete;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.Exportable;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -45,12 +46,12 @@ public class ImageStack implements Exportable, HasKey {
 
     private final ImmutableList<Img> images;
 
-    private ImageStack(){
+    private ImageStack() {
         throw new UnsupportedOperationException("needed (but not called) by gwt-exporter");
     }
 
     public ImageStack(final Key key, CoreImageStack coreImageStack) {
-          this(key, coreImageStack,null);
+        this(key, coreImageStack, null);
     }
 
     public ImageStack(final Key key, CoreImageStack coreImageStack, LayerState m) {
@@ -214,9 +215,22 @@ public class ImageStack implements Exportable, HasKey {
             this.coreKey = coreKey;
         }
 
-        public Key(Path repoBaseUrl, AngleKey angleKey, FixedPicks fixedPicks, Profile profile, ImageMode imageMode) {
+        public Key(Path repoBaseUrl, AngleKey angleKey, final FixedPicks fixedPicks, Profile profile, ImageMode imageMode) {
             this.repoBase = repoBaseUrl;
-            RawImageStack.Key rawSpec = new RawImageStack.Key(angleKey, fixedPicks);
+
+            SimplePicks simplePicks = new SimplePicks() {
+                @Override
+                public boolean isPicked(Object var) {
+                    return fixedPicks.isPicked((Var) var);
+                }
+
+                @Override
+                public boolean isValidBuild() {
+                    return fixedPicks.isValidBuild();
+                }
+            };
+
+            RawImageStack.Key rawSpec = new RawImageStack.Key(angleKey, simplePicks);
             this.coreKey = new CoreImageStack.Key(rawSpec, profile, imageMode);
         }
 
@@ -270,8 +284,6 @@ public class ImageStack implements Exportable, HasKey {
             return result;
         }
     }
-
-
 
 
 }

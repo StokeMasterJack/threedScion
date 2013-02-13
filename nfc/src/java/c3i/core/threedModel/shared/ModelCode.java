@@ -47,7 +47,8 @@ public class ModelCode {
         this.trimCode = code.substring(2, 3);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return seriesCode + trimCode;
     }
 

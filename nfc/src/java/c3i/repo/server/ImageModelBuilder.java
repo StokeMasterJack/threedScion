@@ -1,13 +1,12 @@
 package c3i.repo.server;
 
 import c3i.core.featureModel.shared.UnknownVarCodeException;
-import c3i.imageModel.server.BlinkChecker;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImNodeType;
-import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.PngShortSha;
 import c3i.imageModel.shared.SeriesKey;
 import c3i.imageModel.shared.SimpleFeatureModel;
@@ -15,8 +14,6 @@ import c3i.imageModel.shared.SrcPng;
 import c3i.imageModel.shared.ViewLiftSpec;
 import c3i.repo.server.vnode.VNode;
 import com.google.common.base.Preconditions;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectId;
 
 import javax.annotation.Nonnull;
@@ -25,19 +22,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
+
+//import c3i.imageModel.server.BlinkChecker;
 
 public class ImageModelBuilder {
 
     private final SimpleFeatureModel featureModel;
     private final VNode seriesVDir;
 
-    private final BlinkChecker blinkChecker;
-
-    public ImageModelBuilder(SimpleFeatureModel featureModel, VNode seriesVDir, BlinkChecker blinkChecker) {
+    public ImageModelBuilder(SimpleFeatureModel featureModel, VNode seriesVDir) {
         Preconditions.checkNotNull(seriesVDir);
         this.featureModel = featureModel;
         this.seriesVDir = seriesVDir;
-        this.blinkChecker = blinkChecker;
     }
 
     public ImageModel buildImageModel() {
@@ -76,7 +73,7 @@ public class ImageModelBuilder {
         List<ImView> imViews = new ArrayList<ImView>();
         for (int i = 0; i < viewDirs.size(); i++) {
             VNode viewDir = viewDirs.get(i);
-            ImView view = createImViewFromViewDir(viewDir,i);
+            ImView view = createImViewFromViewDir(viewDir, i);
             imViews.add(view);
         }
 
@@ -87,7 +84,7 @@ public class ImageModelBuilder {
     private ImView createImViewFromViewDir(VNode viewDir, int viewIndex) {
         ViewHelper viewHelper = new ViewHelper(viewDir);
         List<ImLayer> imLayers = createImLayersFromViewDir(viewHelper);
-        return new ImView(viewDir.getDepth(), viewHelper.viewName,viewIndex ,imLayers, viewHelper.liftSpec);
+        return new ImView(viewDir.getDepth(), viewHelper.viewName, viewIndex, imLayers, viewHelper.liftSpec);
     }
 
     public class ViewHelper {
@@ -219,9 +216,8 @@ public class ImageModelBuilder {
         ObjectId pngSha = pngVFile.getFullSha();
 
         PngShortSha shortSha = pngSha == null ? null : new PngShortSha(pngSha.getName());
-        boolean blink = blinkChecker.isBlinkPng(shortSha);
 
-        return new SrcPng(depth, angle, shortSha, blink);
+        return new SrcPng(depth, angle, shortSha);
     }
 
 

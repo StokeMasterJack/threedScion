@@ -67,7 +67,8 @@ public class Commit {
         return a.toString();
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return serialize();
     }
 

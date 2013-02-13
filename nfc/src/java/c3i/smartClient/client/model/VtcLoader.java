@@ -8,9 +8,10 @@ import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.Loader;
 import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;
-import java.util.logging.Level;import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VtcLoader extends Loader<SeriesKey, String> {
 

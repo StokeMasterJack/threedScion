@@ -24,7 +24,7 @@ public class TwoThirty8 {
         return thirty8;
     }
 
-    public File getFileName(File prefix,BaseImageType baseImageType) {
+    public File getFileName(File prefix, BaseImageType baseImageType) {
         Preconditions.checkNotNull(baseImageType);
         File twoFile = new File(prefix, two);
         String ext = baseImageType.getFileExtension();

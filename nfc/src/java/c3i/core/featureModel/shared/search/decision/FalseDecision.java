@@ -10,7 +10,7 @@ public class FalseDecision extends SimpleAssignment {
         super(var);
     }
 
-    public void makeAssignment(AssignContext ctx)  throws AssignmentException {
+    public void makeAssignment(AssignContext ctx) throws AssignmentException {
         ctx.assignFalse(var);
     }
 

@@ -33,6 +33,7 @@ public interface ViewModel extends DragToSpinModel {
     void setViewIndex(int value);
 
     int getViewIndex();
+
     int getAngle();
 
     List<ImView> getViews();

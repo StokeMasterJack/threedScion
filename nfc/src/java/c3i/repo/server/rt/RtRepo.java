@@ -1,6 +1,8 @@
 package c3i.repo.server.rt;
 
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.server.BlinkChecker;
 import c3i.imageModel.server.ImageUtil;
 import c3i.imageModel.shared.BaseImageType;
@@ -9,15 +11,11 @@ import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.PngShortSha;
 import c3i.imageModel.shared.Profile;
-import c3i.core.threedModel.shared.RootTreeId;
 import c3i.imageModel.shared.Slice;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.TwoThirty8;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectStream;
 import smartsoft.util.FileUtil;
@@ -27,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.logging.Logger;
 
 /**
  * This is the gen directory

@@ -4,17 +4,17 @@ import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.imageModel.shared.BaseImageType;
-import c3i.imageModel.shared.IBaseImageKey;
-import c3i.imageModel.shared.PngSegment;
-import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.Profiles;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.core.threedModel.shared.VtcMap;
+import c3i.imageModel.shared.BaseImageType;
+import c3i.imageModel.shared.IBaseImageKey;
+import c3i.imageModel.shared.PngSegment;
+import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Profiles;
 import c3i.jpgGen.server.singleJpg.BaseImageGenerator;
 import c3i.jpgGen.server.singleJpg.ZPngGenerator;
 import c3i.repo.server.rt.RtRepo;
@@ -238,7 +238,7 @@ public class Repos {
                             baseImageType = BaseImageType.valueOf(sBaseImageType);
                         }
                     } catch (IllegalArgumentException e) {
-                        log.log(Level.SEVERE,"Problem reading baseImageType", e);
+                        log.log(Level.SEVERE, "Problem reading baseImageType", e);
                         baseImageType = BaseImageType.JPG;
                     }
                 } else {

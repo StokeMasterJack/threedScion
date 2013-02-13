@@ -13,9 +13,10 @@ public class TmToJsonJvmTest {
 
 
     Repos repos;
+
     @Before
-    public void setup() throws Exception{
-        repos = new Repos(BrandKey.TOYOTA,new File("/configurator-content-toyota") );
+    public void setup() throws Exception {
+        repos = new Repos(BrandKey.TOYOTA, new File("/configurator-content-toyota"));
 
     }
 
@@ -28,12 +29,12 @@ public class TmToJsonJvmTest {
     }
 
     @Test
-       public void test_TmToJsonIq() throws Exception {
-           SeriesKey sk = SeriesKey.IQ_2012;
-           ThreedModel threedModel = repos.getThreedModelForHead(sk);
-           String threedModelJsonText = TmToJsonJvm.toJson(threedModel);
-           System.err.println(threedModelJsonText);
-       }
+    public void test_TmToJsonIq() throws Exception {
+        SeriesKey sk = SeriesKey.IQ_2012;
+        ThreedModel threedModel = repos.getThreedModelForHead(sk);
+        String threedModelJsonText = TmToJsonJvm.toJson(threedModel);
+        System.err.println(threedModelJsonText);
+    }
 
 //    public void test_generateJsonForAllSeriesKeys() throws Exception {
 //        generateJsonForAllSeriesKeys();

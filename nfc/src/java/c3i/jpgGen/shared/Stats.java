@@ -26,7 +26,7 @@ public class Stats implements Serializable {
     }
 
     public double getDurationInMinutes() {
-        long et = masterJobEndTime==-1?System.currentTimeMillis():masterJobEndTime;
+        long et = masterJobEndTime == -1 ? System.currentTimeMillis() : masterJobEndTime;
         double diff = et - masterJobStartTime;
         double seconds = diff / 1000.0;
         double minutes = seconds / 60.0;

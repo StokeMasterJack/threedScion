@@ -1,15 +1,16 @@
 package c3i.core.threedModel.client;
 
-import com.google.common.collect.ImmutableSet;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.UnknownVarCodeException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import java.util.logging.Level;import java.util.logging.Logger;
+import com.google.common.collect.ImmutableSet;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 

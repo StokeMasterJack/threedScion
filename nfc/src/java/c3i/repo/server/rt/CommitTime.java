@@ -37,8 +37,9 @@ public class CommitTime {
         return timestamp;
     }
 
-    @Override public String toString() {
-        return timestamp+"";
+    @Override
+    public String toString() {
+        return timestamp + "";
     }
 
     @Override

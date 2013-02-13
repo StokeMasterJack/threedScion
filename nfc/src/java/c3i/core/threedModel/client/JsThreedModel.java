@@ -1,8 +1,8 @@
 package c3i.core.threedModel.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.imageModel.client.JsImageModel;
+import com.google.gwt.core.client.JavaScriptObject;
 
 public final class JsThreedModel extends JavaScriptObject {
 

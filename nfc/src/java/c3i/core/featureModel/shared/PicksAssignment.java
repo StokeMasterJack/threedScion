@@ -78,7 +78,8 @@ public class PicksAssignment {
         return isAssigned() && source.isUser();
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return value + "[" + source + "]";
     }
 }

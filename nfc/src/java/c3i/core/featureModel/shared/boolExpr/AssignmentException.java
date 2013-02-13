@@ -1,7 +1,7 @@
 package c3i.core.featureModel.shared.boolExpr;
 
-import com.google.common.base.Preconditions;
 import c3i.core.featureModel.shared.AutoAssignContext;
+import com.google.common.base.Preconditions;
 
 /**
  * Attempted to assign the value [value] to expr

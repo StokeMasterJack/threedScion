@@ -1,7 +1,9 @@
 package c3i.util.shared.events;
 
 import com.google.common.base.Preconditions;
-import java.util.logging.Level;import java.util.logging.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Topic0<LT> extends Topic<LT> {
 

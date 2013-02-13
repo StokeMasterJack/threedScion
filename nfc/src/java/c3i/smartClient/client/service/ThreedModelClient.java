@@ -21,11 +21,13 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.UserLog;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.shared.Path;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -341,7 +343,7 @@ public class ThreedModelClient {
         }
     };
 
-    public void log(String msg){
+    public void log(String msg) {
         userLog.log(msg);
     }
 

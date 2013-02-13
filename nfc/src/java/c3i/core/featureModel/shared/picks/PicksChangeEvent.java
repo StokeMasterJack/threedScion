@@ -1,9 +1,9 @@
 package c3i.core.featureModel.shared.picks;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.gwt.event.shared.GwtEvent;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import com.google.common.collect.ImmutableSet;
+import com.google.gwt.event.shared.GwtEvent;
 
 import static smartsoft.util.shared.Strings.getSimpleName;
 
@@ -38,17 +38,19 @@ public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
         return null;
     }
 
-    public Var getBlinkAccessory(){
+    public Var getBlinkAccessory() {
         return mostRecentSinglePick;
     }
 
     public static final Type<PicksChangeHandler> TYPE = new Type<PicksChangeHandler>();
 
-    @Override public Type<PicksChangeHandler> getAssociatedType() {
+    @Override
+    public Type<PicksChangeHandler> getAssociatedType() {
         return TYPE;
     }
 
-    @Override protected void dispatch(PicksChangeHandler handler) {
+    @Override
+    protected void dispatch(PicksChangeHandler handler) {
         handler.onPicksChange(this);
     }
 
@@ -57,7 +59,8 @@ public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
     }
 
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return getSimpleName(this) + " [" + currentTrueUiVars + "]";
     }
 

@@ -24,6 +24,5 @@ public class SampleFeatureSet extends HashSet<String> {
         }
     }
 
-    
 
 }

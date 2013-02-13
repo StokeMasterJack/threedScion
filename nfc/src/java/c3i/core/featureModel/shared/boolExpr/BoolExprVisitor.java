@@ -14,6 +14,7 @@ public abstract class BoolExprVisitor {
     abstract protected void visitImpl(Unary unary);
 
     abstract protected void visitImpl(Constant constant);
+
     abstract protected void visitImpl(Var var);
 
     public void visit(Junction e) {
@@ -21,7 +22,6 @@ public abstract class BoolExprVisitor {
         visitImpl(e);
         visited.add(e);
     }
-
 
 
     public void visit(Pair e) {
@@ -36,7 +36,7 @@ public abstract class BoolExprVisitor {
         visited.add(e);
     }
 
-     public void visit(Var e) {
+    public void visit(Var e) {
         if (visited.contains(e)) return;
         visitImpl(e);
         visited.add(e);

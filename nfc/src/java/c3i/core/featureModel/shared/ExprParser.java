@@ -1,6 +1,10 @@
 package c3i.core.featureModel.shared;
 
-import c3i.core.featureModel.shared.boolExpr.*;
+import c3i.core.featureModel.shared.boolExpr.BoolExpr;
+import c3i.core.featureModel.shared.boolExpr.Conflict;
+import c3i.core.featureModel.shared.boolExpr.Iff;
+import c3i.core.featureModel.shared.boolExpr.Imp;
+import c3i.core.featureModel.shared.boolExpr.Var;
 
 import java.util.LinkedHashSet;
 
@@ -115,27 +119,27 @@ public class ExprParser {
         }
     }
 
-    public Iff createIff(String varCode, BoolExprString boolExprString,Vars vars) {
-           if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-           Var expr1 = vars.get(varCode);
-           BoolExpr expr2 = this.parseExpression(boolExprString);
-           return BoolExpr.iff(expr1, expr2);
-       }
+    public Iff createIff(String varCode, BoolExprString boolExprString, Vars vars) {
+        if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
+        Var expr1 = vars.get(varCode);
+        BoolExpr expr2 = this.parseExpression(boolExprString);
+        return BoolExpr.iff(expr1, expr2);
+    }
 
 
-       public Imp createImplication(String varCode, BoolExprString exprString,Vars vars) {
-           if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-           Var expr1 = vars.get(varCode);
-           BoolExpr expr2 = this.parseExpression(exprString);
-           return BoolExpr.imp(expr1, expr2);
-       }
+    public Imp createImplication(String varCode, BoolExprString exprString, Vars vars) {
+        if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
+        Var expr1 = vars.get(varCode);
+        BoolExpr expr2 = this.parseExpression(exprString);
+        return BoolExpr.imp(expr1, expr2);
+    }
 
-       public Conflict createConflict(String varCode, BoolExprString exprString,Vars vars) {
-           if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-           Var expr1 = vars.get(varCode);
-           BoolExpr expr2 = this.parseExpression(exprString);
-           return BoolExpr.conflict(expr1, expr2);
-       }
+    public Conflict createConflict(String varCode, BoolExprString exprString, Vars vars) {
+        if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
+        Var expr1 = vars.get(varCode);
+        BoolExpr expr2 = this.parseExpression(exprString);
+        return BoolExpr.conflict(expr1, expr2);
+    }
 
 
 }

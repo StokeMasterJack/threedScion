@@ -1,6 +1,9 @@
 package c3i.core.featureModel.shared.boolExpr;
 
-import c3i.core.featureModel.shared.*;
+import c3i.core.featureModel.shared.AutoAssignContext;
+import c3i.core.featureModel.shared.Bit;
+import c3i.core.featureModel.shared.EvalContext;
+import c3i.core.featureModel.shared.Tri;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -139,7 +142,7 @@ public class And extends Junction {
         boolean oneOpenRestTrue = openCount == 1;
 
         if (allTrue) {
-            throw new AllTermsTrueAndAutoAssignFalseExceptionImpl(this,ctx);
+            throw new AllTermsTrueAndAutoAssignFalseExceptionImpl(this, ctx);
         }
 
         if (oneOpenRestTrue) {

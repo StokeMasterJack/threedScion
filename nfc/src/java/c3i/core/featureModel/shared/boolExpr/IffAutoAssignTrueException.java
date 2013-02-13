@@ -8,8 +8,8 @@ public class IffAutoAssignTrueException extends AssignmentException {
     private final boolean v1;
     private final boolean v2;
 
-    public IffAutoAssignTrueException(Iff expr, boolean v1, boolean v2,AutoAssignContext context) {
-        super(expr, true,context); //iff only supports autoAssignTrue
+    public IffAutoAssignTrueException(Iff expr, boolean v1, boolean v2, AutoAssignContext context) {
+        super(expr, true, context); //iff only supports autoAssignTrue
         assert v1 != v2;
 
         this.expr = expr;

@@ -30,6 +30,7 @@
     <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
     <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
+    <orderEntry type="module" module-name="imageModel" />
   </component>
 </module>
 

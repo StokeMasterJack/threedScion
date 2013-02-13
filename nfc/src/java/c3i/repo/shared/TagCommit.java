@@ -13,8 +13,8 @@ public class TagCommit implements Comparable<TagCommit>, Serializable {
 
     private String tagShortName;
     private CommitId commitId;
-    private   RootTreeId rootTreeId;
-    private   boolean isHead;
+    private RootTreeId rootTreeId;
+    private boolean isHead;
 
     public TagCommit(String tagShortName, String commitId, String rootTreeId, boolean head) {
         if (isEmpty(tagShortName)) throw new IllegalArgumentException("tagShortName cannot be empty");
@@ -104,7 +104,8 @@ public class TagCommit implements Comparable<TagCommit>, Serializable {
         return result;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "TagCommit{" +
                 "tagShortName='" + tagShortName + '\'' +
                 ", commitId=" + commitId +
@@ -117,7 +118,8 @@ public class TagCommit implements Comparable<TagCommit>, Serializable {
         return tagShortName;
     }
 
-    @Override public int compareTo(TagCommit that) {
+    @Override
+    public int compareTo(TagCommit that) {
         if (this.isTaggedAsHead() && !that.isTaggedAsHead()) {
             return -1;
         } else if (!this.isTaggedAsHead() && that.isTaggedAsHead()) {

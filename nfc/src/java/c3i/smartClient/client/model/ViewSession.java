@@ -1,6 +1,7 @@
 package c3i.smartClient.client.model;
 
 import c3i.core.featureModel.shared.FixedPicks;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.AngleKey;
 import c3i.imageModel.shared.CacheAheadPolicy;
 import c3i.imageModel.shared.CoreImageStack;
@@ -466,7 +467,21 @@ public class ViewSession implements DragToSpinModel, ViewModel {
             return null;
         }
 
-        RawImageStack.Key rawKey = new RawImageStack.Key(angleKey, viewsSession.picks.get());
+        final FixedPicks fixedPicks = viewsSession.picks.get();
+
+        SimplePicks simplePicks = new SimplePicks() {
+            @Override
+            public boolean isPicked(Object var) {
+                return fixedPicks.isPicked((Var) var);
+            }
+
+            @Override
+            public boolean isValidBuild() {
+                return fixedPicks.isValidBuild();
+            }
+        };
+
+        RawImageStack.Key rawKey = new RawImageStack.Key(angleKey, simplePicks);
         CoreImageStack.Key coreKey = new CoreImageStack.Key(rawKey, viewsSession.profile.get(), viewsSession.imageMode.get());
 
         return new ImageStack.Key(viewsSession.getRepoBaseUrl(), coreKey);

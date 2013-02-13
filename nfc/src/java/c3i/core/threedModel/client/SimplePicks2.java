@@ -1,11 +1,11 @@
 package c3i.core.threedModel.client;
 
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
-import c3i.imageModel.shared.SimplePicks;
+import c3i.core.featureModel.shared.boolExpr.Var;
 
-public interface SimplePicks2 extends SimplePicks {
+public interface SimplePicks2 {
 
-    boolean isPicked(Object var);
+    boolean isPicked(Var var);
 
     boolean isInvalidBuild();
 

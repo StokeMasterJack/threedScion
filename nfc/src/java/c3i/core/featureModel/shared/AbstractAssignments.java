@@ -384,8 +384,8 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     }
 
     @Override
-    public boolean isPicked(Object var) {
-        return isTrue((Var) var);
+    public boolean isPicked(Var var) {
+        return isTrue(var);
     }
 
 

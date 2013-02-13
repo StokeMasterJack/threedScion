@@ -1,7 +1,7 @@
 package c3i.repo.server;
 
 public class PngInfo {
-    
+
     private final boolean empty;
 
     public PngInfo(boolean empty) {
@@ -11,5 +11,5 @@ public class PngInfo {
     public boolean isEmpty() {
         return empty;
     }
-    
+
 }

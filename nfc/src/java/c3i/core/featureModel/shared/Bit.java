@@ -88,8 +88,8 @@ public enum Bit implements Tri {
 
 
     public boolean boolValue() {
-        if(isTrue()) return true;
-        if(isFalse()) return false;
+        if (isTrue()) return true;
+        if (isFalse()) return false;
         throw new IllegalStateException();
     }
 }

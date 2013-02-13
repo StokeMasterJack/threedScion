@@ -1,6 +1,6 @@
 package c3i.core.featureModel.server;
 
-import com.google.common.base.Preconditions;
+import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.BoolExprString;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.ExprParser;
@@ -9,17 +9,15 @@ import c3i.core.featureModel.shared.boolExpr.Conflict;
 import c3i.core.featureModel.shared.boolExpr.Iff;
 import c3i.core.featureModel.shared.boolExpr.Imp;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.SeriesKey;
-import java.util.logging.Logger;
-
+import com.google.common.base.Preconditions;
 import org.dom4j.Element;
 import smartsoft.util.shared.Path;
-
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 import static smartsoft.util.shared.Strings.notEmpty;

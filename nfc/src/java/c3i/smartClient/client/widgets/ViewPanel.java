@@ -17,8 +17,10 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.RectSize;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.GwtSafe.getSimpleName;
 

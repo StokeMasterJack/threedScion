@@ -1,10 +1,10 @@
 package c3i.core.featureModel.data;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.IVarGuesser;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
 
 public class Avalon2011 extends FeatureModel implements IVarGuesser {
 
@@ -124,7 +124,7 @@ The current picks are not valid: [1F7, LH17, 3544]
     public Avalon2011() {
         //trim
 
-        super(BrandKey.TOYOTA, 2011,"avalon","Avalon");
+        super(BrandKey.TOYOTA, 2011, "avalon", "Avalon");
         trim.setMandatory(true);
         trim.setCardinality(Cardinality.AllGroup);
 
@@ -144,8 +144,6 @@ The current picks are not valid: [1F7, LH17, 3544]
         interiorColorCode.setCardinality(Cardinality.PickOneGroup);
         interiorMaterial.setCardinality(Cardinality.PickOneGroup);
 
-
-        
 
         addConstraint(v6);
         addConstraint(at6);

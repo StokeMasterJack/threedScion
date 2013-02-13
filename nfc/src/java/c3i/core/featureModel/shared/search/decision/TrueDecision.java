@@ -10,7 +10,7 @@ public class TrueDecision extends SimpleAssignment {
         super(var);
     }
 
-    public void makeAssignment(AssignContext ctx)  throws AssignmentException {
+    public void makeAssignment(AssignContext ctx) throws AssignmentException {
         ctx.assignTrue(var);
     }
 
@@ -18,7 +18,6 @@ public class TrueDecision extends SimpleAssignment {
     public String toString() {
         return var + "[T]";
     }
-
 
 
 }

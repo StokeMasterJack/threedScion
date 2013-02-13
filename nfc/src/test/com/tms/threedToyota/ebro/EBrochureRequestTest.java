@@ -12,7 +12,7 @@ public class EBrochureRequestTest extends TestCase {
 
     Repos repos = Repos.get();
 
-    public void test1() throws Exception{
+    public void test1() throws Exception {
 
     }
 

@@ -1,9 +1,8 @@
 package c3i.repo.server;
 
-import c3i.imageModel.server.ImageUtil;
-
 import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.server.ImageUtil;
 import junit.framework.TestCase;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -16,7 +15,6 @@ public class ReposTest extends TestCase {
         final SeriesRepo seriesRepo = repos.getSeriesRepo(BrandKey.TOYOTA, "avalon", 2011);
         final SrcRepo srcRepo = seriesRepo.getSrcRepo();
         final RevCommit revCommit = srcRepo.addAllAndCommit("init");
-
 
 
         ThreedModel threedModel = repos.getThreedModel(BrandKey.TOYOTA, "avalon", 2011);

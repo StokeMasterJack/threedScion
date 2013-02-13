@@ -15,7 +15,7 @@ import org.timepedia.exporter.client.Exportable;
  *   });
  */
 
-public interface Future<T> extends Exportable{
+public interface Future<T> extends Exportable {
 
     /** The value provided. Throws an exception if [hasValue] is false. */
     @Export

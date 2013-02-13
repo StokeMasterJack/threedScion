@@ -8,8 +8,6 @@ import c3i.repo.server.vnode.VNodeBuilder;
 import c3i.repo.server.vnode.VNodeHeader;
 import c3i.repo.server.vnode.VNodeRepo;
 import com.google.common.base.Preconditions;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -24,6 +22,7 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.logging.Logger;
 
 public class RepoVNodeBuilder extends VNodeBuilder {
 

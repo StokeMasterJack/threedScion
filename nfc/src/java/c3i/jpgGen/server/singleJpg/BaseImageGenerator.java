@@ -1,19 +1,17 @@
 package c3i.jpgGen.server.singleJpg;
 
 
+import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.imageModel.shared.IBaseImageKey;
 import c3i.imageModel.shared.PngSegment;
-import c3i.imageModel.shared.PngSegments;
+import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.SeriesKey;
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
 import org.imgscalr.Scalr;
@@ -23,12 +21,15 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Takes multiple pngs and turns them into a single jpg
@@ -76,7 +77,7 @@ public class BaseImageGenerator {
         BufferedImage newImage = null;
         Graphics2D newGraphics = null;
 
-        PngSegments pngKeys = baseImage.getPngKeys();
+        RawBaseImage pngKeys = baseImage.getPngKeys();
 
         boolean zeroPngIsBackground = false;
 

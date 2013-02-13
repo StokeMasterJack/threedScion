@@ -3,13 +3,13 @@ package com.tms.threed.smartClients.jvm;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.Repos;
-import c3i.core.threedModel.shared.*;
-
 import c3i.smartClientJvm.JsonToTmJvm;
 import c3i.smartClientJvm.RepoClient;
-import smartsoft.util.shared.Path;
 import org.junit.Test;
+import smartsoft.util.shared.Path;
 
 import java.net.URL;
 
@@ -17,7 +17,8 @@ import static junit.framework.Assert.assertEquals;
 
 public class RepoClientTest {
 
-     @Test public void test_JavaClient2() throws Exception {
+    @Test
+    public void test_JavaClient2() throws Exception {
 
         Path repoUrl = new Path("http://localhost:8080/configurator-content");
         RepoClient repoClient = new RepoClient(repoUrl);
@@ -26,7 +27,8 @@ public class RepoClientTest {
 
     }
 
-    @Test public void test_Unmarshaller() throws Exception {
+    @Test
+    public void test_Unmarshaller() throws Exception {
 
 
         //read ThreedModel from JSON
@@ -37,14 +39,15 @@ public class RepoClientTest {
 
         //read from local repo using XML file - just to have something to compare against
         Repos repos = Repos.get();
-        ThreedModel threedModel2 = repos.getThreedModel(BrandKey.TOYOTA,"avalon", 2011);
+        ThreedModel threedModel2 = repos.getThreedModel(BrandKey.TOYOTA, "avalon", 2011);
 
         assertEquals(threedModel1, threedModel2);
 
 
     }
 
-    @Test public void test_JavaClient() throws Exception {
+    @Test
+    public void test_JavaClient() throws Exception {
 
         Path repoUrl = new Path("http://localhost:8080/configurator-content");
         RepoClient repoClient = new RepoClient(repoUrl);

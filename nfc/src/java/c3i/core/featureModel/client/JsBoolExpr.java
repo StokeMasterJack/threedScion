@@ -1,8 +1,8 @@
 package c3i.core.featureModel.client;
 
+import c3i.core.featureModel.shared.boolExpr.Type;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import c3i.core.featureModel.shared.boolExpr.Type;
 
 
 public final class JsBoolExpr extends JavaScriptObject {
@@ -35,7 +35,7 @@ public final class JsBoolExpr extends JavaScriptObject {
 
     public boolean check() {
         Type type = getType();
-        assert !type.isConstant():"Constants not supported for marshaling";
+        assert !type.isConstant() : "Constants not supported for marshaling";
         if (type.isVar()) assert getCode() != null;
         if (type.isNot()) assert getExpressions().length() == 1;
         if (type.isPair()) assert getExpressions().length() == 2;

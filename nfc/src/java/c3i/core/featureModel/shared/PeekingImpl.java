@@ -28,7 +28,7 @@ public class PeekingImpl<E> implements PeekingIterator<E> {
     }
 
     public void remove() {
-        assert !hasPeeked:"Can't remove after you've peeked at next";
+        assert !hasPeeked : "Can't remove after you've peeked at next";
         iterator.remove();
     }
 

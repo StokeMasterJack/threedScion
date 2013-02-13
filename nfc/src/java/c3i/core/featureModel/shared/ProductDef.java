@@ -104,7 +104,8 @@ public class ProductDef {
         System.out.println(toString());
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return name + ": " + toStringList(fieldNames);
     }
 }

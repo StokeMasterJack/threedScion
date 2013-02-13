@@ -20,8 +20,7 @@ import static org.junit.Assert.fail;
 public class CspTest {
 
 
-
-    public void test1() throws Exception{
+    public void test1() throws Exception {
 
     }
 

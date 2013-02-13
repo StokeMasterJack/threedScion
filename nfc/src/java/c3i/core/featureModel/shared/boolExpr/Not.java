@@ -34,17 +34,16 @@ public class Not extends Unary {
     }
 
 
-
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx,int depth) {
+    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
         logAutoAssignTrue(depth);
-        getExpr().autoAssignFalse(ctx,depth);
+        getExpr().autoAssignFalse(ctx, depth);
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx,int depth) {
+    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
         logAutoAssignFalse(depth);
-        getExpr().autoAssignTrue(ctx,depth);
+        getExpr().autoAssignTrue(ctx, depth);
     }
 
     @Override

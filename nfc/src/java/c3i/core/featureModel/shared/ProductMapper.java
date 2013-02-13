@@ -16,7 +16,7 @@ public class ProductMapper {
 
     public ProductMapper(@Nonnull ProductDef fromProductDef, @Nonnull ProductDef toProductDef) {
         assert fromProductDef.getFieldCount() > toProductDef.getFieldCount();
-        
+
         this.fromProductDef = fromProductDef;
         this.toProductDef = toProductDef;
 
@@ -25,7 +25,6 @@ public class ProductMapper {
 
         map = initMap();
     }
-
 
 
     private int[] initMap() {
@@ -38,7 +37,7 @@ public class ProductMapper {
         return m;
     }
 
-    public Product map(Product fromProduct){
+    public Product map(Product fromProduct) {
         assert fromProduct.getDef().equals(this.fromProductDef);
         final boolean[] from = fromProduct.getFieldValues();
 
@@ -62,7 +61,7 @@ public class ProductMapper {
         return toProduct;
     }
 
-    public int mapIndex(int fromIndex){
+    public int mapIndex(int fromIndex) {
         return map[fromIndex];
     }
 

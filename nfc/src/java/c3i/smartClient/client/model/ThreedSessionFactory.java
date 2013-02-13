@@ -2,9 +2,9 @@ package c3i.smartClient.client.model;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.shared.Profile;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.service.ThreedModelLoader;
 import c3i.util.shared.futures.Completer;
@@ -16,10 +16,11 @@ import com.google.common.base.Preconditions;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *  A <code>ThreedSessionFactory</code> is used to configure and load a <code>ThreedSession </code>. For example:<br/>
@@ -94,7 +95,7 @@ public class ThreedSessionFactory implements Exportable {
             SeriesKey sk = new SeriesKey(brandKey, seriesYear + "", seriesName);
             this.setSeriesKey(sk);
         } catch (IllegalArgumentException e) {
-            log.log(Level.SEVERE,"Problem calling setSeries", e);
+            log.log(Level.SEVERE, "Problem calling setSeries", e);
             throw e;
         }
     }
@@ -104,9 +105,9 @@ public class ThreedSessionFactory implements Exportable {
      * The new threedSession is accessed by passing a callback function to the returned future's success method.
      *
      * Example:<pre>
-      *  factory.createSession().success(function (threedSession) {
-      *      //use threedSession
-      *  });</pre>
+     *  factory.createSession().success(function (threedSession) {
+     *      //use threedSession
+     *  });</pre>
      */
     @Export
     public ThreedSessionFuture createSession() {
@@ -165,12 +166,11 @@ public class ThreedSessionFactory implements Exportable {
 //            return new ForwardingFuture<ThreedSession>(future);
             return new ThreedSessionFuture(future);
         } catch (Exception e) {
-            log.log(Level.SEVERE,"Problem in createSession", e);
+            log.log(Level.SEVERE, "Problem in createSession", e);
             throw new RuntimeException(e);
         }
 
     }
-
 
 
     @NoExport

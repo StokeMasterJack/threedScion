@@ -2,11 +2,10 @@ package c3i.repo.server;
 
 import c3i.core.common.shared.BrandKey;
 import com.google.common.collect.ImmutableMap;
-import java.util.logging.Logger;
-
 
 import java.io.File;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class BrandRepos {
 

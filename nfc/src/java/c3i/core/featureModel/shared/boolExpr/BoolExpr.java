@@ -9,7 +9,12 @@ import smartsoft.util.shared.Strings;
 import javax.annotation.Nonnull;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static smartsoft.util.shared.Console.prindent;
 
@@ -50,7 +55,6 @@ public abstract class BoolExpr implements Tri {
         }
         return map;
     }
-
 
 
     public Var asVar() {

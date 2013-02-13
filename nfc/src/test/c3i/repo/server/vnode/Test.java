@@ -1,10 +1,9 @@
 package c3i.repo.server.vnode;
 
-import c3i.repo.server.Repos;
-import c3i.repo.server.SeriesRepo;
-
 import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.repo.server.Repos;
+import c3i.repo.server.SeriesRepo;
 import junit.framework.TestCase;
 
 public class Test extends TestCase {
@@ -12,7 +11,8 @@ public class Test extends TestCase {
     Repos repos;
     SeriesRepo seriesRepo;
 
-    @Override protected void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
         repos = Repos.get();
         seriesRepo = repos.getSeriesRepo(BrandKey.TOYOTA, "tundra", 2011);
     }

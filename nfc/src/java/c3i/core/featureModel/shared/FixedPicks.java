@@ -1,10 +1,10 @@
 package c3i.core.featureModel.shared;
 
-import com.google.common.base.Preconditions;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.client.SimplePicks2;
 import c3i.util.shared.futures.HasKey;
+import com.google.common.base.Preconditions;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -64,7 +64,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
         }
     }
 
-    public boolean isPicked(Object var) {
+    public boolean isPicked(Var var) {
         assert assignments != null;
         return assignments.isPicked(var);
     }

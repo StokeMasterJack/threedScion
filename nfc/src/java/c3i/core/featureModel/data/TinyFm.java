@@ -1,9 +1,10 @@
 package c3i.core.featureModel.data;
 
-import c3i.core.featureModel.shared.*;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.common.shared.BrandKey;
+import c3i.core.featureModel.shared.Cardinality;
+import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.IVarGuesser;
+import c3i.core.featureModel.shared.boolExpr.Var;
 
 public class TinyFm extends FeatureModel implements IVarGuesser {
 
@@ -26,12 +27,11 @@ public class TinyFm extends FeatureModel implements IVarGuesser {
 
     public TinyFm() {
 
-        super(BrandKey.TOYOTA, 2011, "tiny","Tiny");
+        super(BrandKey.TOYOTA, 2011, "tiny", "Tiny");
 
         grade.setCardinality(Cardinality.PickOneGroup);
         engine.setCardinality(Cardinality.PickOneGroup);
         modelCode.setCardinality(Cardinality.PickOneGroup);
-
 
 
         grade.setMandatory(true);

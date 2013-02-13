@@ -10,6 +10,5 @@ public class JpgItTest extends TestCase {
         TwoThirty8 twoThirty8 = TwoThirty8.getTwoThirty8(sha);
 
 
-
     }
 }

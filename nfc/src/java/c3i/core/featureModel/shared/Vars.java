@@ -15,6 +15,4 @@ public interface Vars {
     boolean containsIndex(int varIndex);
 
 
-
-
 }

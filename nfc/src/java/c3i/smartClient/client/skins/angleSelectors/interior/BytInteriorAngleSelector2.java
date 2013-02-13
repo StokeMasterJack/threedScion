@@ -11,10 +11,11 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.logging.Level;import java.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BytInteriorAngleSelector2 extends AngleSelector {
 

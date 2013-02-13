@@ -87,7 +87,6 @@ public class BoolExprString {
     }
 
 
-
     public void checkValidCharsForOrExpression() {
         for (int i = 0; i < expr.length(); i++) {
             char c = expr.charAt(i);
@@ -174,7 +173,8 @@ public class BoolExprString {
         return expr;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return stringValue();
     }
 

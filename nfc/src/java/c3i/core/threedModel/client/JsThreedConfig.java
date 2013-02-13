@@ -4,7 +4,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 public final class JsThreedConfig extends JavaScriptObject {
 
-    protected JsThreedConfig() {}
+    protected JsThreedConfig() {
+    }
 
     public native String getThreedRootHttp() /*-{
         return this.threedRootHttp;
@@ -14,7 +15,7 @@ public final class JsThreedConfig extends JavaScriptObject {
         return this.threedRootFileSystem;
     }-*/;
 
-     public native String getPngRootHttp() /*-{
+    public native String getPngRootHttp() /*-{
         return this.pngRootHttp;
     }-*/;
 

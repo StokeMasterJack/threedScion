@@ -4,7 +4,11 @@ import c3i.core.featureModel.shared.Bit;
 import c3i.core.featureModel.shared.EvalContext;
 import c3i.core.featureModel.shared.Tri;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class FixupVars {
 

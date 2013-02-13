@@ -33,7 +33,6 @@ public interface IVarGuesser extends Serializable {
     String PerformanceAccessories = "PerformanceAccessories";
 
 
-
     String[] StandardTrimChildVars = {
             ModelCode,
             Grade,

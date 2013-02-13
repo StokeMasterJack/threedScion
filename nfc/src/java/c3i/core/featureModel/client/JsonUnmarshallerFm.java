@@ -1,13 +1,13 @@
 package c3i.core.featureModel.client;
 
-import com.google.gwt.core.client.JsArray;
+import c3i.core.common.shared.BrandKey;
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.And;
 import c3i.core.featureModel.shared.boolExpr.BoolExpr;
 import c3i.core.featureModel.shared.boolExpr.Type;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.core.common.shared.BrandKey;
+import com.google.gwt.core.client.JsArray;
 
 import java.util.LinkedHashSet;
 

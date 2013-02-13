@@ -2,11 +2,10 @@ package c3i.core.featureModel.shared;
 
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
-import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Set;
 
-public interface Assignments<A extends Assignments> extends EvalContext, AutoAssignContext, SimplePicks {
+public interface Assignments<A extends Assignments> extends EvalContext, AutoAssignContext {
 
     Vars getVars();
 
@@ -93,9 +92,7 @@ public interface Assignments<A extends Assignments> extends EvalContext, AutoAss
 
     boolean anyOpenVars();
 
-    @Override
-    boolean isPicked(Object var);
-
+    boolean isPicked(Var var);
 
     Var get(int i);
 

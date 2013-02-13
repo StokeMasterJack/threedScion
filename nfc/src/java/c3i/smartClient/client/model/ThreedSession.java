@@ -1,11 +1,11 @@
 package c3i.smartClient.client.model;
 
 import c3i.core.featureModel.shared.FixedPicks;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;
 import c3i.smartClient.client.widgets.ViewPanel;

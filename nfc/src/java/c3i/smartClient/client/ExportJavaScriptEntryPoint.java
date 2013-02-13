@@ -2,7 +2,9 @@ package c3i.smartClient.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import org.timepedia.exporter.client.ExporterUtil;
-import java.util.logging.Level;import java.util.logging.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExportJavaScriptEntryPoint implements EntryPoint {
 

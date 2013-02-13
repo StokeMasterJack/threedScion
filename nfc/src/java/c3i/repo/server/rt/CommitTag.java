@@ -13,7 +13,8 @@ public class CommitTag {
         this.tag = tag;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return tag == null ? "-" : tag;
     }
 

@@ -16,15 +16,18 @@ public class IteratorBase<T> implements Iterator<T> {
         itemsVisitedSoFar++;
     }
 
-    @Override public boolean hasNext() {
+    @Override
+    public boolean hasNext() {
         return false;
     }
 
-    @Override public T next() {
+    @Override
+    public T next() {
         return null;
     }
 
-    @Override public void remove() {
+    @Override
+    public void remove() {
         throw new UnsupportedOperationException();
     }
 

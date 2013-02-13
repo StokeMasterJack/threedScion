@@ -2,7 +2,8 @@ package c3i.core.featureModel.server;
 
 import c3i.core.featureModel.shared.Cardinality;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.*;
+import c3i.core.featureModel.shared.boolExpr.BoolExpr;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;

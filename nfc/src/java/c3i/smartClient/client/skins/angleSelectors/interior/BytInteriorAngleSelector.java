@@ -1,5 +1,6 @@
 package c3i.smartClient.client.skins.angleSelectors.interior;
 
+import c3i.imageModel.shared.ViewKeyOld;
 import c3i.smartClient.client.widgets.AngleSelector;
 import c3i.smartClient.client.widgets.dragToSpin.DragToSpinModel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -8,7 +9,6 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import c3i.imageModel.shared.ViewKeyOld;
 
 public class BytInteriorAngleSelector extends AngleSelector {
 

@@ -13,8 +13,8 @@ public class ReductionQueue {
         queue.add(r);
     }
 
-    public static void add(BoolExpr expr,boolean value) {
-        add(new Reduction(expr,value));
+    public static void add(BoolExpr expr, boolean value) {
+        add(new Reduction(expr, value));
     }
 
 }

@@ -4,7 +4,9 @@ import c3i.smartClient.client.model.ThreedSession;
 import com.google.gwt.user.client.ui.RootPanel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import java.util.logging.Level;import java.util.logging.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Export("ViewPanel")
 public class ViewPanelJs implements Exportable {
