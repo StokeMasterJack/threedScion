@@ -1,0 +1,20 @@
+Modularization
+
+Goal: make c3i modular such that:
+
+1.  It can still be used in its current stand-alone capacity
+2.  It can be leveraged from EFC which has it's own sat solver and FM
+
+
+Modules:
+
+Image Model: takes picks, view, angle outputs image stack
+
+jpg gen service
+    start job
+
+New Ideas from JS meeting
+    how to create a hash-based job-id that is more appropriate to the scope of the jpg-gen-job:
+        csp = csp.select("tundra","2014)
+        csp = csp.reduce() //lossy reduce
+        String sha = csp.sha();

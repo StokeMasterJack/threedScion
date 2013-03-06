@@ -1,0 +1,14 @@
+REST API
+    jobSpec
+        brand/series/year
+    startJob
+    cancelJob
+    getJobStatus
+
+interface Callback
+    String getImageModel(String context)
+    forEachProduct(String context,ProductHandler ph)
+    byte[] getPng(String context,String shortSha)
+
+Core
+FW

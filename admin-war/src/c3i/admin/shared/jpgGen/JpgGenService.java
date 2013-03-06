@@ -24,18 +24,20 @@ public interface JpgGenService extends RemoteService {
     void removeJob(BrandKey brandKey, JobId jobId);
 
     /**
-     * Removes all terminal (completed or canceled) jobs
+     * Removes all terminal (completed or canceled or errored) jobs
      */
     void removeTerminal(BrandKey brandKey);
 
-
-
-
-
     ArrayList<JobStatusItem> getQueueStatus(BrandKey brandKey);
+
+
+
+
+
 
     ArrayList<ExecutorStatus> getQueueDetails(BrandKey brandKey, JobId jobId);
 
     Stats getJpgGenFinalStats(BrandKey brandKey, JobId jobId);
+
 
 }

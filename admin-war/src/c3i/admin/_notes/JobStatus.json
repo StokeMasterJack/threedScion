@@ -1,0 +1,16 @@
+{
+
+    "context":{
+
+    },
+    "profile": "wwww", //key only
+    "jobId": 1212332,
+    "startTime": 123445,
+    "jobStage": "Analysis|Generation",
+    "jobStatus": "InProgress|Complete|Canceled|Errored",
+    "jpgCountExpected": 12233,
+    "jpgCountGenerated": 12233,
+    "percentComplete": 12
+
+
+}
