@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
-import c3i.imageModel.shared.BaseImageType;
 import c3i.imageModel.shared.BaseImageKey;
+import c3i.imageModel.shared.BaseImageType;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
@@ -22,12 +22,16 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
     @Override
     public void handle(JpgRequest r) {
+
         log.fine("Received request for [" + r.getRequest().getRequestURI() + "]");
 
         BaseImageKey jpgKey = r.getBaseImageKey();
 
         Repos repos = r.getRepos();
-        File jpgFile = repos.getFileForJpg(jpgKey);
+
+        JpgGenHelper jpgGenHelper = new JpgGenHelper();
+        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
+
 
         HttpServletResponse response = r.getResponse();
         BaseImageType baseImageType = jpgKey.getProfile().getBaseImageType();

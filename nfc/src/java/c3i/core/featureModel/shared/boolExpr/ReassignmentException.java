@@ -12,6 +12,7 @@ public class ReassignmentException extends AssignmentException {
      */
     public ReassignmentException(BoolExpr expr, boolean value, AutoAssignContext context) {
         super(expr, value, context);
+        System.out.println("ReassignmentException.ReassignmentException");
     }
 
 }

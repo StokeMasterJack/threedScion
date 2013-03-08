@@ -1,0 +1,29 @@
+Hitachi using maven plugin
+
+QuickBuild: http://freecode.com/projects/quickbuild
+
+
+Given a Hitachi "ContextParameter" object, how to get an instance
+    of the SolverFeatureModel that has forEachVehicle
+    SolverFeatureModel has a getCsp which returns a Csp
+    Csp has a ForEachVehicle
+        findAllFiltered
+
+context param will have pre-picks ()
+
+String getImageModelJsonText(cp)
+byte[] getPngBytes(cp,String shortSha)
+forEachVehicle(outVars,cp,productHandler,
+
+csp = csp.refine("camry","2013","red")
+csp.forEachVehicle(outVars,cp,productHandler);
+
+
+sql scripts (under config admin project):
+    3 things:
+        ddl
+        seed data
+        test data
+
+
+

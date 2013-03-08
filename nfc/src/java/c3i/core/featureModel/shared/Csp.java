@@ -4,12 +4,15 @@ import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.BoolExpr;
 import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.featureModel.shared.search.FindFirstTreeSearch;
 import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkState;
 
 abstract public class Csp<A extends Assignments, C extends Csp> implements AutoAssignContext {
 
@@ -19,6 +22,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
     protected final MasterConstraint constraint;
     //deep copy
 
+    protected AssignmentException assignmentException;
 
     public Csp(Vars vars, MasterConstraint constraint) {
         this.vars = vars;
@@ -30,6 +34,9 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         this.constraint = new MasterConstraint(that.constraint);
     }
 
+    public AssignmentException getPropagationException() {
+        return assignmentException;
+    }
 
     abstract public A getAssignments();
 
@@ -58,6 +65,10 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
     }
 
 
+    public boolean isFailed() {
+        return assignmentException != null;
+    }
+
     public VarStates snapVarStates() {
         return null;
 //        return assignments.snapVarsStates();
@@ -85,7 +96,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
     }
 
     public boolean isFalse() {
-        return constraint.isFalse();
+        return isFailed() || constraint.isFalse();
     }
 
     public boolean isOpen() {
@@ -163,7 +174,13 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
     }
 
     public void propagate() throws AssignmentException {
-        propagate(0);
+        checkState(!isFailed());
+        try {
+            propagate(0);
+        } catch (AssignmentException e) {
+            this.assignmentException = e;
+            throw e;
+        }
     }
 
     private void propagate(int count) throws AssignmentException {
@@ -287,24 +304,34 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         return getAssignments().isSolved();
     }
 
-    public long satCount() {
-        if (isTrue()) return 1;
-        SatCountProductHandler satCountProductHandler = new SatCountProductHandler();
-        findAll(satCountProductHandler);
-        return satCountProductHandler.getCount();
+    public boolean isSat() {
+        if (this instanceof CspForTreeSearch) {
+            FindFirstTreeSearch search = new FindFirstTreeSearch((CspForTreeSearch) this);
+            CspForTreeSearch firstSolution = search.getFirstSolution();
+            return firstSolution != null;
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
-    public void findAll(ProductHandler handler) {
+    public long getSatCount() {
+
         if (this instanceof CspForTreeSearch) {
-            if (isTrue()) {
-                AssignmentsForTreeSearch assignments = (AssignmentsForTreeSearch) getAssignments();
-                handler.onProduct(assignments);
-            } else {
-                CspForTreeSearch csp1 = (CspForTreeSearch) this;
-                TreeSearch treeSearch = new TreeSearch();
-                treeSearch.setProductHandler(handler);
-                treeSearch.start(csp1);
-            }
+            CspForTreeSearch cspForTreeSearch = (CspForTreeSearch) this;
+            TreeSearch treeSearch = new TreeSearch();
+            treeSearch.start(cspForTreeSearch);
+            return treeSearch.getSolutionCount();
+        } else {
+            throw new IllegalStateException();
+        }
+
+    }
+
+    public void forEach(ProductHandler handler) {
+        if (this instanceof CspForTreeSearch) {
+            CspForTreeSearch cspForTreeSearch = (CspForTreeSearch) this;
+            TreeSearch treeSearch = new TreeSearch(handler);
+            treeSearch.start(cspForTreeSearch);
         } else {
             throw new IllegalStateException();
         }

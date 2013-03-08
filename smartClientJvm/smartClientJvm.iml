@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="imageModel" />
+    <orderEntry type="module" module-name="img-gen" />
+    <orderEntry type="module" module-name="nfc" />
+    <orderEntry type="module" module-name="repo" />
+    <orderEntry type="module" module-name="ut" />
+    <orderEntry type="library" name="jsr305" level="application" />
+    <orderEntry type="library" name="guava-latest-stable-release" level="application" />
+    <orderEntry type="library" name="jackson-1.8.1" level="application" />
+    <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
+  </component>
+</module>
+

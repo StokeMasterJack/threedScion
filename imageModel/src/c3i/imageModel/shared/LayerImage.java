@@ -6,7 +6,7 @@ public class LayerImage extends AbstractImImage {
 
     private final PngSpec pngSpec;
 
-    public LayerImage(Profile profile,PngSpec pngSpec) {
+    public LayerImage(Profile profile, PngSpec pngSpec) {
         super(profile);
         this.pngSpec = pngSpec;
     }

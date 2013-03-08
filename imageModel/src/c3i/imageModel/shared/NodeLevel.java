@@ -31,7 +31,8 @@ public class NodeLevel {
         return name;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return depth + ": " + name;
     }
 

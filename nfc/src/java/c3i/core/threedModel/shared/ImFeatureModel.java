@@ -17,7 +17,7 @@ public class ImFeatureModel implements SimpleFeatureModel {
     }
 
     @Override
-    public Object get(String varCode) {
+    public Object getVar(String varCode) {
         return featureModel.get(varCode);
     }
 
@@ -27,7 +27,7 @@ public class ImFeatureModel implements SimpleFeatureModel {
     }
 
     @Override
-    public boolean containsCode(String varCode) {
+    public boolean containsVarCode(String varCode) {
         return featureModel.containsCode(varCode);
     }
 

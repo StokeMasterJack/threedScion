@@ -3,7 +3,7 @@ package c3i.admin.client;
 import c3i.admin.client.featurePicker.CurrentUiPicks;
 import c3i.admin.client.jpgGen.JpgGenClient;
 import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
-import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.imgGen.shared.JobSpec;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;

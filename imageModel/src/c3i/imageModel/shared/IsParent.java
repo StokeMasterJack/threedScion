@@ -8,5 +8,5 @@ public interface IsParent<CT extends IsChild> extends ImNode {
 
     void printTree();
 
-    
+
 }

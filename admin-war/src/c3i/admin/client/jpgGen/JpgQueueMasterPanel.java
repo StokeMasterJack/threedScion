@@ -26,10 +26,10 @@ import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 import c3i.core.common.shared.SeriesId;
 import c3i.imageModel.shared.Profile;
-import c3i.admin.shared.jpgGen.JobId;
-import c3i.admin.shared.jpgGen.JobState;
-import c3i.admin.shared.jpgGen.JobStatus;
-import c3i.admin.shared.jpgGen.JobStatusItem;
+import c3i.imgGen.shared.JobId;
+import c3i.imgGen.shared.JobState;
+import c3i.imgGen.shared.JobStatus;
+import c3i.imgGen.shared.JobStatusItem;
 
 import java.util.ArrayList;
 import java.util.Collections;

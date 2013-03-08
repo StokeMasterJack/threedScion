@@ -14,10 +14,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.MessageDigest;
 import java.security.Provider;
 import java.security.Security;
 import java.util.HashSet;
@@ -281,7 +279,6 @@ public class ImageUtil {
         }
         return toBase62(bytes);
     }
-
 
 
 //    public static InputSupplier<FileInputStream> newInputStreamSupplier(final File file) {

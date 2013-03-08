@@ -1,7 +1,6 @@
 package c3i.imageModel.shared;
 
 import com.google.common.collect.ImmutableList;
-import smartsoft.util.shared.Path;
 
 import java.io.Serializable;
 

@@ -1,0 +1,1307 @@
+{
+    "displayName": "Avalon",
+    "brand": "toyota",
+    "name": "avalon",
+    "year": 2014,
+    "rootVar": {
+        "c": "Root",
+        "childNodes": [
+            {
+                "c": "trim",
+                "childNodes": [
+                    {
+                        "c": "grade",
+                        "card": "PickOneGroup",
+                        "d": true,
+                        "childNodes": [
+                            {
+                                "c": "LTD"
+                            },
+                            {
+                                "c": "XLE"
+                            },
+                            {
+                                "c": "Premium"
+                            },
+                            {
+                                "c": "Touring"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "engine",
+                        "card": "PickOneGroup",
+                        "d": true,
+                        "childNodes": [
+                            {
+                                "c": "V6"
+                            },
+                            {
+                                "c": "L4"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "transmission",
+                        "card": "PickOneGroup",
+                        "d": true,
+                        "childNodes": [
+                            {
+                                "c": "6AT"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "modelCode",
+                        "card": "PickOneGroup",
+                        "childNodes": [
+                            {
+                                "c": "3544",
+                                "n": "XLE"
+                            },
+                            {
+                                "c": "3554",
+                                "n": "Limited"
+                            },
+                            {
+                                "c": "3546",
+                                "n": "XLE Premium"
+                            },
+                            {
+                                "c": "3548",
+                                "n": "XLE Touring"
+                            },
+                            {
+                                "c": "3514",
+                                "n": "Limited Hybrid"
+                            },
+                            {
+                                "c": "3506",
+                                "n": "Hybrid XLE Premium"
+                            },
+                            {
+                                "c": "3508",
+                                "n": "Hybrid XLE Touring "
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "c": "color",
+                "childNodes": [
+                    {
+                        "c": "exterior",
+                        "card": "PickOneGroup",
+                        "childNodes": [
+                            {
+                                "c": "070",
+                                "n": "Blizzard Pearl"
+                            },
+                            {
+                                "c": "1F7",
+                                "n": "Classic Silver Metallic"
+                            },
+                            {
+                                "c": "1G3",
+                                "n": "Magnetic Gray Metallic"
+                            },
+                            {
+                                "c": "218",
+                                "n": "Attitude Black"
+                            },
+                            {
+                                "c": "3R0",
+                                "n": "Sizzling Crimson Mica"
+                            },
+                            {
+                                "c": "3T0",
+                                "n": "Moulin Rouge Mica"
+                            },
+                            {
+                                "c": "5B2",
+                                "n": "Champagne Mica"
+                            },
+                            {
+                                "c": "6T7",
+                                "n": "Cypress Pearl"
+                            },
+                            {
+                                "c": "8S6",
+                                "n": "Nautical Blue Metallic"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "interior",
+                        "card": "PickOneGroup",
+                        "childNodes": [
+                            {
+                                "c": "LD03",
+                                "n": "XLE Almond Leather"
+                            },
+                            {
+                                "c": "LD17",
+                                "n": "XLE Gray Leather"
+                            },
+                            {
+                                "c": "LD20",
+                                "n": "XLE Black Leather"
+                            },
+                            {
+                                "c": "LM03",
+                                "n": "LTD Perforated Leather Almond"
+                            },
+                            {
+                                "c": "LM17",
+                                "n": "LTD Perforated Leather Gray"
+                            },
+                            {
+                                "c": "LM20",
+                                "n": "LTD Perforated Leather Black"
+                            },
+                            {
+                                "c": "LT03",
+                                "n": "Touring Almond Leather"
+                            },
+                            {
+                                "c": "LT17",
+                                "n": "Touring Gray Leather"
+                            },
+                            {
+                                "c": "LT20",
+                                "n": " Touring Black Leather"
+                            },
+                            {
+                                "c": "LF03",
+                                "n": "Premium grade Almond Leather"
+                            },
+                            {
+                                "c": "LF17",
+                                "n": "Premium Grade Gray Leather"
+                            },
+                            {
+                                "c": "LF20",
+                                "n": "Premium grade Black Leather"
+                            },
+                            {
+                                "c": "LE03",
+                                "n": "Hybrid Almond Leather"
+                            },
+                            {
+                                "c": "LE17",
+                                "n": "Hybrid Gray Leather"
+                            },
+                            {
+                                "c": "LE20",
+                                "n": "Hybrid Black Leather"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "iColor",
+                        "card": "PickOneGroup",
+                        "d": true,
+                        "childNodes": [
+                            {
+                                "c": "Almond"
+                            },
+                            {
+                                "c": "Gray",
+                                "n": "Light Gray"
+                            },
+                            {
+                                "c": "Black"
+                            }
+                        ]
+                    },
+                    {
+                        "c": "iMaterial",
+                        "card": "PickOneGroup",
+                        "d": true,
+                        "childNodes": [
+                            {
+                                "c": "Leather"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "c": "options",
+                "childNodes": [
+                    {
+                        "c": "Hyb",
+                        "n": "Hybrid",
+                        "d": true
+                    },
+                    {
+                        "c": "AY",
+                        "n": "Technology Package"
+                    },
+                    {
+                        "c": "AutoDim",
+                        "d": true
+                    },
+                    {
+                        "c": "LED",
+                        "n": "LED Lights",
+                        "d": true
+                    },
+                    {
+                        "c": "Fog",
+                        "n": "Foglamps",
+                        "d": true
+                    },
+                    {
+                        "c": "SR",
+                        "n": "SunRoof",
+                        "d": true
+                    },
+                    {
+                        "c": "DisplayAudio",
+                        "d": true
+                    },
+                    {
+                        "c": "AudioSTRD",
+                        "d": true
+                    },
+                    {
+                        "c": "PremiumNav",
+                        "d": true
+                    },
+                    {
+                        "c": "Eco",
+                        "d": true
+                    },
+                    {
+                        "c": "DriverMemory",
+                        "d": true
+                    },
+                    {
+                        "c": "BackupCamera",
+                        "d": true
+                    }
+                ]
+            },
+            {
+                "c": "accessories",
+                "childNodes": [
+                    {
+                        "c": "CF",
+                        "n": "Carpet Floor Mats"
+                    },
+                    {
+                        "c": "WL",
+                        "n": "Wheel locks (alloy)"
+                    },
+                    {
+                        "c": "9G",
+                        "n": "Cargo Tote"
+                    },
+                    {
+                        "c": "EF",
+                        "n": "Rear Bumper Applique"
+                    }
+                ]
+            }
+        ]
+    },
+    "constraints": {
+        "t": 1,
+        "e": [
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF20"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Black"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "Touring"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Fog"
+                            },
+                            {
+                                "t": 8,
+                                "code": "DisplayAudio"
+                            },
+                            {
+                                "t": 8,
+                                "code": "AutoDim"
+                            },
+                            {
+                                "t": 8,
+                                "code": "BackupCamera"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE20"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Black"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE03"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Almond"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LTD"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "LED"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Fog"
+                            },
+                            {
+                                "t": 8,
+                                "code": "PremiumNav"
+                            },
+                            {
+                                "t": 8,
+                                "code": "AutoDim"
+                            },
+                            {
+                                "t": 8,
+                                "code": "DriverMemory"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE17"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Gray"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF17"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Gray"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "Premium"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "AudioSTRD"
+                            },
+                            {
+                                "t": 8,
+                                "code": "AutoDim"
+                            },
+                            {
+                                "t": 8,
+                                "code": "BackupCamera"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "SR"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF03"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Almond"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 4,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "XLE"
+                    },
+                    {
+                        "t": 8,
+                        "code": "AudioSTRD"
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3508"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "L4"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM03"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Almond"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM17"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Gray"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3506"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "L4"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM20"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Black"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT03"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Almond"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3546"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "V6"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD03"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Almond"
+                            },
+                            {
+                                "t": 8,
+                                "code": "XLE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD20"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Black"
+                            },
+                            {
+                                "t": 8,
+                                "code": "XLE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3548"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "V6"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT17"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Gray"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3514"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "L4"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Hyb"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3544"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "V6"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "XLE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT20"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Black"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD17"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Leather"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Gray"
+                            },
+                            {
+                                "t": 8,
+                                "code": "XLE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 6,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "3554"
+                    },
+                    {
+                        "t": 1,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "V6"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6AT"
+                            },
+                            {
+                                "t": 8,
+                                "code": "LTD"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF20"
+                    },
+                    {
+                        "t": 8,
+                        "code": "6T7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM03"
+                    },
+                    {
+                        "t": 8,
+                        "code": "1F7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM17"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "3T0"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6T7"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "AY"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "Premium"
+                            },
+                            {
+                                "t": 8,
+                                "code": "Touring"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LM20"
+                    },
+                    {
+                        "t": 8,
+                        "code": "6T7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT03"
+                    },
+                    {
+                        "t": 8,
+                        "code": "1F7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "DisplayAudio"
+                    },
+                    {
+                        "t": 8,
+                        "code": "XLE"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD03"
+                    },
+                    {
+                        "t": 8,
+                        "code": "1F7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD20"
+                    },
+                    {
+                        "t": 8,
+                        "code": "6T7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE20"
+                    },
+                    {
+                        "t": 8,
+                        "code": "6T7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT17"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "3T0"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6T7"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LD17"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "3T0"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6T7"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LT20"
+                    },
+                    {
+                        "t": 8,
+                        "code": "6T7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE03"
+                    },
+                    {
+                        "t": 8,
+                        "code": "1F7"
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LE17"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "3T0"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6T7"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF17"
+                    },
+                    {
+                        "t": 2,
+                        "e": [
+                            {
+                                "t": 8,
+                                "code": "3T0"
+                            },
+                            {
+                                "t": 8,
+                                "code": "6T7"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "t": 5,
+                "e": [
+                    {
+                        "t": 8,
+                        "code": "LF03"
+                    },
+                    {
+                        "t": 8,
+                        "code": "1F7"
+                    }
+                ]
+            }
+        ]
+    }
+}

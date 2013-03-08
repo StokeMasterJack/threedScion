@@ -1,15 +1,15 @@
 package c3i.admin.server;
 
-import c3i.admin.server.taskManager.EquivalentJobAlreadyRunningException;
-import c3i.admin.server.taskManager.JpgGeneratorService;
-import c3i.admin.server.taskManager.Master;
-import c3i.admin.shared.jpgGen.ExecutorStatus;
-import c3i.admin.shared.jpgGen.JobId;
-import c3i.admin.shared.jpgGen.JobSpec;
-import c3i.admin.shared.jpgGen.JobStatusItem;
-import c3i.admin.shared.jpgGen.JpgGenService;
+import c3i.imgGen.server.taskManager.EquivalentJobAlreadyRunningException;
+import c3i.imgGen.server.taskManager.JpgGeneratorService;
+import c3i.imgGen.server.taskManager.Master;
+import c3i.imgGen.shared.ExecutorStatus;
+import c3i.imgGen.shared.JobId;
+import c3i.imgGen.shared.JobSpec;
+import c3i.imgGen.shared.JobStatusItem;
+import c3i.imgGen.shared.JpgGenService;
 import c3i.core.common.shared.BrandKey;
-import c3i.jpgGen.shared.Stats;
+import c3i.imgGen.shared.Stats;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

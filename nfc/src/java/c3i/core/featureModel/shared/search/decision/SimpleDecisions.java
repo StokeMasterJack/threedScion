@@ -1,6 +1,5 @@
 package c3i.core.featureModel.shared.search.decision;
 
-import c3i.core.featureModel.shared.PeekingIterator;
 import c3i.core.featureModel.shared.boolExpr.Var;
 
 import java.util.Iterator;
@@ -11,14 +10,6 @@ public class SimpleDecisions implements Decisions {
 
     private boolean f;
     private boolean t;
-
-    public static Decisions create(PeekingIterator<Var> openVars) {
-        if (openVars.hasNext()) {
-            return new SimpleDecisions(openVars.next());
-        } else {
-            return null;
-        }
-    }
 
     public SimpleDecisions(Var var) {
         this.var = var;

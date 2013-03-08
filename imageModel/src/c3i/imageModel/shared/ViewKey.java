@@ -3,12 +3,16 @@ package c3i.imageModel.shared;
 
 import smartsoft.util.shared.Path;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 public class ViewKey {
 
     private final SeriesKey seriesKey;
     private final int viewIndex;
 
     public ViewKey(SeriesKey seriesKey, int viewIndex) {
+        checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.viewIndex = viewIndex;
     }
@@ -47,6 +51,7 @@ public class ViewKey {
     }
 
     public Path getPath() {
+        checkState(seriesKey != null);
         return new Path("v" + viewIndex).prepend(seriesKey.getPath());
     }
 }

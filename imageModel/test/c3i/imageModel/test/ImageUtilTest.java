@@ -30,7 +30,7 @@ public class ImageUtilTest extends TestCase {
     }
 
     public void test5() throws Exception {
-        byte[] a = {0,0,0,0};
+        byte[] a = {0, 0, 0, 0};
         System.out.println(byteArrayToInt(a));
 
     }

@@ -135,7 +135,7 @@ public final class ViewKeyOld {
         for (Angle angle : angles) {
             if (angle.angleValue == angleValue) return angle;
         }
-        throw new IllegalArgumentException("bad angleValue["+angleValue+"] for view["+getName()+"]");
+        throw new IllegalArgumentException("bad angleValue[" + angleValue + "] for view[" + getName() + "]");
     }
 
     public boolean isFirst(Angle angle) {

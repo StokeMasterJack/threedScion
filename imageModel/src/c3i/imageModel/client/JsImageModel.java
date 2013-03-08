@@ -5,7 +5,8 @@ import com.google.gwt.json.client.JSONArray;
 
 public final class JsImageModel extends JavaScriptObject {
 
-    protected JsImageModel() {}
+    protected JsImageModel() {
+    }
 
     public native JSONArray getViews() /*-{
         var v = this.views;
@@ -14,7 +15,7 @@ public final class JsImageModel extends JavaScriptObject {
     }-*/;
 
     public native JsRepoBase getRepoBase() /*-{
-       return this.repoBase;
+        return this.repoBase;
     }-*/;
 
 

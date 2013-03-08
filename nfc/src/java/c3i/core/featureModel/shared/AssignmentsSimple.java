@@ -25,5 +25,13 @@ public class AssignmentsSimple extends AbstractAssignments<AssignmentsSimple> {
         return new AssignmentsSimple(this);
     }
 
+    @Override
+    public boolean isPicked(Object var) {
+        return isTrue((Var) var);
+    }
 
+    @Override
+    public boolean isValidBuild() {
+        throw new UnsupportedOperationException();
+    }
 }

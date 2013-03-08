@@ -3,10 +3,10 @@ package c3i.core.featureModel.shared.search;
 import c3i.core.featureModel.data.Camry2011;
 import c3i.core.featureModel.data.Trim;
 import c3i.core.featureModel.data.TrimColor;
+import c3i.core.featureModel.data.TrimColorOption;
 import c3i.core.featureModel.shared.Csp;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.SatCountProductHandler;
 import c3i.core.featureModel.shared.boolExpr.MoreThanOneTrueTermXorAssignmentException;
 import org.junit.After;
 import org.junit.Test;
@@ -16,13 +16,7 @@ import javax.annotation.Nullable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-
 public class CspTest {
-
-
-    public void test1() throws Exception {
-
-    }
 
     @Test
     public void test_FindAll_SimpleVehicle() throws Exception {
@@ -30,7 +24,7 @@ public class CspTest {
         Csp csp = buildCspSimpleVehicle();
         SatCountProductHandler counter = new SatCountProductHandler();
 
-        csp.findAll(counter);
+        csp.forEach(counter);
 
         assertEquals(11, counter.getCount());
 
@@ -42,7 +36,7 @@ public class CspTest {
         Csp csp = buildCspMediumVehicle();
         SatCountProductHandler counter = new SatCountProductHandler();
 
-        csp.findAll(counter);
+        csp.forEach(counter);
 
         assertEquals(227, counter.getCount());
 
@@ -55,7 +49,7 @@ public class CspTest {
         Csp csp = buildCspComplexVehicle();
         SatCountProductHandler counter = new SatCountProductHandler();
 
-        csp.findAll(counter);
+        csp.forEach(counter);
 
         assertEquals(2080512, counter.getCount());
     }
@@ -63,21 +57,28 @@ public class CspTest {
     @Test
     public void test_SatCount_SimpleVehicle() throws Exception {
         Csp csp = buildCspSimpleVehicle();
-        long satCount = csp.satCount();
+        long satCount = csp.getSatCount();
         assertEquals(11, satCount);
     }
 
     @Test
     public void test_SatCount_MediumVehicle() throws Exception {
         Csp csp = buildCspMediumVehicle();
-        long satCount = csp.satCount();
+        long satCount = csp.getSatCount();
         assertEquals(227, satCount);
+    }
+
+    @Test
+    public void test_SatCount_SemiComplexVehicle() throws Exception {
+        Csp csp = buildCspSemiComplexVehicle();
+        long satCount = csp.getSatCount();
+        assertEquals(44944, satCount);
     }
 
     @Test
     public void test_SatCount_ComplexVehicle() throws Exception {
         Csp csp = buildCspComplexVehicle();
-        long satCount = csp.satCount();
+        long satCount = csp.getSatCount();
         assertEquals(2080512, satCount);
     }
 
@@ -129,7 +130,7 @@ public class CspTest {
         if (varCode == null) {
             System.out.println("*** Nothing Picked ***");
             cspIn.print();
-            System.out.println("satCount: " + cspIn.satCount());
+            System.out.println("satCount: " + cspIn.getSatCount());
             System.out.println();
             return cspIn;
         } else {
@@ -137,7 +138,7 @@ public class CspTest {
             Csp reduced = cspIn.reduce(varCode);
 
             reduced.print();
-            System.out.println("satCount: " + reduced.satCount());
+            System.out.println("satCount: " + reduced.getSatCount());
             System.out.println();
             return reduced;
         }
@@ -162,9 +163,15 @@ public class CspTest {
         return csp;
     }
 
+    private Csp buildCspSemiComplexVehicle() {
+        FeatureModel fm = new TrimColorOption();
+        //        Csp csp = new CspSimple(fm, fm.getConstraint());
+        Csp csp = new CspForTreeSearch(fm, fm.getConstraint(), null);
+        return csp;
+    }
+
     private Csp buildCspComplexVehicle() {
         FeatureModel fm = new Camry2011();
-//        Csp csp = new CspSimple(fm, fm.getConstraint());
         Csp csp = new CspForTreeSearch(fm, fm.getConstraint(), null);
         return csp;
     }

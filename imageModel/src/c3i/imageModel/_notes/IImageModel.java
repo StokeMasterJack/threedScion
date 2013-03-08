@@ -12,8 +12,8 @@ public interface IImageModel {
             String viewId,
             int angle,
             String[] picks,
-            String profileId ,//size,PngOrJpg
-            String imageMode , //Collapse | Expanded
+            String profileId,//size,PngOrJpg
+            String imageMode, //Collapse | Expanded
             boolean skipZLayers,
             String repoBase
 

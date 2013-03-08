@@ -1,7 +1,10 @@
 package c3i.core.featureModel.shared.search;
 
-import c3i.core.featureModel.shared.Assignments;
+import c3i.core.featureModel.shared.CspForTreeSearch;
 
 public interface ProductHandler {
-    void onProduct(Assignments product);
+    /**
+     * where csp.isTrue and csp.isOutComplete
+     */
+    void onProduct(CspForTreeSearch csp);
 }

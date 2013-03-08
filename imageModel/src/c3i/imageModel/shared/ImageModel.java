@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
 
     private final SeriesKey seriesKey;
@@ -13,6 +16,7 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
 
     public ImageModel(int depth, List<ImView> imViews, SeriesKey seriesKey) {
         super(depth);
+        checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.imViews = imViews;
 
@@ -169,6 +173,7 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
     }
 
     public SeriesKey getSeriesKey() {
+        checkState(seriesKey != null);
         return seriesKey;
     }
 
@@ -220,4 +225,9 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
     public ImView getInitialView() {
         return imViews.get(0);
     }
+
+    public RawImageStack getImageStack(String viewName, int angle, SimplePicks picks) {
+        return getView(viewName).getRawImageStack(picks, angle);
+    }
+
 }

@@ -1,7 +1,6 @@
 package c3i.imageModel.shared;
 
 
-
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;

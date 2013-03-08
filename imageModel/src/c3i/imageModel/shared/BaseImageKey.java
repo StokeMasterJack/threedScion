@@ -2,7 +2,7 @@ package c3i.imageModel.shared;
 
 import com.google.common.base.Preconditions;
 
-public class BaseImageKey implements IBaseImageKey{
+public class BaseImageKey implements IBaseImageKey {
 
     private final SeriesKey seriesKey;
     private final Profile profile;
@@ -78,7 +78,6 @@ public class BaseImageKey implements IBaseImageKey{
         }
         return false;
     }
-
 
 
     @Override

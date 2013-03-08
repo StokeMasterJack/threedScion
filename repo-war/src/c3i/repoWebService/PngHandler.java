@@ -2,11 +2,12 @@ package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
 import c3i.imageModel.shared.PngSegment;
+import c3i.imgGen.server.singleJpg.ZPngGenerator;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
+import c3i.repo.server.SeriesRepo;
+import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Files;
-import java.util.logging.Logger;
-
 import smartsoft.util.Date;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
@@ -15,6 +16,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * <repo-url-base>/<repo-name>/3d/pngs/<short-sha>.png
@@ -36,8 +38,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
 
         SeriesKey seriesKey = repoRequest.getSeriesKey();
         PngSegment pngKey = repoRequest.getPngKey();
-        Repos repos = repoRequest.getRepos();
-        File zPngFile = repos.getFileForZPng(seriesKey,-1,pngKey);
+
+        File zPngFile = getFileForZPng(seriesKey, -1, pngKey, repoRequest);
 
         HttpServletResponse response = repoRequest.getResponse();
         response.setContentType("image/png");
@@ -61,6 +63,32 @@ public class PngHandler extends RepoHandler<PngRequest> {
         }
 
     }
+
+    private File getFileForZPng(SeriesKey sk, int width, PngSegment pngKey, PngRequest repoRequest) {
+        Repos repos = repoRequest.getRepos();
+        SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+        RtRepo genRepo = seriesRepo.getRtRepo();
+
+        File pngFile = genRepo.getZPngFileName(pngKey);
+
+        if (!pngFile.exists()) {
+            log.warning("Creating fallback zPng on the fly: " + pngFile);
+            createZPngOnTheFly(width, sk, pngKey, repoRequest);
+
+            if (!pngFile.exists()) {
+                throw new RuntimeException("Failed to create fallback zPng[" + pngFile + "]");
+            }
+        }
+
+        return pngFile;
+    }
+
+    private void createZPngOnTheFly(int width, SeriesKey sk, PngSegment pngKey, PngRequest repoRequest) {
+        Repos repos = repoRequest.getRepos();
+        ZPngGenerator zPngGenerator = new ZPngGenerator(repos, width, sk, pngKey);
+        zPngGenerator.generate();
+    }
+
 
     protected static Logger log = Logger.getLogger(PngHandler.class.getName());
 

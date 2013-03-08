@@ -68,9 +68,10 @@ public class PngSpec {
 //        return srcPng.getUrl(repoBase);
 //    }
 
-    public PngSegment getKey(){
-        return new PngSegment(srcPng.getShortSha(),deltaY);
+    public PngSegment getKey() {
+        return new PngSegment(srcPng.getShortSha(), deltaY);
     }
+
     public Path getUrl(Path repoBaseUrl) {
         ImView view = srcPng.getView();
         ImageModel series = view.getSeries();

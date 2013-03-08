@@ -1,7 +1,7 @@
 package c3i.core.featureModel.shared.search.decision;
 
 import c3i.core.featureModel.shared.AssignContext;
-import c3i.core.featureModel.shared.boolExpr.AssignmentException;
+import c3i.core.featureModel.shared.boolExpr.ReassignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
 
 public class XorDecision implements Decision {
@@ -12,7 +12,7 @@ public class XorDecision implements Decision {
         this.xorChild = xorChild;
     }
 
-    public void makeAssignment(AssignContext ctx) throws AssignmentException {
+    public void makeAssignment(AssignContext ctx) throws ReassignmentException {
         ctx.assignTrue(xorChild);
         for (Var sibling : xorChild.getSiblings()) {
             ctx.assignFalse(sibling);

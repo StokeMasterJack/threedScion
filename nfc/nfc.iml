@@ -31,6 +31,7 @@
     <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="module" module-name="imageModel" />
+    <orderEntry type="module" module-name="repo" scope="TEST" />
   </component>
 </module>
 

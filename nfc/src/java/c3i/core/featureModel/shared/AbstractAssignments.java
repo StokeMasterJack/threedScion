@@ -155,17 +155,17 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     }
 
     @Override
-    public void assignTrue(Var var) throws AssignmentException {
+    public void assignTrue(Var var) throws ReassignmentException {
         assignTrue(var, 0);
     }
 
     @Override
-    public void assignFalse(Var var) throws AssignmentException {
+    public void assignFalse(Var var) throws ReassignmentException {
         assignFalse(var, 0);
     }
 
     @Override
-    public void assignTrue(Var var, int depth) throws AssignmentException {
+    public void assignTrue(Var var, int depth) throws ReassignmentException {
         if (isFalse(var)) {
             throw new ReassignmentException(var, true, this);
         } else if (isTrue(var)) {
@@ -185,7 +185,7 @@ abstract public class AbstractAssignments<A extends Assignments> implements Assi
     abstract protected boolean removeFromOpenVars(Var var);
 
     @Override
-    public void assignFalse(Var var, int depth) throws AssignmentException {
+    public void assignFalse(Var var, int depth) throws ReassignmentException {
         if (isTrue(var)) {
             throw new ReassignmentException(var, false, this);
         } else if (isFalse(var)) {

@@ -576,6 +576,5 @@ public class FeatureModel implements Vars {
         return new CspForTreeSearch(this, getConstraint());
     }
 
-
 }
 

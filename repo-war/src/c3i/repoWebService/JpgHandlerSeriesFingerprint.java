@@ -56,7 +56,10 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
 
 
         //added support for single, full jpg that includes all zLayers built-int
-        File jpgFile = repos.getFileForJpg(jpgKey);
+
+
+        JpgGenHelper jpgGenHelper = new JpgGenHelper();
+        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
 
 
         HttpServletResponse response = r.getResponse();

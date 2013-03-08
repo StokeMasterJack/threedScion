@@ -1,18 +1,17 @@
 package c3i.admin.client.jpgGen;
 
-import c3i.admin.shared.jpgGen.ExecutorStatus;
-import c3i.admin.shared.jpgGen.JobId;
-import c3i.admin.shared.jpgGen.JobSpec;
-import c3i.admin.shared.jpgGen.JobStatusItem;
-import c3i.admin.shared.jpgGen.JpgGenService;
-import c3i.admin.shared.jpgGen.JpgGenServiceAsync;
+import c3i.imgGen.shared.ExecutorStatus;
+import c3i.imgGen.shared.JobId;
+import c3i.imgGen.shared.JobSpec;
+import c3i.imgGen.shared.JobStatusItem;
+import c3i.imgGen.shared.JpgGenService;
+import c3i.imgGen.shared.JpgGenServiceAsync;
 import c3i.core.common.shared.BrandKey;
-import c3i.jpgGen.shared.Stats;
+import c3i.imgGen.shared.Stats;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
-import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.shared.Path;
 
 import java.util.ArrayList;

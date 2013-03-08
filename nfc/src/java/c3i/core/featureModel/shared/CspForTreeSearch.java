@@ -1,7 +1,10 @@
 package c3i.core.featureModel.shared;
 
+import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
+import c3i.core.featureModel.shared.boolExpr.ReassignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.core.featureModel.shared.search.decision.Decision;
 import c3i.core.featureModel.shared.search.decision.Decisions;
 import c3i.core.featureModel.shared.search.decision.SimpleDecisions;
 
@@ -9,11 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSearch> {
 
@@ -24,7 +26,6 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
         super(vars, constraint);
 
         Comparator<Var> varComparator = new VarComparator();
-
 
         if (outputVars != null) {
 
@@ -89,7 +90,7 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
 
     @Override
     public String toString() {
-        return "openVars: " + getOpenOutputVarCount() + ":" + getOpenOutputVars();
+        return "State:" + getState() + ":openVars:" + getOpenOutputVarCount() + ":" + getOpenOutputVars();
     }
 
     public Set<Var> getTrueOutputVars() {
@@ -105,6 +106,37 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
         return assignments.getVars1();
     }
 
+    public CspForTreeSearch refine(Decision decision) {
+
+        CspForTreeSearch copy = copy();
+
+        try {
+            copy.makeAssignments(decision);
+            copy.propagate();
+            copy.simplify();
+
+            checkState(!copy.isFailed());
+            checkState(!copy.isFalse());
+
+        } catch (AssignmentException e) {
+            checkState(copy.isFailed());
+            checkState(copy.isFalse());
+        }
+
+        return copy;
+    }
+
+    public void makeAssignments(Decision decision) throws ReassignmentException {
+        checkState(!isFailed());
+        try {
+            decision.makeAssignment(assignments);
+        } catch (AssignmentException e) {
+            System.out.println("@@@@@@@");
+            this.assignmentException = e;
+            throw e;
+        }
+    }
+
     public boolean isSolved1() {
         return assignments.isSolved1();
     }
@@ -113,52 +145,12 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
         return getAssignments().getOpenVars();
     }
 
-    public Decisions decide2() {
-        if (true) throw new UnsupportedOperationException();
-        Var var = getNextDecisionVar();
-        if (var == null) return null;
-        else return new SimpleDecisions(var);
-//        Decisions decisions = assignments.decide();
-//        return decisions;
-    }
 
     public Decisions decide() {
         Var var = openVars.getNextDecisionVar();
         if (var == null) return null;
         else return new SimpleDecisions(var);
-//        Decisions decisions = assignments.decide();
-//        return decisions;
     }
-
-    private Var getNextDecisionVar() {
-
-        Var maxVar = null;
-        int maxConflictCount = 0;
-
-        List<Var> openVars11 = assignments.getOpenVars1();
-
-        for (Var var : openVars11) {
-            if (var.isModelCodeXorChild()) return var;
-            if (var.isInteriorColorXorChild()) return var;
-            if (var.isExteriorColorXorChild()) return var;
-            if (var.isXorChild()) return var;
-
-            if (maxVar == null) {
-                maxVar = var;
-                maxConflictCount = getConflictCountForVar(var);
-            } else {
-                int conflictCount = getConflictCountForVar(var);
-                if (conflictCount > maxConflictCount) {
-                    maxVar = var;
-                    maxConflictCount = conflictCount;
-                }
-            }
-        }
-
-
-        return maxVar;
-    }
-
 
     public class VarComparator implements Comparator<Var> {
 
@@ -201,11 +193,9 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
                 } else if (xorSiblingCount1 > xorSiblingCount2) {
                     return -1;
                 } else {
-
-                    String parentName1 = getParentName(v1);
-                    String parentName2 = getParentName(v2);
-
-                    return parentName1.compareTo(parentName2);
+                    String parentCode1 = getParentCode(v1);
+                    String parentCode2 = getParentCode(v2);
+                    return parentCode1.compareTo(parentCode2);
                 }
 
             } else {
@@ -216,8 +206,15 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
             }
         }
 
-        public String getParentName(Var var) {
-            return var.isRoot() ? "NoParent" : var.getParent().getName();
+        public String getParentCode(Var var) {
+            boolean r = var.isRoot();
+            if (r) {
+                return "NoParent";
+            } else {
+                return var.getParent().getCode();
+//                return p.getCode();
+            }
+
         }
 
         public void printVarSort(List<Var> vars, Collection<Var> outputVars) {
@@ -234,7 +231,7 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
 
                 String sSiblingCount = xorChild ? siblingCount + "SiblingCount" : "NSiblingCount";
 
-                String parentName = var.isRoot() ? "NoParent" : getParentName(var);
+                String parentName = var.isRoot() ? "NoParent" : getParentCode(var);
 
                 System.err.println("\t " + sPng + "\t" + sXorChild + "\t" + sSiblingCount + "\t" + parentName + "\t" + var.getCode());
             }
@@ -248,67 +245,25 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
 
     }
 
-    public class VarComparator3 extends VarComparator {
-
-        @Override
-        public String getParentName(Var var) {
-            return getParentNamePrefix(var) + super.getParentName(var);
-        }
-
-        String getParentNamePrefix(Var var) {
-            int conflictCount;
-            if (var.isModelCodeXorChild()) {
-                conflictCount = getConflictCountForModelCode(var);
-            } else {
-                conflictCount = getConflictCountForVar(var);
-            }
-
-            return (99 - conflictCount) + "-";
-        }
-    }
 
     public boolean anyOpenOutputVars() {
         return getAssignments().anyOpenVars1();
     }
 
-    public Map<Integer, Set<Var>> getConflictCounts() {
+    public boolean isOutComplete() {
+        return !anyOpenOutputVars();
+    }
 
-        TreeMap<Integer, Set<Var>> map = new TreeMap<Integer, Set<Var>>();
-        for (Var var : getAllVarsAsSet()) {
-            if (var.hasChildVars()) continue;
-            if (var.isXorChild()) continue;
-            int conflictCount = getConflictCountForVar(var);
-            Set<Var> vars = map.get(conflictCount);
-            if (vars == null) {
-                vars = new HashSet<Var>();
-                map.put(conflictCount, vars);
-            }
-            vars.add(var);
+    public String getState() {
+        if (isTrue()) {
+            return "True";
+        } else if (isFalse()) {
+            return "False";
+        } else if (isOpen()) {
+            return "Open";
+        } else {
+            throw new IllegalStateException();
         }
-
-        return map;
-    }
-
-    private int getConflictCountForVar(Var var) {
-        return constraint.getConflictCountForVar(var);
-    }
-
-    private int getConflictCountForModelCode(Var var) {
-        throw new UnsupportedOperationException();
-//        int t = 0;
-//        assert var.isModelCodeXorChild();
-//
-//        Collection<BoolExpr> expressions = constraint.getExpressions();
-//        for (BoolExpr e : expressions) {
-//            if (e.isIff() && e.getExpr1().equals(var) && e.getExpr2().isAnd()) {
-//                for (BoolExpr ee : e.getExpr2().asAnd().getExpressions()) {
-//                    if (ee.isVar()) {
-//                        t += getConflictCountForVar(ee.asVar());
-//                    }
-//                }
-//            }
-//        }
-//        return t;
     }
 
 }

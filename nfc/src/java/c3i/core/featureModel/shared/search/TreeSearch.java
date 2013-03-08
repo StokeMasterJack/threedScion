@@ -1,153 +1,124 @@
 package c3i.core.featureModel.shared.search;
 
-import c3i.core.featureModel.shared.Assignments;
-import c3i.core.featureModel.shared.AssignmentsForTreeSearch;
 import c3i.core.featureModel.shared.CspForTreeSearch;
-import c3i.core.featureModel.shared.boolExpr.AssignmentException;
-import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.decision.Decision;
 import c3i.core.featureModel.shared.search.decision.Decisions;
 import smartsoft.util.shared.Strings;
 
-import java.util.Set;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Copying-based branch-and-prune tree search
+ * Uses out-vars
+ * For AllSat and SatCount only
+ * Use FindFirstTreeSearch for isSat
  */
 public class TreeSearch {
 
+    private int logLevel = 3;
+
     private ProductHandler productHandler;
-
-    public Set<Var> jpgVars;
-
     private long solutionCount;
-    private int rejectCount;
-    private int decisionsCount;
-    private int decisionCount;
-    private int propagateCount;
-    private int skipSimplifyCount;
-    private int decisionsNullConstraintTrue;
-    private int decisionsNullConstraintFalse;
-    private int decisionsNullConstraintOpen;
+    private long visitCount;
 
-    public void setProductHandler(ProductHandler productHandler) {
+    public TreeSearch(ProductHandler productHandler) {
         this.productHandler = productHandler;
     }
 
+    public TreeSearch() {
+        this(null);
+    }
+
     public void start(CspForTreeSearch csp) {
-        nextDecisions(csp, 0);
+        search(csp, 0);
     }
 
-    int aaTrue;
-    int bbTrue;
-    int ccFalse;
-    int ddOpen1;
-    int ddOpen2;
-    int eeException;
+    private void search(CspForTreeSearch csp, int depth) {
+        visitCount++;
+//        prindent1(depth, "search: " + csp);
 
-    private boolean canBeExtendedToTrue(CspForTreeSearch csp) {
-
-        //this seem to always return true for some reason, thus:
-
-        if (true) return true;
-
-        boolean canBeExtended;
-
-        FindFirstTreeSearch findFirstSearch = new FindFirstTreeSearch();
-
-        Assignments before = csp.getAssignments().copy(csp.getOpenVars().copy());
-        Assignments after = findFirstSearch.findFirst(csp.copy());
-
-        if (after == null) {
-            System.out.println("Cannot be extended: " + before.getTrueVars());
-            canBeExtended = false;
-        } else {
-            canBeExtended = true;
+        if (csp.isFalse()) {
+            return;
         }
-
-
-        return canBeExtended;
-
-
-    }
-
-    public void nextDecisions(CspForTreeSearch csp, int depth) {
 
         if (csp.anyOpenOutputVars()) {
-
-            Decisions decisions = csp.decide();
-            decisionsCount++;
-            //prindent(depth, System.identityHashCode(this) + ".Decisions: " + decisions);
-
-            for (Decision decision : decisions) {
-                CspForTreeSearch copy = csp.copy();
-                processDecision(copy, decision, depth + 1);
-            }
-
-        } else {
-
-            assert csp.getOpenOutputVarCount() == 0;
-
             if (csp.isTrue()) {
-                aaTrue++;
-                onCompleteSolution(csp.getAssignments());
-            } else if (csp.isFalse()) {
-                //skip
-            } else { //open
-                if (canBeExtendedToTrue(csp)) { //this is stubbed out to always return true
-                    onCompleteSolution(csp.getAssignments());
-                }
+                onTrueNotOutComplete(csp, depth);
+            } else if (csp.isOpen()) {
+                onOpenNotOutComplete(csp, depth);
+            } else {
+                throw new IllegalStateException();
+            }
+
+        } else { //out complete
+            if (csp.isTrue()) {
+                onTrueOutComplete(csp, depth);
+            } else if (csp.isOpen()) { //open
+                onOpenOutComplete(csp, depth);
+            } else {
+                throw new IllegalStateException();
             }
         }
 
-    }
-
-
-    private void processDecision(CspForTreeSearch csp, Decision decision, int depth) {
-        this.decisionCount++;
-
-//        prindent2(depth, "Process decision: " + decision);
-//        prindent3(depth, "\t before assign \t[" + csp + "]");
-
-
-        try {
-            decision.makeAssignment(csp.getAssignments());
-            this.propagateCount++;
-            csp.propagateSimplify();
-
-//            prindent3(depth, "\t after assign\t[" + csp + "]");
-            nextDecisions(csp, depth);
-        } catch (AssignmentException e) {
-            rejectCount++;
-        }
 
     }
 
-
-    protected void onCompleteSolution(AssignmentsForTreeSearch completeSolution) {
+    private void onTrueOutComplete(CspForTreeSearch csp, int depth) {
         solutionCount++;
         if (productHandler != null) {
-            productHandler.onProduct(completeSolution);
+            productHandler.onProduct(csp);
         }
+    }
 
-//        if (solutionCount % 1000000L == 0) {
-//            System.out.println("solutionCount = " + solutionCount);
-//        }
-//        Set<Var> product = completeSolution.getTrueOutputVars(varsToSuppressInSolution);
-//        boolean added = uniqueSolutions.add(product.toString());
+    private void onOpenOutComplete(CspForTreeSearch csp, int depth) {
+        if (csp.isSat()) { //todo
+            solutionCount++;
+            if (productHandler != null) {
+                productHandler.onProduct(csp);
+            }
+        }
+    }
 
+    //todo - this should uses Math.pow(2,dcCount);
+    //todo - because all open vars, at this point, are dontCares
+    private void onTrueNotOutComplete(CspForTreeSearch csp, int depth) {
+        if (productHandler == null) {
+            int dcCount = csp.getOpenOutputVarCount();
+            solutionCount += twoToThePowerOf(dcCount);
+        } else {
+            distribute(csp, depth);
+        }
+    }
 
+    private void onOpenNotOutComplete(CspForTreeSearch csp, int depth) {
+        distribute(csp, depth);
+    }
+
+    private void distribute(CspForTreeSearch csp, int depth) {
+        if (csp.isFalse()) {
+            throw new IllegalArgumentException("distribute can only be passed a non-false csp. The following CSP is false: " + csp);
+        }
+        Decisions decisions = csp.decide();
+//        prindent2(depth, "Decisions: " + decisions);
+        checkNotNull(decisions);
+        for (Decision decision : decisions) {
+//            prindent2(depth, "Decision: " + decision);
+//            prindent3(depth, "\t before assign \t[" + csp + "]");
+
+            CspForTreeSearch copy = csp.refine(decision);
+//            prindent3(depth, "\t after assign\t[" + copy + "]");
+            search(copy, depth + 1);
+        }
     }
 
     public long getSolutionCount() {
         return solutionCount;
     }
 
-    public int getRejectCount() {
-        return rejectCount;
+    public long getVisitCount() {
+        return visitCount;
     }
 
-    private int logLevel = 3;
 
     public void prindent(int depth, String msg) {
         System.err.println(Strings.indent(depth) + msg);
@@ -165,35 +136,7 @@ public class TreeSearch {
         if (logLevel >= 3) prindent(depth, msg);
     }
 
-    public int getDecisionsCount() {
-        return decisionsCount;
-    }
-
-    public int getDecisionCount() {
-        return decisionCount;
-    }
-
-    public int getPropagateCount() {
-        return propagateCount;
-    }
-
-    public void printCounts() {
-        System.err.println("solutionCount = " + solutionCount);
-        System.err.println("rejectCount = " + rejectCount);
-        System.err.println("decisionsCount = " + decisionsCount);
-        System.err.println("decisionCount = " + decisionCount);
-        System.err.println("propagateCount = " + propagateCount);
-        System.err.println("skipSimplifyCount = " + skipSimplifyCount);
-
-        System.err.println("aaTrue = " + aaTrue);
-        System.err.println("bbTrue = " + bbTrue);
-        System.err.println("ccFalse = " + ccFalse);
-        System.err.println("ddOpen1 = " + ddOpen1);
-        System.err.println("ddOpen2 = " + ddOpen2);
-        System.err.println("eeException = " + eeException);
-
-
-        System.err.println();
-
+    public static long twoToThePowerOf(int power) {
+        return (long) Math.pow(2, power);
     }
 }

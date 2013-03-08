@@ -96,7 +96,8 @@ public class Angle implements Comparable<Angle> {
         JPG, PNG
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return angleValue + "";
     }
 
@@ -151,7 +152,8 @@ public class Angle implements Comparable<Angle> {
         return getLocalImageName(ImageFileExtension.PNG, false);
     }
 
-    @Override public int compareTo(Angle that) {
+    @Override
+    public int compareTo(Angle that) {
         if (this.displayIndex == that.displayIndex) return 0;
         else if (this.displayIndex < that.displayIndex) return -1;
         else return 1;

@@ -19,21 +19,28 @@ public class Camry2011 extends TrimColorOption {
     public Var e5 = eAcc.addChild("E5", "Exhaust Tip");
     public Var wb = eAcc.addChild("WB", "Alloy Wheel");
     public Var r7 = eAcc.addChild("R7");
+
     public Var bm = eAcc.addChild("BM", "Body Side Molding");
     public Var dio3 = eAcc.addChild("DIO3", "Mudguards");
 
     public Camry2011() {
+
+        acc.setMandatory(true);
+        iAcc.setMandatory(true);
+        eAcc.setMandatory(true);
+
         addConstraint(imply(up, wb));
         addConstraint(imply(ut, wb));
         addConstraint(imply(t2540, e5));
+
         addConstraint(conflict(a28, mt6));
         addConstraint(xor(a2q, cf));
-        a2q.setDefaultValue(true);
-        addConstraint(imply(qd, and(r7, sr, se)));
         addConstraint(imply(r7, se));
 
+        addConstraint(imply(qd, and(r7, sr, se)));
 
-//        performSemiHumanFixup();
+
+        a2q.setDefaultValue(true);
     }
 
     public Set<Var> getSamplePicks() {
