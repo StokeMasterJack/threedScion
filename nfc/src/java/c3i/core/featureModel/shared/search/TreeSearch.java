@@ -1,5 +1,6 @@
 package c3i.core.featureModel.shared.search;
 
+import c3i.core.common.shared.ProductHandler;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.search.decision.Decision;
 import c3i.core.featureModel.shared.search.decision.Decisions;
@@ -17,11 +18,11 @@ public class TreeSearch {
 
     private int logLevel = 3;
 
-    private ProductHandler productHandler;
+    private ProductHandler<CspForTreeSearch> productHandler;
     private long solutionCount;
     private long visitCount;
 
-    public TreeSearch(ProductHandler productHandler) {
+    public TreeSearch(ProductHandler<CspForTreeSearch> productHandler) {
         this.productHandler = productHandler;
     }
 

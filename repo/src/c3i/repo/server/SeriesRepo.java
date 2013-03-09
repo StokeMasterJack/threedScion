@@ -235,7 +235,7 @@ public class SeriesRepo {
         return XmlToFmJvm.create(seriesKey, seriesDisplayName, seriesYear, featureModel);
     }
 
-    private ImageModel createImageModel(RootTreeId rootTreeId, SimpleFeatureModel fm) {
+    public ImageModel createImageModel(RootTreeId rootTreeId, SimpleFeatureModel fm) {
         ObjectId gitObjectId = srcRepo.toGitObjectId(rootTreeId);
         RevCommit revCommit = srcRepo.getRevCommit(gitObjectId);
         RepoVNodeBuilder b = new RepoVNodeBuilder(this, revCommit, rtRepo);
@@ -323,6 +323,16 @@ public class SeriesRepo {
 
     public InputSupplier<? extends InputStream> getObject(ObjectId objectId) {
         return srcRepo.getInputSupplier(objectId);
+    }
+
+    public InputSupplier<? extends InputStream> getSrcPngSupplier(final String pngShortSha) {
+        return new InputSupplier<InputStream>() {
+            @Override
+            public InputStream getInput() throws IOException {
+                ObjectLoader objectLoader = getSrcPngByShortSha(pngShortSha);
+                return objectLoader.openStream();
+            }
+        };
     }
 
     private static Logger log = Logger.getLogger("c3i");

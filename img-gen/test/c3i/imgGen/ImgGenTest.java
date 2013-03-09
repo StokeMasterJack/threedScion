@@ -6,19 +6,30 @@ import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.RawImageStack;
+import c3i.imageModel.shared.Slice2;
 import c3i.imageModel.test.Avalon2014Picks;
 import c3i.imgGen.external.ImgGenContext;
 import c3i.imgGen.external.ImgGenContextFactory;
+import c3i.imgGen.external.ImgGenContextFactoryDave;
+import c3i.imgGen.server.JpgSetTask;
+import c3i.imgGen.server.JpgSetsTask;
+import c3i.repo.server.BrandRepos;
 import junit.framework.TestCase;
+
+import java.io.File;
 
 public class ImgGenTest extends TestCase {
 
+    File TOYOTA_REPO_BASE_DIR = new File("/configurator-content-toyota");
+
+    BrandRepos brandRepos;
     ImgGenContextFactory factory;
     Object contextKey;
     ImgGenContext ctx;
 
     @Override
     protected void setUp() throws Exception {
+        brandRepos = BrandRepos.createSingleBrand(BrandKey.TOYOTA, TOYOTA_REPO_BASE_DIR);
         factory = createImageGenFactory();
         contextKey = createImageGenContextKey();
         ctx = factory.getImgGenContext(contextKey);
@@ -52,7 +63,7 @@ public class ImgGenTest extends TestCase {
 
     }
 
-    public void testJpgCountOneSlice() throws Exception {
+    public void testJpgSetOneSlice() throws Exception {
 
         String viewName = "exterior";
         int angle = 2;
@@ -61,12 +72,14 @@ public class ImgGenTest extends TestCase {
 
         ImView view = imageModel.getView(viewName);
 
-        JpgSetTask jpgSetTask = new JpgSetTask(ctx, view, angle);
+        Slice2 slice2 = new Slice2(view, angle);
+
+        JpgSetTask jpgSetTask = new JpgSetTask(ctx, slice2);
         jpgSetTask.start();
         assertEquals(189, jpgSetTask.getJpgCount());
     }
 
-    public void testJpgCount() throws Exception {
+    public void testJpgSetAllSlices() throws Exception {
         JpgSetsTask jpgSetsTask = new JpgSetsTask(ctx);
         jpgSetsTask.start();
         assertEquals(2385, jpgSetsTask.getJpgCount());
@@ -82,6 +95,6 @@ public class ImgGenTest extends TestCase {
     }
 
     ImgGenContextFactory createImageGenFactory() {
-        return new ImgGenContextFactoryDave();
+        return new ImgGenContextFactoryDave(brandRepos);
     }
 }

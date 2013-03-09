@@ -1,6 +1,8 @@
 package c3i.repo.server;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
+import c3i.core.common.shared.SeriesKey;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.File;
@@ -21,6 +23,15 @@ public class BrandRepos {
             b1.put(brandKey, repos);
         }
         reposMap = b1.build();
+    }
+
+    public SeriesRepo getSeriesRepo(SeriesId seriesId) {
+        SeriesKey seriesKey = seriesId.getSeriesKey();
+        return getSeriesRepo(seriesKey);
+    }
+
+    public SeriesRepo getSeriesRepo(SeriesKey seriesKey) {
+        return getRepos(seriesKey.getBrandKey()).getSeriesRepo(seriesKey);
     }
 
     public Repos getRepos(BrandKey brandKey) {

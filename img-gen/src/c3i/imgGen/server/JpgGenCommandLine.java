@@ -3,9 +3,11 @@ package c3i.imgGen.server;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.JpgWidth;
 import c3i.core.threedModel.shared.RootTreeId;
+import c3i.imageModel.shared.JpgWidth;
+import c3i.imageModel.shared.Profile;
+import c3i.imgGen.external.ImgGenContextFactory;
+import c3i.imgGen.external.ImgGenContextFactoryDave;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.imgGen.server.taskManager.Master;
 import c3i.imgGen.shared.JobSpec;
@@ -15,17 +17,19 @@ import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
-import java.util.logging.Logger;
-
 import smartsoft.util.CommandLineArgs;
 import smartsoft.util.Sys;
 
-import java.awt.*;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.ImageCapabilities;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class JpgGenCommandLine {
 
@@ -60,8 +64,10 @@ public class JpgGenCommandLine {
         SeriesId seriesId = new SeriesId(args.getSeriesKey(), rootTreeId);
         JobSpec jobSpec = new JobSpec(seriesId, args.getProfile());
 
-        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos);
+        ImgGenContextFactory imgGenContextFactory = new ImgGenContextFactoryDave(brandRepos);
+        JpgSetFactory jpgSetFactory = new JpgSetFactory1(brandRepos, imgGenContextFactory);
 
+        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos, jpgSetFactory, imgGenContextFactory);
 
         final Master job = jpgGen.startNewJpgJob(jobSpec, args.getThreadCount(), Thread.NORM_PRIORITY);
         final Timer timer = new Timer();
@@ -124,8 +130,6 @@ public class JpgGenCommandLine {
         }
 
     }
-
-
 
 
     public static class Args extends CommandLineArgs {

@@ -1,12 +1,11 @@
-package c3i.imgGen;
+package c3i.imgGen.server;
 
-import c3i.core.common.shared.SeriesId;
 import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
+import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.external.ImgGenContext;
-import c3i.imgGen.external.ImgGenContextFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +37,6 @@ public class JpgSetsTask {
 
     private void execute() {
 
-        SeriesId seriesId = ctx.getSeriesId();
-
-        ImgGenContextFactory f = new ImgGenContextFactoryDave();
-        ImgGenContext ctx = f.getImgGenContext(seriesId);
-
         String imageModelJson = ctx.getImageModelJson();
 
         ImageModel imageModel = JsonToImJvm.parse(ctx, imageModelJson);
@@ -52,10 +46,10 @@ public class JpgSetsTask {
         for (ImView view : views) {
             for (int angle = 1; angle <= view.getAngleCount(); angle++) {
 
-                Slice slice = new Slice(view.getName(), angle);
+                Slice2 slice = new Slice2(view, angle);
 
-                JpgSetTask jpgSetTask = new JpgSetTask(ctx, view, angle);
-                jpgSetTasks.put(slice, jpgSetTask);
+                JpgSetTask jpgSetTask = new JpgSetTask(ctx, slice);
+                jpgSetTasks.put(slice.getSlice(), jpgSetTask);
 
                 jpgSetTask.start();
 

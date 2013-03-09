@@ -1,14 +1,16 @@
 package c3i.imgGen.server.taskManager;
 
+import c3i.core.common.server.SrcPngLoader;
 import c3i.core.common.shared.SeriesId;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.Slice2;
+import c3i.imgGen.external.ImgGenContext;
 import c3i.imgGen.server.JpgSet;
+import c3i.imgGen.server.JpgSetFactory;
+import c3i.imgGen.server.JpgSetKey;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
 import c3i.imgGen.shared.ExecutorStatus;
 import c3i.imgGen.shared.JobId;
@@ -19,17 +21,15 @@ import c3i.imgGen.shared.JpgState;
 import c3i.imgGen.shared.JpgStateCounts;
 import c3i.imgGen.shared.Stats;
 import c3i.imgGen.shared.TerminalStatus;
-import c3i.repo.server.Repos;
+import c3i.repo.server.RepoSrcPngLoader;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.ExceptionRenderer;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -48,11 +48,8 @@ public class Master {
 
     private final MyExecutors executors;
 
-    //dependencies
-    private final Repos repos;
-
-    //master spec
     private final JobSpec jobSpec;
+
     private final SeriesId seriesId;
     private final Profile profile;
 
@@ -62,24 +59,30 @@ public class Master {
 
     private final Stats stats = new Stats();
 
-    private final ThreedModel threedModel;
+    private final JpgSetFactory jpgSetFactory;
+    private final ImgGenContext context;
+    private final SeriesRepo seriesRepo;
+    private final RtRepo rtRepo;
 
-    public Master(final Repos repos, JobSpec jobSpec, int threadCount, int priority) {
-        Preconditions.checkNotNull(repos);
-        Preconditions.checkNotNull(jobSpec);
+    //ImgGenContext
 
-
+    public Master(JpgSetFactory jpgSetFactory, SeriesRepo seriesRepo, JobSpec jobSpec, ImgGenContext context, int threadCount, int priority) {
+        this.seriesRepo = seriesRepo;
+        this.rtRepo = seriesRepo.getRtRepo();
         id = JobId.generateNew();
 
         executors = new MyExecutors(threadCount, priority);
 
-        this.repos = repos;
         this.jobSpec = jobSpec;
-        this.seriesId = jobSpec.getSeriesId();
+
+        this.context = context;
+
+        this.seriesId = context.getSeriesId();
         this.profile = jobSpec.getProfile();
         profile.getBaseImageType();
 
-        threedModel = repos.getThreedModel(seriesId);
+        this.jpgSetFactory = jpgSetFactory;
+
 
         stats.masterJobStartTime = id.getEnqueueTime();
 
@@ -120,7 +123,7 @@ public class Master {
 
                     initDirsAndStartFile();
 
-                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(threedModel);
+                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(context);
                     executors.createJpgSets.submit(createJpgSetsTask);
 
                     return createJpgSetsTask;
@@ -199,7 +202,7 @@ public class Master {
             }
 
             if (terminalStatus.equals(TerminalStatus.Complete)) {
-                writeCompletedFile(stats.masterJobEndTime);
+                //writeCompletedFile(stats.masterJobEndTime);
             }
 
             stats.finalStatus = terminalStatus;
@@ -209,18 +212,18 @@ public class Master {
         }
     }
 
-    private void writeCompletedFile(long timeMillis) {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(this.seriesId.getSeriesKey());
-        RootTreeId rootTreeId = seriesId.getRootTreeId();
-        RtRepo rtRepo = seriesRepo.getRtRepo();
-        File versionWidthDir = rtRepo.getVersionWidthDir(rootTreeId, profile);
-        File completedFile = new File(versionWidthDir, "completed.txt");
-        try {
-            Files.write(timeMillis + "", completedFile, Charset.defaultCharset());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private void writeCompletedFile(long timeMillis) {
+//        SeriesRepo seriesRepo = repos.getSeriesRepo(this.seriesId.getSeriesKey());
+//        RootTreeId rootTreeId = seriesId.getRootTreeId();
+//        RtRepo rtRepo = seriesRepo.getRtRepo();
+//        File versionWidthDir = rtRepo.getVersionWidthDir(rootTreeId, profile);
+//        File completedFile = new File(versionWidthDir, "completed.txt");
+//        try {
+//            Files.write(timeMillis + "", completedFile, Charset.defaultCharset());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 
     public JobStatus getStatus() {
@@ -267,9 +270,10 @@ public class Master {
      */
     private final class CreateJpgSetsTask extends MyFutureTask<ImmutableList<CreateJpgSetTask>> {
 
-        private final ThreedModel threedModel;
+        private final ImgGenContext context;
 
-        private CreateJpgSetsTask(final ThreedModel threedModel) {
+        private CreateJpgSetsTask(final ImgGenContext context) {
+
             super(new Callable<ImmutableList<CreateJpgSetTask>>() {
 
                 @Override
@@ -279,7 +283,7 @@ public class Master {
                     log.info("Creating JpgSets");
                     final ImmutableList.Builder<CreateJpgSetTask> builder = new ImmutableList.Builder<CreateJpgSetTask>();
 
-                    List<ImView> views = threedModel.getViews();
+                    List<ImView> views = context.getImageModel().getViews();
                     for (ImView view : views) {
                         int angleCount = view.getAngleCount();
                         for (int a = 1; a <= angleCount; a++) {
@@ -295,12 +299,12 @@ public class Master {
                 }
             });
 
-            this.threedModel = threedModel;
+            this.context = context;
 
         }
 
         public int getSliceCount() {
-            return threedModel.getSliceCount();
+            return context.getSliceCount();
         }
 
 
@@ -364,8 +368,10 @@ public class Master {
                     if (monitorTask.isCancelled()) throw new InterruptedException();
 
                     log.info("Start: jpgSetAction: " + slice);
-                    JpgSetAction jpgSetAction = new JpgSetAction(repos, new JpgSet.JpgSetKey(seriesId, slice.getViewName(), slice.getAngle()));
-                    JpgSet jpgSet = jpgSetAction.getJpgSet();
+                    JpgSetKey key = new JpgSetKey(seriesId, slice.getSlice());
+
+                    JpgSet jpgSet = jpgSetFactory.getOrCreateJpgSet(key);
+
                     log.info("Complete: jpgSetAction: " + slice + "  jpgCount: " + jpgSet.size());
 
                     ProcessJpgSetTask task1 = new ProcessJpgSetTask(slice, jpgSet);
@@ -475,8 +481,10 @@ public class Master {
                     if (monitorTask.isCancelled()) throw new InterruptedException();
 
                     BaseImage baseImage = new BaseImage(profile, slice, fingerprint);
+                    File outFile = rtRepo.getBaseImageFileName(baseImage);
+                    SrcPngLoader pngLoader = new RepoSrcPngLoader(seriesRepo);
 
-                    BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(repos, baseImage);
+                    BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(outFile, baseImage, pngLoader);
                     jpgGeneratorPureJava.generate(stats);
 
                     return JpgState.COMPLETE;
@@ -496,11 +504,10 @@ public class Master {
     }
 
     private void createGenVersionDirs() {
-        repos.createGenVersionDirs(seriesId, profile);
+        seriesRepo.createGenVersionDir(seriesId, profile);
     }
 
     private void createJpgWidthDir() {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId.getSeriesKey());
         File jpgDirForSize = seriesRepo.getRtRepo().getJpgDirForSize(profile);
         try {
             Files.createParentDirs(jpgDirForSize);

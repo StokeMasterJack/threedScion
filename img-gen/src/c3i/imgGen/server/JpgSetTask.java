@@ -1,13 +1,10 @@
-package c3i.imgGen;
+package c3i.imgGen.server;
 
-import c3i.core.featureModel.shared.CspForTreeSearch;
-import c3i.core.featureModel.shared.search.ProductHandler;
-import c3i.imageModel.shared.ImView;
+import c3i.core.common.shared.ProductHandler;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.SimplePicks;
+import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.external.ImgGenContext;
-import c3i.imgGen.external.ProductHandlerSimple;
-import c3i.imgGen.server.JpgSet;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +17,7 @@ public class JpgSetTask {
 
     //core state
     private final ImgGenContext ctx;
-    private final ImView view;
-    private final int angle;
+    private final Slice2 slice;
 
     private final MyProductHandler productHandler;
 
@@ -31,12 +27,11 @@ public class JpgSetTask {
     //compute onProduct
     private State state;
 
-    public JpgSetTask(ImgGenContext ctx, ImView view, int angle) {
+    public JpgSetTask(ImgGenContext ctx, Slice2 slice) {
         this.ctx = ctx;
-        this.view = view;
-        this.angle = angle;
+        this.slice = slice;
 
-        this.outVars = view.getPngVars();
+        this.outVars = slice.getPngVars();
         this.productHandler = new MyProductHandler();
 
         state = State.NOT_STARTED;
@@ -55,13 +50,10 @@ public class JpgSetTask {
         return state;
     }
 
-    public ImView getView() {
-        return view;
+    public Slice2 getSlice() {
+        return slice;
     }
 
-    public int getAngle() {
-        return angle;
-    }
 
     public HashSet<RawBaseImage> getJpgSet() {
         return productHandler.jpgSet;
@@ -75,23 +67,19 @@ public class JpgSetTask {
         return ctx;
     }
 
-    public JpgSet.JpgSetKey getJpgSetKey() {
-        return new JpgSet.JpgSetKey(ctx.getSeriesId(), view.getName(), angle);
+    public JpgSetKey getJpgSetKey() {
+        return new JpgSetKey(ctx.getSeriesId(), slice.getSlice());
     }
 
-    private class MyProductHandler implements ProductHandlerSimple, ProductHandler {
+
+    private class MyProductHandler implements ProductHandler<SimplePicks> {
 
         private final HashSet<RawBaseImage> jpgSet = new HashSet<RawBaseImage>();
 
         @Override
         public void onProduct(SimplePicks product) {
-            RawBaseImage rawBaseImage = view.getPngSegments(product, angle);
+            RawBaseImage rawBaseImage = slice.getPngSegments(product);
             jpgSet.add(rawBaseImage);
-        }
-
-        @Override
-        public void onProduct(CspForTreeSearch csp) {
-            this.onProduct(csp.getAssignments());
         }
 
     }

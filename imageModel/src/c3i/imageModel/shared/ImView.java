@@ -400,6 +400,10 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return new Slice(getName(), angle);
     }
 
+    public Slice2 getSlice2(int angle) {
+        return new Slice2(this, angle);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;

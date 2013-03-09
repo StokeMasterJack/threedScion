@@ -2,7 +2,10 @@ package c3i.repoWebService;
 
 import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.imageModel.shared.IBaseImageKey;
+import c3i.imageModel.shared.SeriesKey;
+import c3i.core.common.server.SrcPngLoader;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
+import c3i.repo.server.RepoSrcPngLoader;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
@@ -30,8 +33,28 @@ public class JpgGenHelper {
         return jpgFile;
     }
 
+    public void test1() throws Exception {
+
+    }
+
     private void createJpgOnTheFly(IBaseImageKey jpgKey, Repos repos) {
-        BaseImageGenerator jpgGeneratorPureJava2 = new BaseImageGenerator(repos, jpgKey);
+
+        SeriesKey seriesKey = jpgKey.getSeriesKey();
+
+        c3i.core.common.shared.SeriesKey sk =
+                new c3i.core.common.shared.SeriesKey(
+                        seriesKey.getBrand(),
+                        seriesKey.getYear(),
+                        seriesKey.getName());
+
+        final SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+
+        SrcPngLoader pngLoader = new RepoSrcPngLoader(seriesRepo);
+
+        RtRepo rtRepo = repos.getSeriesRepo(sk).getRtRepo();
+
+        File outFile = rtRepo.getBaseImageFileName(jpgKey);
+        BaseImageGenerator jpgGeneratorPureJava2 = new BaseImageGenerator(outFile, jpgKey, pngLoader);
         jpgGeneratorPureJava2.generate();
     }
 

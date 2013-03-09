@@ -6,16 +6,12 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.CommitKey;
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.core.threedModel.shared.VtcMap;
 import c3i.imageModel.shared.BaseImageType;
-import c3i.imageModel.shared.IBaseImageKey;
-import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Profiles;
-import c3i.repo.server.rt.RtRepo;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.Series;
 import com.google.common.base.Preconditions;
@@ -72,7 +68,6 @@ public class Repos {
         }
 
     }
-
 
     public static Repos get() {
         return get(BrandKey.TOYOTA);
@@ -342,9 +337,6 @@ public class Repos {
             return true;
         }
     };
-
-
-
 
 
     public SeriesId getHead(SeriesKey seriesKey) {

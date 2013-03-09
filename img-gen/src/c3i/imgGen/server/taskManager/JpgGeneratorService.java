@@ -2,6 +2,9 @@ package c3i.imgGen.server.taskManager;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
+import c3i.imgGen.external.ImgGenContext;
+import c3i.imgGen.external.ImgGenContextFactory;
+import c3i.imgGen.server.JpgSetFactory;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
@@ -10,23 +13,26 @@ import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import com.google.common.util.concurrent.AbstractIdleService;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class JpgGeneratorService extends AbstractIdleService {
 
     private final ConcurrentHashMap<JobId, Master> jobQueue = new ConcurrentHashMap<JobId, Master>();
 
     private final BrandRepos brandRepos;
+    private final JpgSetFactory jpgSetFactory;
+    private final ImgGenContextFactory imgGenContextFactory;
 
-    public JpgGeneratorService(BrandRepos brandRepos) {
+    public JpgGeneratorService(BrandRepos brandRepos, JpgSetFactory jpgSetFactory, ImgGenContextFactory imgGenContextFactory) {
         this.brandRepos = brandRepos;
+        this.jpgSetFactory = jpgSetFactory;
+        this.imgGenContextFactory = imgGenContextFactory;
     }
 
     public Master startNewJpgJob(JobSpec jobSpec, int threadCount, int priority) throws EquivalentJobAlreadyRunningException {
@@ -40,11 +46,15 @@ public class JpgGeneratorService extends AbstractIdleService {
         BrandKey brandKey = jobSpec.getBrandKey();
         Repos repos = brandRepos.getRepos(brandKey);
 
-        Master master = new Master(repos, jobSpec, threadCount, priority);
+        SeriesRepo seriesRepo = repos.getSeriesRepo(jobSpec.getSeriesId().getSeriesKey());
+
+
+        SeriesId seriesId = jobSpec.getSeriesId();
+        ImgGenContext imgGenContext = imgGenContextFactory.getImgGenContext(seriesId);
+        Master master = new Master(jpgSetFactory, seriesRepo, jobSpec, imgGenContext, threadCount, priority);
         jobQueue.put(master.getId(), master);
         return master;
     }
-
 
 
     private boolean isThereAlreadyAnOpenJobWithThisSpec(JobSpec jobSpec) {

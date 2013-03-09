@@ -1,20 +1,16 @@
 package c3i.imgGen.server.singleJpg;
 
 
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.imageModel.shared.IBaseImageKey;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.RawBaseImage;
-import c3i.imageModel.shared.SeriesKey;
+import c3i.core.common.server.SrcPngLoader;
 import c3i.imgGen.shared.Stats;
-import c3i.repo.server.Repos;
-import c3i.repo.server.SeriesRepo;
-import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectStream;
+import com.google.common.io.InputSupplier;
 import org.imgscalr.Scalr;
+import smartsoft.util.shared.IORuntimeException;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -39,12 +35,13 @@ public class BaseImageGenerator {
     public static final float QUALITY = 75F * .01F;
 
     private final IBaseImageKey baseImage;
-    private final SeriesRepo seriesRepo;
+    private final File outFile;
+    private final SrcPngLoader pngLoader;
 
-    public BaseImageGenerator(final Repos repos, final IBaseImageKey baseImage) {
+    public BaseImageGenerator(final File outFile, final IBaseImageKey baseImage, final SrcPngLoader pngLoader) {
         this.baseImage = baseImage;
-        SeriesKey seriesKey = baseImage.getSeriesKey();
-        this.seriesRepo = repos.getSeriesRepo(ImFeatureModel.imToFmSeriesKey(seriesKey));
+        this.outFile = outFile;
+        this.pngLoader = pngLoader;
     }
 
     public void generate() {
@@ -52,7 +49,7 @@ public class BaseImageGenerator {
     }
 
     public void generate(Stats stats) {
-        if (getOutputFile().exists()) return;
+        if (outFile.exists()) return;
         BufferedImage combined = combinePngs(stats);
         BufferedImage scaled = maybeScale(combined, stats);
         writeBaseImage(stats, scaled);
@@ -83,7 +80,7 @@ public class BaseImageGenerator {
 
         int i = 0;
         for (PngSegment pngKey : pngKeys.getPngs()) {
-            BufferedImage layerPng = readSrcPng(pngKey.getShortSha(), stats);
+            BufferedImage layerPng = readSrcPng(pngKey.getShortSha());
 
             boolean background = layerPng.getTransparency() == Transparency.OPAQUE;
 
@@ -171,7 +168,7 @@ public class BaseImageGenerator {
 
         FileImageOutputStream output = null;
         try {
-            output = newFileImageOs(getOutputFile());
+            output = newFileImageOs(outFile);
             writer.setOutput(output);
             IIOImage image = new IIOImage(input, null, null);
             writeImage(writer, iwp, image);
@@ -182,7 +179,7 @@ public class BaseImageGenerator {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    log.warning("Problem closing file [" + getOutputFile() + "]");
+                    log.warning("Problem closing file [" + outFile + "]");
                 }
             }
         }
@@ -198,9 +195,8 @@ public class BaseImageGenerator {
     private void writeBasePng(BufferedImage input, Stats stats) {
         long t1 = System.currentTimeMillis();
         try {
-            File outputFile = getOutputFile();
-            Files.createParentDirs(outputFile);
-            ImageIO.write(input, "PNG", outputFile);
+            Files.createParentDirs(outFile);
+            ImageIO.write(input, "PNG", outFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -214,11 +210,6 @@ public class BaseImageGenerator {
     }
 
     private static Logger log = Logger.getLogger("c3i");
-
-    private File getOutputFile() {
-        RtRepo genRepo = seriesRepo.getRtRepo();
-        return genRepo.getBaseImageFileName(baseImage);
-    }
 
     private void createParentDirs(File jpgFile) {
         try {
@@ -271,23 +262,50 @@ public class BaseImageGenerator {
         }
     }
 
-    private BufferedImage readSrcPng(String pngShortSha, Stats stats) {
-        long t1 = System.currentTimeMillis();
-        ObjectLoader objectLoader = seriesRepo.getSrcPngByShortSha(pngShortSha);
-        ObjectStream is = null;
+    public InputSupplier<? extends InputStream> getPng(String pngShortSha) {
+        return null;
+    }
+
+    public void test1() throws Exception {
+        InputStream is = null;
         try {
-            is = objectLoader.openStream();
-            return readSrcImage(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            is = getPng("www").getInput();
+            BufferedImage bufferedImage = readSrcImage(is);
         } finally {
             Closeables.closeQuietly(is);
-            long t2 = System.currentTimeMillis();
-            if (stats != null) {
-                stats.readSrcPngDeltaSum += (t2 - t1);
-            }
         }
     }
+
+    private BufferedImage readSrcPng(String pngShortSha) throws IORuntimeException {
+        InputStream is = null;
+        try {
+            is = pngLoader.getPng(pngShortSha).getInput();
+            return readSrcImage(is);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        } finally {
+            Closeables.closeQuietly(is);
+        }
+    }
+
+
+//    private BufferedImage readSrcPng(String pngShortSha, Stats stats) {
+//        long t1 = System.currentTimeMillis();
+//        ObjectLoader objectLoader = seriesRepo.getSrcPngByShortSha(pngShortSha);
+//        ObjectStream is = null;
+//        try {
+//            is = objectLoader.openStream();
+//            return readSrcImage(is);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            Closeables.closeQuietly(is);
+//            long t2 = System.currentTimeMillis();
+//            if (stats != null) {
+//                stats.readSrcPngDeltaSum += (t2 - t1);
+//            }
+//        }
+//    }
 
 
 }

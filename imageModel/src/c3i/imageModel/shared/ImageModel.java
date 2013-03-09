@@ -30,6 +30,14 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return getView(viewName).getSlice(angle);
     }
 
+    public Slice2 getSlice2(String viewName, int angle) {
+        return getView(viewName).getSlice2(angle);
+    }
+
+    public Slice2 getSlice2(Slice slice) {
+        return getSlice2(slice.getViewName(), slice.getAngle());
+    }
+
     @Override
     public String getName() {
         return seriesKey.getName();
@@ -181,8 +189,9 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return getView(viewName).getViewSlice(angle);
     }
 
-    public ViewSlice getImageSlice(Slice slice) {
-        return getViewSlice(slice.getView(), slice.getAngle());
+    public Slice2 getViewSlice(Slice slice) {
+        ImView view = getView(slice.getViewName());
+        return new Slice2(view, slice.getAngle());
     }
 
     public int getVarCount() {

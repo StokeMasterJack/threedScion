@@ -1,13 +1,16 @@
 package c3i.imageModel.shared;
 
-import javax.annotation.Nonnull;
+import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class Slice2 {
 
     private final ImView view;
     private final int angle;
 
-    public Slice2(@Nonnull ImView view, int angle) {
+    public Slice2(ImView view, int angle) {
+        checkNotNull(view);
         assert view != null;
         this.angle = angle;
         this.view = view;
@@ -58,5 +61,18 @@ public final class Slice2 {
     public String toString() {
         return "view: " + view + ", angle: " + angle;
     }
+
+    public Set<Object> getPngVars() {
+        return view.getPngVars(angle);
+    }
+
+    public Slice getSlice() {
+        return new Slice(view.getName(), angle);
+    }
+
+    public RawBaseImage getPngSegments(SimplePicks picks) {
+        return view.getPngSegments(picks, angle);
+    }
+
 
 }

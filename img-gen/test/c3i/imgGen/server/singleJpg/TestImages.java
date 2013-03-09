@@ -1,12 +1,16 @@
 package c3i.imgGen.server.singleJpg;
 
+import c3i.core.common.server.SrcPngLoader;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.Profile;
 import c3i.imgGen.shared.Stats;
+import c3i.repo.server.RepoSrcPngLoader;
 import c3i.repo.server.Repos;
+import c3i.repo.server.SeriesRepo;
+import c3i.repo.server.rt.RtRepo;
 import org.junit.Before;
 import org.junit.Test;
 import smartsoft.util.shared.Path;
@@ -52,7 +56,11 @@ public class TestImages {
 
         for (Profile profile : profiles) {
             BaseImageKey baseImage = new BaseImageKey(imSeriesKey, profile, fp);
-            BaseImageGenerator g = new BaseImageGenerator(Repos.get(), baseImage);
+            SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+            RtRepo rtRepo = seriesRepo.getRtRepo();
+            File file = rtRepo.getBaseImageFileName(baseImage);
+            SrcPngLoader srcPngLoader = new RepoSrcPngLoader(seriesRepo);
+            BaseImageGenerator g = new BaseImageGenerator(file, baseImage, srcPngLoader);
             g.generate(stats);
         }
 

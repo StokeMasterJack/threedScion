@@ -1,12 +1,13 @@
 package c3i.core.featureModel.shared;
 
+import c3i.core.common.shared.ProductHandler;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.BoolExpr;
 import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.FindFirstTreeSearch;
-import c3i.core.featureModel.shared.search.ProductHandler;
 import c3i.core.featureModel.shared.search.TreeSearch;
+import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-abstract public class Csp<A extends Assignments, C extends Csp> implements AutoAssignContext {
+abstract public class Csp<A extends Assignments, C extends Csp> implements AutoAssignContext, SimplePicks {
 
     //shallow copy - todo can shallow copy be replaced by NO copy? These values never change for the duration of a search
     protected final Vars vars;
@@ -327,7 +328,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
 
     }
 
-    public void forEach(ProductHandler handler) {
+    public void forEach(ProductHandler<CspForTreeSearch> handler) {
         if (this instanceof CspForTreeSearch) {
             CspForTreeSearch cspForTreeSearch = (CspForTreeSearch) this;
             TreeSearch treeSearch = new TreeSearch(handler);
@@ -359,5 +360,13 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         return cp;
     }
 
+    @Override
+    public boolean isPicked(Object var) {
+        return getAssignments().isPicked(var);
+    }
 
+    @Override
+    public boolean isValidBuild() {
+        throw new IllegalStateException();
+    }
 }

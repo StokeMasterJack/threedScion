@@ -2,9 +2,9 @@ package c3i.imgGen.external;
 
 import javax.annotation.Nonnull;
 
-public interface ImgGenContextFactory {
+public interface ImgGenContextFactory<K> {
 
     @Nonnull
-    ImgGenContext getImgGenContext(Object imgGenContextKey);
+    ImgGenContext getImgGenContext(K key);
 
 }

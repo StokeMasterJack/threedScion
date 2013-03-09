@@ -1,25 +1,28 @@
-package c3i.imgGen;
+package c3i.imgGen.external;
 
+import c3i.core.common.shared.ProductHandler;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.featureModel.server.JsonToFmJvm;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.featureModel.shared.search.TreeSearch;
-import c3i.core.threedModel.shared.ImFeatureModel;
+import c3i.imageModel.server.JsonToImJvm;
+import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.SeriesKey;
-import c3i.imageModel.shared.SimplePicks;
-import c3i.imgGen.external.ImgGenContext;
-import c3i.imgGen.external.ProductHandlerSimple;
+import c3i.repo.server.SeriesRepo;
+import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
+import org.eclipse.jgit.lib.ObjectLoader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ImgGenContextImpl implements ImgGenContext {
+public class ImgGenContextDave implements ImgGenContext<CspForTreeSearch> {
 
     SeriesId seriesId;
     SeriesKey seriesKey2;
@@ -30,12 +33,18 @@ public class ImgGenContextImpl implements ImgGenContext {
 
     private String imJson;
 
+    private ImageModel imageModel;
 
-    public ImgGenContextImpl(SeriesId seriesId) {
+    private SeriesRepo seriesRepo;
+
+
+    public ImgGenContextDave(SeriesId seriesId, SeriesRepo seriesRepo) {
+
         this.seriesId = seriesId;
         seriesKey1 = seriesId.getSeriesKey();
         String brand = seriesKey1.getBrandKey().toString();
         seriesKey2 = new SeriesKey(brand, seriesKey1.getYear(), seriesKey1.getName());
+
 
         JsonToFmJvm fmParser = new JsonToFmJvm();
 
@@ -70,24 +79,26 @@ public class ImgGenContextImpl implements ImgGenContext {
     }
 
     @Override
-    public byte[] getPng(String pngShortSha) {
-        return new byte[0];
+    public InputSupplier<? extends InputStream> getPng(final String pngShortSha) {
+        return new InputSupplier<InputStream>() {
+            @Override
+            public InputStream getInput() throws IOException {
+                ObjectLoader objectLoader = seriesRepo.getSrcPngByShortSha(pngShortSha);
+                return objectLoader.openStream();
+            }
+        };
     }
 
-    private class ProductHandlerAdapter implements c3i.core.featureModel.shared.search.ProductHandler {
 
-        private final ProductHandlerSimple delegate;
-
-        public ProductHandlerAdapter(ProductHandlerSimple delegate) {
-            this.delegate = delegate;
-        }
-
-        @Override
-        public void onProduct(CspForTreeSearch csp) {
-            SimplePicks simplePicks = ImFeatureModel.toSimplePicks(csp.getAssignments());
-            delegate.onProduct(simplePicks);
-        }
+    @Override
+    public int getSliceCount() {
+        return 0;
     }
+
+    //    @Override
+//    public byte[] getPng(String pngShortSha) {
+//        return new byte[0];
+//    }
 
 
     @Override
@@ -100,10 +111,11 @@ public class ImgGenContextImpl implements ImgGenContext {
         return treeSearch.getSolutionCount();
     }
 
-    @Override
-    public void forEach(Set<Object> outVars, ProductHandlerSimple productHandler) {
-        ProductHandlerAdapter ph = new ProductHandlerAdapter(productHandler);
-        forEach2(outVars, ph);
+    public ImageModel getImageModel() {
+        if (this.imageModel == null) {
+            this.imageModel = JsonToImJvm.parse(this, imJson);
+        }
+        return imageModel;
     }
 
     private Set<Var> codeSetToVarSet(Set<Object> pngVars) {
@@ -115,8 +127,8 @@ public class ImgGenContextImpl implements ImgGenContext {
         return vars;
     }
 
-
-    private void forEach2(Set<Object> pngVarCodes, c3i.core.featureModel.shared.search.ProductHandler productHandler) {
+    @Override
+    public void forEach(Set<Object> pngVarCodes, ProductHandler<CspForTreeSearch> productHandler) {
         Set<Var> pngVars = codeSetToVarSet(pngVarCodes);
         CspForTreeSearch csp = fm.createCspForTreeSearch(pngVars);
         csp.propagateSimplify();
