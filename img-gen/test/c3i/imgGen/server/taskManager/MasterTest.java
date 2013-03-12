@@ -184,7 +184,6 @@ public class MasterTest implements TestConstants {
 
     }
 
-
     public JpgSet createJpgSet(SeriesId seriesId, Slice2 slice) throws Exception {
         JpgSet jpgSet = imgGenService.getJpgSet(seriesId, slice.getSlice());
         long t2 = System.currentTimeMillis();

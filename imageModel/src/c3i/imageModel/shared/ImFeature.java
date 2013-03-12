@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, ImLayerOrFeature<V>, IsChild<V>, IsParent<ImFeatureOrPng<V>,V> {
+public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, ImLayerOrFeature<V>, IsChild<V>, IsParent<ImFeatureOrPng<V>, V> {
 
     private final V var;
     private final List<ImFeatureOrPng<V>> childNodes;

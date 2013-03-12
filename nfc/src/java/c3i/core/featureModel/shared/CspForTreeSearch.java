@@ -42,7 +42,6 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
             Collections.sort(vars1, varComparator);
             Collections.sort(vars2, varComparator);
 
-
             this.openVars = new OpenVars(vars1, vars2);
 
         } else {
@@ -52,7 +51,6 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
                 Var var = vars.get(i);
                 vars1.add(var);
             }
-
 
             Collections.sort(vars1, varComparator);
 

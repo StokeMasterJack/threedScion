@@ -14,6 +14,4 @@ abstract public class ImChildBase<V> extends ImNodeBase<V> implements IsChild<V>
     }
 
 
-
-
 }

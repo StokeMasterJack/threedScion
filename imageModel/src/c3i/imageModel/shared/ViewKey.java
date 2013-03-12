@@ -4,7 +4,6 @@ package c3i.imageModel.shared;
 import smartsoft.util.shared.Path;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 public class ViewKey {
 
