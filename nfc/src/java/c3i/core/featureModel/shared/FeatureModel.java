@@ -77,32 +77,6 @@ public class FeatureModel implements Vars {
         return a;
     }
 
-//    public Set<Var> getModelCodeVars() {
-//        HashSet<Var> set = new HashSet<Var>();
-//        Xor modelCodeXor = getModelCodeXor();
-//        LinkedHashSet<BoolExpr> expressions = modelCodeXor.getExpressions();
-//        for (BoolExpr expr : expressions) {
-//            Var var = expr.asVar();
-//            set.add(var);
-//        }
-//        return set;
-//    }
-
-//    public void performSemiHumanFixup() {
-//        for (Var var : vars) {
-//            if (!var.hasCardinality()) {
-//                Cardinality card = VarGuesser.guessCardinality(var);
-//                var.setCardinality(card);
-//            }
-//
-//            if (!var.hasMandatory()) {
-//                Boolean b = VarGuesser.guessMandatory(var);
-//                if (b != null) var.setMandatory(b);
-//            }
-//        }
-//    }
-
-
     public SeriesKey getSeriesKey() {
         return seriesKey;
     }
@@ -551,17 +525,12 @@ public class FeatureModel implements Vars {
     }
 
     public CspSimple createCsp(Set<Var> trueVars) {
-
         Preconditions.checkNotNull(trueVars);
-
         CspSimple csp = createCsp();
-
         for (Var trueVar : trueVars) {
             csp.assignTrue(trueVar);
         }
-
         return csp;
-
     }
 
     public CspSimple createCsp() {
@@ -579,7 +548,6 @@ public class FeatureModel implements Vars {
     public <R> void forEach(FmSearchRequest<R> searchRequest) {
         ImmutableSet<Var> outVars = searchRequest.getOutVars();
         CspForTreeSearch csp;
-
         if (outVars != null) {
             csp = createCspForTreeSearch(outVars);
         } else {
@@ -587,9 +555,7 @@ public class FeatureModel implements Vars {
         }
         csp.propagateSimplify();
         csp.forEach(searchRequest);
-
     }
-
 
 }
 

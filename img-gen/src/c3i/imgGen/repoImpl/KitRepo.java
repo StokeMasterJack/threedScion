@@ -9,14 +9,11 @@ import c3i.repo.server.BrandRepos;
 
 public class KitRepo implements Kit<SeriesId> {
 
-    private final BrandRepos brandRepos;
-
     private final FeatureModelFactory featureModelFactory;
     private final ImageModelFactory imageModelFactory;
     private final SrcPngLoader srcPngLoader;
 
-    public KitRepo(BrandRepos brandRepos) {
-        this.brandRepos = brandRepos;
+    public KitRepo(final BrandRepos brandRepos) {
         featureModelFactory = new FeatureModelFactoryRepo(brandRepos);
         imageModelFactory = new ImageModelFactoryRepo(brandRepos);
         srcPngLoader = new SrcPngLoaderRepo(brandRepos);

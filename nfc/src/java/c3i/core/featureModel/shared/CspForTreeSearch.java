@@ -90,7 +90,8 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
 
     @Override
     public String toString() {
-        return "State:" + getState() + ":openVars:" + getOpenOutputVarCount() + ":" + getOpenOutputVars();
+        return getTrueVars().toString();
+//        return "State:" + getState() + ":openVars:" + getOpenOutputVarCount() + ":" + getOpenOutputVars();
     }
 
     public Set<Var> getTrueOutputVars() {
@@ -265,5 +266,6 @@ public class CspForTreeSearch extends Csp<AssignmentsForTreeSearch, CspForTreeSe
             throw new IllegalStateException();
         }
     }
+
 
 }

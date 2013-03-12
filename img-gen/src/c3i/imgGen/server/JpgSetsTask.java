@@ -42,8 +42,9 @@ public class JpgSetsTask<ID> {
         List<ImView> views = imageModel.getViews();
 
         for (ImView view : views) {
+            System.out.println("view = " + view);
             for (int angle = 1; angle <= view.getAngleCount(); angle++) {
-
+                System.out.println("\t angle = " + angle);
                 Slice2 slice = new Slice2(view, angle);
 
                 JpgSetTask jpgSetTask = new JpgSetTask(fmIm, slice);

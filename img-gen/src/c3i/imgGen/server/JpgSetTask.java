@@ -30,6 +30,7 @@ public class JpgSetTask<ID> {
 
     private final FmIm<ID> fmIm;
     private final FmSearchRequest<JpgSet> request;
+    private final JpgSetProductHandler productHandler;
 
     private State state;
 
@@ -46,7 +47,8 @@ public class JpgSetTask<ID> {
         this.slice2 = slice2;
         request = new FmSearchRequest<JpgSet>();
         request.setOutVars(slice2.getPngVars());
-        request.setProductHandler(new JpgSetProductHandler(slice2));
+        productHandler = new JpgSetProductHandler(slice2);
+        request.setProductHandler(productHandler);
         state = State.NOT_STARTED;
     }
 
@@ -55,6 +57,7 @@ public class JpgSetTask<ID> {
         state = State.IN_PROCESS;
         FeatureModel fm = fmIm.getFeatureModel();
         fm.forEach(request);
+
         state = State.COMPLETE;
     }
 
@@ -83,6 +86,7 @@ public class JpgSetTask<ID> {
         private final HashSet<RawBaseImage> set = new HashSet<RawBaseImage>();
         private JpgSet jpgSet;
 
+        private int dupCount;
 
         private JpgSetProductHandler(Slice2<Var> slice2) {
             this.slice2 = slice2;
@@ -91,7 +95,13 @@ public class JpgSetTask<ID> {
         @Override
         public void onProduct(CspForTreeSearch product) {
             RawBaseImage rawBaseImage = slice2.getPngSegments(product);
-            set.add(rawBaseImage);
+            boolean added = set.add(rawBaseImage);
+            if (added) {
+//                System.out.println(set.size() + ":Added: " + product.toString());
+            } else {
+                dupCount++;
+//                System.out.println(set.size() + ":Dup: " + product.toString());
+            }
         }
 
         public JpgSet getResult() {
@@ -100,6 +110,14 @@ public class JpgSetTask<ID> {
             }
             return jpgSet;
         }
+
+        public int getDupCount() {
+            return dupCount;
+        }
+    }
+
+    public int getDupCount() {
+        return productHandler.getDupCount();
     }
 
     protected JpgSet getFromFile(File file) throws IORuntimeException {

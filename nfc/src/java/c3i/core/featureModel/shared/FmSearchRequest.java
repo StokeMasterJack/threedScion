@@ -5,4 +5,5 @@ import c3i.core.featureModel.shared.search.SearchRequest;
 
 public class FmSearchRequest<R> extends SearchRequest<Var, CspForTreeSearch, R> {
 
+
 }

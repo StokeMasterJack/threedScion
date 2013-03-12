@@ -14,8 +14,7 @@ import c3i.imgGen.api.Kit;
 import c3i.imgGen.generic.ImgGenService;
 import c3i.imgGen.repoImpl.KitRepo;
 import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSetKey;
-import c3i.imgGen.server.JpgSetsTask;
+import c3i.imgGen.server.JpgSets;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
 import c3i.imgGen.shared.JobStatus;
@@ -124,10 +123,11 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
         SeriesId seriesId = repos.getHead(seriesKey);
 
+        Kit<SeriesId> kit = new KitRepo(brandRepos);
+        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
+        JpgSets jpgSets = imgGenService.getJpgSets(seriesId);
+        int jpgCount = jpgSets.getJpgCount();
 
-        JpgSetsTask task = new JpgSetsTask(imgGenService.getFmIm(seriesId));
-        task.start();
-        int jpgCount = task.getJpgCount();
         assertEquals(2385, jpgCount);
 
     }
@@ -138,12 +138,26 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
         SeriesId seriesId = repos.getHead(seriesKey);
 
+        Kit<SeriesId> kit = new KitRepo(brandRepos);
+        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
+        JpgSets jpgSets = imgGenService.getJpgSets(seriesId);
+        int jpgCount = jpgSets.getJpgCount();
 
-        JpgSetsTask task = new JpgSetsTask(imgGenService.getFmIm(seriesId));
-        task.start();
-        int jpgCount = task.getJpgCount();
-//        assertEquals(2385, jpgCount);
         System.out.println("jpgCount = " + jpgCount);
+
+    }
+
+    //1s
+    @Test
+    public void testAnalOnlyOnTundra2014OneAngle() throws Exception {
+        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
+        SeriesId seriesId = repos.getHead(seriesKey);
+
+        Kit<SeriesId> kit = new KitRepo(brandRepos);
+        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
+        JpgSet jpgSet = imgGenService.getJpgSet(seriesId, "exterior", 2);
+
+        System.out.println("jpgCount = " + jpgSet.getJpgCount());
 
     }
 

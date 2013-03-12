@@ -60,6 +60,7 @@ public class ImgGenService<ID> {
         FmIm fmIm = getFmIm(id);
         JpgSetTask task = new JpgSetTask(fmIm, slice);
         task.start();
+        System.out.println("task.DupCount = " + task.getDupCount());
         return task.getJpgSet();
     }
 
