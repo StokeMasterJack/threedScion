@@ -9,6 +9,7 @@ import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
+import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
@@ -25,9 +26,11 @@ import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
 
 public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFingerprint> {
 
+    SrcPngLoader pngLoader;
 
-    public JpgHandlerSeriesFingerprint(BrandRepos repos) {
-        super(repos);
+    public JpgHandlerSeriesFingerprint(BrandRepos brandRepos, SrcPngLoader pngLoader) {
+        super(brandRepos);
+        this.pngLoader = pngLoader;
     }
 
     @Override
@@ -58,8 +61,8 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
         //added support for single, full jpg that includes all zLayers built-int
 
 
-        JpgGenHelper jpgGenHelper = new JpgGenHelper();
-        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
+        JpgGenHelper jpgGenHelper = new JpgGenHelper(pngLoader, brandRepos);
+        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey);
 
 
         HttpServletResponse response = r.getResponse();

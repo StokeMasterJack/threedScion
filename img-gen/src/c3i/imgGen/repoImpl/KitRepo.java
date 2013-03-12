@@ -1,12 +1,13 @@
 package c3i.imgGen.repoImpl;
 
+import c3i.core.common.shared.SeriesId;
 import c3i.imgGen.api.FeatureModelFactory;
 import c3i.imgGen.api.ImageModelFactory;
 import c3i.imgGen.api.Kit;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 
-public class KitRepo implements Kit {
+public class KitRepo implements Kit<SeriesId> {
 
     private final BrandRepos brandRepos;
 

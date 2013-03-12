@@ -1,6 +1,10 @@
 package c3i.repoWebService;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
+import c3i.imgGen.api.Kit;
+import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.repoImpl.KitRepo;
 import c3i.repo.server.BrandRepos;
 import com.google.common.collect.ImmutableMap;
 import smartsoft.util.config.App;
@@ -19,10 +23,14 @@ public class ThreedRepoApp extends App {
     private static final File REPO_BASE_DIR_PRIVATE = new File("/configurator-content");
 
     private BrandRepos brandRepos;
+    private Kit<SeriesId> kit;
+    private SrcPngLoader pngLoader;
 
     public ThreedRepoApp() {
         super("threed-repo");
         brandRepos = new BrandRepos(getRepoBaseDirs());
+        kit = new KitRepo(brandRepos);
+        pngLoader = kit.createSrcPngLoader();
     }
 
     public ImmutableMap<BrandKey, File> getRepoBaseDirs() {
@@ -39,6 +47,9 @@ public class ThreedRepoApp extends App {
         return b.build();
     }
 
+    public SrcPngLoader getPngLoader() {
+        return pngLoader;
+    }
 
     public String getRepoBaseDirName(String brand) {
         String propName = brand + "." + REPO_BASE_DIR_KEY;

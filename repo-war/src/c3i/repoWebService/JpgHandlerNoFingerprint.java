@@ -9,6 +9,7 @@ import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
+import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.collect.ImmutableSet;
@@ -24,8 +25,11 @@ import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 
-    public JpgHandlerNoFingerprint(BrandRepos repos) {
-        super(repos);
+    SrcPngLoader pngLoader;
+
+    public JpgHandlerNoFingerprint(BrandRepos brandRepos, SrcPngLoader pngLoader) {
+        super(brandRepos);
+        this.pngLoader = pngLoader;
     }
 
     @Override
@@ -49,8 +53,8 @@ public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint
         BaseImageKey jpgKey = coreImageStack.getBaseImageKey();
 
 
-        JpgGenHelper jpgGenHelper = new JpgGenHelper();
-        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
+        JpgGenHelper jpgGenHelper = new JpgGenHelper(pngLoader, brandRepos);
+        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey);
 
         HttpServletResponse response = r.getResponse();
         response.setContentType("image/jpeg");

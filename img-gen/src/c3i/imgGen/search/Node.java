@@ -162,7 +162,7 @@ public abstract class Node<
     }
 
     protected void onProduct() {
-        ProductHandler<PRODUCT_TYPE> productHandler = getSearch().getProductHandler();
+        ProductHandler<PRODUCT_TYPE,Void> productHandler = getSearch().getProductHandler();
         if (productHandler != null) {
             ProductConverter<PRODUCT_TYPE, VAR_TYPE, SEARCH_TYPE, NODE_TYPE> productConverter = getSearch().getProductConverter();
             productConverter.onProduct(self(), productHandler);

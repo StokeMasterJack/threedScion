@@ -2,6 +2,7 @@ package c3i.repoWebService;
 
 import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.BaseImageType;
+import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.io.Files;
@@ -16,8 +17,11 @@ import java.util.logging.Logger;
 
 public class JpgHandler extends RepoHandler<JpgRequest> {
 
-    public JpgHandler(BrandRepos brandRepos) {
+    SrcPngLoader pngLoader;
+
+    public JpgHandler(BrandRepos brandRepos, SrcPngLoader pngLoader) {
         super(brandRepos);
+        this.pngLoader = pngLoader;
     }
 
     @Override
@@ -29,10 +33,8 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
         Repos repos = r.getRepos();
 
-        JpgGenHelper jpgGenHelper = new JpgGenHelper();
-
-
-        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
+        JpgGenHelper jpgGenHelper = new JpgGenHelper(pngLoader, brandRepos);
+        File jpgFile = jpgGenHelper.getFileForJpg(jpgKey);
 
 
         HttpServletResponse response = r.getResponse();

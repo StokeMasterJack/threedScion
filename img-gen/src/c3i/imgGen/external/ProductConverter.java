@@ -18,6 +18,6 @@ public abstract class ProductConverter<
         this.search = search;
     }
 
-    public abstract void onProduct(NODE_TYPE in, ProductHandler<PRODUCT_TYPE> out);
+    public abstract void onProduct(NODE_TYPE in, ProductHandler<PRODUCT_TYPE,Void> out);
 
 }

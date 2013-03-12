@@ -37,6 +37,10 @@ public class JpgSetTask<ID> {
         this(fmIm, fmIm.getImageModel().getSlice2(viewName, angle));
     }
 
+    public JpgSetTask(FmIm<ID> fmIm, c3i.imageModel.shared.Slice slice) {
+        this(fmIm, slice.getViewName(), slice.getAngle());
+    }
+
     public JpgSetTask(FmIm<ID> fmIm, Slice2<Var> slice2) {
         this.fmIm = fmIm;
         this.slice2 = slice2;

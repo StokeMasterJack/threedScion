@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * Takes multiple pngs and turns them into a single jpg
  */
-public class BaseImageGenerator<ID> {
+public class BaseImageGenerator {
 
     public static final float QUALITY = 75F * .01F;
 

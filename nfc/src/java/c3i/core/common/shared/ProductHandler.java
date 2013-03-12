@@ -1,6 +1,6 @@
 package c3i.core.common.shared;
 
-public interface ProductHandler<P,R> {
+public interface ProductHandler<P, R> {
 
     /**
      *
@@ -12,7 +12,6 @@ public interface ProductHandler<P,R> {
     void onProduct(P product);
 
     R getResult();
-
 
 
 }

@@ -10,6 +10,9 @@ import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice2;
+import c3i.imgGen.api.Kit;
+import c3i.imgGen.generic.ImgGenService;
+import c3i.imgGen.repoImpl.KitRepo;
 import c3i.imgGen.server.JpgSet;
 import c3i.imgGen.server.JpgSetKey;
 import c3i.imgGen.server.JpgSetsTask;
@@ -38,14 +41,14 @@ public class MasterTest implements TestConstants {
     BrandRepos brandRepos;
     Repos repos;
     ImgGenService<SeriesId> imgGenService;
-    JpgSetFactory jpgSetFactory;
+    Kit kit;
 
     @Before
     public void setUp() throws Exception {
         brandRepos = BrandRepos.createSingleBrand(BrandKey.TOYOTA, TOYOTA_REPO_BASE_DIR);
+        kit = new KitRepo(brandRepos);
         repos = brandRepos.getRepos(BrandKey.TOYOTA);
-        imgGenService = new ImgGenServiceDave(brandRepos);
-        jpgSetFactory = new JpgSetFactory1(brandRepos, imgGenService);
+        imgGenService = new ImgGenService<SeriesId>(kit);
     }
 
     @Test
@@ -73,7 +76,6 @@ public class MasterTest implements TestConstants {
     public void testMasterTaskOnTundra2013() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
         SeriesId seriesId = repos.getHead(seriesKey);
-        ImgGenContext imgGenContext = imgGenService.getImgGenContext(seriesId);
 
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
 
@@ -81,10 +83,10 @@ public class MasterTest implements TestConstants {
         JobSpec jobSpec = new JobSpec(seriesId, profile);
 
         final Master master = new Master(
-                jpgSetFactory,
                 seriesRepo,
                 jobSpec,
-                imgGenContext,
+                imgGenService,
+                kit.createSrcPngLoader(),
                 5,
                 Thread.NORM_PRIORITY);
 
@@ -122,9 +124,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
         SeriesId seriesId = repos.getHead(seriesKey);
 
-        ImgGenContext imgGenContext = imgGenService.getImgGenContext(seriesId);
 
-        JpgSetsTask task = new JpgSetsTask(imgGenContext);
+        JpgSetsTask task = new JpgSetsTask(imgGenService.getFmIm(seriesId));
         task.start();
         int jpgCount = task.getJpgCount();
         assertEquals(2385, jpgCount);
@@ -137,9 +138,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
         SeriesId seriesId = repos.getHead(seriesKey);
 
-        ImgGenContext imgGenContext = imgGenService.getImgGenContext(seriesId);
 
-        JpgSetsTask task = new JpgSetsTask(imgGenContext);
+        JpgSetsTask task = new JpgSetsTask(imgGenService.getFmIm(seriesId));
         task.start();
         int jpgCount = task.getJpgCount();
 //        assertEquals(2385, jpgCount);
@@ -172,8 +172,7 @@ public class MasterTest implements TestConstants {
 
 
     public JpgSet createJpgSet(SeriesId seriesId, Slice2 slice) throws Exception {
-        JpgSetKey jpgSetKey = new JpgSetKey(seriesId, slice.getSlice());
-        JpgSet jpgSet = jpgSetFactory.getOrCreateJpgSet(jpgSetKey);
+        JpgSet jpgSet = imgGenService.getJpgSet(seriesId, slice.getSlice());
         long t2 = System.currentTimeMillis();
         return jpgSet;
     }
@@ -214,13 +213,12 @@ public class MasterTest implements TestConstants {
         SeriesId seriesId = repos.getHead(seriesKey);
         SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
 
-        ImgGenContext imgGenContext = imgGenService.getImgGenContext(seriesId);
 
         final Master master = new Master(
-                jpgSetFactory,
                 seriesRepo,
                 new JobSpec(seriesId, Profile.STD),
-                imgGenContext,
+                imgGenService,
+                kit.createSrcPngLoader(),
                 5,
                 Thread.NORM_PRIORITY);
         TimerTask timerTask = new TimerTask() {

@@ -12,12 +12,12 @@ import c3i.repo.server.rt.RtRepo;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class JpgGenHelper<ID> {
+public class JpgGenHelper {
 
-    private final SrcPngLoader<ID> pngLoader;
+    private final SrcPngLoader pngLoader;
     private final BrandRepos brandRepos;
 
-    public JpgGenHelper(SrcPngLoader<ID> pngLoader, BrandRepos brandRepos) {
+    public JpgGenHelper(SrcPngLoader pngLoader, BrandRepos brandRepos) {
         this.pngLoader = pngLoader;
         this.brandRepos = brandRepos;
     }
@@ -47,7 +47,7 @@ public class JpgGenHelper<ID> {
     private void createJpgOnTheFly(IBaseImageKey jpgKey, RtRepo rtRepo) {
         File outFile = rtRepo.getBaseImageFileName(jpgKey);
 
-        BaseImageGenerator<ID> jpgGeneratorPureJava2 = new BaseImageGenerator<ID>(outFile, jpgKey, pngLoader);
+        BaseImageGenerator jpgGeneratorPureJava2 = new BaseImageGenerator(outFile, jpgKey, pngLoader);
         jpgGeneratorPureJava2.generate();
     }
 

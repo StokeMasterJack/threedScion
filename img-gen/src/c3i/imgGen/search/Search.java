@@ -28,11 +28,11 @@ public abstract class Search<
     private Class<PRODUCT_TYPE> productHandlerClass;
     private ProductConverter<PRODUCT_TYPE, VAR_TYPE, SEARCH_TYPE, NODE_TYPE> productConverter;
 
-    private ProductHandler<PRODUCT_TYPE> productHandler;
+//    private ProductHandler<PRODUCT_TYPE, R> productHandler;
 
     private RunState runState = RunState.SEARCH_NOT_STARTED;
 
-    protected Search(SpaceContext<VAR_TYPE> spaceContext, ProductHandler<PRODUCT_TYPE> productHandler) {
+    protected Search(SpaceContext<VAR_TYPE> spaceContext, ProductHandler<PRODUCT_TYPE, Void> productHandler) {
         this.spaceContext = spaceContext;
     }
 
@@ -105,7 +105,7 @@ public abstract class Search<
 
     public abstract VAR_TYPE resolveVar(String varCode);
 
-    public abstract ProductHandler<PRODUCT_TYPE> getProductHandler();
+    public abstract ProductHandler<PRODUCT_TYPE, Void> getProductHandler();
 
     public abstract ProductConverter<PRODUCT_TYPE, VAR_TYPE, SEARCH_TYPE, NODE_TYPE> getProductConverter();
 }

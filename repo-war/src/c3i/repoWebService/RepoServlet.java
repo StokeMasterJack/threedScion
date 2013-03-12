@@ -1,5 +1,6 @@
 package c3i.repoWebService;
 
+import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
@@ -52,6 +53,7 @@ public class RepoServlet extends HttpServlet {
     private GitObjectHandler gitObjectHandler;
 
     private BrandRepos brandRepos;
+    private SrcPngLoader pngLoader;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -63,6 +65,7 @@ public class RepoServlet extends HttpServlet {
             app = ThreedRepoApp.getFromServletContext(getServletContext());
             Preconditions.checkNotNull(app);
             brandRepos = app.getBrandRepos();
+            pngLoader = app.getPngLoader();
             log.info(getClass().getSimpleName() + " initialization complete!");
         } catch (Throwable e) {
             String msg = "Problem initializing ThreedRepo: " + e;
@@ -73,9 +76,9 @@ public class RepoServlet extends HttpServlet {
         pngHandler = new PngHandler(brandRepos);
         vtcHandler = new VtcHandler(brandRepos);
         vtcMapHandler = new VtcMapHandler(brandRepos);
-        jpgHandler = new JpgHandler(brandRepos);
-        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos);
-        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos);
+        jpgHandler = new JpgHandler(brandRepos, pngLoader);
+        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos,pngLoader);
+        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos,pngLoader);
         blinkHandler = new BlinkHandler(brandRepos);
         threedModelHandler = new ThreedModelHandler(brandRepos);
         threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos);

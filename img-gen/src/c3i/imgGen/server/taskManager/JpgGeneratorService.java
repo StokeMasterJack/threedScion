@@ -32,7 +32,6 @@ public class JpgGeneratorService extends AbstractIdleService {
 
     public JpgGeneratorService(BrandRepos brandRepos, ImgGenService imgGenService, SrcPngLoader srcPngLoader) {
         this.brandRepos = brandRepos;
-        this.jpgSetFactory = jpgSetFactory;
         this.imgGenService = imgGenService;
         this.srcPngLoader = srcPngLoader;
     }
@@ -55,10 +54,9 @@ public class JpgGeneratorService extends AbstractIdleService {
         FmIm fmIm = imgGenService.getFmIm(seriesId);
 
         Master master = new Master(
-                jpgSetFactory,
                 seriesRepo,
                 jobSpec,
-                fmIm,
+                imgGenService,
                 srcPngLoader,
                 threadCount,
                 priority);

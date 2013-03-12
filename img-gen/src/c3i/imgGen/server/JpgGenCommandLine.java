@@ -6,6 +6,8 @@ import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.imageModel.shared.JpgWidth;
 import c3i.imageModel.shared.Profile;
+import c3i.imgGen.generic.ImgGenService;
+import c3i.imgGen.repoImpl.KitRepo;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.imgGen.server.taskManager.Master;
 import c3i.imgGen.shared.JobSpec;
@@ -62,10 +64,10 @@ public class JpgGenCommandLine {
         SeriesId seriesId = new SeriesId(args.getSeriesKey(), rootTreeId);
         JobSpec jobSpec = new JobSpec(seriesId, args.getProfile());
 
-        ImgGenService imgGenService = new ImgGenServiceDave(brandRepos);
-        JpgSetFactory jpgSetFactory = new JpgSetFactory1(brandRepos, imgGenService);
+        KitRepo kit = new KitRepo(brandRepos);
+        ImgGenService imgGenService = new ImgGenService(kit);
 
-        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos, jpgSetFactory, imgGenService);
+        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos, imgGenService, kit.createSrcPngLoader());
 
         final Master job = jpgGen.startNewJpgJob(jobSpec, args.getThreadCount(), Thread.NORM_PRIORITY);
         final Timer timer = new Timer();

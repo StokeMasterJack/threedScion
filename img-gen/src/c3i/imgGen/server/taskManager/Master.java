@@ -10,9 +10,9 @@ import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.generic.ImgGenService;
 import c3i.imgGen.repoImpl.FmIm;
 import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSetKey;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
 import c3i.imgGen.shared.ExecutorStatus;
 import c3i.imgGen.shared.JobId;
@@ -60,14 +60,14 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
     private final Stats stats = new Stats();
 
-    private final FmIm<SeriesId> fmIm;
+    private final ImgGenService<SeriesId> imgGenService;
     private final SeriesRepo seriesRepo;
     private final RtRepo rtRepo;
     private final SrcPngLoader pngLoader;
 
     //ImgGenContext
 
-    public Master(SeriesRepo seriesRepo, JobSpec jobSpec, FmIm<SeriesId> fmIm, SrcPngLoader pngLoader, int threadCount, int priority) {
+    public Master(SeriesRepo seriesRepo, JobSpec jobSpec, ImgGenService<SeriesId> imgGenService, SrcPngLoader pngLoader, int threadCount, int priority) {
         this.seriesRepo = seriesRepo;
         this.pngLoader = pngLoader;
         this.rtRepo = seriesRepo.getRtRepo();
@@ -77,14 +77,11 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
         this.jobSpec = jobSpec;
 
-        this.fmIm = fmIm;
+        this.imgGenService = imgGenService;
 
-        this.seriesId = fmIm.getId();
+        this.seriesId = jobSpec.getSeriesId();
         this.profile = jobSpec.getProfile();
         profile.getBaseImageType();
-
-        this.jpgSetFactory = jpgSetFactory;
-
 
         stats.masterJobStartTime = id.getEnqueueTime();
 
@@ -125,7 +122,7 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
                     initDirsAndStartFile();
 
-                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(fmIm);
+                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(imgGenService);
                     executors.createJpgSets.submit(createJpgSetsTask);
 
                     return createJpgSetsTask;
@@ -273,8 +270,9 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
     private final class CreateJpgSetsTask extends MyFutureTask<ImmutableList<CreateJpgSetTask>> {
 
         private final FmIm<SeriesId> fmIm;
+        private final ImgGenService<SeriesId> imgGenService;
 
-        private CreateJpgSetsTask(final FmIm<SeriesId> fmIm) {
+        private CreateJpgSetsTask(final ImgGenService<SeriesId> imgGenService) {
 
             super(new Callable<ImmutableList<CreateJpgSetTask>>() {
 
@@ -285,6 +283,8 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                     log.info("Creating JpgSets");
                     final ImmutableList.Builder<CreateJpgSetTask> builder = new ImmutableList.Builder<CreateJpgSetTask>();
 
+
+                    FmIm fmIm = imgGenService.getFmIm(seriesId);
                     ImageModel<Var> imageModel = fmIm.getImageModel();
 
                     List<ImView<Var>> views = imageModel.getViews();
@@ -304,7 +304,8 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                 }
             });
 
-            this.fmIm = fmIm;
+            this.fmIm = imgGenService.getFmIm(seriesId);
+            this.imgGenService = imgGenService;
 
         }
 
@@ -373,9 +374,8 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                     if (monitorTask.isCancelled()) throw new InterruptedException();
 
                     log.info("Start: jpgSetAction: " + slice);
-                    JpgSetKey key = new JpgSetKey(seriesId, slice.getSlice());
 
-                    JpgSet jpgSet = jpgSetFactory.getOrCreateJpgSet(key);
+                    JpgSet jpgSet = imgGenService.getJpgSet(seriesId, slice.getSlice());
 
                     log.info("Complete: jpgSetAction: " + slice + "  jpgCount: " + jpgSet.size());
 

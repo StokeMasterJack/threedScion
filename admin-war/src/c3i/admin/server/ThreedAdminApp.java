@@ -1,6 +1,11 @@
 package c3i.admin.server;
 
 import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
+import c3i.imgGen.api.Kit;
+import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.generic.ImgGenService;
+import c3i.imgGen.repoImpl.KitRepo;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.repo.server.BrandRepos;
 import com.google.common.collect.ImmutableMap;
@@ -20,16 +25,18 @@ public class ThreedAdminApp extends App {
     private static final File REPO_BASE_DIR_PRIVATE = new File("/configurator-content");
 
     private BrandRepos brandRepos;
+    private Kit<SeriesId> kit;
+    private SrcPngLoader pngLoader;
     private ImgGenService imgGenService;
     private JpgGeneratorService jpgGeneratorService;
-    private JpgSetFactory jpgSetFactory;
 
     public ThreedAdminApp() {
         super("threed-admin");
         brandRepos = new BrandRepos(getRepoBaseDirs());
-        imgGenService = new ImgGenServiceDave(brandRepos);
-        jpgSetFactory = new JpgSetFactory1(brandRepos, imgGenService);
-        jpgGeneratorService = new JpgGeneratorService(brandRepos, jpgSetFactory, imgGenService);
+        kit = new KitRepo(brandRepos);
+        pngLoader = kit.createSrcPngLoader();
+        imgGenService = new ImgGenService(kit);
+        jpgGeneratorService = new JpgGeneratorService(brandRepos, imgGenService, pngLoader);
     }
 
     public ImmutableMap<BrandKey, File> getRepoBaseDirs() {

@@ -2,6 +2,7 @@ package c3i.imgGen.generic;
 
 import c3i.core.featureModel.shared.FeatureModel;
 import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.Slice;
 import c3i.imgGen.api.FeatureModelFactory;
 import c3i.imgGen.api.ImageModelFactory;
 import c3i.imgGen.api.Kit;
@@ -23,11 +24,7 @@ public class ImgGenService<ID> {
     private final FeatureModelFactory fmFactory;
     private final ImageModelFactory imFactory;
 
-    private final Kit<ID> kit;
-
-    public ImgGenService(Kit<ID> kit) {
-
-        this.kit = kit;
+    public ImgGenService(final Kit<ID> kit) {
 
         fmFactory = kit.createFeatureModelFactory();
         imFactory = kit.createImageModelFactory();
@@ -55,10 +52,13 @@ public class ImgGenService<ID> {
         }
     }
 
-
     public JpgSet getJpgSet(ID id, String viewName, int angle) {
+        return getJpgSet(id, new Slice(viewName, angle));
+    }
+
+    public JpgSet getJpgSet(ID id, Slice slice) {
         FmIm fmIm = getFmIm(id);
-        JpgSetTask task = new JpgSetTask(fmIm, viewName, angle);
+        JpgSetTask task = new JpgSetTask(fmIm, slice);
         task.start();
         return task.getJpgSet();
     }
