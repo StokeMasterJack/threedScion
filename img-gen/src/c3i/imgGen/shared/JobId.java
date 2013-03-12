@@ -3,20 +3,21 @@ package c3i.imgGen.shared;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 
-public class JobId implements Comparable<JobId>,Serializable {
+public class JobId implements Comparable<JobId>, Serializable {
 
     private static final long serialVersionUID = 5981643237620253463L;
     private long enqueueTime;
 
     // for serialization
-    private JobId() {}
+    private JobId() {
+    }
 
 //    public JobId(String enqueueTime) throws IllegalArgumentException {
 //        this.enqueueTime = Long.parseLong(enqueueTime);
 //    }
 
     private JobId(long enqueueTime) throws IllegalArgumentException {
-        if(enqueueTime < 1){
+        if (enqueueTime < 1) {
             throw new IllegalArgumentException();
         }
         this.enqueueTime = enqueueTime;
@@ -26,7 +27,7 @@ public class JobId implements Comparable<JobId>,Serializable {
         return enqueueTime;
     }
 
-    public static JobId generateNew(){
+    public static JobId generateNew() {
         return new JobId(System.currentTimeMillis());
     }
 
@@ -43,7 +44,8 @@ public class JobId implements Comparable<JobId>,Serializable {
         return (int) (enqueueTime ^ (enqueueTime >>> 32));
     }
 
-    @Override public int compareTo(@Nonnull JobId that) {
+    @Override
+    public int compareTo(@Nonnull JobId that) {
         assert that != null;
 
 
@@ -57,7 +59,8 @@ public class JobId implements Comparable<JobId>,Serializable {
 
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return enqueueTime + "";
     }
 }

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public final class Slice2 {
+public final class Slice2<V> {
 
     private final ImView view;
     private final int angle;
@@ -62,7 +62,7 @@ public final class Slice2 {
         return "view: " + view + ", angle: " + angle;
     }
 
-    public Set<Object> getPngVars() {
+    public Set<V> getPngVars() {
         return view.getPngVars(angle);
     }
 

@@ -8,16 +8,16 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class ViewKey {
 
-    private final SeriesKey seriesKey;
+    private final ImageModelKey seriesKey;
     private final int viewIndex;
 
-    public ViewKey(SeriesKey seriesKey, int viewIndex) {
+    public ViewKey(ImageModelKey seriesKey, int viewIndex) {
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.viewIndex = viewIndex;
     }
 
-    public SeriesKey getSeriesKey() {
+    public ImageModelKey getSeriesKey() {
         return seriesKey;
     }
 
@@ -51,7 +51,8 @@ public class ViewKey {
     }
 
     public Path getPath() {
-        checkState(seriesKey != null);
-        return new Path("v" + viewIndex).prepend(seriesKey.getPath());
+//        checkState(seriesKey != null);
+        Path localPath = seriesKey.getLocalPath();
+        return new Path("v" + viewIndex).prepend(localPath);
     }
 }

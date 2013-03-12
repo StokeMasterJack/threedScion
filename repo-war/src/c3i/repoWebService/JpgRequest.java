@@ -54,7 +54,9 @@ public class JpgRequest extends SeriesBasedRepoRequest {
         String fingerprint = a[0];  //1cd92-3e498
 
         Profile profile = brandRepos.getRepos(brandKey).getProfiles().get(profileSegment);
-        baseImageKey = new BaseImageKey(ImFeatureModel.fmToMmSeriesKey(seriesKey), profile, fingerprint);
+
+
+        baseImageKey = new BaseImageKey(seriesKey, profile, fingerprint);
 
 
     }

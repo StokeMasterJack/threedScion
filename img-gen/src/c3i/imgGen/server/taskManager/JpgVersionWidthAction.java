@@ -2,13 +2,13 @@ package c3i.imgGen.server.taskManager;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.RootTreeId;
+import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.Profile;
-import c3i.repo.server.rt.RtRepo;
-import c3i.core.threedModel.shared.*;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
-import c3i.core.threedModel.shared.RootTreeId;
+import c3i.repo.server.rt.RtRepo;
 
 public class JpgVersionWidthAction {
 

@@ -2,6 +2,7 @@ package c3i.core.featureModel.shared.search;
 
 import c3i.core.common.shared.ProductHandler;
 import c3i.core.featureModel.shared.CspForTreeSearch;
+import c3i.core.featureModel.shared.FmSearchRequest;
 import c3i.core.featureModel.shared.search.decision.Decision;
 import c3i.core.featureModel.shared.search.decision.Decisions;
 import smartsoft.util.shared.Strings;
@@ -14,16 +15,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * For AllSat and SatCount only
  * Use FindFirstTreeSearch for isSat
  */
-public class TreeSearch {
+public class TreeSearch<P, R> {
 
     private int logLevel = 3;
 
-    private ProductHandler<CspForTreeSearch> productHandler;
+    private FmSearchRequest<R> searchRequest;
+    private ProductHandler<CspForTreeSearch, R> productHandler;
     private long solutionCount;
     private long visitCount;
 
-    public TreeSearch(ProductHandler<CspForTreeSearch> productHandler) {
-        this.productHandler = productHandler;
+    public TreeSearch(FmSearchRequest<R> searchRequest) {
+        this.searchRequest = searchRequest;
+        this.productHandler = searchRequest.getProductHandler();
     }
 
     public TreeSearch() {

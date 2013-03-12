@@ -576,5 +576,20 @@ public class FeatureModel implements Vars {
         return new CspForTreeSearch(this, getConstraint());
     }
 
+    public <R> void forEach(FmSearchRequest<R> searchRequest) {
+        ImmutableSet<Var> outVars = searchRequest.getOutVars();
+        CspForTreeSearch csp;
+
+        if (outVars != null) {
+            csp = createCspForTreeSearch(outVars);
+        } else {
+            csp = createCspForTreeSearch();
+        }
+        csp.propagateSimplify();
+        csp.forEach(searchRequest);
+
+    }
+
+
 }
 

@@ -7,8 +7,8 @@ import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImNodeType;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.ImageModelKey;
 import c3i.imageModel.shared.PngShortSha;
-import c3i.imageModel.shared.SeriesKey;
 import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
 import c3i.imageModel.shared.ViewLiftSpec;
@@ -44,7 +44,7 @@ public class ImageModelBuilder {
         List<ImView> imViews = createImViewsFromSeriesDir(seriesVDir);
 
 
-        SeriesKey seriesKey = featureModel.getSeriesKey();
+        ImageModelKey seriesKey = featureModel.getSeriesKey();
         return new ImageModel(seriesVDir.getDepth(), imViews, seriesKey);
     }
 

@@ -61,7 +61,7 @@ public class CoreImageStack {
     public BaseImageKey getBaseImageKey() {
         ImView view = rawImageStack.getView();
         String jpgFingerprint = getBaseImageFingerprint();
-        SeriesKey seriesKey = view.getSeries().getSeriesKey();
+        ImageModelKey seriesKey = view.getSeries().getSeriesKey();
         Profile profile = key.getProfile();
         return new BaseImageKey(seriesKey, profile, jpgFingerprint);
     }

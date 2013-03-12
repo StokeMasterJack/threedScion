@@ -30,6 +30,8 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
         Repos repos = r.getRepos();
 
         JpgGenHelper jpgGenHelper = new JpgGenHelper();
+
+
         File jpgFile = jpgGenHelper.getFileForJpg(jpgKey, repos);
 
 

@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -243,7 +244,8 @@ public class RtRepo implements BlinkChecker {
         }
 
         for (ImView view : threedModel.getViews()) {
-            for (Integer angle : view.getAngles()) {
+            List<Integer> angles = view.getAngles();
+            for (Integer angle : angles) {
                 File file = this.getVersionWidthSliceDir(rootTreeId, profile, view, angle);
                 if (!file.exists()) {
                     try {

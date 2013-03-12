@@ -29,7 +29,7 @@ public class JpgSetKey {
     }
 
     public String getKey() {
-        return JPG_SET + "-" + seriesId.serialize() + "-" + slice.getView() + "-" + slice.getAngle();
+        return JPG_SET + "-" + seriesId.toString() + "-" + slice.getView() + "-" + slice.getAngle();
     }
 
     public File getFileName(File cacheDir) {

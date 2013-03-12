@@ -2,9 +2,10 @@ package c3i.imgGen.server.taskManager;
 
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
-import c3i.imgGen.external.ImgGenContext;
-import c3i.imgGen.external.ImgGenContextFactory;
-import c3i.imgGen.server.JpgSetFactory;
+
+import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.generic.ImgGenService;
+import c3i.imgGen.repoImpl.FmIm;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
@@ -26,13 +27,14 @@ public class JpgGeneratorService extends AbstractIdleService {
     private final ConcurrentHashMap<JobId, Master> jobQueue = new ConcurrentHashMap<JobId, Master>();
 
     private final BrandRepos brandRepos;
-    private final JpgSetFactory jpgSetFactory;
-    private final ImgGenContextFactory imgGenContextFactory;
+    private final ImgGenService imgGenService;
+    private final SrcPngLoader srcPngLoader;
 
-    public JpgGeneratorService(BrandRepos brandRepos, JpgSetFactory jpgSetFactory, ImgGenContextFactory imgGenContextFactory) {
+    public JpgGeneratorService(BrandRepos brandRepos, ImgGenService imgGenService, SrcPngLoader srcPngLoader) {
         this.brandRepos = brandRepos;
         this.jpgSetFactory = jpgSetFactory;
-        this.imgGenContextFactory = imgGenContextFactory;
+        this.imgGenService = imgGenService;
+        this.srcPngLoader = srcPngLoader;
     }
 
     public Master startNewJpgJob(JobSpec jobSpec, int threadCount, int priority) throws EquivalentJobAlreadyRunningException {
@@ -50,8 +52,16 @@ public class JpgGeneratorService extends AbstractIdleService {
 
 
         SeriesId seriesId = jobSpec.getSeriesId();
-        ImgGenContext imgGenContext = imgGenContextFactory.getImgGenContext(seriesId);
-        Master master = new Master(jpgSetFactory, seriesRepo, jobSpec, imgGenContext, threadCount, priority);
+        FmIm fmIm = imgGenService.getFmIm(seriesId);
+
+        Master master = new Master(
+                jpgSetFactory,
+                seriesRepo,
+                jobSpec,
+                fmIm,
+                srcPngLoader,
+                threadCount,
+                priority);
         jobQueue.put(master.getId(), master);
         return master;
     }

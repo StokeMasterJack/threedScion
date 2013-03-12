@@ -1,15 +1,17 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.core.common.server.SrcPngLoader;
 import c3i.core.common.shared.SeriesId;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
+import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawBaseImage;
+import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.Slice2;
-import c3i.imgGen.external.ImgGenContext;
+import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.repoImpl.FmIm;
 import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSetFactory;
 import c3i.imgGen.server.JpgSetKey;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
 import c3i.imgGen.shared.ExecutorStatus;
@@ -21,7 +23,6 @@ import c3i.imgGen.shared.JpgState;
 import c3i.imgGen.shared.JpgStateCounts;
 import c3i.imgGen.shared.Stats;
 import c3i.imgGen.shared.TerminalStatus;
-import c3i.repo.server.RepoSrcPngLoader;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.collect.ImmutableList;
@@ -42,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Master {
+public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
     private final JobId id;
 
@@ -59,15 +60,16 @@ public class Master {
 
     private final Stats stats = new Stats();
 
-    private final JpgSetFactory jpgSetFactory;
-    private final ImgGenContext context;
+    private final FmIm<SeriesId> fmIm;
     private final SeriesRepo seriesRepo;
     private final RtRepo rtRepo;
+    private final SrcPngLoader pngLoader;
 
     //ImgGenContext
 
-    public Master(JpgSetFactory jpgSetFactory, SeriesRepo seriesRepo, JobSpec jobSpec, ImgGenContext context, int threadCount, int priority) {
+    public Master(SeriesRepo seriesRepo, JobSpec jobSpec, FmIm<SeriesId> fmIm, SrcPngLoader pngLoader, int threadCount, int priority) {
         this.seriesRepo = seriesRepo;
+        this.pngLoader = pngLoader;
         this.rtRepo = seriesRepo.getRtRepo();
         id = JobId.generateNew();
 
@@ -75,9 +77,9 @@ public class Master {
 
         this.jobSpec = jobSpec;
 
-        this.context = context;
+        this.fmIm = fmIm;
 
-        this.seriesId = context.getSeriesId();
+        this.seriesId = fmIm.getId();
         this.profile = jobSpec.getProfile();
         profile.getBaseImageType();
 
@@ -123,7 +125,7 @@ public class Master {
 
                     initDirsAndStartFile();
 
-                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(context);
+                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(fmIm);
                     executors.createJpgSets.submit(createJpgSetsTask);
 
                     return createJpgSetsTask;
@@ -270,9 +272,9 @@ public class Master {
      */
     private final class CreateJpgSetsTask extends MyFutureTask<ImmutableList<CreateJpgSetTask>> {
 
-        private final ImgGenContext context;
+        private final FmIm<SeriesId> fmIm;
 
-        private CreateJpgSetsTask(final ImgGenContext context) {
+        private CreateJpgSetsTask(final FmIm<SeriesId> fmIm) {
 
             super(new Callable<ImmutableList<CreateJpgSetTask>>() {
 
@@ -283,12 +285,15 @@ public class Master {
                     log.info("Creating JpgSets");
                     final ImmutableList.Builder<CreateJpgSetTask> builder = new ImmutableList.Builder<CreateJpgSetTask>();
 
-                    List<ImView> views = context.getImageModel().getViews();
+                    ImageModel<Var> imageModel = fmIm.getImageModel();
+
+                    List<ImView<Var>> views = imageModel.getViews();
                     for (ImView view : views) {
                         int angleCount = view.getAngleCount();
                         for (int a = 1; a <= angleCount; a++) {
                             if (monitorTask.isCancelled()) throw new InterruptedException();
-                            CreateJpgSetTask task = new CreateJpgSetTask(new Slice2(view, a));
+                            Slice2<Var> slice = new Slice2<Var>(view, a);
+                            CreateJpgSetTask task = new CreateJpgSetTask(slice);
                             executors.createJpgSet.submit(task);
                             builder.add(task);
                         }
@@ -299,12 +304,12 @@ public class Master {
                 }
             });
 
-            this.context = context;
+            this.fmIm = fmIm;
 
         }
 
         public int getSliceCount() {
-            return context.getSliceCount();
+            return fmIm.getImageModel().getSliceCount();
         }
 
 
@@ -482,7 +487,6 @@ public class Master {
 
                     BaseImage baseImage = new BaseImage(profile, slice, fingerprint);
                     File outFile = rtRepo.getBaseImageFileName(baseImage);
-                    SrcPngLoader pngLoader = new RepoSrcPngLoader(seriesRepo);
 
                     BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(outFile, baseImage, pngLoader);
                     jpgGeneratorPureJava.generate(stats);
@@ -504,6 +508,7 @@ public class Master {
     }
 
     private void createGenVersionDirs() {
+
         seriesRepo.createGenVersionDir(seriesId, profile);
     }
 

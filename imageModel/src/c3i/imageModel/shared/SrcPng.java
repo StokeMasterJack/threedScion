@@ -9,7 +9,7 @@ import java.util.Set;
 
 
 @Immutable
-public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
+public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLeaf<V> {
 
     private final int angle;
     private final PngShortSha shortSha;
@@ -158,17 +158,17 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return new Path(getBlinkName());
     }
 
-    public Set<Object> getFeatures() {
-        HashSet<Object> vars = new HashSet<Object>();
+    public Set<V> getFeatures() {
+        HashSet<V> vars = new HashSet<V>();
         getFeatures(vars);
         return vars;
     }
 
-    public void getFeatures(Set<Object> features) {
+    public void getFeatures(Set<V> features) {
         IsParent p = parent;
         while (p.isFeature()) {
-            ImFeature f = p.asFeature();
-            Object var = f.getVar();
+            ImFeature<V> f = p.asFeature();
+            V var = f.getVar();
             features.add(var);
             p = p.getParent();
         }
@@ -223,7 +223,7 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
 //        else return png2;
 //    }
 
-    public SrcPng copy(int angle) {
+    public SrcPng<V> copy(int angle) {
         if (this.angle == angle) return new SrcPng(depth, angle, shortSha);
         else throw new IllegalStateException();
     }
@@ -235,21 +235,21 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
 //    }
 
     @Override
-    public void getVarSet(Set<Object> varSet) {
+    public void getVarSet(Set<V> varSet) {
         //intentionally blank
     }
 
     @Override
-    public void getVarSet(Set<Object> varSet, int angle) {
+    public void getVarSet(Set<V> varSet, int angle) {
         //intentionally blank
         if (this.angle == angle) {
-            Set<Object> features = getFeatures();
+            Set<V> features = getFeatures();
             varSet.addAll(features);
         }
     }
 
     @Override
-    public void getPngs(Set<SrcPng> pngs) {
+    public void getPngs(Set<SrcPng<V>> pngs) {
         pngs.add(this);
     }
 

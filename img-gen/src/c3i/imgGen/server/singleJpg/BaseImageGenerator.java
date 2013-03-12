@@ -2,9 +2,10 @@ package c3i.imgGen.server.singleJpg;
 
 
 import c3i.imageModel.shared.IBaseImageKey;
+import c3i.imageModel.shared.ImageModelKey;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.RawBaseImage;
-import c3i.core.common.server.SrcPngLoader;
+import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.shared.Stats;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
@@ -30,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * Takes multiple pngs and turns them into a single jpg
  */
-public class BaseImageGenerator {
+public class BaseImageGenerator<ID> {
 
     public static final float QUALITY = 75F * .01F;
 
@@ -279,7 +280,8 @@ public class BaseImageGenerator {
     private BufferedImage readSrcPng(String pngShortSha) throws IORuntimeException {
         InputStream is = null;
         try {
-            is = pngLoader.getPng(pngShortSha).getInput();
+            ImageModelKey imageModelKey = baseImage.getSeriesKey();
+            is = pngLoader.getPng(imageModelKey, pngShortSha).getInput();
             return readSrcImage(is);
         } catch (IOException e) {
             throw new IORuntimeException(e);

@@ -266,28 +266,29 @@ public class SeriesRepo {
         return threedModel;
     }
 
-    public ThreedModel createThreedModel(@Nonnull RootTreeId rootTreeId) {
-        Preconditions.checkNotNull(rootTreeId);
-
-        long t1 = System.currentTimeMillis();
-
-        log.info("\tBuilding ThreedModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
+    public FeatureModel createFeatureModel(@Nonnull RootTreeId rootTreeId) {
+        log.info("\tBuilding FeatureModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
         ModelXml modelXml = readModelXml(rootTreeId);
 
         log.info("\t\t Building FeatureModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
-        FeatureModel fm = createFeatureModel(modelXml);
+        return createFeatureModel(modelXml);
+    }
 
+    public ImageModel createImageModel(FeatureModel featureModel, RootTreeId rootTreeId) {
         log.info("\t\t Building ImageModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
+        ImFeatureModel imFeatureModel = new ImFeatureModel(featureModel);
+        return createImageModel(rootTreeId, imFeatureModel);
+    }
 
-        ImFeatureModel imFeatureModel = new ImFeatureModel(fm);
-        ImageModel im = createImageModel(rootTreeId, imFeatureModel);
+    public ThreedModel createThreedModel(RootTreeId rootTreeId) {
+        Preconditions.checkNotNull(rootTreeId);
+
+        FeatureModel fm = createFeatureModel(rootTreeId);
+        ImageModel im = createImageModel(fm, rootTreeId);
+
         ThreedModel threedModel = new ThreedModel(fm, im);
 
-        long t2 = System.currentTimeMillis();
-        long delta = t2 - t1;
-
-        log.info("\t\t ThreedModel complete for [" + seriesKey + "].  ThreedModel created in [" + delta + "]ms");
-
+        log.info("\t\t ThreedModel complete for [" + seriesKey + "].  ThreedModel created");
 
         return threedModel;
     }

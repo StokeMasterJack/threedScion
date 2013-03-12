@@ -11,15 +11,15 @@ public interface JpgGenServiceAsync {
      */
     void startJob(JobSpec jobSpec, AsyncCallback<Boolean> async);
 
-    void getQueueStatus(BrandKey brandKey,AsyncCallback<ArrayList<JobStatusItem>> async);
+    void getQueueStatus(BrandKey brandKey, AsyncCallback<ArrayList<JobStatusItem>> async);
 
-    void getQueueDetails(BrandKey brandKey,JobId jobId, AsyncCallback<ArrayList<ExecutorStatus>> async);
+    void getQueueDetails(BrandKey brandKey, JobId jobId, AsyncCallback<ArrayList<ExecutorStatus>> async);
 
-    void getJpgGenFinalStats(BrandKey brandKey,JobId jobId, AsyncCallback<Stats> async);
+    void getJpgGenFinalStats(BrandKey brandKey, JobId jobId, AsyncCallback<Stats> async);
 
-    void cancelJob(BrandKey brandKey,JobId jobId, AsyncCallback<Void> async);
+    void cancelJob(BrandKey brandKey, JobId jobId, AsyncCallback<Void> async);
 
-    void removeJob(BrandKey brandKey,JobId jobId, AsyncCallback<Void> async);
+    void removeJob(BrandKey brandKey, JobId jobId, AsyncCallback<Void> async);
 
-    void removeTerminal(BrandKey brandKey,AsyncCallback<Void> async);
+    void removeTerminal(BrandKey brandKey, AsyncCallback<Void> async);
 }

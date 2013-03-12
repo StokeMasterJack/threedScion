@@ -28,18 +28,11 @@ public class ImToJsonJvm {
 
     public ObjectNode jsonForSeries(ImageModel series) {
         ObjectNode jsSeries = f.objectNode();
-        ArrayNode jsView = toJson(series.getViews());
+        ArrayNode jsView = viewsToJson(series.getViews());
         jsSeries.put("views", jsView);
         return jsSeries;
     }
 
-    private ArrayNode toJson(List<ImView> imViews) {
-        ArrayNode a = f.arrayNode();
-        for (ImView imView : imViews) {
-            a.add(toJson(imView));
-        }
-        return a;
-    }
 
     private JsonNode toJson(ImView imView) {
         ObjectNode n = f.objectNode();
@@ -52,7 +45,7 @@ public class ImToJsonJvm {
             n.put("lift", toJson(liftSpec));
         }
 
-        n.put("layers", this.toJson(imView.getLayers()));
+        n.put("layers", this.layersToJson(imView.getLayers()));
         return n;
     }
 
@@ -63,7 +56,15 @@ public class ImToJsonJvm {
         return n;
     }
 
-    private JsonNode toJson(List<ImLayer> imLayers) {
+    private ArrayNode viewsToJson(List<ImView> imViews) {
+        ArrayNode a = f.arrayNode();
+        for (ImView imView : imViews) {
+            a.add(toJson(imView));
+        }
+        return a;
+    }
+
+    private JsonNode layersToJson(List<ImLayer> imLayers) {
         ArrayNode n = f.arrayNode();
         for (ImLayer imLayer : imLayers) {
             n.add(toJson(imLayer));

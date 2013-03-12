@@ -1,10 +1,10 @@
 package c3i.imageModel.shared;
 
-public interface SimpleFeatureModel {
+public interface SimpleFeatureModel<V> {
 
-    Object getVar(String varCode);
+    V getVar(String varCode);
 
-    SeriesKey getSeriesKey();
+    ImageModelKey getSeriesKey();
 
     boolean containsVarCode(String varCode);
 }

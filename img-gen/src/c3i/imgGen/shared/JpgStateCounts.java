@@ -2,7 +2,7 @@ package c3i.imgGen.shared;
 
 import java.io.Serializable;
 
-public class JpgStateCounts implements Serializable{
+public class JpgStateCounts implements Serializable {
 
     private static final long serialVersionUID = 4837089457962891271L;
 
@@ -16,7 +16,8 @@ public class JpgStateCounts implements Serializable{
         this.errorCount = errorCount;
     }
 
-    protected JpgStateCounts(){}
+    protected JpgStateCounts() {
+    }
 
     public int getCompleteCount() {
         return completeCount;
@@ -59,7 +60,7 @@ public class JpgStateCounts implements Serializable{
         }
 
         public void count(JpgStateCounts states) {
-            if(states==null) return;
+            if (states == null) return;
             completeCount += states.completeCount;
             cancelCount += states.cancelCount;
             errorCount += states.errorCount;

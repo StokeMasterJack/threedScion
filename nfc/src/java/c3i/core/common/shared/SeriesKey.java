@@ -1,6 +1,7 @@
 package c3i.core.common.shared;
 
 
+import c3i.imageModel.shared.ImageModelKey;
 import smartsoft.util.shared.Path;
 import smartsoft.util.shared.Strings;
 
@@ -13,7 +14,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Integer.parseInt;
 
-public class SeriesKey implements Comparable<SeriesKey>, Serializable {
+public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageModelKey {
 
     private static final long serialVersionUID = -1194176968240952697L;
 
@@ -67,7 +68,12 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
         this.brandKey = BrandKey.fromString(brandKey);
     }
 
+    //ImageModelKey seriesKey
     protected SeriesKey() {
+    }
+
+    public SeriesKey(ImageModelKey k) {
+        this(k.getBrand(), k.getName(), k.getYear() + "");
     }
 
     public SeriesKey(BrandKey brandKey, String seriesYear, String seriesName) {
@@ -298,4 +304,20 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
             throw new RuntimeException("Problems parsing[" + brandSpaceYearSpaceName + "]");
         }
     }
+
+    /**
+     * ex: toyota/tundra/2014
+     */
+    @Override
+    public Path getLocalPath() {
+        String seriesName = getName();
+        return new Path(getBrand()).append(seriesName).append(getYear());
+    }
+
+    @Override
+    public String getBrand() {
+        return getBrandKey().getKey();
+    }
+
+
 }

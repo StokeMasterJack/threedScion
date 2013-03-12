@@ -1,29 +1,29 @@
 package c3i.imgGen.server;
 
-import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.Slice2;
-import c3i.imgGen.external.ImgGenContext;
+import c3i.imgGen.repoImpl.FmIm;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class JpgSetsTask {
+public class JpgSetsTask<ID> {
 
     public static enum State {NOT_STARTED, IN_PROCESS, COMPLETE}
 
-    private final ImgGenContext ctx;
+    private final FmIm<ID> fmIm;
 
     private final HashMap<Slice, JpgSetTask> jpgSetTasks = new HashMap<Slice, JpgSetTask>();
 
     private State state = State.NOT_STARTED;
 
-    public JpgSetsTask(ImgGenContext ctx) {
-        this.ctx = ctx;
+    public JpgSetsTask(FmIm<ID> fmIm) {
+        this.fmIm = fmIm;
     }
 
     public void start() {
@@ -37,9 +37,7 @@ public class JpgSetsTask {
 
     private void execute() {
 
-        String imageModelJson = ctx.getImageModelJson();
-
-        ImageModel imageModel = JsonToImJvm.parse(ctx, imageModelJson);
+        ImageModel imageModel = fmIm.getImageModel();
 
         List<ImView> views = imageModel.getViews();
 
@@ -48,7 +46,7 @@ public class JpgSetsTask {
 
                 Slice2 slice = new Slice2(view, angle);
 
-                JpgSetTask jpgSetTask = new JpgSetTask(ctx, slice);
+                JpgSetTask jpgSetTask = new JpgSetTask(fmIm, slice);
                 jpgSetTasks.put(slice.getSlice(), jpgSetTask);
 
                 jpgSetTask.start();
@@ -63,8 +61,17 @@ public class JpgSetsTask {
     }
 
 
-    public HashMap<Slice, JpgSetTask> getJpgSetTasks() {
+    public Map<Slice, JpgSetTask> getJpgSetTasks() {
         return jpgSetTasks;
+    }
+
+    public JpgSets getJpgSets() {
+        Map<Slice, JpgSet> m = new HashMap<Slice, JpgSet>();
+        for (Slice slice : jpgSetTasks.keySet()) {
+            JpgSetTask task = jpgSetTasks.get(slice);
+            m.put(slice, task.getJpgSet());
+        }
+        return new JpgSets(m);
     }
 
     public int getJpgCount() {
@@ -74,10 +81,5 @@ public class JpgSetsTask {
         }
         return c;
     }
-
-    public ImgGenContext getCtx() {
-        return ctx;
-    }
-
 
 }

@@ -5,9 +5,9 @@ import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
+import c3i.imageModel.shared.ImageModelKey;
 import c3i.imageModel.shared.JsonParseException;
 import c3i.imageModel.shared.PngShortSha;
-import c3i.imageModel.shared.SeriesKey;
 import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
 import org.codehaus.jackson.JsonNode;
@@ -21,9 +21,9 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class JsonToImJvm {
+public class JsonToImJvm<V> {
 
-    private final SimpleFeatureModel featureModel;
+    private final SimpleFeatureModel<V> featureModel;
 
     public static ImageModel parse(SimpleFeatureModel featureModel, String imageModelJson) throws JsonParseException {
         checkNotNull(featureModel.getSeriesKey());
@@ -53,7 +53,7 @@ public class JsonToImJvm {
         List<ImView> imViews = parseViews(jsonArray);
 
 
-        SeriesKey seriesKey = featureModel.getSeriesKey();
+        ImageModelKey seriesKey = featureModel.getSeriesKey();
         checkState(seriesKey != null);
 
 

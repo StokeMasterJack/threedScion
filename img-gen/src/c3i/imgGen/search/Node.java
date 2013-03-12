@@ -1,8 +1,8 @@
 package c3i.imgGen.search;
 
 
-import c3i.imgGen.external.ProductConverter;
 import c3i.core.common.shared.ProductHandler;
+import c3i.imgGen.external.ProductConverter;
 
 public abstract class Node<
         PRODUCT_TYPE,

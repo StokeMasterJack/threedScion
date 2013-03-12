@@ -30,10 +30,6 @@ public interface JpgGenService extends RemoteService {
     ArrayList<JobStatusItem> getQueueStatus(BrandKey brandKey);
 
 
-
-
-
-
     ArrayList<ExecutorStatus> getQueueDetails(BrandKey brandKey, JobId jobId);
 
     Stats getJpgGenFinalStats(BrandKey brandKey, JobId jobId);

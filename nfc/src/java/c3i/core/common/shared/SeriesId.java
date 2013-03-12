@@ -70,7 +70,7 @@ public class SeriesId implements Serializable {
 
     @Override
     public String toString() {
-        return seriesKey.toString() + " " + rootTreeId;
+        return serialize();
     }
 
     public String serialize() {

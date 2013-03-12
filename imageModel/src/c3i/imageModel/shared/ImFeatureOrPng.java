@@ -3,17 +3,17 @@ package c3i.imageModel.shared;
 
 import java.util.Set;
 
-public interface ImFeatureOrPng extends IsChild {
+public interface ImFeatureOrPng<V> extends IsChild<V> {
 
     void getMatchingPngs(PngMatch bestMatch, SimplePicks picks, int angle);
 
-    ImFeatureOrPng copy(int angle);
+    ImFeatureOrPng<V> copy(int angle);
 
-    void getVarSet(Set<Object> varSet);
+    void getVarSet(Set<V> varSet);
 
-    void getVarSet(Set<Object> varSet, int angle);
+    void getVarSet(Set<V> varSet, int angle);
 
-    void getPngs(Set<SrcPng> pngs);
+    void getPngs(Set<SrcPng<V>> pngs);
 
 
 }

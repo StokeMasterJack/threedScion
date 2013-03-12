@@ -328,14 +328,20 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
 
     }
 
-    public void forEach(ProductHandler<CspForTreeSearch> handler) {
+    public <R> void forEach(FmSearchRequest<R> request) {
         if (this instanceof CspForTreeSearch) {
-            CspForTreeSearch cspForTreeSearch = (CspForTreeSearch) this;
-            TreeSearch treeSearch = new TreeSearch(handler);
-            treeSearch.start(cspForTreeSearch);
+            CspForTreeSearch csp = (CspForTreeSearch) this;
+            TreeSearch treeSearch = new TreeSearch(request);
+            treeSearch.start(csp);
         } else {
             throw new IllegalStateException();
         }
+    }
+
+    public <R> void forEach(ProductHandler<CspForTreeSearch,R> handler) {
+        FmSearchRequest<R> r = new FmSearchRequest<R>();
+        r.setProductHandler(handler);
+        this.forEach(r);
     }
 
     public C reduce(String... varCodes) {

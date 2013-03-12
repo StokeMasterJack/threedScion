@@ -3,7 +3,7 @@ package c3i.core.featureModel.shared.search;
 import c3i.core.common.shared.ProductHandler;
 import c3i.core.featureModel.shared.CspForTreeSearch;
 
-public class SatCountProductHandler implements ProductHandler<CspForTreeSearch> {
+public class SatCountProductHandler implements ProductHandler<CspForTreeSearch, Long> {
 
     private long satCount;
 
@@ -17,6 +17,11 @@ public class SatCountProductHandler implements ProductHandler<CspForTreeSearch> 
     }
 
     public long getCount() {
+        return satCount;
+    }
+
+    @Override
+    public Long getResult() {
         return satCount;
     }
 }

@@ -9,18 +9,18 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
+public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, V>, IsRoot<V> {
 
-    private final SeriesKey seriesKey;
-    private final List<ImView> imViews;
+    private final ImageModelKey seriesKey;
+    private final List<ImView<V>> imViews;
 
-    public ImageModel(int depth, List<ImView> imViews, SeriesKey seriesKey) {
+    public ImageModel(int depth, List<ImView<V>> imViews, ImageModelKey seriesKey) {
         super(depth);
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.imViews = imViews;
 
-        for (ImView view : imViews) {
+        for (ImView<V> view : imViews) {
             view.initParent(this);
         }
     }
@@ -30,8 +30,10 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return getView(viewName).getSlice(angle);
     }
 
-    public Slice2 getSlice2(String viewName, int angle) {
-        return getView(viewName).getSlice2(angle);
+    public Slice2<V> getSlice2(String viewName, int angle) {
+        ImView<V> view = getView(viewName);
+        Slice2<V> slice2 = view.getSlice2(angle);
+        return slice2;
     }
 
     public Slice2 getSlice2(Slice slice) {
@@ -60,8 +62,8 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         }
     }
 
-    public ImView getView(String viewName) {
-        for (ImView view : imViews) {
+    public ImView<V> getView(String viewName) {
+        for (ImView<V> view : imViews) {
             if (view.is(viewName)) {
                 return view;
             }
@@ -69,7 +71,7 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         throw new IllegalArgumentException("No such view[" + viewName + "]");
     }
 
-    public List<ImView> getViews() {
+    public List<ImView<V>> getViews() {
         return imViews;
     }
 
@@ -91,22 +93,15 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
         return getView("interior");
     }
 
-    @Override
-    public Path getLocalPath() {
-        String y = seriesKey.getYear() + "";
-        String n = seriesKey.getName();
-        Path localPath = new Path(n, y);
-        return localPath;
-    }
 
     @Override
-    public List<ImView> getChildNodes() {
+    public List<ImView<V>> getChildNodes() {
         return imViews;
     }
 
     @Override
     public boolean containsAngle(int angle) {
-        List<ImView> views = getViews();
+        List<ImView<V>> views = getViews();
         if (views == null) return false;
         for (int i = 0; i < views.size(); i++) {
             if (views.get(i).containsAngle(angle)) return true;
@@ -168,19 +163,23 @@ public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
 //        return getView(viewIndex);
 //    }
 
+
+    @Override
+    public Path getLocalPath() {
+        return seriesKey.getLocalPath();
+    }
+
     public Path getThreedBaseUrl(Path repoBase) {
         if (repoBase == null) {
             //            throw new IllegalStateException("repoBase should not be null");
             repoBase = new Path();
         }
-        SeriesKey seriesKey = getSeriesKey();
-        String brand = seriesKey.getBrand();
-        String seriesName = seriesKey.getName();
-        int year = seriesKey.getYear();
-        return repoBase.append(brand).append(seriesName).append(year).append("3d");
+
+        Path localPath = getLocalPath();
+        return repoBase.append(localPath).append("3d");
     }
 
-    public SeriesKey getSeriesKey() {
+    public ImageModelKey getSeriesKey() {
         checkState(seriesKey != null);
         return seriesKey;
     }

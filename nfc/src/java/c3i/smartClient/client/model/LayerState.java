@@ -8,23 +8,24 @@ import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.events.ValueChangeTopic;
 import com.google.common.collect.Sets;
 
+import java.util.List;
 import java.util.Set;
 
-public class LayerState {
+public class LayerState<V> {
 
-    private final ValueChangeTopic<LayerState> change = new ValueChangeTopic<LayerState>("LayerStateChangeTopic");
+    private final ValueChangeTopic<LayerState<V>> change = new ValueChangeTopic<LayerState<V>>("LayerStateChangeTopic");
 
     private final Set<ImLayer> hiddenLayers = Sets.newHashSet();
 
     private final ViewSession viewSession;
-    private final ImView view;
+    private final ImView<V> view;
 
     public LayerState(ViewSession viewSession) {
         this.viewSession = viewSession;
         this.view = viewSession.getView();
     }
 
-    public void enableLayer(ImLayer layer) {
+    public void enableLayer(ImLayer<V> layer) {
         checkPngMode("enableLayer");
         boolean removed = hiddenLayers.remove(layer);
         if (removed) {
@@ -32,7 +33,7 @@ public class LayerState {
         }
     }
 
-    public void disableLayer(ImLayer layer) {
+    public void disableLayer(ImLayer<V> layer) {
         checkPngMode("disableLayer");
         boolean added = hiddenLayers.add(layer);
         if (added) {
@@ -41,7 +42,7 @@ public class LayerState {
     }
 
 
-    public void toggleLayer(ImLayer layer) {
+    public void toggleLayer(ImLayer<V> layer) {
         checkPngMode("toggleLayer");
         if (hiddenLayers.contains(layer)) {
             hiddenLayers.remove(layer);
@@ -61,7 +62,8 @@ public class LayerState {
 
     public void enableNone() {
         checkPngMode("enableNone");
-        for (ImLayer layer : view.getLayers()) {
+        List<ImLayer<V>> layers = view.getLayers();
+        for (ImLayer<V> layer : layers) {
             hiddenLayers.add(layer);
         }
         fire();
@@ -78,11 +80,11 @@ public class LayerState {
         return isLayerEnabled(png.getLayer());
     }
 
-    public void addChangeListener(ChangeListener<LayerState> l) {
+    public void addChangeListener(ChangeListener<LayerState<V>> l) {
         change.add(l);
     }
 
-    public void removeChangeListener(ChangeListener<LayerState> l) {
+    public void removeChangeListener(ChangeListener<LayerState<V>> l) {
         change.remove(l);
     }
 
