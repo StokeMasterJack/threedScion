@@ -1,9 +1,10 @@
-package c3i.core.threedModel.server;
+package c3i.repo.server;
 
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.Repos;
+import c3i.repo.server.TmToJsonJvm;
 import org.junit.Before;
 import org.junit.Test;
 

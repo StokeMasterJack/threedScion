@@ -5,7 +5,7 @@ import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.search.SatCountProductHandler;
-import c3i.core.threedModel.server.TestConstants;
+import c3i.repo.server.TestConstants;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;

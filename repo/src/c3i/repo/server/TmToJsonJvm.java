@@ -1,4 +1,4 @@
-package c3i.core.threedModel.server;
+package c3i.repo.server;
 
 import c3i.featureModel.server.FmToJsonJvm;
 import c3i.core.threedModel.shared.ThreedModel;

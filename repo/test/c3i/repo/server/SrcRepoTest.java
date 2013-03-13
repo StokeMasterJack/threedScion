@@ -1,6 +1,5 @@
 package c3i.repo.server;
 
-import c3i.core.threedModel.server.TestConstants;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.shared.CommitHistory;

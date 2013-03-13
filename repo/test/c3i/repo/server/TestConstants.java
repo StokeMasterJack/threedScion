@@ -1,4 +1,4 @@
-package c3i.core.threedModel.server;
+package c3i.repo.server;
 
 import c3i.featureModel.shared.common.BrandKey;
 import com.google.common.collect.ImmutableMap;
