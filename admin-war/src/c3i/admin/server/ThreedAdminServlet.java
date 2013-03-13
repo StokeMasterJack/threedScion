@@ -8,7 +8,6 @@ import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.imageModel.shared.Profiles;
-import c3i.repo.server.BlinkCheckin;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
@@ -176,7 +175,6 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
 
             RevCommit revCommit = srcRepo.addAllAndCommit(commitMessage);
             ObjectId newCommitId = revCommit.getId();
-            BlinkCheckin.processBlinks(srcRepo.getGitRepo(), revCommit);
 
             if (notEmpty(tag)) {
                 srcRepo.tagCommit(tag, revCommit);

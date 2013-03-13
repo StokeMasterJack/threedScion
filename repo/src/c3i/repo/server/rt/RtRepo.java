@@ -3,7 +3,6 @@ package c3i.repo.server.rt;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.imageModel.server.BlinkChecker;
 import c3i.imageModel.server.ImageUtil;
 import c3i.imageModel.shared.BaseImageType;
 import c3i.imageModel.shared.IBaseImageKey;
@@ -31,7 +30,7 @@ import java.util.logging.Logger;
 /**
  * This is the gen directory
  */
-public class RtRepo implements BlinkChecker {
+public class RtRepo  {
 
     private final File rtRepoDir;
     private final SeriesKey seriesKey;
@@ -45,7 +44,6 @@ public class RtRepo implements BlinkChecker {
     private final File emptyPngDir;
     private final File notEmptyPngDir;
     private final File versionsDir;
-    private final File blinksDir;
     private final File cacheDir;
 
     public RtRepo(File rtRepoDir, SeriesKey seriesKey) {
@@ -80,10 +78,6 @@ public class RtRepo implements BlinkChecker {
 
         versionsDir = new File(this.rtRepoDir, "versions");
         FileUtil.createDirNotExists(versionsDir);
-
-
-        blinksDir = new File(this.rtRepoDir, "blinks");
-        FileUtil.createDirNotExists(blinksDir);
 
         cacheDir = new File(this.rtRepoDir, "cache");
         FileUtil.createDirNotExists(cacheDir);
@@ -258,17 +252,6 @@ public class RtRepo implements BlinkChecker {
             }
         }
 
-    }
-
-    public File getBlinkPngFile(PngShortSha shortSha) {
-        return new File(blinksDir, shortSha.stringValue() + ".png");
-    }
-
-    @Override
-    public boolean isBlinkPng(PngShortSha shortSha) {
-        File blinkFile = getBlinkPngFile(shortSha);
-        boolean exists = blinkFile.exists();
-        return exists;
     }
 
     public File getZPngFileName(PngSegment pngKey) {

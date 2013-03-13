@@ -136,9 +136,6 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
         return !isZLayer();
     }
 
-    public boolean isBlinkPngRequired() {
-        return isAccessory();
-    }
 
     @Override
     public boolean containsAngle(int angle) {

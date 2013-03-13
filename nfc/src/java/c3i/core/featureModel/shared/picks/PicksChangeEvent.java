@@ -17,31 +17,6 @@ public class PicksChangeEvent extends GwtEvent<PicksChangeHandler> {
         this.mostRecentSinglePick = mostRecentSinglePick;
     }
 
-    /**
-     * is this redundant???
-     * @param fm
-     * @return
-     */
-    public boolean isBlinkEvent(FeatureModel fm) {
-        if (mostRecentSinglePick == null) return false;
-        return mostRecentSinglePick.isAccessory(fm);
-    }
-
-    /**
-     * is this redundant???
-     * @param fm
-     * @return
-     */
-    public Var getBlinkAccessory(FeatureModel fm) {
-        if (mostRecentSinglePick == null) return null;
-        if (mostRecentSinglePick.isAccessory(fm)) return mostRecentSinglePick;
-        return null;
-    }
-
-    public Var getBlinkAccessory() {
-        return mostRecentSinglePick;
-    }
-
     public static final Type<PicksChangeHandler> TYPE = new Type<PicksChangeHandler>();
 
     @Override

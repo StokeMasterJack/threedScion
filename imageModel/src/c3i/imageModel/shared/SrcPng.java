@@ -16,8 +16,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
 
     public static final String VERSION_PREFIX = "vr_1_";
     public static final String PNG_SUFFIX = ".png";
-    public static final String BLINK_SEGMENT = "_w";
-    public static final String BLINK_SUFFIX = "_w" + PNG_SUFFIX;
 
 
     @Override
@@ -49,14 +47,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return VERSION_PREFIX + Angle.getAnglePadded(angle) + PNG_SUFFIX;
     }
 
-    public String getBlinkName() {
-        return getVersionPrefix() + getAnglePadded() + getBlinkSegment() + getPngSuffix();
-    }
-
-    private String getBlinkSegment() {
-        return BLINK_SEGMENT;
-    }
-
     private String getAnglePadded() {
         return Angle.getAnglePadded(angle);
     }
@@ -66,10 +56,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
     }
 
     public String getPngSuffix() {
-        return PNG_SUFFIX;
-    }
-
-    public String getBlinkSuffix() {
         return PNG_SUFFIX;
     }
 
@@ -146,18 +132,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return false;
     }
 
-    public Path getBlinkPath(Path repoBaseUrl) {
-        return getParent().getUrl(repoBaseUrl).append(getBlinkLocalPath());
-    }
-
-    public Path getBlinkPath() {
-        return getBlinkPath(null);
-    }
-
-    public Path getBlinkLocalPath() {
-        return new Path(getBlinkName());
-    }
-
     public Set<V> getFeatures() {
         HashSet<V> vars = new HashSet<V>();
         getFeatures(vars);
@@ -188,10 +162,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return localName.endsWith(PNG_SUFFIX);
     }
 
-    public static boolean hasBlinkSuffix(String localName) {
-        return localName.endsWith(BLINK_SUFFIX);
-    }
-
     public static boolean canParseAngeFromLocalName(String localName) {
         try {
             getAngleFromPng(localName);
@@ -208,7 +178,7 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
     }
 
     public static boolean isValidLocalName(String localName) {
-        return hasPngSuffix(localName) && !hasBlinkSuffix(localName) && canParseAngeFromLocalName(localName);
+        return hasPngSuffix(localName) && canParseAngeFromLocalName(localName);
     }
 
     @Override
@@ -216,23 +186,10 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return this.angle == angle;
     }
 
-//    public static SrcPng bestMatch(SrcPng png1, SrcPng png2, Var accessory) {
-//        int featureIndex1 = png1.indexOf(accessory);
-//        int featureIndex2 = png2.indexOf(accessory);
-//        if (featureIndex1 < featureIndex2) return png1;
-//        else return png2;
-//    }
-
     public SrcPng<V> copy(int angle) {
         if (this.angle == angle) return new SrcPng(depth, angle, shortSha);
         else throw new IllegalStateException();
     }
-
-//    @Override
-//    public FeatureOrPng getSlice(int angle) {
-//        if (this.angle == angle) return new Png(shortSha.stringValue(), blink);
-//        else return null;
-//    }
 
     @Override
     public void getVarSet(Set<V> varSet) {

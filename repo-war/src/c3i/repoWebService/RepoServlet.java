@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  *      /sienna/2011/3d/models/[root tree sha].json
  *      /sienna/2011/3d/jpgs/wStd/[png-shas].json
  *      /sienna/2011/3d/pngs/[sha].json
- *      /sienna/2011/3d/blink/[png-sha].json
  *      /avalon/2011/vtc.txt
  *      /avalon/2011/exterior-2/wStd/3544/070/LH02/nofp.jpg
  *      /avalon/2011/2c05ba6f8d52e4ba85ae650756dc2d1423d9395d/exterior-2/wStd/3544/070/LH02/seriesfp.jpg
@@ -32,7 +31,6 @@ import java.util.logging.Logger;
  *
  * 1.   pngs
  * 2.   jpgs
- * 3.   blink pngs
  * 4.   threed-model.json
  * 5.   Any git source object (backdoor)
  */
@@ -47,7 +45,6 @@ public class RepoServlet extends HttpServlet {
     private JpgHandler jpgHandler;
     private JpgHandlerSeriesFingerprint jpgHandlerSeriesFingerprint;
     private JpgHandlerNoFingerprint jpgHandlerNoFingerprint;
-    private BlinkHandler blinkHandler;
     private ThreedModelHandler threedModelHandler;
     private ThreedModelHandlerJsonP threedModelHandlerJsonP;
     private GitObjectHandler gitObjectHandler;
@@ -77,9 +74,8 @@ public class RepoServlet extends HttpServlet {
         vtcHandler = new VtcHandler(brandRepos);
         vtcMapHandler = new VtcMapHandler(brandRepos);
         jpgHandler = new JpgHandler(brandRepos, pngLoader);
-        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos,pngLoader);
-        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos,pngLoader);
-        blinkHandler = new BlinkHandler(brandRepos);
+        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos, pngLoader);
+        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos, pngLoader);
         threedModelHandler = new ThreedModelHandler(brandRepos);
         threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos);
         gitObjectHandler = new GitObjectHandler(brandRepos);
@@ -134,9 +130,6 @@ public class RepoServlet extends HttpServlet {
             } else if (isJpgRequest(request)) {
                 log.fine("isJpgRequest");
                 jpgHandler.handle(new JpgRequest(brandRepos, request, response));
-            } else if (isBlinkRequest(request)) {
-                log.fine("isBlinkRequest");
-                blinkHandler.handle(new SeriesBasedRepoRequest(brandRepos, request, response));
             } else if (isThreedModelRequest(request)) {
                 log.fine("isThreedModelRequest");
                 threedModelHandler.handle(new ThreedModelRequest(brandRepos, request, response));
@@ -206,13 +199,8 @@ public class RepoServlet extends HttpServlet {
 
     private boolean isPngRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        boolean retVal = uri.contains("/pngs/") && !uri.contains("/blink/") && !uri.contains("/objects/");
+        boolean retVal = uri.contains("/pngs/") && !uri.contains("/objects/");
         return retVal;
-    }
-
-    private boolean isBlinkRequest(HttpServletRequest request) {
-        String uri = request.getRequestURI();
-        return uri.endsWith(".png") && uri.contains("/blink/");
     }
 
     private boolean isJpgRequest(HttpServletRequest request) {

@@ -51,7 +51,6 @@ ImageStack
 PngSpec
     pngShortSha
     deltaY: int
-    blink: boolean
 
 =====
 Level 1:

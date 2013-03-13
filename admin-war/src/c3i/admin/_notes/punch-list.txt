@@ -1,5 +1,4 @@
 todo make sure pre-fetch still works
-todo make sure blink still works
 
 get current version mechanism
 

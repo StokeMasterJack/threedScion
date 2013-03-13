@@ -28,8 +28,6 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     private final AsyncKeyValue<Set<Var>, FixedPicks> fixedPicks;
 
-    private Var potentialBlinkVar;
-
     public CurrentUiPicks(ThreedModel threedModel) {
         this.threedModel = threedModel;
         this.featureModel = threedModel.getFeatureModel();
@@ -133,7 +131,6 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
         updateFixedPicksKey();
 
-        potentialBlinkVar = null;
     }
 
     public void pickRadio(String varCode) {
@@ -162,10 +159,8 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
         if (currentTrueUiVars.contains(var)) {
             currentTrueUiVars.remove(var);
-            potentialBlinkVar = null;
         } else {
             currentTrueUiVars.add(var);
-            potentialBlinkVar = var;
         }
 
         updateFixedPicksKey();
@@ -192,9 +187,6 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 //        }
 //    }
 
-    public Var getPotentialBlinkVar() {
-        return potentialBlinkVar;
-    }
 
     public void setPicksRaw(Iterable<String> newValue) {
         ImmutableSet<Var> newPicks = featureModel.varCodesToVars(newValue);

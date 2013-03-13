@@ -110,17 +110,16 @@ public class Angle implements Comparable<Angle> {
         return getAnglePadded(this.angleValue);
     }
 
-    public String getLocalImageName(ImageFileExtension imageType, boolean blinkBlink) {
+    public String getLocalImageName(ImageFileExtension imageType) {
         StringBuffer sb = new StringBuffer();
-        getLocalImageName(sb, imageType, blinkBlink);
+        getLocalImageName(sb, imageType);
         return sb.toString();
     }
 
-    public void getLocalImageName(StringBuffer sb, ImageFileExtension imageType, boolean blinkBlink) {
+    public void getLocalImageName(StringBuffer sb, ImageFileExtension imageType) {
         String anglePadding = angleValue < 10 ? "0" : "";
-        String sWhite = blinkBlink ? "_w" : "";
         String s = anglePadding + angleValue;
-        String name = "vr_1_" + s + sWhite;
+        String name = "vr_1_" + s;
 
         String fileExtension = imageType.name().toLowerCase();
         sb.append(name);
@@ -129,27 +128,20 @@ public class Angle implements Comparable<Angle> {
     }
 
     public void getLocalJpgImageName(StringBuffer sb) {
-        getLocalImageName(sb, ImageFileExtension.JPG, false);
-    }
-
-    public void getLocalPngImageName(StringBuffer sb, boolean blinkBlink) {
-        getLocalImageName(sb, ImageFileExtension.PNG, blinkBlink);
+        getLocalImageName(sb, ImageFileExtension.JPG);
     }
 
     public void getLocalPngImageName(StringBuffer sb) {
-        getLocalImageName(sb, ImageFileExtension.PNG, false);
+        getLocalImageName(sb, ImageFileExtension.PNG);
     }
+
 
     public String getLocalJpgFileName() {
-        return getLocalImageName(ImageFileExtension.JPG, false);
-    }
-
-    public String getLocalPngFileName(boolean blinkBlink) {
-        return getLocalImageName(ImageFileExtension.PNG, blinkBlink);
+        return getLocalImageName(ImageFileExtension.JPG);
     }
 
     public String getLocalPngFileName() {
-        return getLocalImageName(ImageFileExtension.PNG, false);
+        return getLocalImageName(ImageFileExtension.PNG);
     }
 
     @Override

@@ -245,17 +245,6 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         return this.name.equalsIgnoreCase(viewName);
     }
 
-
-//    public Jpg getJpg(Picks picks, int angle) {
-//        final List<Png> pngs = getPngs(picks, angle);
-//        if (pngs == null) return null;
-//        int version = 1; //todo fix this: "version" shouldn't be hard-coded
-//
-//        assert pngs.size() != 0;
-////        return new Jpg(this, pngs, angle);
-//        return null;
-//    }
-
     public int getLayerCount() {
         if (layers == null) return 0;
         return layers.size();
@@ -265,64 +254,6 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
     public List<ImLayer<V>> getChildNodes() {
         return layers;
     }
-
-//    @Nullable
-//    public PngSpec getAccessorySrcPng(int angle, SimplePicks picks, Var accessory) {
-//
-//        assert picks != null;
-//        assert accessory != null;
-//
-//        RawImageStack rawImageStack = getRawImageStack(picks, angle);
-//
-//        ImmutableList<PngSpec> blinkPngs = rawImageStack.getBlinkPngs();
-//
-//        class FeaturePng {
-//            PngSpec png;
-//            int featureIndex;
-//
-//            FeaturePng(PngSpec png, int featureIndex) {
-//                this.png = png;
-//                this.featureIndex = featureIndex;
-//            }
-//        }
-//
-//        FeaturePng bestMatch = null;
-//
-//        for (PngSpec blinkPng : blinkPngs) {
-//            int featureIndex = blinkPng.indexOf(accessory);
-//            if (featureIndex == -1) continue;
-//
-//            if (bestMatch == null) {
-//                bestMatch = new FeaturePng(blinkPng, featureIndex);
-//            } else if (featureIndex < bestMatch.featureIndex) {
-//                bestMatch.featureIndex = featureIndex;
-//                bestMatch.png = blinkPng;
-//            }
-//        }
-//
-//        if (bestMatch == null) {
-//            //accessory not visible for this angle
-//            return null;
-//        } else {
-//            return bestMatch.png;
-//        }
-//
-//    }
-
-//    public ImView copy(int angle) {
-//        ArrayList<ImLayer> a;
-//        if (layers == null) {
-//            a = null;
-//        } else {
-//            a = new ArrayList<ImLayer>();
-//            for (ImLayer childNode : layers) {
-//                if (childNode.containsAngle(angle)) a.add(childNode.copy(angle));
-//            }
-//        }
-//        ImView copy = new ImView(depth, name, a, liftSpec);
-//        copy.parent = parent;
-//        return copy;
-//    }
 
     public Set<Object> getPngVars() {
         HashSet<Object> vars = new HashSet<Object>();
