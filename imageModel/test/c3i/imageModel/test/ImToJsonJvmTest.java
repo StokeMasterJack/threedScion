@@ -1,6 +1,6 @@
 package c3i.imageModel.test;
 
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.server.ImToJsonJvm;
 import c3i.imageModel.shared.ImageModel;
 import c3i.repo.server.Repos;

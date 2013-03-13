@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.Brand;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import org.codehaus.jackson.node.ObjectNode;

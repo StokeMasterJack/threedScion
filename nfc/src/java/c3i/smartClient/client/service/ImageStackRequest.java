@@ -1,6 +1,6 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.common.shared.SeriesId;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.ImageMode;
 
 import java.util.Set;

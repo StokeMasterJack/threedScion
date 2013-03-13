@@ -1,6 +1,6 @@
 package c3i.imageModel.test;
 
-import c3i.imageModel.shared.SimplePicks;
+import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 

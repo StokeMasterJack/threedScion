@@ -1,6 +1,6 @@
 package c3i.imgGen.server;
 
-import c3i.core.common.shared.SeriesId;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.Slice;
 
 import java.io.File;

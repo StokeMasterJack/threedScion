@@ -1,14 +1,13 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.BrandKey;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
-import c3i.core.threedModel.shared.RootTreeId;
-import c3i.core.common.shared.SeriesKey;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.PrintWriter;

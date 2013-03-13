@@ -1,5 +1,7 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
+
 public interface ImContext<V> {
 
     /**
@@ -7,6 +9,6 @@ public interface ImContext<V> {
      */
     V resolveVar(String varCode);
 
-    ImContextKey getContextKey();
+    SeriesKey getContextKey();
 
 }

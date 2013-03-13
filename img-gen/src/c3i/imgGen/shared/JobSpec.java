@@ -1,7 +1,7 @@
 package c3i.imgGen.shared;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.Profile;
 import com.google.common.base.Preconditions;
 

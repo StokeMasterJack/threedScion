@@ -1,10 +1,10 @@
 package c3i.admin.shared;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.CommitId;
 import c3i.core.threedModel.shared.CommitKey;
-import c3i.core.threedModel.shared.RootTreeId;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.shared.CommitHistory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

@@ -70,7 +70,7 @@ public class JsonToImJvmTest {
 
     }
 
-    public ImageModel<Var> loadImageModel(String localResourceName, ImContext<Var> fm) throws IOException {
+    public ImageModel<Var> loadImageModel(String localResourceName, FeatureModel fm) throws IOException {
         URL urlIm = Resources.getResource(this.getClass(), localResourceName);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsImageModel = mapper.readValue(urlIm, JsonNode.class);

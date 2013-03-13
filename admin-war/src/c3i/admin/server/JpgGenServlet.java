@@ -1,5 +1,6 @@
 package c3i.admin.server;
 
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.imgGen.server.taskManager.EquivalentJobAlreadyRunningException;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.imgGen.server.taskManager.Master;
@@ -8,7 +9,6 @@ import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobStatusItem;
 import c3i.imgGen.shared.JpgGenService;
-import c3i.core.common.shared.BrandKey;
 import c3i.imgGen.shared.Stats;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;

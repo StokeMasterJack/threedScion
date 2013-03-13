@@ -1,5 +1,7 @@
 package c3i.core.threedModel.shared;
 
+import c3i.featureModel.shared.common.RootTreeId;
+
 import java.io.Serializable;
 
 public final class CommitKey implements Serializable {

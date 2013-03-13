@@ -1,8 +1,8 @@
 package c3i.repoWebService;
 
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
 import c3i.repo.server.BrandRepos;

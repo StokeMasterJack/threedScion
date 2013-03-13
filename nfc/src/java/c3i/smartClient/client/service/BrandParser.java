@@ -1,10 +1,10 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.Brand;
-import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.VtcMap;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.BaseImageType;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Profiles;

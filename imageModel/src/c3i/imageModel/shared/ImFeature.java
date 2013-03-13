@@ -1,6 +1,8 @@
 package c3i.imageModel.shared;
 
 
+import c3i.featureModel.shared.common.SimplePicks;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

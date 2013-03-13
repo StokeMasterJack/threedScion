@@ -1,7 +1,7 @@
 package c3i.repo.server;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.imageModel.server.ImageUtil;
 import junit.framework.TestCase;
 import org.eclipse.jgit.revwalk.RevCommit;

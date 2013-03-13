@@ -1,11 +1,12 @@
 package c3i.repo.server;
 
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.server.ModelXml;
 import c3i.featureModel.server.XmlToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
-import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
@@ -234,7 +235,7 @@ public class SeriesRepo {
         return XmlToFmJvm.create(seriesKey, seriesDisplayName, seriesYear, featureModel);
     }
 
-    public ImageModel createImageModel(RootTreeId rootTreeId, ImContext fm) {
+    public ImageModel createImageModel(RootTreeId rootTreeId, FeatureModel fm) {
         ObjectId gitObjectId = srcRepo.toGitObjectId(rootTreeId);
         RevCommit revCommit = srcRepo.getRevCommit(gitObjectId);
         RepoVNodeBuilder b = new RepoVNodeBuilder(this, revCommit, rtRepo);
@@ -245,7 +246,7 @@ public class SeriesRepo {
         return imNodeBuilder.buildImageModel();
     }
 
-    private ImageModel createImageModelFromWork(ImContext fm) {
+    private ImageModel createImageModelFromWork(FeatureModel fm) {
         VNodeBuilder vNodeBuilder = new FileSystemVNodeBuilder(srcWork.getSrcWorkDir(), rtRepo);
         vNodeBuilder.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode vNode = vNodeBuilder.buildVNode();

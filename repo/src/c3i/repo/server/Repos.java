@@ -1,14 +1,14 @@
 package c3i.repo.server;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.CommitKey;
-import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.core.threedModel.shared.VtcMap;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.BaseImageType;
 import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.Profile;
@@ -137,11 +137,6 @@ public class Repos {
 
     public SeriesRepo getSeriesRepo(BrandKey brandKey, String seriesName, int seriesYear) {
         return getSeriesRepo(new SeriesKey(brandKey, seriesYear, seriesName));
-    }
-
-    public SeriesRepo getSeriesRepo(ImContextKey imageModelKey) {
-        SeriesKey sk = new SeriesKey(imageModelKey);
-        return getSeriesRepo(sk);
     }
 
     public SeriesRepo getSeriesRepo(SeriesKey seriesKey) {

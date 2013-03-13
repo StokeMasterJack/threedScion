@@ -33,6 +33,7 @@
     <orderEntry type="library" name="com.google.guava:guava-gwt:13.0.1" level="application" />
     <orderEntry type="library" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
     <orderEntry type="module" module-name="imageModel" />
+    <orderEntry type="module" module-name="fm" />
   </component>
 </module>
 

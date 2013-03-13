@@ -1,12 +1,12 @@
 package c3i.admin.client;
 
 import c3i.admin.client.featurePicker.CurrentUiPicks;
-import c3i.core.common.shared.SeriesId;
 import c3i.featureModel.shared.Assignments;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.ViewKey;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.ImageStack;

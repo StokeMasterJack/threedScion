@@ -1,7 +1,7 @@
 package c3i.repo.shared;
 
 import c3i.core.threedModel.shared.CommitId;
-import c3i.core.threedModel.shared.RootTreeId;
+import c3i.featureModel.shared.common.RootTreeId;
 
 import java.io.Serializable;
 

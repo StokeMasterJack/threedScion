@@ -1,5 +1,6 @@
 package c3i.admin.client;
 
+import c3i.featureModel.shared.common.SeriesKey;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -8,7 +9,6 @@ import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.*;
 import c3i.repo.shared.CommitHistory;
-import c3i.core.common.shared.SeriesKey;
 import smartsoft.util.gwt.client.dialogs.MyDialogBox;
 
 

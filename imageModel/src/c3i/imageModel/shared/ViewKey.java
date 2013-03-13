@@ -1,22 +1,23 @@
 package c3i.imageModel.shared;
 
 
+import c3i.featureModel.shared.common.SeriesKey;
 import smartsoft.util.shared.Path;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ViewKey {
 
-    private final ImContextKey seriesKey;
+    private final SeriesKey seriesKey;
     private final int viewIndex;
 
-    public ViewKey(ImContextKey seriesKey, int viewIndex) {
+    public ViewKey(SeriesKey seriesKey, int viewIndex) {
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.viewIndex = viewIndex;
     }
 
-    public ImContextKey getSeriesKey() {
+    public SeriesKey getSeriesKey() {
         return seriesKey;
     }
 

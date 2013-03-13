@@ -1,6 +1,6 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imgGen.server.singleJpg.ZPngGenerator;
 import c3i.repo.server.BrandRepos;

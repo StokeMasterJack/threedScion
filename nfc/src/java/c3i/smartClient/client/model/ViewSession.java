@@ -2,6 +2,7 @@ package c3i.smartClient.client.model;
 
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.common.SimplePicks;
 import c3i.imageModel.shared.AngleKey;
 import c3i.imageModel.shared.CacheAheadPolicy;
 import c3i.imageModel.shared.CoreImageStack;
@@ -9,7 +10,6 @@ import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
-import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.event.AngleChangeListener;
 import c3i.smartClient.client.model.event.ViewChangeListener;

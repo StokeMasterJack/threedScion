@@ -1,5 +1,6 @@
 package c3i.repo.server.vnode;
 
+import c3i.featureModel.shared.FeatureModel;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.NodeLevel;
 import c3i.imageModel.shared.SrcPng;
@@ -7,10 +8,10 @@ import smartsoft.util.shared.Strings;
 
 public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 
-    private final ImContext featureModel;
+    private final FeatureModel featureModel;
     private final String seriesName;
 
-    public ImVNodeHeaderFilter(ImContext featureModel) {
+    public ImVNodeHeaderFilter(FeatureModel featureModel) {
         this.featureModel = featureModel;
         this.seriesName = featureModel.getContextKey().getSeriesName();
     }

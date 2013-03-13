@@ -1,5 +1,7 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
+import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import smartsoft.util.shared.Strings;
@@ -111,7 +113,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
 
     private ViewKey initViewKey() {
         ImageModel imageModel = (ImageModel) parent;
-        ImContextKey seriesKey = imageModel.getSeriesKey();
+        SeriesKey seriesKey = imageModel.getSeriesKey();
         return new ViewKey(seriesKey, getIndex());
     }
 

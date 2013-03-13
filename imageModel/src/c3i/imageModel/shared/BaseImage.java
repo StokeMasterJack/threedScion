@@ -1,5 +1,6 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
@@ -71,7 +72,7 @@ public class BaseImage extends AbstractImImage implements IBaseImageKey {
         return slice.getView();
     }
 
-    public ImContextKey getSeriesKey() {
+    public SeriesKey getSeriesKey() {
         return slice.getView().getSeries().getSeriesKey();
     }
 

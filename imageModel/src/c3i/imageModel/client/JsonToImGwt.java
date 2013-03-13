@@ -1,5 +1,7 @@
 package c3i.imageModel.client;
 
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
@@ -20,18 +22,18 @@ import java.util.logging.Logger;
 
 public class JsonToImGwt {
 
-    private final ImContext featureModel;
+    private final FeatureModel featureModel;
 
-    private JsonToImGwt(ImContext featureModel) {
+    private JsonToImGwt(FeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 
-    public static ImageModel parse(ImContext featureModel, JsImageModel jsImageModel) {
+    public static ImageModel parse(FeatureModel featureModel, JsImageModel jsImageModel) {
         JsonToImGwt parser = new JsonToImGwt(featureModel);
         return parser.parseSeries(jsImageModel);
     }
 
-    public static ImageModel parse(ImContext featureModel, String imageModelAsJsonText) {
+    public static ImageModel parse(FeatureModel featureModel, String imageModelAsJsonText) {
         JsonToImGwt parser = new JsonToImGwt(featureModel);
         JsImageModel jsImageModel = getJsImageModelFromJsonText(imageModelAsJsonText);
         return parser.parseSeries(jsImageModel);
@@ -46,7 +48,8 @@ public class JsonToImGwt {
         JSONArray jsonArray = jsImageModel.getViews();
         assert jsonArray != null;
         List<ImView> imViews = parseViews(jsonArray);
-        ImageModel imageModel = new ImageModel(0, imViews, featureModel.getContextKey());
+        SeriesKey contextKey = featureModel.getContextKey();
+        ImageModel imageModel = new ImageModel(0, imViews, contextKey);
         return imageModel;
     }
 

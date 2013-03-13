@@ -1,5 +1,7 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
+import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.concurrent.Immutable;
@@ -61,7 +63,7 @@ public class CoreImageStack {
     public BaseImageKey getBaseImageKey() {
         ImView view = rawImageStack.getView();
         String jpgFingerprint = getBaseImageFingerprint();
-        ImContextKey seriesKey = view.getSeries().getSeriesKey();
+        SeriesKey seriesKey = view.getSeries().getSeriesKey();
         Profile profile = key.getProfile();
         return new BaseImageKey(seriesKey, profile, jpgFingerprint);
     }

@@ -1,7 +1,7 @@
 package c3i.admin.client;
 
 import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.BrandKey;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.util.shared.futures.AsyncFunction;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.Loader;

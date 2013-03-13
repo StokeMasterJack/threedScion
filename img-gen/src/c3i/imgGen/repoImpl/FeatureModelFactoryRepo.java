@@ -1,7 +1,7 @@
 package c3i.imgGen.repoImpl;
 
-import c3i.core.common.shared.SeriesId;
 import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imgGen.api.FeatureModelFactory;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.SeriesRepo;

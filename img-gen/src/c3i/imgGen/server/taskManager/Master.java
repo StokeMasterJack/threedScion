@@ -1,13 +1,13 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.core.common.shared.SeriesId;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SimplePicks;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawBaseImage;
-import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.generic.ImgGenService;

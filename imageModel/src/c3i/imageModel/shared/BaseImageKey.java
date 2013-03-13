@@ -1,10 +1,11 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
 import com.google.common.base.Preconditions;
 
 public class BaseImageKey implements IBaseImageKey {
 
-    private final ImContextKey seriesKey;
+    private final SeriesKey seriesKey;
     private final Profile profile;
     private final String fingerprint;  //example: 0e24056-80e3097 (i.e. png1-png2-png3 etc)
 
@@ -16,7 +17,7 @@ public class BaseImageKey implements IBaseImageKey {
      * @param profile
      * @param fingerprint  //example: 0e24056-80e3097 (i.e. png1-png2-png3 etc)
      */
-    public BaseImageKey(ImContextKey seriesKey, Profile profile, String fingerprint) {
+    public BaseImageKey(SeriesKey seriesKey, Profile profile, String fingerprint) {
         Preconditions.checkNotNull(profile);
         profile.getBaseImageType();
         this.seriesKey = seriesKey;
@@ -30,7 +31,7 @@ public class BaseImageKey implements IBaseImageKey {
     }
 
 
-    public ImContextKey getSeriesKey() {
+    public SeriesKey getSeriesKey() {
         return seriesKey;
     }
 

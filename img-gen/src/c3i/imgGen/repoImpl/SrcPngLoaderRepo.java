@@ -1,7 +1,6 @@
 package c3i.imgGen.repoImpl;
 
-import c3i.core.common.shared.SeriesKey;
-import c3i.imageModel.shared.ImContextKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.SeriesRepo;
@@ -20,11 +19,10 @@ public class SrcPngLoaderRepo implements SrcPngLoader {
     }
 
     @Override
-    public InputSupplier<? extends InputStream> getPng(final ImContextKey imageModelKey, final String pngShortSha) {
+    public InputSupplier<? extends InputStream> getPng(final SeriesKey seriesKey, final String pngShortSha) {
         return new InputSupplier<InputStream>() {
             @Override
             public InputStream getInput() throws IOException {
-                SeriesKey seriesKey = new SeriesKey(imageModelKey);
                 SeriesRepo seriesRepo = brandRepos.getSeriesRepo(seriesKey);
                 ObjectLoader objectLoader = seriesRepo.getSrcPngByShortSha(pngShortSha);
                 return objectLoader.openStream();

@@ -5,7 +5,7 @@ import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
 import c3i.admin.client.messageLog.UserLog;
 import c3i.admin.client.messageLog.UserLogView;
 import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.SeriesCommit;

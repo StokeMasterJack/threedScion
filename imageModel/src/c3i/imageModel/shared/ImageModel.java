@@ -1,5 +1,7 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.common.SeriesKey;
+import c3i.featureModel.shared.common.SimplePicks;
 import smartsoft.util.shared.Path;
 
 import java.util.HashSet;
@@ -11,10 +13,10 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, V>, IsRoot<V> {
 
-    private final ImContextKey seriesKey;
+    private final SeriesKey seriesKey;
     private final List<ImView<V>> imViews;
 
-    public ImageModel(int depth, List<ImView<V>> imViews, ImContextKey seriesKey) {
+    public ImageModel(int depth, List<ImView<V>> imViews, SeriesKey seriesKey) {
         super(depth);
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
@@ -179,7 +181,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
         return repoBase.append(localPath).append("3d");
     }
 
-    public ImContextKey getSeriesKey() {
+    public SeriesKey getSeriesKey() {
         checkState(seriesKey != null);
         return seriesKey;
     }

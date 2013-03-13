@@ -1,8 +1,8 @@
 package c3i.core.threedModel.shared;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Profiles;
 import com.google.common.base.Preconditions;

@@ -1,7 +1,7 @@
 package c3i.repo.server.vnode;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import junit.framework.TestCase;

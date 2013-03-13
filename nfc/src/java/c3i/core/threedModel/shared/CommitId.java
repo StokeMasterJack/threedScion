@@ -1,6 +1,8 @@
 package c3i.core.threedModel.shared;
 
 
+import c3i.featureModel.shared.common.FullSha;
+
 import java.io.Serializable;
 
 /**

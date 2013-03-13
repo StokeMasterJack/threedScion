@@ -1,7 +1,7 @@
 package c3i.admin.client;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import com.google.common.collect.ImmutableMap;
 import smartsoft.util.servlet.shared.QueryString;
 

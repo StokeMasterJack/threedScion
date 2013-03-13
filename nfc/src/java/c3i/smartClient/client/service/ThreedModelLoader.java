@@ -1,8 +1,8 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.util.shared.futures.AsyncFunction;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.Loader;

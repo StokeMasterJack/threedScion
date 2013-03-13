@@ -1,6 +1,6 @@
 package c3i.admin.client;
 
-import c3i.core.common.shared.BrandKey;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.shared.Series;
 
 import java.util.ArrayList;

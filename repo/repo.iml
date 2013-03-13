@@ -17,6 +17,7 @@
     <orderEntry type="library" name="org.eclipse.jgit-1.1.0" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="module" module-name="imageModel" />
+    <orderEntry type="module" module-name="fm" />
   </component>
 </module>
 

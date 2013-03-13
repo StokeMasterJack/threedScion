@@ -1,11 +1,11 @@
 package c3i.admin.client;
 
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import c3i.repo.shared.Series;
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package c3i.imgGen.shared;
 
-import c3i.core.common.shared.BrandKey;
+import c3i.featureModel.shared.common.BrandKey;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
 import c3i.featureModel.shared.CspForTreeSearch;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.search.SatCountProductHandler;
 import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.ThreedModel;

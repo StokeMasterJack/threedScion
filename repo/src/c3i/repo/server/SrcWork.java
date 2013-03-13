@@ -1,6 +1,6 @@
 package c3i.repo.server;
 
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import smartsoft.util.FileUtil;
 
 import java.io.File;

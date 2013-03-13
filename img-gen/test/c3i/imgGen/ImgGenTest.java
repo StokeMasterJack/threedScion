@@ -1,10 +1,10 @@
 package c3i.imgGen;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SimplePicks;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.RawImageStack;
-import c3i.imageModel.shared.SimplePicks;
 import c3i.imageModel.test.Avalon2014Picks;
 import c3i.imgGen.generic.ImgGenService;
 import c3i.imgGen.repoImpl.FmIm;

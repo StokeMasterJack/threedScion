@@ -1,5 +1,7 @@
 package c3i.imageModel.server;
 
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
@@ -23,9 +25,9 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class JsonToImJvm<V> {
 
-    private final ImContext<V> featureModel;
+    private final FeatureModel featureModel;
 
-    public static ImageModel parse(ImContext featureModel, String imageModelJson) throws JsonParseException {
+    public static ImageModel parse(FeatureModel featureModel, String imageModelJson) throws JsonParseException {
         checkNotNull(featureModel.getContextKey());
         ObjectMapper mapper = new ObjectMapper();
         JsonNode imageModeAsJsonNode;
@@ -37,13 +39,13 @@ public class JsonToImJvm<V> {
         return parse(featureModel, imageModeAsJsonNode);
     }
 
-    public static ImageModel parse(ImContext featureModel, JsonNode imageModelAsJsonNode) {
+    public static ImageModel parse(FeatureModel featureModel, JsonNode imageModelAsJsonNode) {
         checkNotNull(featureModel.getContextKey());
         JsonToImJvm parser = new JsonToImJvm(featureModel);
         return parser.parseSeries(imageModelAsJsonNode);
     }
 
-    private JsonToImJvm(ImContext featureModel) {
+    private JsonToImJvm(FeatureModel featureModel) {
         this.featureModel = featureModel;
     }
 
@@ -53,7 +55,7 @@ public class JsonToImJvm<V> {
         List<ImView> imViews = parseViews(jsonArray);
 
 
-        ImContextKey seriesKey = featureModel.getContextKey();
+        SeriesKey seriesKey = featureModel.getContextKey();
         checkState(seriesKey != null);
 
 

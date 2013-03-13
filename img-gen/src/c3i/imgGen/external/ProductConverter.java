@@ -1,6 +1,6 @@
 package c3i.imgGen.external;
 
-import c3i.core.common.shared.ProductHandler;
+import c3i.featureModel.shared.ProductHandler;
 import c3i.imgGen.search.Node;
 import c3i.imgGen.search.Search;
 

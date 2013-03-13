@@ -1,9 +1,9 @@
 package c3i.repo.shared;
 
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.CommitId;
-import c3i.core.threedModel.shared.RootTreeId;
+import c3i.featureModel.shared.common.RootTreeId;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 
 public class SeriesCommit {
 

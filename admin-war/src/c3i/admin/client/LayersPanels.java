@@ -1,8 +1,8 @@
 package c3i.admin.client;
 
+import c3i.util.shared.events.ChangeListener;
 import com.google.common.collect.ImmutableList;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
-import c3i.util.shared.events.ChangeListener;
 import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.ViewKey;
 import c3i.smartClient.client.model.ViewSession;

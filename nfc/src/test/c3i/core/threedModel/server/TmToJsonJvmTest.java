@@ -1,8 +1,8 @@
 package c3i.core.threedModel.server;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.Repos;
 import org.junit.Before;
 import org.junit.Test;

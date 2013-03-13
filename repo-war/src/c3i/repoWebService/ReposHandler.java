@@ -1,6 +1,6 @@
 package c3i.repoWebService;
 
-import c3i.core.common.shared.BrandKey;
+import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.base.Preconditions;

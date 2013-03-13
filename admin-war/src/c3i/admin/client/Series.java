@@ -2,10 +2,10 @@ package c3i.admin.client;
 
 import c3i.admin.client.featurePicker.CurrentUiPicks;
 import c3i.admin.shared.BrandInit;
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;

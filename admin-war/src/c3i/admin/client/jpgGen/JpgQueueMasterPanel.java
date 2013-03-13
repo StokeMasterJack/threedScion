@@ -1,5 +1,6 @@
 package c3i.admin.client.jpgGen;
 
+import c3i.featureModel.shared.common.SeriesId;
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -24,7 +25,6 @@ import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
 import smartsoft.util.gwt.client.ui.tabLabel.TabAware;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
-import c3i.core.common.shared.SeriesId;
 import c3i.imageModel.shared.Profile;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobState;

@@ -1,6 +1,6 @@
 package c3i.imageModel.test;
 
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.server.JsonToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
 import com.google.common.io.Resources;

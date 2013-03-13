@@ -1,7 +1,7 @@
 package c3i.core.threedModel.shared;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import junit.framework.TestCase;
 
 public class SeriesKeyTest extends TestCase {

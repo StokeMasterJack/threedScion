@@ -1,6 +1,6 @@
 package c3i.repo.server;
 
-import c3i.core.common.shared.SeriesKey;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.rt.RtRepo;
 import c3i.repo.server.vnode.Rejection;
 import c3i.repo.server.vnode.VNode;

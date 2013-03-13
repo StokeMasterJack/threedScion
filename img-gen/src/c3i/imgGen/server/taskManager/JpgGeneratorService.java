@@ -1,8 +1,8 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
 
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesId;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.generic.ImgGenService;
 import c3i.imgGen.repoImpl.FmIm;
@@ -47,7 +47,8 @@ public class JpgGeneratorService extends AbstractIdleService {
         BrandKey brandKey = jobSpec.getBrandKey();
         Repos repos = brandRepos.getRepos(brandKey);
 
-        SeriesRepo seriesRepo = repos.getSeriesRepo(jobSpec.getSeriesId().getSeriesKey());
+        SeriesId seriesId1 = (SeriesId) jobSpec.getSeriesId();
+        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId1.getSeriesKey());
 
 
         SeriesId seriesId = jobSpec.getSeriesId();

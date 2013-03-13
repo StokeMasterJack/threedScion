@@ -1,9 +1,9 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.common.shared.SeriesId;
-import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.common.SeriesId;
+import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profile;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.service.ThreedModelLoader;
