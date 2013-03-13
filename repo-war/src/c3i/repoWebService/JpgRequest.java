@@ -3,7 +3,6 @@ package c3i.repoWebService;
 
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.BaseImageKey;
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.repo.server.BrandRepos;
 
 import javax.servlet.http.HttpServletRequest;

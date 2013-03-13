@@ -1,7 +1,9 @@
 package c3i.imageModel.test;
 
-import c3i.core.threedModel.shared.ImFeatureModel;
+import c3i.core.featureModel.shared.FeatureModel;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.server.JsonToImJvm;
+import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.RawImageStack;
@@ -16,8 +18,8 @@ import java.util.logging.Logger;
 
 public class JsonToImJvmTest {
 
-    Avalon2014FeatureModel fmAvalon = new Avalon2014FeatureModel();
-    TundraFeatureModel fmtTundra = new TundraFeatureModel();
+    FeatureModel fmAvalon = Avalon2014FeatureModel.parse();
+    FeatureModel fmtTundra = TundraFeatureModel.parse();
 
     Avalon2014Picks picksAvalon = new Avalon2014Picks();
     TundraPicks picksTundra = new TundraPicks();
@@ -25,7 +27,8 @@ public class JsonToImJvmTest {
     @Test
     public void testAvalon() throws Exception {
 
-        ImageModel imageModel = loadImageModel("avalon-im.json", fmAvalon);
+        ImageModel<Var> varImageModel = loadImageModel("avalon-im.json", fmAvalon);
+        ImageModel<Var> imageModel = varImageModel;
         ImView exterior = imageModel.getView("exterior");
         assert exterior != null;
 
@@ -67,7 +70,7 @@ public class JsonToImJvmTest {
 
     }
 
-    public ImageModel loadImageModel(String localResourceName, ImFeatureModel fm) throws IOException {
+    public ImageModel<Var> loadImageModel(String localResourceName, ImContext<Var> fm) throws IOException {
         URL urlIm = Resources.getResource(this.getClass(), localResourceName);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsImageModel = mapper.readValue(urlIm, JsonNode.class);

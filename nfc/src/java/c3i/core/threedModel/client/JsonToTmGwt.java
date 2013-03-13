@@ -3,7 +3,6 @@ package c3i.core.threedModel.client;
 import c3i.core.featureModel.client.JsFeatureModel;
 import c3i.core.featureModel.client.JsonUnmarshallerFm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.SubSeries;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.client.JsImageModel;
@@ -92,9 +91,8 @@ public class JsonToTmGwt {
         JsFeatureModel jsFeatureModel = jsThreedModel.getJsFeatureModel();
         final FeatureModel featureModel = jsonFeatureModelBuilder.createFeatureModelFromJson(jsFeatureModel);
 
-        ImFeatureModel imFeatureModel = new ImFeatureModel(featureModel);
         JsImageModel jsImageModel = jsThreedModel.getJsImageModel();
-        ImageModel imageModel = JsonToImGwt.parse(imFeatureModel, jsImageModel);
+        ImageModel imageModel = JsonToImGwt.parse(featureModel, jsImageModel);
 
 
         return new ThreedModel(featureModel, imageModel);

@@ -19,6 +19,8 @@ import c3i.core.featureModel.shared.boolExpr.Xor;
 import c3i.core.featureModel.shared.picks.Picks;
 import c3i.core.featureModel.shared.picks.PicksContextFm;
 import c3i.core.threedModel.shared.SubSeries;
+import c3i.imageModel.shared.ImContext;
+import c3i.imageModel.shared.ImContextKey;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
@@ -31,7 +33,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class FeatureModel implements Vars {
+public class FeatureModel implements Vars, ImContext<Var> {
 
     public final LinkedHashSet<BoolExpr> extraConstraints = new LinkedHashSet<BoolExpr>();
 
@@ -78,6 +80,10 @@ public class FeatureModel implements Vars {
     }
 
     public SeriesKey getSeriesKey() {
+        return seriesKey;
+    }
+
+    public ImContextKey getContextKey() {
         return seriesKey;
     }
 

@@ -3,7 +3,6 @@ package c3i.smartClientJvm;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.JsonToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.threedModel.shared.ImFeatureModel;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImageModel;
@@ -65,9 +64,8 @@ public class JsonToTmJvm {
         JsonToFmJvm uFm = new JsonToFmJvm();
         final FeatureModel featureModel = uFm.parseJson(seriesKey, jsFm);
 
-        ImFeatureModel imFeatureModel = new ImFeatureModel(featureModel);
 
-        ImageModel im = JsonToImJvm.parse(imFeatureModel, jsIm);
+        ImageModel im = JsonToImJvm.parse(featureModel, jsIm);
 
         ThreedModel threedModel = new ThreedModel(featureModel, im);
         return threedModel;

@@ -1,12 +1,12 @@
 package c3i.imageModel.client;
 
+import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.PngShortSha;
-import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
 import c3i.imageModel.shared.ViewLiftSpec;
 import com.google.gwt.json.client.JSONArray;
@@ -20,18 +20,18 @@ import java.util.logging.Logger;
 
 public class JsonToImGwt {
 
-    private final SimpleFeatureModel featureModel;
+    private final ImContext featureModel;
 
-    private JsonToImGwt(SimpleFeatureModel featureModel) {
+    private JsonToImGwt(ImContext featureModel) {
         this.featureModel = featureModel;
     }
 
-    public static ImageModel parse(SimpleFeatureModel featureModel, JsImageModel jsImageModel) {
+    public static ImageModel parse(ImContext featureModel, JsImageModel jsImageModel) {
         JsonToImGwt parser = new JsonToImGwt(featureModel);
         return parser.parseSeries(jsImageModel);
     }
 
-    public static ImageModel parse(SimpleFeatureModel featureModel, String imageModelAsJsonText) {
+    public static ImageModel parse(ImContext featureModel, String imageModelAsJsonText) {
         JsonToImGwt parser = new JsonToImGwt(featureModel);
         JsImageModel jsImageModel = getJsImageModelFromJsonText(imageModelAsJsonText);
         return parser.parseSeries(jsImageModel);

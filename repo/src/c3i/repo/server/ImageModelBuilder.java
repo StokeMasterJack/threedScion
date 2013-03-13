@@ -1,6 +1,7 @@
 package c3i.repo.server;
 
 import c3i.core.featureModel.shared.UnknownVarCodeException;
+import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
@@ -9,7 +10,6 @@ import c3i.imageModel.shared.ImNodeType;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.PngShortSha;
-import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
 import c3i.imageModel.shared.ViewLiftSpec;
 import c3i.repo.server.vnode.VNode;
@@ -28,10 +28,10 @@ import java.util.logging.Logger;
 
 public class ImageModelBuilder {
 
-    private final SimpleFeatureModel featureModel;
+    private final ImContext featureModel;
     private final VNode seriesVDir;
 
-    public ImageModelBuilder(SimpleFeatureModel featureModel, VNode seriesVDir) {
+    public ImageModelBuilder(ImContext featureModel, VNode seriesVDir) {
         Preconditions.checkNotNull(seriesVDir);
         this.featureModel = featureModel;
         this.seriesVDir = seriesVDir;
@@ -111,7 +111,7 @@ public class ImageModelBuilder {
 
         }
 
-        ViewLiftSpec parse(Properties properties, SimpleFeatureModel vars) {
+        ViewLiftSpec parse(Properties properties, ImContext vars) {
             String varCode = properties.getProperty("trigger-feature");
             Object var = vars.resolveVar(varCode);
             int deltaY = Integer.parseInt(properties.getProperty("delta-y"));

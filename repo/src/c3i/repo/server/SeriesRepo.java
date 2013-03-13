@@ -4,12 +4,12 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.featureModel.server.XmlToFmJvm;
 import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.threedModel.shared.ImFeatureModel;
+import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
+import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
-import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.repo.server.rt.RtRepo;
 import c3i.repo.server.vnode.FileSystemVNodeBuilder;
 import c3i.repo.server.vnode.ImVNodeHeaderFilter;
@@ -235,7 +235,7 @@ public class SeriesRepo {
         return XmlToFmJvm.create(seriesKey, seriesDisplayName, seriesYear, featureModel);
     }
 
-    public ImageModel createImageModel(RootTreeId rootTreeId, SimpleFeatureModel fm) {
+    public ImageModel createImageModel(RootTreeId rootTreeId, ImContext fm) {
         ObjectId gitObjectId = srcRepo.toGitObjectId(rootTreeId);
         RevCommit revCommit = srcRepo.getRevCommit(gitObjectId);
         RepoVNodeBuilder b = new RepoVNodeBuilder(this, revCommit, rtRepo);
@@ -246,7 +246,7 @@ public class SeriesRepo {
         return imNodeBuilder.buildImageModel();
     }
 
-    private ImageModel createImageModelFromWork(SimpleFeatureModel fm) {
+    private ImageModel createImageModelFromWork(ImContext fm) {
         VNodeBuilder vNodeBuilder = new FileSystemVNodeBuilder(srcWork.getSrcWorkDir(), rtRepo);
         vNodeBuilder.setVNodeHeaderFilter(new ImVNodeHeaderFilter(fm));
         VNode vNode = vNodeBuilder.buildVNode();
@@ -258,8 +258,7 @@ public class SeriesRepo {
     public ThreedModel createThreedModelFromWork() {
         log.info("\tBuilding server-side ThreedModel for [" + seriesKey + " - from srcWork...");
         FeatureModel fm = createFeatureModelFromWork();
-        ImFeatureModel imFm = new ImFeatureModel(fm);
-        ImageModel im = createImageModelFromWork(imFm);
+        ImageModel im = createImageModelFromWork(fm);
         ThreedModel threedModel = new ThreedModel(fm, im);
 
         log.info("\tServer-side ThreedModel for [" + seriesKey + "] complete");
@@ -276,8 +275,7 @@ public class SeriesRepo {
 
     public ImageModel createImageModel(FeatureModel featureModel, RootTreeId rootTreeId) {
         log.info("\t\t Building ImageModel for [" + seriesKey + " - " + rootTreeId.getName() + "] ...");
-        ImFeatureModel imFeatureModel = new ImFeatureModel(featureModel);
-        return createImageModel(rootTreeId, imFeatureModel);
+        return createImageModel(rootTreeId, featureModel);
     }
 
     public ThreedModel createThreedModel(RootTreeId rootTreeId) {

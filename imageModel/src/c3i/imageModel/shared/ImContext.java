@@ -1,6 +1,6 @@
 package c3i.imageModel.shared;
 
-public interface SimpleFeatureModel<V> {
+public interface ImContext<V> {
 
     /**
      *  returns Var from feature model or null if varCode not found

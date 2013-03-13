@@ -1,5 +1,6 @@
 package c3i.imageModel.server;
 
+import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
@@ -8,7 +9,6 @@ import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.JsonParseException;
 import c3i.imageModel.shared.PngShortSha;
-import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -23,9 +23,9 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class JsonToImJvm<V> {
 
-    private final SimpleFeatureModel<V> featureModel;
+    private final ImContext<V> featureModel;
 
-    public static ImageModel parse(SimpleFeatureModel featureModel, String imageModelJson) throws JsonParseException {
+    public static ImageModel parse(ImContext featureModel, String imageModelJson) throws JsonParseException {
         checkNotNull(featureModel.getContextKey());
         ObjectMapper mapper = new ObjectMapper();
         JsonNode imageModeAsJsonNode;
@@ -37,13 +37,13 @@ public class JsonToImJvm<V> {
         return parse(featureModel, imageModeAsJsonNode);
     }
 
-    public static ImageModel parse(SimpleFeatureModel featureModel, JsonNode imageModelAsJsonNode) {
+    public static ImageModel parse(ImContext featureModel, JsonNode imageModelAsJsonNode) {
         checkNotNull(featureModel.getContextKey());
         JsonToImJvm parser = new JsonToImJvm(featureModel);
         return parser.parseSeries(imageModelAsJsonNode);
     }
 
-    private JsonToImJvm(SimpleFeatureModel featureModel) {
+    private JsonToImJvm(ImContext featureModel) {
         this.featureModel = featureModel;
     }
 
