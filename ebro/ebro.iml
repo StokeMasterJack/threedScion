@@ -8,7 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="imageModel" />
     <orderEntry type="module" module-name="nfc" />
     <orderEntry type="module" module-name="repo" />
     <orderEntry type="module" module-name="smartClientJvm" />

@@ -12,7 +12,7 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 
     public ImVNodeHeaderFilter(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
-        this.seriesName = featureModel.getSeriesKey().getName();
+        this.seriesName = featureModel.getSeriesKey().getSeries();
     }
 
     Rejection veto(VNodeHeader vNode, String reason) {
@@ -46,7 +46,8 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
                     return veto(vNode, "feature code contains Non-word Char");
                 }
                 String varCode = vNode.name;
-                if (!featureModel.containsVarCode(varCode)) {
+                Object var = featureModel.resolveVar(varCode);
+                if (var == null) {
                     return veto(vNode, "feature code not in fm");
                 }
             }

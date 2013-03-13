@@ -64,7 +64,7 @@ public class XmlToFmJvm {
     private Map<String, BoolExprString> conflictMap = new HashMap<String, BoolExprString>();
 
     public static FeatureModel create(@Nonnull SeriesKey seriesKey, @Nonnull Element featuresElement) {
-        return create(seriesKey, seriesKey.getName(), seriesKey.getYear(), featuresElement);
+        return create(seriesKey, seriesKey.getSeries(), seriesKey.getYear(), featuresElement);
     }
 
     public static FeatureModel create(@Nonnull SeriesKey seriesKey, @Nonnull String seriesDisplayName, int seriesYear, @Nonnull Element featuresElement) {

@@ -19,7 +19,7 @@ public class PicksContextFm implements PicksContext {
 
     @Override
     public Var getVarOrNull(String varCode) {
-        return fm.getVarOrNull(varCode);
+        return fm.resolveVar(varCode);
     }
 
     @Override

@@ -133,7 +133,7 @@ public class VarPicksSnapshot {
 
         for (String varCode : varCodes) {
             if (isEmpty(varCode)) continue;
-            Var var = fm.getVarOrNull(varCode.trim());
+            Var var = fm.resolveVar(varCode.trim());
             if (var != null) {
                 set.add(var);
             } else {

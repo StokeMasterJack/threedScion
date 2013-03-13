@@ -114,7 +114,7 @@ public class SeriesRepo {
     private File initSeriesDir() {
 
         File brandDir = repoBaseDir;
-        File seriesNameDir = new File(brandDir, seriesKey.getName());
+        File seriesNameDir = new File(brandDir, seriesKey.getSeries());
         File seriesDir = new File(seriesNameDir, seriesKey.getYear() + "");
 
         if (!seriesDir.exists()) throw new RepoException("Can't find seriesDir [" + seriesDir + "]");

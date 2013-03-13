@@ -2,7 +2,6 @@ package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.base.Strings;
 import java.util.logging.Logger;
@@ -59,7 +58,7 @@ public class SeriesBasedRepoRequest extends RepoRequest {
     }
 
     public String getSeriesName() {
-        return seriesKey.getName();
+        return seriesKey.getSeries();
     }
 
     public Integer getSeriesYear() {

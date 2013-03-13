@@ -4,7 +4,7 @@ import smartsoft.util.shared.Path;
 
 public interface ImageModelKey {
 
-    String getName();
+    String getSeries();
 
     Path getLocalPath();
 

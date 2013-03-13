@@ -146,7 +146,7 @@ public class ThreedModel {
             return getFeatureModel().getDisplayName();
         }
         Assignments assignments = picks.getAssignments();
-        Var displayName = getFeatureModel().getVarOrNull("displayName");
+        Var displayName = getFeatureModel().resolveVar("displayName");
         if (displayName == null) {
             return getFeatureModel().getDisplayName();
         }

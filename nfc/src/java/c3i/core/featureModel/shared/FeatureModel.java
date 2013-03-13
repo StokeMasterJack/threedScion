@@ -162,7 +162,7 @@ public class FeatureModel implements Vars {
 
     }
 
-    public Var getVarOrNull(String varCode) {
+    public Var resolveVar(String varCode) {
         try {
             return get(varCode);
         } catch (UnknownVarCodeException e) {
@@ -186,7 +186,7 @@ public class FeatureModel implements Vars {
     public Set<Var> getVars(Collection<String> varCodes) {
         Set<Var> set = new HashSet<Var>();
         for (String code : varCodes) {
-            Var var = getVarOrNull(code);
+            Var var = resolveVar(code);
             if (var == null) {
                 System.out.println("[" + code + "] not in FeatureModel");
             } else {

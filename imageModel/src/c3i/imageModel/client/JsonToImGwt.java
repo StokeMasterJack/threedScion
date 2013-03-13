@@ -99,7 +99,7 @@ public class JsonToImGwt {
 
     ViewLiftSpec parseViewLiftSpec(JSONObject jsLift) {
         String triggerFeatureVarCode = jsLift.get("triggerFeature").isString().stringValue();
-        Object triggerFeature = featureModel.getVar(triggerFeatureVarCode);
+        Object triggerFeature = featureModel.resolveVar(triggerFeatureVarCode);
         int deltaY = (int) jsLift.get("deltaY").isNumber().doubleValue();
         return new ViewLiftSpec(triggerFeature, deltaY);
     }
@@ -144,7 +144,7 @@ public class JsonToImGwt {
 
     private ImFeature parseFeature(int depth, JSONObject jsFeature) {
         String varCode = jsFeature.keySet().iterator().next();
-        Object var = featureModel.getVar(varCode);
+        Object var = featureModel.resolveVar(varCode);
         JSONArray jsFeaturesOrPngs = jsFeature.get(varCode).isArray();
         List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(depth, jsFeaturesOrPngs);
         return new ImFeature(depth, var, imFeatureOrPngs);

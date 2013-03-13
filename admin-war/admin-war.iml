@@ -42,9 +42,9 @@
     <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" name="gwt-servlet-2.4" level="application" />
-    <orderEntry type="module" module-name="imageModel" />
     <orderEntry type="module" module-name="img-gen" />
     <orderEntry type="module" module-name="repo" />
+    <orderEntry type="module" module-name="imageModel" />
   </component>
 </module>
 

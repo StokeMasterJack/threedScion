@@ -152,7 +152,7 @@ public class RepoVNodeBuilder extends VNodeBuilder {
             RevTree revTree = revWalk.parseTree(revCommit);
             ObjectId treeId = revTree.getId();
 
-            VNode vNode = buildTreeNode(treeId, seriesKey.getName(), 0);
+            VNode vNode = buildTreeNode(treeId, seriesKey.getSeries(), 0);
             if (vNode == null) {
                 throw new IllegalStateException("returned null vnode for treeId: " + treeId);
             }

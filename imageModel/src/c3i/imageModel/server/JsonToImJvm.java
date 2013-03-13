@@ -137,7 +137,7 @@ public class JsonToImJvm<V> {
         String varCode = jsFeature.getFieldNames().next();
 
 
-        Object var = featureModel.getVar(varCode);
+        Object var = featureModel.resolveVar(varCode);
         if (var == null) {
             throw new IllegalStateException("varCode[" + varCode + "] is not contained in fm[" + featureModel + "]");
         }

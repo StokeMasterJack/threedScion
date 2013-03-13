@@ -25,7 +25,7 @@ public final class JsonToFmJvm {
         String displayName = rootNode.get("displayName").getTextValue();
         String name = rootNode.get("name").getTextValue();
 
-        assert name.equals(seriesKey.getName());
+        assert name.equals(seriesKey.getSeries());
 
         fm = new FeatureModel(seriesKey, displayName);
 
@@ -187,7 +187,7 @@ public final class JsonToFmJvm {
 
     private BoolExpr mapVar(ObjectNode jsVar) {
         String varCode = jsVar.get("code").getTextValue();
-        Var var = fm.getVarOrNull(varCode);
+        Var var = fm.resolveVar(varCode);
         assert var != null : varCode + " was not in FeatureModel";
         return var;
     }

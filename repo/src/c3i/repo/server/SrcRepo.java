@@ -437,7 +437,7 @@ public class SrcRepo {
     }
 
     public File getVtcFile() {
-        String fileName = seriesKey.getName() + "-" + seriesKey.getYear() + ".txt";
+        String fileName = seriesKey.getSeries() + "-" + seriesKey.getYear() + ".txt";
         return new File(vtcBaseDir, fileName);
     }
 

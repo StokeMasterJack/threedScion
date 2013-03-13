@@ -73,7 +73,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
     }
 
     public SeriesKey(ImageModelKey k) {
-        this(k.getBrand(), k.getName(), k.getYear() + "");
+        this(k.getBrand(), k.getSeries(), k.getYear() + "");
     }
 
     public SeriesKey(BrandKey brandKey, String seriesYear, String seriesName) {
@@ -97,7 +97,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
         return year;
     }
 
-    public String getName() {
+    public String getSeries() {
         return name;
     }
 
@@ -310,7 +310,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
      */
     @Override
     public Path getLocalPath() {
-        String seriesName = getName();
+        String seriesName = getSeries();
         return new Path(getBrand()).append(seriesName).append(getYear());
     }
 

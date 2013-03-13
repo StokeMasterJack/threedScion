@@ -17,18 +17,13 @@ public class ImFeatureModel implements SimpleFeatureModel<Var> {
     }
 
     @Override
-    public Var getVar(String varCode) {
-        return featureModel.get(varCode);
+    public Var resolveVar(String varCode) {
+        return featureModel.resolveVar(varCode);
     }
 
     @Override
     public SeriesKey getSeriesKey() {
         return featureModel.getSeriesKey();
-    }
-
-    @Override
-    public boolean containsVarCode(String varCode) {
-        return featureModel.containsCode(varCode);
     }
 
     public static SimplePicks toSimplePicks(FixedPicks fixedPicks) {

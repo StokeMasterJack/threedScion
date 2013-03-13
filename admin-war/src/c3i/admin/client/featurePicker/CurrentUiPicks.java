@@ -81,7 +81,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public FixedPicks proposePickRadio(String varCode) {
-        Var var = featureModel.getVarOrNull(varCode);
+        Var var = featureModel.resolveVar(varCode);
         if (var == null) {
             throw new IllegalStateException();
         }
@@ -90,7 +90,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public FixedPicks proposeToggleCheckBox(String varCode) {
-        Var var = featureModel.getVarOrNull(varCode);
+        Var var = featureModel.resolveVar(varCode);
         if (var == null) {
             throw new IllegalStateException();
         }
@@ -137,7 +137,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
     }
 
     public void pickRadio(String varCode) {
-        Var var = featureModel.getVarOrNull(varCode);
+        Var var = featureModel.resolveVar(varCode);
         Preconditions.checkNotNull(var);
         pickRadio(var);
     }
@@ -174,7 +174,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public void toggleCheckBox(String varCode) {
-        Var var = featureModel.getVarOrNull(varCode);
+        Var var = featureModel.resolveVar(varCode);
         Preconditions.checkArgument(var != null);
         toggleCheckBox(var);
     }

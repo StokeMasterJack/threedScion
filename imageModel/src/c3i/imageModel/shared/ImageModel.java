@@ -42,7 +42,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
 
     @Override
     public String getName() {
-        return seriesKey.getName();
+        return seriesKey.getSeries();
     }
 
     public ImView getView(int i) {

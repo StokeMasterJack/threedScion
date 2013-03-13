@@ -138,7 +138,7 @@ public final class JsonUnmarshallerFm {
 
     private BoolExpr mapVar(JsBoolExpr jsVar) {
         String varCode = jsVar.getVarCode();
-        Var var = fm.getVarOrNull(varCode);
+        Var var = fm.resolveVar(varCode);
         assert var != null : varCode + " was not in FeatureModel";
         return var;
     }
