@@ -15,7 +15,7 @@
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="module" module-name="nfc" scope="TEST" />
-    <orderEntry type="module" module-name="fm" />
+    <orderEntry type="module" module-name="featureModel" />
   </component>
 </module>
 

@@ -22,7 +22,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="servlet-api-2.5" level="application" />
     <orderEntry type="module" module-name="ut" />
-    <orderEntry type="module" module-name="fm" />
+    <orderEntry type="module" module-name="featureModel" />
   </component>
 </module>
 
