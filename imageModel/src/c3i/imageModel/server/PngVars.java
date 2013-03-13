@@ -7,70 +7,64 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Extracts the outVars for a given Slice.
+ */
 public class PngVars {
 
-    private final File viewDir;
-    private final int angle;
+    public static Set<String> getPngVars(final File viewDir, final int angle) {
 
-    //computed
-    private final String expectedLocalName;
-    private final Set<File> pngFiles;
-    private final Set<String> features;
+        class Helper {
 
-    public PngVars(File viewDir, int angle) {
-        this.viewDir = viewDir;
-        this.angle = angle;
+            //computed
+            private final String expectedLocalName;
+            private final Set<File> pngFiles;
+            private final Set<String> pngVars;
 
-        expectedLocalName = initPngFileName(angle);
-        pngFiles = new HashSet<File>();
-        features = new HashSet<String>();
-        initPngFiles(viewDir);
-        initFeatures();
-    }
-
-    public File getViewDir() {
-        return viewDir;
-    }
-
-    public int getAngle() {
-        return angle;
-    }
-
-    public Set<String> getPngVars() {
-        return features;
-    }
-
-    public Set<File> getPngFiles() {
-        return pngFiles;
-    }
-
-    private void initPngFiles(File node) {
-        if (node.isDirectory() && !isZLayerDir(node)) {
-            File[] childNodes = node.listFiles();
-            for (File childNode : childNodes) {
-                initPngFiles(childNode);
+            private Helper() {
+                expectedLocalName = initPngFileName(angle);
+                pngFiles = new HashSet<File>();
+                pngVars = new HashSet<String>();
+                initPngFiles(viewDir);
+                initFeatures();
             }
-        } else if (node.isFile()) {
-            if (expectedLocalName.equals(node.getName())) {
-                pngFiles.add(node);
+
+            private void initPngFiles(File node) {
+                if (node.isDirectory() && !isZLayerDir(node)) {
+                    File[] childNodes = node.listFiles();
+                    for (File childNode : childNodes) {
+                        initPngFiles(childNode);
+                    }
+                } else if (node.isFile()) {
+                    if (expectedLocalName.equals(node.getName())) {
+                        pngFiles.add(node);
+                    }
+                }
+            }
+
+            private void initFeatures() {
+                for (File pngFile : pngFiles) {
+                    File f = pngFile.getParentFile();
+                    while (!isLayerDir(f)) {
+                        pngVars.add(f.getName());
+                        f = f.getParentFile();
+                    }
+                }
+            }
+
+            public Set<String> getPngVars() {
+                return pngVars;
             }
         }
-    }
 
-    private void initFeatures() {
-        for (File pngFile : pngFiles) {
-            File f = pngFile.getParentFile();
-            while (!isLayerDir(f)) {
-                features.add(f.getName());
-                f = f.getParentFile();
-            }
-        }
+
+        return new Helper().getPngVars();
 
     }
 
 
     private static String initPngFileName(int angle) {
-        return new StringBuilder(11).append("vr_1").append("_").append(Strings.lpad(angle + "", '0', 2)).append(".png").toString();
+        return "vr_1" + "_" + Strings.lpad(angle + "", '0', 2) + ".png";
     }
 
     private static boolean isLayerDir(File node) {
@@ -84,7 +78,4 @@ public class PngVars {
     }
 
 
-    public static Set<String> getPngVars(File viewDir, int angle) {
-        return new PngVars(viewDir, angle).getPngVars();
-    }
 }
