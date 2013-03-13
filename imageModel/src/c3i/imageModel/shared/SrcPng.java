@@ -95,30 +95,6 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return layer.getDeltaY(picks, angle);
     }
 
-//    public int indexOf(Var accessory) {
-//        IsParent p = parent;
-//        while (p.isFeature()) {
-//            ImFeature imFeature = (ImFeature) p;
-//            if (imFeature.is(accessory)) {
-//                return imFeature.getDepth();
-//            } else {
-//                p = imFeature.getParent();
-//            }
-//        }
-//        return -1;
-//    }
-
-//    public boolean hasFeature(Var accessory) {
-//        IsParent p = parent;
-//        while (p.isFeature()) {
-//            ImFeature imFeature = (ImFeature) p;
-//            if (imFeature.is(accessory)) return true;
-//            p = imFeature.getParent();
-//        }
-//
-//        return false;
-//    }
-
     public boolean hasFeature(String varCode) {
         IsParent p = parent;
         while (p.isFeature()) {

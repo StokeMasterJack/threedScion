@@ -35,7 +35,7 @@ public class VarGuesser implements IVarGuesser {
     }
 
     public static Boolean guessMandatory(Var var) {
-        if(var.isRoot()) return true;
+        if (var.isRoot()) return true;
         for (String code : MandatoryVars) {
             if (var.getCode().equalsIgnoreCase(code)) return true;
         }

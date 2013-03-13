@@ -338,7 +338,7 @@ abstract public class Csp<A extends Assignments, C extends Csp> implements AutoA
         }
     }
 
-    public <R> void forEach(ProductHandler<CspForTreeSearch,R> handler) {
+    public <R> void forEach(ProductHandler<CspForTreeSearch, R> handler) {
         FmSearchRequest<R> r = new FmSearchRequest<R>();
         r.setProductHandler(handler);
         this.forEach(r);

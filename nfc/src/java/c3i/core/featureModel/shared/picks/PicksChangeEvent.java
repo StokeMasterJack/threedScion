@@ -1,6 +1,5 @@
 package c3i.core.featureModel.shared.picks;
 
-import c3i.core.featureModel.shared.FeatureModel;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.event.shared.GwtEvent;

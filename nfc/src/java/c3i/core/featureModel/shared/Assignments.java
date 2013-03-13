@@ -6,7 +6,7 @@ import c3i.imageModel.shared.SimplePicks;
 
 import java.util.Set;
 
-public interface Assignments<A extends Assignments> extends EvalContext, AutoAssignContext,SimplePicks {
+public interface Assignments<A extends Assignments> extends EvalContext, AutoAssignContext, SimplePicks {
 
     Vars getVars();
 
