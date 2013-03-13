@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 
 import java.io.File;
 
-public class ImgGenTest extends TestCase {
+public class JpgSetTest extends TestCase {
 
     File TOYOTA_REPO_BASE_DIR = new File("/configurator-content-toyota");
 
@@ -32,6 +32,15 @@ public class ImgGenTest extends TestCase {
         id = new SeriesId(BrandKey.TOYOTA, "avalon", 2014, "18942e640eb38949d3fa6a7bad3958edd1283d7c");
         imgGenService = createImageGenFactoryRepo();
     }
+
+    public void testJpgSetOneSlice1() throws Exception {
+           String viewName = "exterior";
+           int angle = 2;
+
+           JpgSet jpgSet = imgGenService.getJpgSet(id, viewName, angle);
+
+           assertEquals(189, jpgSet.size());
+       }
 
     public void testJpgSetOneSlice() throws Exception {
         String viewName = "exterior";

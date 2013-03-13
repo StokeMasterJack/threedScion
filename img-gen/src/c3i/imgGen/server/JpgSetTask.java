@@ -6,6 +6,7 @@ import c3i.featureModel.shared.FmSearchRequest;
 import c3i.featureModel.shared.ProductHandler;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.RawBaseImage;
+import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.repoImpl.FmIm;
 import com.google.common.base.Charsets;
@@ -38,7 +39,7 @@ public class JpgSetTask<ID> {
         this(fmIm, fmIm.getImageModel().getSlice2(viewName, angle));
     }
 
-    public JpgSetTask(FmIm<ID> fmIm, c3i.imageModel.shared.Slice slice) {
+    public JpgSetTask(FmIm<ID> fmIm, Slice slice) {
         this(fmIm, slice.getViewName(), slice.getAngle());
     }
 
