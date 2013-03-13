@@ -12,7 +12,7 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 
     public ImVNodeHeaderFilter(SimpleFeatureModel featureModel) {
         this.featureModel = featureModel;
-        this.seriesName = featureModel.getSeriesKey().getSeries();
+        this.seriesName = featureModel.getContextKey().getSeriesName();
     }
 
     Rejection veto(VNodeHeader vNode, String reason) {

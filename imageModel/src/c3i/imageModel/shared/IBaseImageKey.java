@@ -5,7 +5,7 @@ public interface IBaseImageKey {
 
     String getFingerprint();
 
-    ImageModelKey getSeriesKey();
+    ImContextKey getSeriesKey();
 
     RawBaseImage getPngKeys();
 

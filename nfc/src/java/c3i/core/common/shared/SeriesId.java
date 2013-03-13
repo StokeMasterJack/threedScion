@@ -41,7 +41,7 @@ public class SeriesId implements Serializable {
     }
 
     public String getName() {
-        return seriesKey.getSeries();
+        return seriesKey.getSeriesName();
     }
 
     public int getYear() {

@@ -58,7 +58,7 @@ public class SeriesBasedRepoRequest extends RepoRequest {
     }
 
     public String getSeriesName() {
-        return seriesKey.getSeries();
+        return seriesKey.getSeriesName();
     }
 
     public Integer getSeriesYear() {

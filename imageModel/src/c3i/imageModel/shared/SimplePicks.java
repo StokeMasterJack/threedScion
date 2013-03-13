@@ -3,9 +3,9 @@ package c3i.imageModel.shared;
 /**
  * Should implement fast hash and equals
  */
-public interface SimplePicks {
+public interface SimplePicks<V> {
 
-    boolean isPicked(Object var);
+    boolean isPicked(V var);
 
     boolean isValidBuild();
 }

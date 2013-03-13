@@ -129,7 +129,7 @@ public class ThreedModelClient {
 
         return repoBaseUrl
                 .append(seriesKey.getBrandKey().getKey())
-                .append(seriesKey.getSeries())
+                .append(seriesKey.getSeriesName())
                 .append(seriesKey.getYear())
                 .append("vtc.txt");
 
@@ -140,7 +140,7 @@ public class ThreedModelClient {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
         }
         String url = urlTemplate.replace("${brandName}", seriesKey.getBrandKey().getKey());
-        url = url.replace("${seriesName}", seriesKey.getSeries());
+        url = url.replace("${seriesName}", seriesKey.getSeriesName());
         url = url.replace("${seriesYear}", seriesKey.getYear() + "");
         url = url.replace("${rootTreeId}", rootTreeId.getName());
         url = url.replace("${repoBase.url}", repoBaseUrl.toString());
@@ -176,7 +176,7 @@ public class ThreedModelClient {
         //mostly due to the checking for empty pngs
         //this should only occur for a 3d admin, not an end user app
         jsonp.setTimeout(1000 * 500);
-        jsonp.setPredeterminedId(seriesId.getSeriesKey().getSeries());
+        jsonp.setPredeterminedId(seriesId.getSeriesKey().getSeriesName());
 
         jsonp.requestObject(url.toString(),
                 new AsyncCallback<JsThreedModel>() {

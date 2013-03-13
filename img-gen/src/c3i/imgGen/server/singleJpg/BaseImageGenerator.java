@@ -2,7 +2,7 @@ package c3i.imgGen.server.singleJpg;
 
 
 import c3i.imageModel.shared.IBaseImageKey;
-import c3i.imageModel.shared.ImageModelKey;
+import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imgGen.api.SrcPngLoader;
@@ -280,7 +280,7 @@ public class BaseImageGenerator {
     private BufferedImage readSrcPng(String pngShortSha) throws IORuntimeException {
         InputStream is = null;
         try {
-            ImageModelKey imageModelKey = baseImage.getSeriesKey();
+            ImContextKey imageModelKey = baseImage.getSeriesKey();
             is = pngLoader.getPng(imageModelKey, pngShortSha).getInput();
             return readSrcImage(is);
         } catch (IOException e) {

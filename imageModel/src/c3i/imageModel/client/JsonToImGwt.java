@@ -46,7 +46,7 @@ public class JsonToImGwt {
         JSONArray jsonArray = jsImageModel.getViews();
         assert jsonArray != null;
         List<ImView> imViews = parseViews(jsonArray);
-        ImageModel imageModel = new ImageModel(0, imViews, featureModel.getSeriesKey());
+        ImageModel imageModel = new ImageModel(0, imViews, featureModel.getContextKey());
         return imageModel;
     }
 

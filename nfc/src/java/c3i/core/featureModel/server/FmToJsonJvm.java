@@ -36,7 +36,7 @@ public class FmToJsonJvm {
         ObjectNode jsFeatureModel = f.objectNode();
         jsFeatureModel.put("displayName", fm.getDisplayName());
         jsFeatureModel.put("brand", fm.getSeriesKey().getBrandKey().getKey());
-        jsFeatureModel.put("name", fm.getSeriesKey().getSeries());
+        jsFeatureModel.put("name", fm.getSeriesKey().getSeriesName());
         jsFeatureModel.put("year", fm.getSeriesKey().getYear());
         jsFeatureModel.put("rootVar", jsRootVar);
         jsFeatureModel.put("constraints", jsExtraConstraints);

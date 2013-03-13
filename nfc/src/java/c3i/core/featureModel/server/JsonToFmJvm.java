@@ -25,7 +25,7 @@ public final class JsonToFmJvm {
         String displayName = rootNode.get("displayName").getTextValue();
         String name = rootNode.get("name").getTextValue();
 
-        assert name.equals(seriesKey.getSeries());
+        assert name.equals(seriesKey.getSeriesName());
 
         fm = new FeatureModel(seriesKey, displayName);
 

@@ -1,7 +1,7 @@
 package c3i.core.common.shared;
 
 
-import c3i.imageModel.shared.ImageModelKey;
+import c3i.imageModel.shared.ImContextKey;
 import smartsoft.util.shared.Path;
 import smartsoft.util.shared.Strings;
 
@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.Integer.parseInt;
 
-public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageModelKey {
+public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImContextKey {
 
     private static final long serialVersionUID = -1194176968240952697L;
 
@@ -72,8 +72,8 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
     protected SeriesKey() {
     }
 
-    public SeriesKey(ImageModelKey k) {
-        this(k.getBrand(), k.getSeries(), k.getYear() + "");
+    public SeriesKey(ImContextKey k) {
+        this(k.getBrandName(), k.getSeriesName(), k.getYear() + "");
     }
 
     public SeriesKey(BrandKey brandKey, String seriesYear, String seriesName) {
@@ -97,7 +97,7 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
         return year;
     }
 
-    public String getSeries() {
+    public String getSeriesName() {
         return name;
     }
 
@@ -310,12 +310,12 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable, ImageMode
      */
     @Override
     public Path getLocalPath() {
-        String seriesName = getSeries();
-        return new Path(getBrand()).append(seriesName).append(getYear());
+        String seriesName = getSeriesName();
+        return new Path(getBrandName()).append(seriesName).append(getYear());
     }
 
     @Override
-    public String getBrand() {
+    public String getBrandName() {
         return getBrandKey().getKey();
     }
 

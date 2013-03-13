@@ -7,16 +7,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ViewKey {
 
-    private final ImageModelKey seriesKey;
+    private final ImContextKey seriesKey;
     private final int viewIndex;
 
-    public ViewKey(ImageModelKey seriesKey, int viewIndex) {
+    public ViewKey(ImContextKey seriesKey, int viewIndex) {
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.viewIndex = viewIndex;
     }
 
-    public ImageModelKey getSeriesKey() {
+    public ImContextKey getSeriesKey() {
         return seriesKey;
     }
 

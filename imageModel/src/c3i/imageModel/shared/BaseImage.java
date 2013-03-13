@@ -71,7 +71,7 @@ public class BaseImage extends AbstractImImage implements IBaseImageKey {
         return slice.getView();
     }
 
-    public ImageModelKey getSeriesKey() {
+    public ImContextKey getSeriesKey() {
         return slice.getView().getSeries().getSeriesKey();
     }
 

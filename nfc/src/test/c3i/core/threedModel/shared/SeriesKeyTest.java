@@ -9,7 +9,7 @@ public class SeriesKeyTest extends TestCase {
     public void test() throws Exception {
 
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2010, "Land Cruiser");
-        assertEquals("landcruiser", seriesKey.getSeries());
+        assertEquals("landcruiser", seriesKey.getSeriesName());
 
     }
 

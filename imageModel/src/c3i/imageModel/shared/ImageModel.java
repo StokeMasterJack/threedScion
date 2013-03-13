@@ -11,10 +11,10 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, V>, IsRoot<V> {
 
-    private final ImageModelKey seriesKey;
+    private final ImContextKey seriesKey;
     private final List<ImView<V>> imViews;
 
-    public ImageModel(int depth, List<ImView<V>> imViews, ImageModelKey seriesKey) {
+    public ImageModel(int depth, List<ImView<V>> imViews, ImContextKey seriesKey) {
         super(depth);
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
@@ -42,7 +42,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
 
     @Override
     public String getName() {
-        return seriesKey.getSeries();
+        return seriesKey.getSeriesName();
     }
 
     public ImView getView(int i) {
@@ -179,7 +179,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
         return repoBase.append(localPath).append("3d");
     }
 
-    public ImageModelKey getSeriesKey() {
+    public ImContextKey getSeriesKey() {
         checkState(seriesKey != null);
         return seriesKey;
     }

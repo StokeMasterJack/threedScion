@@ -21,7 +21,7 @@ public class SeriesInfo {
     }
 
     public String getName() {
-        return getSeriesKey().getSeries();
+        return getSeriesKey().getSeriesName();
     }
 
     public ViewKeyOld[] getViewKeys() {
@@ -118,7 +118,7 @@ public class SeriesInfo {
     }
 
     public String getSeriesName() {
-        return seriesKey.getSeries();
+        return seriesKey.getSeriesName();
     }
 
     public boolean containsView(ViewKeyOld key) {

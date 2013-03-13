@@ -2,7 +2,7 @@ package c3i.repoWebService;
 
 import c3i.core.common.shared.SeriesKey;
 import c3i.imageModel.shared.IBaseImageKey;
-import c3i.imageModel.shared.ImageModelKey;
+import c3i.imageModel.shared.ImContextKey;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
 import c3i.repo.server.BrandRepos;
@@ -23,7 +23,7 @@ public class JpgGenHelper {
     }
 
     public File getFileForJpg(IBaseImageKey jpgKey) {
-        ImageModelKey imageModelKey = jpgKey.getSeriesKey();
+        ImContextKey imageModelKey = jpgKey.getSeriesKey();
 
         SeriesKey seriesKey = new SeriesKey(imageModelKey);
 

@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
 
 public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFingerprint> {
 
@@ -51,7 +50,7 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
         int angle = slice.getAngle();
 
         ImView view = threedModel.getView(viewName);
-        RawImageStack rawImageStack = view.getRawImageStack(toSimplePicks(fixedPicks), slice.getAngle());
+        RawImageStack rawImageStack = view.getRawImageStack(fixedPicks, slice.getAngle());
 
         CoreImageStack coreImageStack = rawImageStack.getCoreImageStack(profile, ImageMode.JPG);
 

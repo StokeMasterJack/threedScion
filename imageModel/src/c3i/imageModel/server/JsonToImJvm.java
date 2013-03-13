@@ -1,11 +1,11 @@
 package c3i.imageModel.server;
 
+import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
-import c3i.imageModel.shared.ImageModelKey;
 import c3i.imageModel.shared.JsonParseException;
 import c3i.imageModel.shared.PngShortSha;
 import c3i.imageModel.shared.SimpleFeatureModel;
@@ -26,7 +26,7 @@ public class JsonToImJvm<V> {
     private final SimpleFeatureModel<V> featureModel;
 
     public static ImageModel parse(SimpleFeatureModel featureModel, String imageModelJson) throws JsonParseException {
-        checkNotNull(featureModel.getSeriesKey());
+        checkNotNull(featureModel.getContextKey());
         ObjectMapper mapper = new ObjectMapper();
         JsonNode imageModeAsJsonNode;
         try {
@@ -38,7 +38,7 @@ public class JsonToImJvm<V> {
     }
 
     public static ImageModel parse(SimpleFeatureModel featureModel, JsonNode imageModelAsJsonNode) {
-        checkNotNull(featureModel.getSeriesKey());
+        checkNotNull(featureModel.getContextKey());
         JsonToImJvm parser = new JsonToImJvm(featureModel);
         return parser.parseSeries(imageModelAsJsonNode);
     }
@@ -53,7 +53,7 @@ public class JsonToImJvm<V> {
         List<ImView> imViews = parseViews(jsonArray);
 
 
-        ImageModelKey seriesKey = featureModel.getSeriesKey();
+        ImContextKey seriesKey = featureModel.getContextKey();
         checkState(seriesKey != null);
 
 

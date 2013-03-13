@@ -111,7 +111,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
 
     private ViewKey initViewKey() {
         ImageModel imageModel = (ImageModel) parent;
-        ImageModelKey seriesKey = imageModel.getSeriesKey();
+        ImContextKey seriesKey = imageModel.getSeriesKey();
         return new ViewKey(seriesKey, getIndex());
     }
 

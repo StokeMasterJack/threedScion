@@ -13,7 +13,6 @@ import c3i.smartClient.client.model.ViewsSession;
 
 import java.util.List;
 
-import static c3i.core.threedModel.shared.ImFeatureModel.toSimplePicks;
 
 public class LayersPanelModel {
 
@@ -56,7 +55,7 @@ public class LayersPanelModel {
     public PngSpec getPngForLayer(ImLayer layer) {
         FixedPicks fixedPicks = viewsSession.fixedPicks().get();
         if (fixedPicks == null) throw new IllegalStateException();
-        return layer.getPngSpec(toSimplePicks(fixedPicks), viewSession.getAngle());
+        return layer.getPngSpec(fixedPicks, viewSession.getAngle());
     }
 
     public void toggleLayer(final ImLayer layer) {

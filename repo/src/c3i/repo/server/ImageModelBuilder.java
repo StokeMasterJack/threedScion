@@ -1,13 +1,13 @@
 package c3i.repo.server;
 
 import c3i.core.featureModel.shared.UnknownVarCodeException;
+import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImNodeType;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
-import c3i.imageModel.shared.ImageModelKey;
 import c3i.imageModel.shared.PngShortSha;
 import c3i.imageModel.shared.SimpleFeatureModel;
 import c3i.imageModel.shared.SrcPng;
@@ -44,7 +44,7 @@ public class ImageModelBuilder {
         List<ImView> imViews = createImViewsFromSeriesDir(seriesVDir);
 
 
-        ImageModelKey seriesKey = featureModel.getSeriesKey();
+        ImContextKey seriesKey = featureModel.getContextKey();
         return new ImageModel(seriesVDir.getDepth(), imViews, seriesKey);
     }
 

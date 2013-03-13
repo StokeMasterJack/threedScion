@@ -116,7 +116,7 @@ public class RepoClient {
             throw new IllegalStateException("Invalid repoUrl[" + repoBaseUrl + "]");
         }
 
-        String n = seriesKey.getSeries();
+        String n = seriesKey.getSeriesName();
         int y = seriesKey.getYear();
         Path p = new Path(n).append(y + "").append("vtc").appendName(".txt");
         try {

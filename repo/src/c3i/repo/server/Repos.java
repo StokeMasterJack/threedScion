@@ -10,7 +10,7 @@ import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.core.threedModel.shared.VtcMap;
 import c3i.imageModel.shared.BaseImageType;
-import c3i.imageModel.shared.ImageModelKey;
+import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Profiles;
 import c3i.repo.shared.CommitHistory;
@@ -139,7 +139,7 @@ public class Repos {
         return getSeriesRepo(new SeriesKey(brandKey, seriesYear, seriesName));
     }
 
-    public SeriesRepo getSeriesRepo(ImageModelKey imageModelKey) {
+    public SeriesRepo getSeriesRepo(ImContextKey imageModelKey) {
         SeriesKey sk = new SeriesKey(imageModelKey);
         return getSeriesRepo(sk);
     }

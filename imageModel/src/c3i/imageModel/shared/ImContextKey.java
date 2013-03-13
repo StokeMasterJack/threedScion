@@ -2,13 +2,13 @@ package c3i.imageModel.shared;
 
 import smartsoft.util.shared.Path;
 
-public interface ImageModelKey {
+public interface ImContextKey {
 
-    String getSeries();
+    String getSeriesName();
 
     Path getLocalPath();
 
-    String getBrand();
+    String getBrandName();
 
     int getYear();
 }
