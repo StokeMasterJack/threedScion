@@ -1,6 +1,6 @@
 package c3i.admin.client;
 
-import c3i.core.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.FixedPicks;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.PngSpec;

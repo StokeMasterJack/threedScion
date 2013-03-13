@@ -1,6 +1,6 @@
 package c3i.imgGen.generic;
 
-import c3i.core.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FeatureModel;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
 import c3i.imgGen.api.FeatureModelFactory;

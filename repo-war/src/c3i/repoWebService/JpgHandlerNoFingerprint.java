@@ -1,6 +1,6 @@
 package c3i.repoWebService;
 
-import c3i.core.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.FixedPicks;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.CoreImageStack;

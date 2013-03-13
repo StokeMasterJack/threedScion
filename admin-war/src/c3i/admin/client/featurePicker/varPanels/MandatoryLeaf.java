@@ -3,7 +3,7 @@ package c3i.admin.client.featurePicker.varPanels;
 import com.google.gwt.user.client.ui.HTML;
 import c3i.admin.client.featurePicker.VarPanel;
 import c3i.admin.client.featurePicker.VarPanelModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.boolExpr.Var;
 
 import javax.annotation.Nonnull;
 

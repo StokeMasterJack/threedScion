@@ -1,7 +1,7 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.featureModel.shared.boolExpr.AssignmentException;
+import c3i.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.AngleKey;
 import c3i.imageModel.shared.ImView;

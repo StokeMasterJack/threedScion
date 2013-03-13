@@ -1,6 +1,6 @@
 package c3i.admin.client.featurePicker;
 
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.admin.client.featurePicker.varPanels.L1Group;
 import c3i.admin.client.featurePicker.varPanels.L2Group;
 import c3i.admin.client.featurePicker.varPanels.MandatoryLeaf;

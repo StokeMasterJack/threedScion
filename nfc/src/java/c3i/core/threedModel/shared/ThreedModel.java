@@ -1,10 +1,10 @@
 package c3i.core.threedModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.Assignments;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.Assignments;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;

@@ -3,7 +3,7 @@ package c3i.repo.server;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FeatureModel;
 import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.CommitKey;
 import c3i.core.threedModel.shared.RootTreeId;

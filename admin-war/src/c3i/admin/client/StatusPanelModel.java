@@ -3,8 +3,8 @@ package c3i.admin.client;
 import smartsoft.util.shared.Path;
 import c3i.admin.client.featurePicker.CurrentUiPicks;
 import c3i.core.common.shared.SeriesId;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FixedPicks;
 import c3i.smartClient.client.model.ImageStack;
 import c3i.smartClient.client.model.ViewSession;
 

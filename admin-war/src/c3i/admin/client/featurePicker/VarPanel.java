@@ -1,7 +1,7 @@
 package c3i.admin.client.featurePicker;
 
 import com.google.gwt.user.client.ui.Composite;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.boolExpr.Var;
 
 import javax.annotation.Nonnull;
 import java.util.List;

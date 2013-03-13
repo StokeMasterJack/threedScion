@@ -1,7 +1,7 @@
 package c3i.imgGen.server.taskManager;
 
 import c3i.core.common.shared.SeriesId;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;

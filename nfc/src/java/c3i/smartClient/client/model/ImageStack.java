@@ -1,8 +1,8 @@
 package c3i.smartClient.client.model;
 
 
-import c3i.core.featureModel.shared.FixedPicks;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.AngleKey;
 import c3i.imageModel.shared.CoreImageStack;
 import c3i.imageModel.shared.ImImage;

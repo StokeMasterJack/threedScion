@@ -4,7 +4,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.StackLayoutPanel;
 import c3i.admin.client.featurePicker.VarPanel;
 import c3i.admin.client.featurePicker.VarPanelModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.boolExpr.Var;
 
 import javax.annotation.Nonnull;
 import java.util.List;

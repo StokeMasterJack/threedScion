@@ -1,11 +1,8 @@
 package c3i.imgGen.repoImpl;
 
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.ImageModel;
-import c3i.imageModel.shared.Slice2;
-import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSetTask;
 
 public class FmIm<ID> {
 

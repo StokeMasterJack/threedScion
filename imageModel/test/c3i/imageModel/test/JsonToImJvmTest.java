@@ -1,7 +1,7 @@
 package c3i.imageModel.test;
 
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImView;

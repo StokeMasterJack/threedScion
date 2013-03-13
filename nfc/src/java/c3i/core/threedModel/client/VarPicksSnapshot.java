@@ -1,8 +1,8 @@
 package c3i.core.threedModel.client;
 
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.UnknownVarCodeException;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.UnknownVarCodeException;
+import c3i.featureModel.shared.boolExpr.Var;
 import com.google.common.collect.ImmutableSet;
 
 import javax.annotation.Nonnull;

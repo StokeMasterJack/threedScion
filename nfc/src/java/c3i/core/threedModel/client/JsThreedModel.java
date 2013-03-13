@@ -1,6 +1,6 @@
 package c3i.core.threedModel.client;
 
-import c3i.core.featureModel.client.JsFeatureModel;
+import c3i.featureModel.client.JsFeatureModel;
 import c3i.imageModel.client.JsImageModel;
 import com.google.gwt.core.client.JavaScriptObject;
 

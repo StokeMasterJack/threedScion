@@ -6,7 +6,7 @@ import c3i.admin.client.jpgGen.JpgQueueMasterPanel;
 import c3i.imgGen.shared.JobSpec;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FeatureModel;
 import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Profiles;

@@ -1,10 +1,10 @@
 package c3i.imgGen.server;
 
 import c3i.core.common.shared.ProductHandler;
-import c3i.core.featureModel.shared.CspForTreeSearch;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.FmSearchRequest;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.CspForTreeSearch;
+import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.FmSearchRequest;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.repoImpl.FmIm;

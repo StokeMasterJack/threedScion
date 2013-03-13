@@ -1,6 +1,6 @@
 package c3i.repo.server;
 
-import c3i.core.featureModel.shared.UnknownVarCodeException;
+import c3i.featureModel.shared.UnknownVarCodeException;
 import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;

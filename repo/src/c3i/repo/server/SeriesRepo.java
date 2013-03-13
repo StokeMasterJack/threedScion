@@ -2,9 +2,8 @@ package c3i.repo.server;
 
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
-import c3i.core.featureModel.server.XmlToFmJvm;
-import c3i.core.featureModel.shared.FeatureModel;
-import c3i.core.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.server.XmlToFmJvm;
+import c3i.featureModel.shared.FeatureModel;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.ImContext;

@@ -3,7 +3,7 @@ package c3i.admin.client;
 import c3i.imageModel.shared.PngSpec;
 import c3i.smartClient.client.model.LayerState;
 import java.util.logging.Level;import java.util.logging.Logger;
-import c3i.core.featureModel.shared.FixedPicks;
+import c3i.featureModel.shared.FixedPicks;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageMode;
