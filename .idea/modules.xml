@@ -4,13 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/admin-war/admin-war.iml" filepath="$PROJECT_DIR$/admin-war/admin-war.iml" />
       <module fileurl="file://$PROJECT_DIR$/build/build.iml" filepath="$PROJECT_DIR$/build/build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ebro/ebro.iml" filepath="$PROJECT_DIR$/ebro/ebro.iml" />
       <module fileurl="file://$PROJECT_DIR$/featureModel/featureModel.iml" filepath="$PROJECT_DIR$/featureModel/featureModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageModel/imageModel.iml" filepath="$PROJECT_DIR$/imageModel/imageModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/img-gen/img-gen.iml" filepath="$PROJECT_DIR$/img-gen/img-gen.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
       <module fileurl="file://$PROJECT_DIR$/repo/repo.iml" filepath="$PROJECT_DIR$/repo/repo.iml" />
       <module fileurl="file://$PROJECT_DIR$/repo-war/repo-war.iml" filepath="$PROJECT_DIR$/repo-war/repo-war.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartClient/smartClient.iml" filepath="$PROJECT_DIR$/smartClient/smartClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartClient-demos-gwt-war/smartClient-demos-gwt-war.iml" filepath="$PROJECT_DIR$/smartClient-demos-gwt-war/smartClient-demos-gwt-war.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartClient-demos-js-war/smartClient-demos-js-war.iml" filepath="$PROJECT_DIR$/smartClient-demos-js-war/smartClient-demos-js-war.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartClient-war/smartClient-war.iml" filepath="$PROJECT_DIR$/smartClient-war/smartClient-war.iml" />

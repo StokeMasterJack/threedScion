@@ -1,10 +1,10 @@
 package c3i.featureModel.shared.boolExpr;
 
-import c3i.featureModel.shared.Assignments;
 import c3i.featureModel.shared.AutoAssignContext;
 import c3i.featureModel.shared.Cardinality;
 import c3i.featureModel.shared.EvalContext;
 import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.IAssignments;
 import c3i.featureModel.shared.PngVarFilter;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.UnknownVarCodeException;
@@ -119,7 +119,7 @@ public class Var extends NonConstant {
     }
 
     @Override
-    public boolean containsDeep(Var v) {
+    public boolean containsVar(Var v) {
         return this.equals(v);
     }
 
@@ -132,8 +132,8 @@ public class Var extends NonConstant {
         else return name;
     }
 
-    private VarsDb.RootVar getRootVar() {
-        if (isRoot()) return (VarsDb.RootVar) this;
+    private VarSpaceDb.RootVar getRootVar() {
+        if (isRoot()) return (VarSpaceDb.RootVar) this;
         else return getParent().getRootVar();
     }
 
@@ -761,16 +761,16 @@ public class Var extends NonConstant {
 
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
-        if (ctx instanceof Assignments) {
+    public void autoAssignTrue(AutoAssignContext ctx) {
+        if (ctx instanceof IAssignments) {
 
         }
-        ctx.assignTrue(this, depth);
+        ctx.assignTrue(this);
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
-        ctx.assignFalse(this, depth);
+    public void autoAssignFalse(AutoAssignContext ctx) {
+        ctx.assignFalse(this);
     }
 
 

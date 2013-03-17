@@ -1,7 +1,6 @@
 package c3i.repoWebService;
 
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import c3i.repo.shared.RevisionParameter;
 
 import javax.servlet.http.HttpServletRequest;

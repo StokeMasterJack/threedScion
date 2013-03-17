@@ -10,9 +10,7 @@ import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.Slice2;
 import c3i.imgGen.api.SrcPngLoader;
-import c3i.imgGen.generic.ImgGenService;
-import c3i.imgGen.repoImpl.FmIm;
-import c3i.imgGen.server.JpgSet;
+import c3i.imgGen.api.ThreedModelService;
 import c3i.imgGen.server.singleJpg.BaseImageGenerator;
 import c3i.imgGen.shared.ExecutorStatus;
 import c3i.imgGen.shared.JobId;
@@ -25,6 +23,8 @@ import c3i.imgGen.shared.Stats;
 import c3i.imgGen.shared.TerminalStatus;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
+import c3i.threedModel.shared.JpgSet;
+import c3i.threedModel.shared.ThreedModel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.ExceptionRenderer;
@@ -60,14 +60,14 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
     private final Stats stats = new Stats();
 
-    private final ImgGenService<SeriesId> imgGenService;
+    private final ThreedModelService threedModelService;
     private final SeriesRepo seriesRepo;
     private final RtRepo rtRepo;
     private final SrcPngLoader pngLoader;
 
     //ImgGenContext
 
-    public Master(SeriesRepo seriesRepo, JobSpec jobSpec, ImgGenService<SeriesId> imgGenService, SrcPngLoader pngLoader, int threadCount, int priority) {
+    public Master(SeriesRepo seriesRepo, JobSpec jobSpec, ThreedModelService threedModelService, SrcPngLoader pngLoader, int threadCount, int priority) {
         this.seriesRepo = seriesRepo;
         this.pngLoader = pngLoader;
         this.rtRepo = seriesRepo.getRtRepo();
@@ -77,7 +77,7 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
         this.jobSpec = jobSpec;
 
-        this.imgGenService = imgGenService;
+        this.threedModelService = threedModelService;
 
         this.seriesId = jobSpec.getSeriesId();
         this.profile = jobSpec.getProfile();
@@ -122,7 +122,7 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
                     initDirsAndStartFile();
 
-                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(imgGenService);
+                    CreateJpgSetsTask createJpgSetsTask = new CreateJpgSetsTask(threedModelService);
                     executors.createJpgSets.submit(createJpgSetsTask);
 
                     return createJpgSetsTask;
@@ -269,10 +269,9 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
      */
     private final class CreateJpgSetsTask extends MyFutureTask<ImmutableList<CreateJpgSetTask>> {
 
-        private final FmIm<SeriesId> fmIm;
-        private final ImgGenService<SeriesId> imgGenService;
+        private final ThreedModel threedModel;
 
-        private CreateJpgSetsTask(final ImgGenService<SeriesId> imgGenService) {
+        private CreateJpgSetsTask(final ThreedModelService threedModelService) {
 
             super(new Callable<ImmutableList<CreateJpgSetTask>>() {
 
@@ -284,10 +283,10 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                     final ImmutableList.Builder<CreateJpgSetTask> builder = new ImmutableList.Builder<CreateJpgSetTask>();
 
 
-                    FmIm fmIm = imgGenService.getFmIm(seriesId);
-                    ImageModel<Var> imageModel = fmIm.getImageModel();
+                    ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+                    ImageModel imageModel = threedModel.getImageModel();
 
-                    List<ImView<Var>> views = imageModel.getViews();
+                    List<ImView> views = imageModel.getViews();
                     for (ImView view : views) {
                         int angleCount = view.getAngleCount();
                         for (int a = 1; a <= angleCount; a++) {
@@ -304,13 +303,12 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                 }
             });
 
-            this.fmIm = imgGenService.getFmIm(seriesId);
-            this.imgGenService = imgGenService;
+            this.threedModel = threedModelService.getThreedModel(seriesId);
 
         }
 
         public int getSliceCount() {
-            return fmIm.getImageModel().getSliceCount();
+            return threedModel.getImageModel().getSliceCount();
         }
 
 
@@ -375,7 +373,8 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
 
                     log.info("Start: jpgSetAction: " + slice);
 
-                    JpgSet jpgSet = imgGenService.getJpgSet(seriesId, slice.getSlice());
+                    ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+                    JpgSet jpgSet = threedModel.createJpgSet(slice.getSlice());
 
                     log.info("Complete: jpgSetAction: " + slice + "  jpgCount: " + jpgSet.size());
 

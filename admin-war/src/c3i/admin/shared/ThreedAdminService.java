@@ -1,7 +1,7 @@
 package c3i.admin.shared;
 
-import c3i.core.threedModel.shared.CommitId;
-import c3i.core.threedModel.shared.CommitKey;
+import c3i.threedModel.shared.CommitId;
+import c3i.threedModel.shared.CommitKey;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;

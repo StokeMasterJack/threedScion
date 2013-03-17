@@ -2,9 +2,8 @@ package c3i.repo.server;
 
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.UnknownVarCodeException;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.imageModel.shared.ImContext;
-import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
@@ -45,7 +44,7 @@ public class ImageModelBuilder {
         List<ImView> imViews = createImViewsFromSeriesDir(seriesVDir);
 
 
-        SeriesKey seriesKey = featureModel.getContextKey();
+        SeriesKey seriesKey = featureModel.getKey();
         return new ImageModel(seriesVDir.getDepth(), imViews, seriesKey);
     }
 
@@ -114,7 +113,7 @@ public class ImageModelBuilder {
 
         ViewLiftSpec parse(Properties properties, FeatureModel vars) {
             String varCode = properties.getProperty("trigger-feature");
-            Object var = vars.resolveVar(varCode);
+            Var var = vars.getVar(varCode);
             int deltaY = Integer.parseInt(properties.getProperty("delta-y"));
             return new ViewLiftSpec(var, deltaY);
         }
@@ -224,9 +223,9 @@ public class ImageModelBuilder {
 
     private ImFeature createImFeatureFromFeatureDir(VNode featureDir) {
         String featureCode = featureDir.getName();
-        Object var = null;
+        Var var = null;
         try {
-            var = featureModel.resolveVar(featureCode);
+            var = featureModel.getVar(featureCode);
         } catch (UnknownVarCodeException e) {
             System.out.println("Feature [" + featureCode + "] was found in imageModel tree here [" + featureDir.getFullPath() + "]");
             System.out.println(e.getMessage());

@@ -2,7 +2,7 @@ package c3i.repoWebService;
 
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.base.Strings;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,10 +78,10 @@ public class RepoRequest {
         return brandRepos;
     }
 
-    public Repos getRepos() {
+    public BrandRepo getRepos() {
         BrandKey brandKey = getBrandKey();
         BrandRepos brandRepos = getBrandRepos();
-        return brandRepos.getRepos(brandKey);
+        return brandRepos.getBrandRepo(brandKey);
     }
 
 

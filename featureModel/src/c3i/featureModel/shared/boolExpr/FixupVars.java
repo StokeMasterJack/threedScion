@@ -3,6 +3,7 @@ package c3i.featureModel.shared.boolExpr;
 import c3i.featureModel.shared.Bit;
 import c3i.featureModel.shared.EvalContext;
 import c3i.featureModel.shared.Tri;
+import c3i.featureModel.shared.node.Csp;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -249,16 +250,16 @@ public class FixupVars {
      *
      * @return null for false else a set of top-level implyClausesThatContainVarOnlyOnRightSide
      */
-    public static LinkedHashSet<Imp> isFixupVar(Var var, MasterConstraint constraint) {
+    public static LinkedHashSet<Imp> isFixupVar(Var var, Csp constraint) {
 
 //        if (!var.isDerived()) return null;
 
         LinkedHashSet<Imp> implyClausesThatContainVarOnlyOnRightSide = null;
 
         for (BoolExpr e : constraint.getExpressions()) {
-            if (e.containsDeep(var)) {
+            if (e.containsVar(var)) {
                 if (!e.isImp()) return null;
-                boolean appearsOnLeft = e.getExpr1().containsDeep(var);
+                boolean appearsOnLeft = e.getExpr1().containsVar(var);
                 if (appearsOnLeft) return null;
 
                 boolean appearsOnRightAsSimpleVar = e.getExpr2().equals(var);
@@ -281,14 +282,14 @@ public class FixupVars {
         }
     }
 
-    public static LinkedHashSet<Iff> isFixupVar2(Var var, MasterConstraint constraint) {
+    public static LinkedHashSet<Iff> isFixupVar2(Var var, Csp constraint) {
 
         if (!var.isDerived()) return null;
 
         LinkedHashSet<Iff> iffClausesThatContainVarVar = new LinkedHashSet<Iff>();
 
         for (BoolExpr e : constraint.getExpressions()) {
-            if (e.containsDeep(var)) {
+            if (e.containsVar(var)) {
                 if (!e.isIff()) return null;
                 iffClausesThatContainVarVar.add(e.asIff());
             }
@@ -332,7 +333,7 @@ public class FixupVars {
         return getFixupVars().toString();
     }
 
-    public void addFixupVarIfAppropriate(Var var, MasterConstraint constraint) {
+    public void addFixupVarIfAppropriate(Var var, Csp constraint) {
         LinkedHashSet<Imp> simpleImpls = FixupVars.isFixupVar(var, constraint);
         if (simpleImpls != null) {
             addFixupVar(var, simpleImpls);

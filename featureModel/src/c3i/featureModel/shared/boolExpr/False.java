@@ -34,13 +34,13 @@ public class False extends Constant {
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) throws AssignmentException {
+    public void autoAssignFalse(AutoAssignContext ctx) throws AssignmentException {
         //ignore
     }
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws AssignmentException {
-        throw new ReassignmentException(this, true, ctx);
+    public void autoAssignTrue(AutoAssignContext ctx) throws AssignmentException {
+        throw new ConflictingAssignmentException(this, true, ctx);
     }
 
     @Override

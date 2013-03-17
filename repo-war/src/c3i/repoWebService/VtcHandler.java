@@ -4,7 +4,7 @@ import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
 
@@ -29,15 +29,15 @@ public class VtcHandler extends RepoHandler<SeriesBasedRepoRequest> {
 
         BrandKey brandKey = r.getSeriesKey().getBrandKey();
 
-        Repos repos = getRepos(brandKey);
-        RootTreeId vtcRootTreeId = repos.getVtcRootTreeId(seriesKey);
+        BrandRepo brandRepo = getRepos(brandKey);
+        RootTreeId vtcRootTreeId = brandRepo.getVtcRootTreeId(seriesKey);
 
         HttpServletResponse response = r.getResponse();
         response.setContentType("text/plain");
 
         CacheUtil.addCacheNeverResponseHeaders(response);
 
-        File vtcFile = repos.getVtcFile(seriesKey);
+        File vtcFile = brandRepo.getVtcFile(seriesKey);
         LastModified lastModified = new LastModified(vtcFile.lastModified());
         lastModified.addToResponse(response);
 

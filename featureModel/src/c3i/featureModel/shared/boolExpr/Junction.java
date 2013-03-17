@@ -115,10 +115,11 @@ public abstract class Junction extends HasChildContent<Expressions> {
     }
 
     @Override
-    public boolean containsDeep(Var var) {
-        if (containsShallow(var)) return true;
+    public boolean containsVar(Var var) {
         for (BoolExpr e : expressions) {
-            if (e.containsDeep(var)) return true;
+            if (e.containsVar(var)) {
+                return true;
+            }
         }
         return false;
     }

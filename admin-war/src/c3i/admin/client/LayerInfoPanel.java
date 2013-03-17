@@ -1,7 +1,7 @@
 package c3i.admin.client;
 
 import c3i.imageModel.shared.PngSpec;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -28,7 +28,7 @@ public class LayerInfoPanel extends Composite {
 
         t.setText(0, 1, png.serializeToUrlSegment());
 
-        Set<Var> features = ThreedModel.objectSetToVarSet(png.getFeatures());
+        Set<Var> features = png.getFeatures();
 
         String featuresString;
         if (features.isEmpty()) {

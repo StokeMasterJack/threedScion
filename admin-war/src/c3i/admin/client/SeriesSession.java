@@ -1,7 +1,7 @@
 package c3i.admin.client;
 
 import c3i.admin.shared.BrandInit;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.shared.CommitHistory;

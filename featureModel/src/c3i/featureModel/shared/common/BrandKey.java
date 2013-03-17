@@ -72,4 +72,8 @@ public class BrandKey implements Serializable {
     public int hashCode() {
         return key.hashCode();
     }
+
+    public boolean equalsIgnoreCase(String brandName) {
+        return this.key.equalsIgnoreCase(brandName);
+    }
 }

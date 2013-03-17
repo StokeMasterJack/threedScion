@@ -1,24 +1,25 @@
 package c3i.featureModel.shared;
 
-import c3i.featureModel.shared.common.BrandKey;
-import c3i.featureModel.shared.common.SeriesKey;
-import c3i.featureModel.shared.common.SubSeries;
 import c3i.featureModel.shared.boolExpr.And;
-import c3i.featureModel.shared.boolExpr.AssignmentException;
 import c3i.featureModel.shared.boolExpr.BoolExpr;
 import c3i.featureModel.shared.boolExpr.Conflict;
 import c3i.featureModel.shared.boolExpr.False;
 import c3i.featureModel.shared.boolExpr.Iff;
 import c3i.featureModel.shared.boolExpr.Imp;
-import c3i.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.featureModel.shared.boolExpr.Not;
 import c3i.featureModel.shared.boolExpr.Or;
 import c3i.featureModel.shared.boolExpr.True;
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.featureModel.shared.boolExpr.VarsDb;
+import c3i.featureModel.shared.boolExpr.VarSpaceDb;
 import c3i.featureModel.shared.boolExpr.Xor;
+import c3i.featureModel.shared.common.BrandKey;
+import c3i.featureModel.shared.common.SeriesKey;
+import c3i.featureModel.shared.common.SubSeries;
+import c3i.featureModel.shared.node.Csp;
+import c3i.featureModel.shared.node.CspContext;
 import c3i.featureModel.shared.picks.Picks;
-import c3i.featureModel.shared.picks.PicksContextFm;
+import c3i.featureModel.shared.picks.PicksContext;
+import c3i.featureModel.shared.search.ProductHandler;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
@@ -26,12 +27,17 @@ import smartsoft.util.shared.Strings;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class FeatureModel implements Vars {
+//import c3i.featureModel.shared.picks.PicksContextFm;
+
+//import c3i.featureModel.shared.picks.PicksContextFm;
+
+public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, Iterable<Var>, CspContext, PicksContext {
 
     public final LinkedHashSet<BoolExpr> extraConstraints = new LinkedHashSet<BoolExpr>();
 
@@ -42,7 +48,7 @@ public class FeatureModel implements Vars {
     public static final False FALSE = BoolExpr.FALSE;
     public static final True TRUE = BoolExpr.TRUE;
 
-    private final VarsDb vars;
+    private final VarSpaceDb vars;
 
     private SubSeries subSeries;
 
@@ -51,13 +57,13 @@ public class FeatureModel implements Vars {
     public FeatureModel(SeriesKey seriesKey, String displayName) {
         this.seriesKey = seriesKey;
         this.displayName = displayName;
-        vars = new VarsDb();
+        vars = new VarSpaceDb();
     }
 
     public FeatureModel(BrandKey brandKey, int year, String name, String displayName) {
         this.seriesKey = new SeriesKey(brandKey, year, name);
         this.displayName = displayName;
-        vars = new VarsDb();
+        vars = new VarSpaceDb();
     }
 
     public Set<Var> getAllXorParentVars() {
@@ -81,7 +87,11 @@ public class FeatureModel implements Vars {
         return seriesKey;
     }
 
-    public SeriesKey getContextKey() {
+//    public SeriesKey getKey() {
+//        return seriesKey;
+//    }
+
+    public SeriesKey getKey() {
         return seriesKey;
     }
 
@@ -157,22 +167,14 @@ public class FeatureModel implements Vars {
 
     }
 
-    public Var get(int varIndex) throws UnknownVarIndexException {
-        return vars.get(varIndex);
+    public Var getVar(int varIndex) throws UnknownVarIndexException {
+        return vars.getVar(varIndex);
     }
 
-    public Var get(String varCode) throws UnknownVarCodeException {
-        return vars.get(varCode);
-
+    public Var getVar(String varCode) throws UnknownVarCodeException {
+        return vars.getVar(varCode);
     }
 
-    public Var resolveVar(String varCode) {
-        try {
-            return get(varCode);
-        } catch (UnknownVarCodeException e) {
-            return null;
-        }
-    }
 
     public boolean containsCode(String code) {
         return vars.containsCode(code);
@@ -190,7 +192,7 @@ public class FeatureModel implements Vars {
     public Set<Var> getVars(Collection<String> varCodes) {
         Set<Var> set = new HashSet<Var>();
         for (String code : varCodes) {
-            Var var = resolveVar(code);
+            Var var = getVar(code);
             if (var == null) {
                 System.out.println("[" + code + "] not in FeatureModel");
             } else {
@@ -369,22 +371,23 @@ public class FeatureModel implements Vars {
     }
 
     public Var getAccessoriesVar() {
-        return get(IVarGuesser.Accessories);
+        return getVar(IVarGuesser.Accessories);
     }
 
-    public MasterConstraint getConstraint() {
+    public LinkedHashSet<BoolExpr> getConstraints() {
         LinkedHashSet<BoolExpr> a = new LinkedHashSet<BoolExpr>();
         BoolExpr ec = getExtraConstraint();
         BoolExpr tc = getTreeConstraint();
         a.addAll(tc.getExpressions());
         a.addAll(ec.getExpressions());
-        return new MasterConstraint(a);
+        return a;
     }
+
 
     public Collection<Var> getXorExclusions(String... xorPicks) {
         HashSet<Var> a = new HashSet<Var>();
         for (String varCode : xorPicks) {
-            Var var = get(varCode);
+            Var var = getVar(varCode);
             a.addAll(getExclusions(var));
         }
         return a;
@@ -484,7 +487,7 @@ public class FeatureModel implements Vars {
         ImmutableSet.Builder<Var> builder = ImmutableSet.builder();
         for (String varCode : picksRaw) {
             try {
-                Var var = get(varCode);
+                Var var = getVar(varCode);
                 builder.add(var);
             } catch (UnknownVarCodeException e) {
                 //ignore
@@ -493,73 +496,73 @@ public class FeatureModel implements Vars {
         return builder.build();
     }
 
-    public Assignments fixRaw(Set<String> picksRaw) throws AssignmentException {
-        ImmutableSet<Var> picks = varCodesToVars(picksRaw);
-        return fix(picks);
-    }
+//    public void test1(Set<String> picksRaw) throws AssignmentException {
+//        ImmutableSet<Var> picks = varCodesToVars(picksRaw);
+//        Csp csp = new Csp(this);
+//        csp.assignTrue(picks);
+//        return fix(picks);
+//    }
 
-    public Assignments fix(Set<Var> picks) throws AssignmentException {
-        Csp csp = createCsp(picks);
+
+    public Csp fixup(Set<Var> picks) {
+        Csp csp = new Csp(this);
+        csp.assignTrue(picks);
         csp.propagate();
-        if (!csp.isSolved()) {
-            csp.fillInInitialPicks();
-        }
-        AssignmentsSimple assignments = (AssignmentsSimple) csp.getAssignments();
-        AssignmentsSimple copy = new AssignmentsSimple(assignments);
-        return copy;
+        return csp;
     }
 
-    public FixedPicks fixup(Set<Var> picks) {
-        try {
-            Assignments assignments = this.fix(picks);
-            return new FixedPicks(picks, assignments, null);
-        } catch (AssignmentException e) {
-            return new FixedPicks(picks, null, e);
-        }
-    }
-
-    public FixedPicks fixupRaw(Iterable<String> picksRaw) {
+    public Csp fixupRaw(Iterable<String> picksRaw) {
         ImmutableSet<Var> picks = varCodesToVars(picksRaw);
-        try {
-            Assignments assignments = fix(picks);
-            return new FixedPicks(picks, assignments, null);
-        } catch (AssignmentException e) {
-            return new FixedPicks(picks, null, e);
-        }
+        return fixup(picks);
     }
 
-    public CspSimple createCsp(Set<Var> trueVars) {
+    public Csp createCsp(Set<Var> trueVars) {
         Preconditions.checkNotNull(trueVars);
-        CspSimple csp = createCsp();
+        Csp csp = createCsp();
         for (Var trueVar : trueVars) {
             csp.assignTrue(trueVar);
         }
         return csp;
     }
 
-    public CspSimple createCsp() {
-        return new CspSimple(this, getConstraint());
+    public Csp createCsp() {
+        return new Csp(this);
     }
 
-    public CspForTreeSearch createCspForTreeSearch(Collection<Var> outputVars) {
-        return new CspForTreeSearch(this, getConstraint(), outputVars);
+    @Override
+    public Iterator<Var> iterator() {
+        return vars.iterator();
     }
 
-    public CspForTreeSearch createCspForTreeSearch() {
-        return new CspForTreeSearch(this, getConstraint());
+    @Override
+    public VarSpace getVarSpace() {
+        return vars;
     }
 
-    public <R> void forEach(FmSearchRequest<R> searchRequest) {
-        ImmutableSet<Var> outVars = searchRequest.getOutVars();
-        CspForTreeSearch csp;
-        if (outVars != null) {
-            csp = createCspForTreeSearch(outVars);
-        } else {
-            csp = createCspForTreeSearch();
+    @Override
+    public int getVarCount() {
+        return vars.size();
+    }
+
+    @Override
+    public Var getVarOrNull(String varCode) {
+        try {
+            return vars.getVar(varCode);
+        } catch (UnknownVarCodeException e) {
+            return null;
         }
-        csp.propagateSimplify();
-        csp.forEach(searchRequest);
     }
 
+    @Override
+    public Csp getConstraint() {
+        return null;
+    }
+
+    public void forEachProduct(ProductHandler productHandler, Set<Var> pngVars) {
+        Csp csp = createCsp();
+        csp.forEachProduct(productHandler,pngVars);
+
+
+    }
 }
 

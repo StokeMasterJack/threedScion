@@ -48,7 +48,7 @@ public class RelatedVarFinder {
         Set<Var> toBeAdded = new HashSet<Var>();
         for (Var var : relatedVars) {
             for (BoolExpr clause : allClauses) {
-                if (clause.containsDeep(var)) {
+                if (clause.containsVar(var)) {
                     toBeAdded.addAll(clause.getCareVars());
                 }
             }

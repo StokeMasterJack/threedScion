@@ -1,6 +1,6 @@
 package c3i.imageModel.shared;
 
-public interface IsChild<V> extends ImNode<V> {
+public interface IsChild extends ImNode {
 
     void initParent(IsParent parent);
 

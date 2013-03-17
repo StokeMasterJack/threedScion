@@ -5,54 +5,49 @@ import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SimplePicks;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.RawImageStack;
+import c3i.imageModel.shared.Slice;
 import c3i.imageModel.test.Avalon2014Picks;
-import c3i.imgGen.generic.ImgGenService;
-import c3i.imgGen.repoImpl.FmIm;
-import c3i.imgGen.repoImpl.KitRepo;
-import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSets;
+import c3i.imgGen.api.ThreedModelService;
 import c3i.repo.server.BrandRepos;
+import c3i.threedModel.shared.JpgSet;
+import c3i.threedModel.shared.JpgSetTask;
+import c3i.threedModel.shared.JpgSets;
+import c3i.threedModel.shared.JpgSetsTask;
+import c3i.threedModel.shared.ThreedModel;
 import junit.framework.TestCase;
-
-import java.io.File;
 
 public class JpgSetTest extends TestCase {
 
-    File TOYOTA_REPO_BASE_DIR = new File("/configurator-content-toyota");
-
     SeriesId id;
 
-    ImgGenService imgGenService;
+    ThreedModelService threedModelService;
+    ImgGenApp app;
 
     BrandRepos brandRepos;
 
     @Override
     protected void setUp() throws Exception {
-        brandRepos = BrandRepos.createSingleBrand(BrandKey.TOYOTA, TOYOTA_REPO_BASE_DIR);
         id = new SeriesId(BrandKey.TOYOTA, "avalon", 2014, "18942e640eb38949d3fa6a7bad3958edd1283d7c");
-        imgGenService = createImageGenFactoryRepo();
+        app = new ImgGenApp();
+        brandRepos = app.getBrandRepos();
+        threedModelService = app.getThreedModelService();
     }
 
-    public void testJpgSetOneSlice1() throws Exception {
-           String viewName = "exterior";
-           int angle = 2;
-
-           JpgSet jpgSet = imgGenService.getJpgSet(id, viewName, angle);
-
-           assertEquals(189, jpgSet.size());
-       }
-
-    public void testJpgSetOneSlice() throws Exception {
-        String viewName = "exterior";
-        int angle = 2;
-
-        JpgSet jpgSet = imgGenService.getJpgSet(id, viewName, angle);
-
+    public void testJpgSet() throws Exception {
+        Slice slice = new Slice("exterior", 2);
+        ThreedModel threedModel = threedModelService.getThreedModel(id);
+        JpgSetTask jpgSetTask = threedModel.createJpgSetTask(slice);
+        jpgSetTask.start();
+        JpgSet jpgSet = jpgSetTask.getJpgSet();
         assertEquals(189, jpgSet.size());
     }
 
-    public void testJpgSetAllSlices() throws Exception {
-        JpgSets jpgSets = imgGenService.getJpgSets(id);
+
+    public void testJpgSets() throws Exception {
+        ThreedModel threedModel = threedModelService.getThreedModel(id);
+        JpgSetsTask task = threedModel.createJpgSetsTask();
+        task.start();
+        JpgSets jpgSets = task.getJpgSets();
         assertEquals(2385, jpgSets.getJpgCount());
     }
 
@@ -62,9 +57,9 @@ public class JpgSetTest extends TestCase {
         int angle = 2;
         SimplePicks simplePicks = new Avalon2014Picks();
 
-        FmIm fmIm = imgGenService.getFmIm(id);
+        ThreedModel threedModel = threedModelService.getThreedModel(id);
 
-        ImageModel imageModel = fmIm.getImageModel();
+        ImageModel imageModel = threedModel.getImageModel();
 
         RawImageStack imageStack = imageModel.getImageStack(viewName, angle, simplePicks);
 
@@ -87,17 +82,4 @@ public class JpgSetTest extends TestCase {
     }
 
 
-    ImgGenService createImageGenFactory() {
-//        return createImageGenFactoryRepo();
-        return createImageGenFactoryRepo();
-    }
-
-    ImgGenService createImageGenFactoryRepo() {
-        KitRepo kit = new KitRepo(brandRepos);
-        return new ImgGenService<SeriesId>(kit);
-    }
-
-//    ImgGenService createImageGenFactoryDave() {
-//        return new ImgGenServiceDave(brandRepos);
-//    }
 }

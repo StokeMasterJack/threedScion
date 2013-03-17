@@ -2,14 +2,14 @@ package c3i.admin.server;
 
 import c3i.admin.shared.BrandInit;
 import c3i.admin.shared.ThreedAdminService;
-import c3i.core.threedModel.shared.CommitId;
-import c3i.core.threedModel.shared.CommitKey;
+import c3i.threedModel.shared.CommitId;
+import c3i.threedModel.shared.CommitKey;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profiles;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import c3i.repo.shared.CommitHistory;
@@ -82,9 +82,9 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
         Path repoContextPath = app.getRepoContextPath();
 
 
-        Repos repos = brandRepos.getRepos(brandKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(brandKey);
 
-        ArrayList<Series> seriesNamesWithYears = repos.getSeriesNamesWithYears();
+        ArrayList<Series> seriesNamesWithYears = brandRepo.getSeriesNamesWithYears();
         Principal userPrincipal = getThreadLocalRequest().getUserPrincipal();
         String userName;
         if (userPrincipal == null) {
@@ -99,7 +99,7 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
 
         ArrayList<BrandKey> visibleBrandsForUser = getVisibleBrandsForUser();
 
-        Profiles profiles = repos.getProfilesCache().getProfiles(brandKey);
+        Profiles profiles = brandRepo.getProfilesCache().getProfiles(brandKey);
 
         BrandInit brandInit = new BrandInit(brandKey, seriesNamesWithYears, userName, visibleBrandsForUser, repoContextPath, profiles);
         return brandInit;
@@ -128,21 +128,21 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
      */
     @Override
     public RootTreeId getVtcRootTreeId(SeriesKey seriesKey) {
-        return brandRepos.getRepos(seriesKey.getBrandKey()).getVtcRootTreeId(seriesKey);
+        return brandRepos.getBrandRepo(seriesKey.getBrandKey()).getVtcRootTreeId(seriesKey);
     }
 
     @Override
     public CommitHistory setVtc(SeriesKey seriesKey, CommitKey commitKey) {
-        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
-        CommitHistory commitHistory = repos.setVtcCommitId(seriesKey, commitKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(seriesKey.getBrandKey());
+        CommitHistory commitHistory = brandRepo.setVtcCommitId(seriesKey, commitKey);
         log.info(seriesKey + " VTC set to [" + commitKey.getRootTreeId() + "]");
         return commitHistory;
     }
 
     @Override
     public CommitHistory getCommitHistory(SeriesKey seriesKey) throws RepoHasNoHeadException {
-        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(seriesKey.getBrandKey());
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         log.info("Building commit history on server..");
         final CommitHistory commitHistory = srcRepo.getHeadCommitHistory();
@@ -153,8 +153,8 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
     @Override
     public CommitHistory tagCommit(SeriesKey seriesKey, String newTagName, CommitId commitId) {
         log.info("Tagging commit[" + commitId + "] with tag[" + newTagName + "]");
-        Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(seriesKey.getBrandKey());
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         ObjectId objectId = srcRepo.tagCommit(newTagName, commitId);
         return srcRepo.getCommitHistory(objectId);
@@ -164,8 +164,8 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
     public CommitHistory addAllAndCommit(SeriesKey seriesKey, String commitMessage, String tag) {
 
         try {
-            Repos repos = brandRepos.getRepos(seriesKey.getBrandKey());
-            SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+            BrandRepo brandRepo = brandRepos.getBrandRepo(seriesKey.getBrandKey());
+            SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
 
             SrcRepo srcRepo = seriesRepo.getSrcRepo();
 
@@ -194,8 +194,8 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
 
     @Override
     public void purgeRepoCache(BrandKey brandKey) {
-        Repos repos = brandRepos.getRepos(brandKey);
-        repos.purgeCache();
+        BrandRepo brandRepo = brandRepos.getBrandRepo(brandKey);
+        brandRepo.purgeCache();
     }
 
 

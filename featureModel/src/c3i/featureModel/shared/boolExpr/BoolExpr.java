@@ -6,7 +6,6 @@ import c3i.featureModel.shared.Tri;
 import smartsoft.util.shared.GwtSafe;
 import smartsoft.util.shared.Strings;
 
-import javax.annotation.Nonnull;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
@@ -37,7 +36,6 @@ public abstract class BoolExpr implements Tri {
 
     abstract public void accept(BoolExprVisitor visitor);
 
-
     public Map<Var, Tri> getVarState(AutoAssignContext ctx) {
         HashMap<Var, Tri> map = new HashMap<Var, Tri>();
         Set<Var> careVars = getCareVars();
@@ -61,8 +59,34 @@ public abstract class BoolExpr implements Tri {
         return null;
     }
 
+    public Var getVarIfSimple() {
+        if (this instanceof Not) {
+            Not not = (Not) this;
+            return not.getExpr().getVarIfSimple();
+        } else if (this instanceof Var) {
+            return this.asVar();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean isSimple() {
+        if (this instanceof Not) {
+            Not not = (Not) this;
+            return not.getExpr().isSimple();
+        } else if (this instanceof Var) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isVar() {
         return this instanceof Var;
+    }
+
+    public boolean isNegVar() {
+        return isNot() && getExpr().isVar();
     }
 
     public boolean isVar(String varCode) {
@@ -75,6 +99,31 @@ public abstract class BoolExpr implements Tri {
 
     public List<Var> isConjunctionOfVars() {
         return null;
+    }
+
+//    public BoolExpr simplifyTopLevelConstraint(AutoAssignContext ctx) {
+//        BoolExpr before = this;
+//        BoolExpr after = this.simplify(ctx, this);
+//
+//        if (before.isComplex() && after.isSimple()) {
+//
+//        }
+//
+//    }
+
+
+    private boolean isComplex() {
+
+        if (this instanceof HasChildContent) {
+            if (this instanceof Not) {
+                Not not = (Not) this;
+                return not.getExpr().isComplex();
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public abstract BoolExpr simplify(AutoAssignContext ctx);
@@ -198,7 +247,7 @@ public abstract class BoolExpr implements Tri {
 
     public abstract boolean containsShallow(Var v);
 
-    public abstract boolean containsDeep(Var v);
+    public abstract boolean containsVar(Var v);
 
     public abstract boolean containsVarCodeDeep(String varCode);
 
@@ -334,19 +383,26 @@ public abstract class BoolExpr implements Tri {
     /**
      * Must fail fast
      */
-    @Nonnull
     abstract public Tri eval(EvalContext ctx);
+
+    public void autoAssign(AutoAssignContext ctx, boolean value) throws AssignmentException {
+        if (value) {
+            autoAssignTrue(ctx);
+        } else {
+            autoAssignFalse(ctx);
+        }
+    }
 
     /**
      * Propagate variable assignments. Must fail fast
      */
-    public abstract void autoAssignTrue(AutoAssignContext ctx, int depth) throws AssignmentException;
+    public abstract void autoAssignTrue(AutoAssignContext ctx) throws AssignmentException;
 
 
     /**
      * Must fail fast
      */
-    public abstract void autoAssignFalse(AutoAssignContext ctx, int depth) throws AssignmentException;
+    public abstract void autoAssignFalse(AutoAssignContext ctx) throws AssignmentException;
 
     public abstract BoolExpr cleanOutIffVars(IffContext ctx);
 

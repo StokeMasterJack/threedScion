@@ -160,10 +160,9 @@ public abstract class Pair extends HasChildContent<Pair.ContentPair> {
     }
 
     @Override
-    public boolean containsDeep(Var var) {
-        return containsShallow(var) || content.expr1.containsDeep(var) || content.expr2.containsDeep(var);
+    public boolean containsVar(Var var) {
+        return content.expr1.containsVar(var) || content.expr2.containsVar(var);
     }
-
 
     @Override
     public BoolExpr cleanOutIffVars(IffContext ctx) {

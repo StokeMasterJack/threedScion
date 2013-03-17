@@ -6,6 +6,7 @@ package c3i.featureModel.shared;
 import c3i.featureModel.data.Camry2011;
 import c3i.featureModel.data.TrimColor;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.node.Csp;
 import c3i.featureModel.shared.picks.Picks;
 import junit.framework.TestCase;
 import smartsoft.util.shared.Path;
@@ -36,6 +37,11 @@ public class FeatureModelTest extends TestCase {
     public void testFixupNoBdd() throws Exception {
 
         FeatureModel fm = new Camry2011();
+
+        Csp csp = fm.createCsp();
+        csp.assignTrue("Base", "040", "Ash", "6AT");
+
+
 
         Picks picks = fm.createPicks();
         picks.pick("Base", "040", "Ash", "6AT");

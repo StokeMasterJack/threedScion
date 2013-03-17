@@ -1,18 +1,19 @@
 package c3i.imageModel.shared;
 
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, ImLayerOrFeature<V>, IsChild<V>, IsParent<ImFeatureOrPng<V>, V> {
+public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrFeature, IsChild, IsParent<ImFeatureOrPng> {
 
-    private final V var;
-    private final List<ImFeatureOrPng<V>> childNodes;
+    private final Var var;
+    private final List<ImFeatureOrPng> childNodes;
 
-    public ImFeature(int depth, V var, List<ImFeatureOrPng<V>> childNodes) {
+    public ImFeature(int depth, Var var, List<ImFeatureOrPng> childNodes) {
         super(depth);
         if (var == null) throw new IllegalArgumentException("var must be non-null");
         if (childNodes == null) throw new IllegalArgumentException("childNodes must be non-null");
@@ -29,7 +30,7 @@ public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, I
         return var.toString();
     }
 
-    public V getVar() {
+    public Var getVar() {
         return var;
     }
 
@@ -38,7 +39,7 @@ public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, I
     }
 
 
-    public List<ImFeatureOrPng<V>> getChildNodes() {
+    public List<ImFeatureOrPng> getChildNodes() {
         return childNodes;
     }
 
@@ -100,7 +101,7 @@ public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, I
     }
 
     @Override
-    public void getVarSet(Set<V> varSet, int angle) {
+    public void getVarSet(Set<Var> varSet, int angle) {
         varSet.add(var);
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
@@ -109,7 +110,7 @@ public class ImFeature<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, I
     }
 
     @Override
-    public void getPngs(Set<SrcPng<V>> pngs) {
+    public void getPngs(Set<SrcPng> pngs) {
         for (ImFeatureOrPng fp : childNodes) {
             fp.getPngs(pngs);
         }

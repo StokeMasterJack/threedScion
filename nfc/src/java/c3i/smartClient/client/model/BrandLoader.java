@@ -1,6 +1,6 @@
 package c3i.smartClient.client.model;
 
-import c3i.core.threedModel.shared.Brand;
+import c3i.threedModel.shared.Brand;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.AsyncFunction;

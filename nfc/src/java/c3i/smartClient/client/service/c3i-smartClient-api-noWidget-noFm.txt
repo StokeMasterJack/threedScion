@@ -1,0 +1,67 @@
+C3I
+
+    action steps:
+
+    c3i - efcNoFm - service-api
+
+        no skins
+        no widgets
+
+        no ThreedSession
+        no ViewsSession
+        no ViewSession
+        no PicksSession
+        no picks session
+        no VtcLoader
+        no BrandLoader
+        no ViewModel
+    c3i - efcNoFm - mvc-api
+    c3i - efcNoFm - widget
+
+
+    If we limit ourselves to:
+        Fixup runs downstream
+        API mode (not widget mode)
+
+        then: what does c3i-api-noWidget-noFixup
+            add above and beyond ImageModel
+
+    Answer:
+
+        vtcMap - gone
+        fm
+        ajax call to load IM *
+        parse IM
+
+        pre-fetch
+        some caching??
+            mostly, caching is provided by Repo (via response headers)
+        maintaining state of currently off-screen slices
+
+        i can skip the call to sha-map.json
+            that should be done upstream
+
+
+        efc - 3d client
+            i am passed 3d model json as needed
+                Q: is imJsonLoaded as part of EFC client FM load?
+
+
+
+
+    * unless (of course) efc loads the IM and simply
+                    passes it to me - im is good candidate for Lazy Bundle
+
+    No fixup needed:
+        fixup will be called upstream
+        we are passed "already fixed" picks
+        since fixup happens upstream:
+            we will not be responsible for:
+                calling fixup
+                caching fixup results
+                dealing with with doEvents
+                    to ensure fixup does not hog the thread
+
+
+
+                worrying about making fixrendering Fm.AssignmentException

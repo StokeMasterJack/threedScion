@@ -1,10 +1,8 @@
 package c3i.repo.server;
 
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.repo.server.Repos;
-import c3i.repo.server.TmToJsonJvm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,18 +11,18 @@ import java.io.File;
 public class TmToJsonJvmTest {
 
 
-    Repos repos;
+    BrandRepo brandRepo;
 
     @Before
     public void setup() throws Exception {
-        repos = new Repos(BrandKey.TOYOTA, new File("/configurator-content-toyota"));
+        brandRepo = new BrandRepo(BrandKey.TOYOTA, new File("/configurator-content-toyota"));
 
     }
 
     @Test
     public void test_TmToJsonAvalon() throws Exception {
         SeriesKey sk = SeriesKey.AVALON_2011;
-        ThreedModel threedModel = repos.getThreedModelForHead(sk);
+        ThreedModel threedModel = brandRepo.getThreedModelForHead(sk);
         String threedModelJsonText = TmToJsonJvm.toJson(threedModel);
         System.err.println(threedModelJsonText);
     }
@@ -32,7 +30,7 @@ public class TmToJsonJvmTest {
     @Test
     public void test_TmToJsonIq() throws Exception {
         SeriesKey sk = SeriesKey.IQ_2012;
-        ThreedModel threedModel = repos.getThreedModelForHead(sk);
+        ThreedModel threedModel = brandRepo.getThreedModelForHead(sk);
         String threedModelJsonText = TmToJsonJvm.toJson(threedModel);
         System.err.println(threedModelJsonText);
     }

@@ -1,7 +1,7 @@
 package c3i.featureModel.shared.picks;
 
-import c3i.featureModel.shared.boolExpr.MasterConstraint;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.node.Csp;
 
 public interface PicksContext {
 
@@ -9,7 +9,7 @@ public interface PicksContext {
 
     Var getVarOrNull(String varCode);
 
-    MasterConstraint getConstraint();
+    Csp getConstraint();
 
     Var getVar(int varIndex);
 

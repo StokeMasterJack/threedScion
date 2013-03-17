@@ -11,5 +11,5 @@ public interface FixupContext {
 
     boolean addIfClauseShouldBeKept(BoolExpr clause, Set<BoolExpr> set);
 
-    void addFixupVarIfAppropriate(Var var, MasterConstraint constraint);
+    void addFixupVarIfAppropriate(Var var, Formula constraint);
 }

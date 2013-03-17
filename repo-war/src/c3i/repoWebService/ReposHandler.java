@@ -2,7 +2,7 @@ package c3i.repoWebService;
 
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.base.Preconditions;
 
 public abstract class ReposHandler<T extends RepoRequest> {
@@ -14,8 +14,8 @@ public abstract class ReposHandler<T extends RepoRequest> {
         this.brandRepos = brandRepos;
     }
 
-    public Repos getRepos(BrandKey brandKey) {
-        return brandRepos.getRepos(brandKey);
+    public BrandRepo getRepos(BrandKey brandKey) {
+        return brandRepos.getBrandRepo(brandKey);
     }
 
 

@@ -61,9 +61,9 @@ public class Iff extends Pair {
      * 1 1 1
      */
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
+    public void autoAssignTrue(AutoAssignContext ctx) {
 
-        logAutoAssignTrue(depth);
+
 
         BoolExpr e1 = getExpr1();
         BoolExpr e2 = getExpr2();
@@ -96,20 +96,20 @@ public class Iff extends Pair {
 
             throw new IffAutoAssignTrueException(this, true, false, ctx);
         } else if (v1.isTrue() && v2.isOpen()) {
-            v2.autoAssignTrue(ctx, depth + 1);
+            v2.autoAssignTrue(ctx);
         } else if (v1.isFalse() && v2.isOpen()) {
-            v2.autoAssignFalse(ctx, depth + 1);
+            v2.autoAssignFalse(ctx);
         } else if (v2.isTrue() && v1.isOpen()) {
-            v1.autoAssignTrue(ctx, depth + 1);
+            v1.autoAssignTrue(ctx);
         } else if (v2.isFalse() && v1.isOpen()) {
-            v1.autoAssignFalse(ctx, depth + 1);
+            v1.autoAssignFalse(ctx);
         }
 
 
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
+    public void autoAssignFalse(AutoAssignContext ctx) {
         throw new UnsupportedOperationException("Iff.autoAssignFalse[" + ctx + "]");
     }
 

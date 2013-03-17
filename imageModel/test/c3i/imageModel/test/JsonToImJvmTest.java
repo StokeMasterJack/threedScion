@@ -27,8 +27,8 @@ public class JsonToImJvmTest {
     @Test
     public void testAvalon() throws Exception {
 
-        ImageModel<Var> varImageModel = loadImageModel("avalon-im.json", fmAvalon);
-        ImageModel<Var> imageModel = varImageModel;
+        ImageModel varImageModel = loadImageModel("avalon-im.json", fmAvalon);
+        ImageModel imageModel = varImageModel;
         ImView exterior = imageModel.getView("exterior");
         assert exterior != null;
 
@@ -70,7 +70,7 @@ public class JsonToImJvmTest {
 
     }
 
-    public ImageModel<Var> loadImageModel(String localResourceName, FeatureModel fm) throws IOException {
+    public ImageModel loadImageModel(String localResourceName, FeatureModel fm) throws IOException {
         URL urlIm = Resources.getResource(this.getClass(), localResourceName);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsImageModel = mapper.readValue(urlIm, JsonNode.class);

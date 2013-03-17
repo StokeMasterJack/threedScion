@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.featureModel.shared.FixedPicks;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.CoreImageStack;
 import c3i.imageModel.shared.ImView;
@@ -11,7 +11,7 @@ import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
@@ -37,8 +37,8 @@ public class JpgHandlerSeriesFingerprint extends RepoHandler<JpgRequestSeriesFin
 
         log.fine("Received request for [" + r.getRequest().getRequestURI() + "]");
 
-        Repos repos = r.getRepos();
-        ThreedModel threedModel = repos.getThreedModel(r.getSeriesId());
+        BrandRepo brandRepo = r.getRepos();
+        ThreedModel threedModel = brandRepo.getThreedModel(r.getSeriesId());
 
         List<String> varCodes = r.getVarCodes();
         FixedPicks fixedPicks = threedModel.fixupRaw(varCodes);

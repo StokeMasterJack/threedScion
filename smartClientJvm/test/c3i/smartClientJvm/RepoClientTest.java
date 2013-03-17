@@ -1,11 +1,11 @@
 package c3i.smartClientJvm;
 
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
+import c3i.threedModel.shared.ThreedModel;
 import org.junit.Test;
 import smartsoft.util.shared.Path;
 
@@ -36,8 +36,10 @@ public class RepoClientTest {
         ThreedModel threedModel1 = u.createModelFromJs(SeriesKey.AVALON_2011, url);
 
         //read from local repo using XML file - just to have something to compare against
-        Repos repos = Repos.get();
-        ThreedModel threedModel2 = repos.getThreedModel(BrandKey.TOYOTA, "avalon", 2011);
+
+
+        BrandRepo brandRepo = BrandRepo.testRepoToyota();
+        ThreedModel threedModel2 = brandRepo.getThreedModel(BrandKey.TOYOTA, "avalon", 2011);
 
         assertEquals(threedModel1, threedModel2);
 

@@ -3,11 +3,10 @@ package c3i.repo.server;
 import c3i.featureModel.server.ModelXml;
 import c3i.featureModel.server.XmlToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.imageModel.shared.ImContext;
 import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
 import c3i.repo.server.rt.RtRepo;
@@ -54,11 +53,11 @@ public class SeriesRepo {
     private final SrcWork srcWork;
     private final RtRepo rtRepo;
 
-    SeriesRepo(Repos repos, final File repoBaseDir, final SeriesKey seriesKey) {
+    SeriesRepo(BrandRepo brandRepo, final File repoBaseDir, final SeriesKey seriesKey) {
         Preconditions.checkNotNull(repoBaseDir);
         Preconditions.checkNotNull(seriesKey);
 
-        this.vtcBaseDir = repos.getVtcBaseDir();
+        this.vtcBaseDir = brandRepo.getVtcBaseDir();
         this.repoBaseDir = repoBaseDir;
         this.seriesKey = seriesKey;
         this.seriesDir = initSeriesDir();

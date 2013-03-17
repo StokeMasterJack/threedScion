@@ -3,7 +3,7 @@ package c3i.imgGen.server.singleJpg;
 
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.PngSegment;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Closeables;
@@ -41,10 +41,10 @@ public class ZPngGenerator {
     private final RtRepo genRepo;
     private final File outputFile;
 
-    public ZPngGenerator(Repos repos, int width, SeriesKey seriesKey, PngSegment pngKey) {
+    public ZPngGenerator(BrandRepo brandRepo, int width, SeriesKey seriesKey, PngSegment pngKey) {
         this.pngKey = pngKey;
         this.width = width;
-        this.seriesRepo = repos.getSeriesRepo(seriesKey);
+        this.seriesRepo = brandRepo.getSeriesRepo(seriesKey);
         this.genRepo = seriesRepo.getRtRepo();
         this.outputFile = getOutputFile();
     }

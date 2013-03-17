@@ -92,4 +92,5 @@ public enum Bit implements Tri {
         if (isFalse()) return false;
         throw new IllegalStateException();
     }
+
 }

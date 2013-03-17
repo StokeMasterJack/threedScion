@@ -46,8 +46,8 @@ public class Imp extends Pair {
      * @param ctx
      * @return
      */
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
-        logAutoAssignTrue(depth);
+    public void autoAssignTrue(AutoAssignContext ctx) {
+
         BoolExpr e1 = content.expr1;
         BoolExpr e2 = content.expr2;
 
@@ -55,7 +55,7 @@ public class Imp extends Pair {
         Tri val2 = e2.eval(ctx);
 
         if (val1.isTrue() && val2.isOpen()) {
-            e2.autoAssignTrue(ctx, depth + 1);
+            e2.autoAssignTrue(ctx);
         } else if (val2.isFalse() && val1.isOpen()) {
 
             if (BoolExpr.debugMode) {
@@ -73,13 +73,13 @@ public class Imp extends Pair {
 
             }
 
-            e1.autoAssignFalse(ctx, depth + 1);
+            e1.autoAssignFalse(ctx);
         } else if (val1.isTrue() && val2.isFalse()) {
             throw new ImpAutoAssignTrueException(this, ctx);
         }
     }
 
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
+    public void autoAssignFalse(AutoAssignContext ctx) {
         throw new UnsupportedOperationException();
     }
 

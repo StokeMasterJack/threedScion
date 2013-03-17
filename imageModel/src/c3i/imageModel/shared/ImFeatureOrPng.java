@@ -1,21 +1,22 @@
 package c3i.imageModel.shared;
 
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 
 import java.util.Set;
 
-public interface ImFeatureOrPng<V> extends IsChild<V> {
+public interface ImFeatureOrPng extends IsChild {
 
     void getMatchingPngs(PngMatch bestMatch, SimplePicks picks, int angle);
 
-    ImFeatureOrPng<V> copy(int angle);
+    ImFeatureOrPng copy(int angle);
 
-    void getVarSet(Set<V> varSet);
+    void getVarSet(Set<Var> varSet);
 
-    void getVarSet(Set<V> varSet, int angle);
+    void getVarSet(Set<Var> varSet, int angle);
 
-    void getPngs(Set<SrcPng<V>> pngs);
+    void getPngs(Set<SrcPng> pngs);
 
 
 }

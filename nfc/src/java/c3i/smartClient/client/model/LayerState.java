@@ -11,21 +11,21 @@ import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
 
-public class LayerState<V> {
+public class LayerState {
 
-    private final ValueChangeTopic<LayerState<V>> change = new ValueChangeTopic<LayerState<V>>("LayerStateChangeTopic");
+    private final ValueChangeTopic<LayerState> change = new ValueChangeTopic<LayerState>("LayerStateChangeTopic");
 
     private final Set<ImLayer> hiddenLayers = Sets.newHashSet();
 
     private final ViewSession viewSession;
-    private final ImView<V> view;
+    private final ImView view;
 
     public LayerState(ViewSession viewSession) {
         this.viewSession = viewSession;
         this.view = viewSession.getView();
     }
 
-    public void enableLayer(ImLayer<V> layer) {
+    public void enableLayer(ImLayer layer) {
         checkPngMode("enableLayer");
         boolean removed = hiddenLayers.remove(layer);
         if (removed) {
@@ -33,7 +33,7 @@ public class LayerState<V> {
         }
     }
 
-    public void disableLayer(ImLayer<V> layer) {
+    public void disableLayer(ImLayer layer) {
         checkPngMode("disableLayer");
         boolean added = hiddenLayers.add(layer);
         if (added) {
@@ -42,7 +42,7 @@ public class LayerState<V> {
     }
 
 
-    public void toggleLayer(ImLayer<V> layer) {
+    public void toggleLayer(ImLayer layer) {
         checkPngMode("toggleLayer");
         if (hiddenLayers.contains(layer)) {
             hiddenLayers.remove(layer);
@@ -62,8 +62,8 @@ public class LayerState<V> {
 
     public void enableNone() {
         checkPngMode("enableNone");
-        List<ImLayer<V>> layers = view.getLayers();
-        for (ImLayer<V> layer : layers) {
+        List<ImLayer> layers = view.getLayers();
+        for (ImLayer layer : layers) {
             hiddenLayers.add(layer);
         }
         fire();
@@ -80,11 +80,11 @@ public class LayerState<V> {
         return isLayerEnabled(png.getLayer());
     }
 
-    public void addChangeListener(ChangeListener<LayerState<V>> l) {
+    public void addChangeListener(ChangeListener<LayerState> l) {
         change.add(l);
     }
 
-    public void removeChangeListener(ChangeListener<LayerState<V>> l) {
+    public void removeChangeListener(ChangeListener<LayerState> l) {
         change.remove(l);
     }
 

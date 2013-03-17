@@ -1,25 +1,28 @@
 package c3i.admin.client.featurePicker;
 
-import c3i.util.shared.futures.AsyncKeyValue;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import c3i.util.shared.futures.Completer;
-import java.util.logging.Level;import java.util.logging.Logger;
-import c3i.util.shared.events.ChangeListener;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.core.threedModel.shared.ThreedModel;
-import c3i.util.shared.futures.RValue;
+import c3i.featureModel.shared.node.Csp;
+import c3i.threedModel.shared.ThreedModel;
+import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.futures.AsyncFunction;
+import c3i.util.shared.futures.AsyncKeyValue;
+import c3i.util.shared.futures.Completer;
+import c3i.util.shared.futures.RValue;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
+    private Csp csp;
     private final ThreedModel threedModel;
     private final FeatureModel featureModel;
     private final Set<Var> uiVars;
@@ -36,7 +39,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
         currentTrueUiVars = Sets.newHashSet(featureModel.getInitiallyTruePickableVars());
 
-        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>("RawPicks","FixedPicks",createAsyncFunction(threedModel));
+        fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>("RawPicks", "FixedPicks", createAsyncFunction(threedModel));
 
         updateFixedPicksKey();
 
@@ -79,7 +82,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public FixedPicks proposePickRadio(String varCode) {
-        Var var = featureModel.resolveVar(varCode);
+        Var var = featureModel.getVar(varCode);
         if (var == null) {
             throw new IllegalStateException();
         }
@@ -88,7 +91,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public FixedPicks proposeToggleCheckBox(String varCode) {
-        Var var = featureModel.resolveVar(varCode);
+        Var var = featureModel.getVar(varCode);
         if (var == null) {
             throw new IllegalStateException();
         }
@@ -134,7 +137,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
     }
 
     public void pickRadio(String varCode) {
-        Var var = featureModel.resolveVar(varCode);
+        Var var = featureModel.getVar(varCode);
         Preconditions.checkNotNull(var);
         pickRadio(var);
     }
@@ -169,7 +172,7 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
 
     @Override
     public void toggleCheckBox(String varCode) {
-        Var var = featureModel.resolveVar(varCode);
+        Var var = featureModel.getVar(varCode);
         Preconditions.checkArgument(var != null);
         toggleCheckBox(var);
     }

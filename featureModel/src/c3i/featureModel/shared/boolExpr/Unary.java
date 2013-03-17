@@ -50,10 +50,7 @@ public abstract class Unary extends HasChildContent<BoolExpr> {
         return v.equals(expr);
     }
 
-    @Override
-    public boolean containsDeep(Var v) {
-        return v.equals(expr) || this.expr.containsDeep(v);
-    }
+
 
 
     @Override

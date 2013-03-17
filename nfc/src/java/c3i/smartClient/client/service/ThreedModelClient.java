@@ -1,9 +1,9 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.threedModel.client.JsThreedModel;
-import c3i.core.threedModel.client.JsonToTmGwt;
-import c3i.core.threedModel.shared.Brand;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.JsThreedModel;
+import c3i.threedModel.client.JsonToTmGwt;
+import c3i.threedModel.shared.Brand;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;

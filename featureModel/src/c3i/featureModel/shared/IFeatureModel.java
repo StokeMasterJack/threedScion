@@ -1,16 +1,13 @@
 package c3i.featureModel.shared;
 
-import c3i.featureModel.shared.boolExpr.BoolExpr;
-import c3i.featureModel.shared.boolExpr.Var;
+public interface IFeatureModel<K, V> {
 
-public interface IFeatureModel {
+    K getKey();
 
-    BoolExpr getConstraint();
+    V getVar(int varIndex) throws UnknownVarIndexException;
 
-    Var getVarOrNull(String code);
+    V getVar(String varCode) throws UnknownVarCodeException;
 
-    Var getVar(int i);
 
-    Var getVar(String code);
 
 }

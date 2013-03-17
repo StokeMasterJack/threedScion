@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  */
 public class RepoServlet extends HttpServlet {
 
-    private ThreedRepoApp app;
+    private RepoWebServiceApp app;
     private Logger log;
 
     private PngHandler pngHandler;
@@ -59,7 +59,7 @@ public class RepoServlet extends HttpServlet {
         log.info("Initializing " + getClass().getSimpleName());
 
         try {
-            app = ThreedRepoApp.getFromServletContext(getServletContext());
+            app = RepoWebServiceApp.getFromServletContext(getServletContext());
             Preconditions.checkNotNull(app);
             brandRepos = app.getBrandRepos();
             pngLoader = app.getPngLoader();

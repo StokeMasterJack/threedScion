@@ -1,11 +1,11 @@
 package c3i.repoWebService;
 
 import c3i.repo.server.TmToJsonJvm;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -124,8 +124,8 @@ public class ThreedModelHandlerJsonP extends RepoHandler<ThreedModelRequest> {
         SeriesId seriesId = key.getSeriesId();
         String callback = key.getCallback();
         BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
-        Repos repos = getRepos(brandKey);
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
+        BrandRepo brandRepo = getRepos(brandKey);
+        ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
         String jsonText = TmToJsonJvm.toJson(threedModel, callback);
         byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
 

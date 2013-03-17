@@ -1,7 +1,6 @@
 package c3i.repoWebService;
 
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import c3i.repo.shared.RevisionParameter;
@@ -9,7 +8,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -3,13 +3,12 @@ package c3i.imageModel.test;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.server.ImToJsonJvm;
 import c3i.imageModel.shared.ImageModel;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import junit.framework.TestCase;
 import org.codehaus.jackson.node.ObjectNode;
 
 public class ImToJsonJvmTest extends TestCase {
 
-    Repos repos = Repos.get();
 
     public void test() throws Exception {
 
@@ -30,8 +29,7 @@ public class ImToJsonJvmTest extends TestCase {
 
 
     ImageModel getTestImageModel() {
-//        return repos.createModel(SeriesKey.TUNDRA_2011).getImageModel();
-
+        BrandRepo repos = BrandRepo.testRepoToyota();
         return repos.getThreedModelForHead(SeriesKey.TACOMA_2011).getImageModel();
     }
 }

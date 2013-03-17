@@ -11,7 +11,7 @@ import c3i.imgGen.shared.JobStatusItem;
 import c3i.imgGen.shared.JpgGenService;
 import c3i.imgGen.shared.Stats;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import javax.servlet.ServletException;
@@ -105,7 +105,7 @@ public class JpgGenServlet extends RemoteServiceServlet implements JpgGenService
 
         jobSpec.getProfile().getBaseImageType();
 
-        Repos repos = brandRepos.getRepos(brandKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(brandKey);
         try {
             int threadCount = 5;
             int priority = Thread.NORM_PRIORITY;

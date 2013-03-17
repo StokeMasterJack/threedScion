@@ -1,9 +1,8 @@
 package c3i.imageModel.server;
 
 import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.imageModel.shared.ImContext;
-import c3i.imageModel.shared.ImContextKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
 import c3i.imageModel.shared.ImLayer;
@@ -28,7 +27,7 @@ public class JsonToImJvm<V> {
     private final FeatureModel featureModel;
 
     public static ImageModel parse(FeatureModel featureModel, String imageModelJson) throws JsonParseException {
-        checkNotNull(featureModel.getContextKey());
+        checkNotNull(featureModel.getKey());
         ObjectMapper mapper = new ObjectMapper();
         JsonNode imageModeAsJsonNode;
         try {
@@ -40,7 +39,7 @@ public class JsonToImJvm<V> {
     }
 
     public static ImageModel parse(FeatureModel featureModel, JsonNode imageModelAsJsonNode) {
-        checkNotNull(featureModel.getContextKey());
+        checkNotNull(featureModel.getKey());
         JsonToImJvm parser = new JsonToImJvm(featureModel);
         return parser.parseSeries(imageModelAsJsonNode);
     }
@@ -55,7 +54,7 @@ public class JsonToImJvm<V> {
         List<ImView> imViews = parseViews(jsonArray);
 
 
-        SeriesKey seriesKey = featureModel.getContextKey();
+        SeriesKey seriesKey = featureModel.getKey();
         checkState(seriesKey != null);
 
 
@@ -139,7 +138,7 @@ public class JsonToImJvm<V> {
         String varCode = jsFeature.getFieldNames().next();
 
 
-        Object var = featureModel.resolveVar(varCode);
+        Var var = featureModel.getVar(varCode);
         if (var == null) {
             throw new IllegalStateException("varCode[" + varCode + "] is not contained in fm[" + featureModel + "]");
         }

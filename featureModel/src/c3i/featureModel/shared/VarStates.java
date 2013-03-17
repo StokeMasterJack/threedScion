@@ -1,6 +1,7 @@
 package c3i.featureModel.shared;
 
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.node.Csp;
 
 import java.util.LinkedHashSet;
 
@@ -15,31 +16,25 @@ public class VarStates {
     private final LinkedHashSet<Var> openVars = new LinkedHashSet<Var>();
 
 
-    public VarStates(Assignments assignments) {
-        this(assignments, Filter.AllVars);
-
+    public VarStates(Csp csp) {
+        this(csp, Filter.AllVars);
     }
 
-    public VarStates(Assignments assignments, Filter filter) {
+    public VarStates(Csp csp, Filter filter) {
 
         this.filter = filter;
 
-        for (int i = 0; i < assignments.getVars().size(); i++) {
+        for (int i = 0; i < csp.getAllVars().size(); i++) {
 
 
-            Var var = assignments.get(i);
+            Var var = csp.getVar(i);
 
             boolean outputVar;
 
-            if (assignments instanceof AssignmentsForTreeSearch) {
-                AssignmentsForTreeSearch a = (AssignmentsForTreeSearch) assignments;
-                outputVar = a.isOutputVar(var);
-            } else {
-                outputVar = true;
-            }
+            outputVar = csp.isOutVar(var);
 
             if (isMatch(var, outputVar)) {
-                Tri v = assignments.getValue(var);
+                Tri v = csp.getValue(var);
                 if (v.isTrue()) trueVars.add(var);
                 else if (v.isFalse()) falseVars.add(var);
                 else if (v.isOpen()) openVars.add(var);

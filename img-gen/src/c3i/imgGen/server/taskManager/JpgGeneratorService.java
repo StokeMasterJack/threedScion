@@ -1,16 +1,16 @@
 package c3i.imgGen.server.taskManager;
 
 
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.imgGen.api.SrcPngLoader;
-import c3i.imgGen.generic.ImgGenService;
-import c3i.imgGen.repoImpl.FmIm;
+import c3i.imgGen.generic.ThreedModelServiceRepo;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import com.google.common.util.concurrent.AbstractIdleService;
@@ -27,12 +27,12 @@ public class JpgGeneratorService extends AbstractIdleService {
     private final ConcurrentHashMap<JobId, Master> jobQueue = new ConcurrentHashMap<JobId, Master>();
 
     private final BrandRepos brandRepos;
-    private final ImgGenService imgGenService;
+    private final ThreedModelServiceRepo threedModelServiceRepo;
     private final SrcPngLoader srcPngLoader;
 
-    public JpgGeneratorService(BrandRepos brandRepos, ImgGenService imgGenService, SrcPngLoader srcPngLoader) {
+    public JpgGeneratorService(BrandRepos brandRepos, ThreedModelServiceRepo threedModelServiceRepo, SrcPngLoader srcPngLoader) {
         this.brandRepos = brandRepos;
-        this.imgGenService = imgGenService;
+        this.threedModelServiceRepo = threedModelServiceRepo;
         this.srcPngLoader = srcPngLoader;
     }
 
@@ -45,19 +45,19 @@ public class JpgGeneratorService extends AbstractIdleService {
         jobSpec.getProfile().getBaseImageType();
 
         BrandKey brandKey = jobSpec.getBrandKey();
-        Repos repos = brandRepos.getRepos(brandKey);
+        BrandRepo brandRepo = brandRepos.getBrandRepo(brandKey);
 
         SeriesId seriesId1 = (SeriesId) jobSpec.getSeriesId();
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId1.getSeriesKey());
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesId1.getSeriesKey());
 
 
         SeriesId seriesId = jobSpec.getSeriesId();
-        FmIm fmIm = imgGenService.getFmIm(seriesId);
+        ThreedModel threedModel = threedModelServiceRepo.getThreedModel(seriesId);
 
         Master master = new Master(
                 seriesRepo,
                 jobSpec,
-                imgGenService,
+                threedModelServiceRepo,
                 srcPngLoader,
                 threadCount,
                 priority);
@@ -84,8 +84,8 @@ public class JpgGeneratorService extends AbstractIdleService {
 
 
     private String commitIdToTag(SeriesId seriesId) {
-        Repos repos = brandRepos.getRepos(seriesId.getBrandKey());
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId.getSeriesKey());
+        BrandRepo brandRepo = brandRepos.getBrandRepo(seriesId.getBrandKey());
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesId.getSeriesKey());
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         Map<String, Ref> tags = srcRepo.getTags();
 

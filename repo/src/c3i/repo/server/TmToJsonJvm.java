@@ -1,7 +1,7 @@
 package c3i.repo.server;
 
 import c3i.featureModel.server.FmToJsonJvm;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.imageModel.server.ImToJsonJvm;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;

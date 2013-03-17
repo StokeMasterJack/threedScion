@@ -242,7 +242,7 @@ public class Xor extends Junction {
 
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
+    public void autoAssignFalse(AutoAssignContext ctx) {
         throw new UnsupportedOperationException("Xor.autoAssignFalse[" + ctx + "]");
     }
 
@@ -260,8 +260,7 @@ public class Xor extends Junction {
     }
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws MoreThanOneTrueTermXorAssignmentException {
-        logAutoAssignTrue(depth);
+    public void autoAssignTrue(AutoAssignContext ctx) throws MoreThanOneTrueTermXorAssignmentException {
         int L = expressions.size();
         if (expressions.size() == 0) throw new IllegalStateException();
 
@@ -305,7 +304,7 @@ public class Xor extends Junction {
                 assert allFalse;
                 throw new AllTermsAreFalseXorAssignmentException(this, ctx);
             } else if (openCount == 1) { //all false - one open
-                a.iterator().next().autoAssignTrue(ctx, depth + 1);
+                a.iterator().next().autoAssignTrue(ctx);
             } else if (openCount > 1) {
 
 //                return new Xor(opens);
@@ -316,10 +315,10 @@ public class Xor extends Junction {
             if (openCount == 0) {
 //                return TRUE;
             } else if (openCount == 1) {
-                a.iterator().next().autoAssignFalse(ctx, depth + 1);
+                a.iterator().next().autoAssignFalse(ctx);
             } else {
                 for (BoolExpr expr : a) {
-                    expr.autoAssignFalse(ctx, depth + 1);
+                    expr.autoAssignFalse(ctx);
                 }
             }
         } else {

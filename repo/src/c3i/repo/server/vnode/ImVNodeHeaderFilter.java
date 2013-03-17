@@ -1,7 +1,7 @@
 package c3i.repo.server.vnode;
 
 import c3i.featureModel.shared.FeatureModel;
-import c3i.imageModel.shared.ImContext;
+import c3i.featureModel.shared.UnknownVarCodeException;
 import c3i.imageModel.shared.NodeLevel;
 import c3i.imageModel.shared.SrcPng;
 import smartsoft.util.shared.Strings;
@@ -13,7 +13,7 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
 
     public ImVNodeHeaderFilter(FeatureModel featureModel) {
         this.featureModel = featureModel;
-        this.seriesName = featureModel.getContextKey().getSeriesName();
+        this.seriesName = featureModel.getKey().getSeriesName();
     }
 
     Rejection veto(VNodeHeader vNode, String reason) {
@@ -47,8 +47,9 @@ public class ImVNodeHeaderFilter implements VNodeHeaderFilter {
                     return veto(vNode, "feature code contains Non-word Char");
                 }
                 String varCode = vNode.name;
-                Object var = featureModel.resolveVar(varCode);
-                if (var == null) {
+                try {
+                    featureModel.getVar(varCode);
+                } catch (UnknownVarCodeException e) {
                     return veto(vNode, "feature code not in fm");
                 }
             }

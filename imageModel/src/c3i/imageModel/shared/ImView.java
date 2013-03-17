@@ -1,5 +1,6 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.base.Preconditions;
@@ -17,11 +18,11 @@ import java.util.logging.Logger;
 //import threed.core.imageModel.shared.slice.ImageSlice;
 //import threed.core.imageModel.shared.slice.Layer;
 
-public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V> {
+public class ImView extends ImChildBase implements IsParent<ImLayer> {
 
     private final String name;
-    private final List<ImLayer<V>> layers;
-    private final ViewLiftSpec<V> liftSpec;
+    private final List<ImLayer> layers;
+    private final ViewLiftSpec liftSpec;
     private final int angleCount;
     private final Integer initialAngle;
     private final int index;
@@ -34,11 +35,11 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
 //        this(depth, name, layers, null);
 //    }
 
-    public ImView(int depth, String name, int index, List<ImLayer<V>> layers, @Nullable ViewLiftSpec<V> liftSpec) {
+    public ImView(int depth, String name, int index, List<ImLayer> layers, @Nullable ViewLiftSpec liftSpec) {
         this(depth, null, index, name, layers, liftSpec);
     }
 
-    public ImView(int depth, Integer initialAngle, int index, String name, List<ImLayer<V>> layers, @Nullable ViewLiftSpec<V> liftSpec) {
+    public ImView(int depth, Integer initialAngle, int index, String name, List<ImLayer> layers, @Nullable ViewLiftSpec liftSpec) {
         super(depth);
 
         if (name == null) throw new IllegalArgumentException();
@@ -82,7 +83,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         }
     }
 
-    private static <V> int getMaxAngle(List<ImLayer<V>> layers) {
+    private static int getMaxAngle(List<ImLayer> layers) {
         int maxAngle = 0;
         for (int i = 0; i < layers.size() && i < 5; i++) {
             ImLayer layer = layers.get(i);
@@ -113,7 +114,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
 
     private ViewKey initViewKey() {
         ImageModel imageModel = (ImageModel) parent;
-        SeriesKey seriesKey = imageModel.getSeriesKey();
+        SeriesKey seriesKey = imageModel.getKey();
         return new ViewKey(seriesKey, getIndex());
     }
 
@@ -161,13 +162,13 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         return index;
     }
 
-    public List<ImLayer<V>> getLayers() {
+    public List<ImLayer> getLayers() {
         return layers;
     }
 
-    public List<ImLayer<V>> getLayers(int angle) {
-        ArrayList<ImLayer<V>> a = new ArrayList<ImLayer<V>>();
-        for (ImLayer<V> layer : layers) {
+    public List<ImLayer> getLayers(int angle) {
+        ArrayList<ImLayer> a = new ArrayList<ImLayer>();
+        for (ImLayer layer : layers) {
             if (layer.containsAngle(angle)) {
                 a.add(layer);
             }
@@ -253,7 +254,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
     }
 
     @Override
-    public List<ImLayer<V>> getChildNodes() {
+    public List<ImLayer> getChildNodes() {
         return layers;
     }
 
@@ -271,11 +272,11 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         }
     }
 
-    public Set<V> getPngVars(int angle) {
-        HashSet<V> vars = new HashSet<V>();
+    public Set<Var> getPngVars(int angle) {
+        HashSet<Var> vars = new HashSet<Var>();
 
         if (liftSpec != null) {
-            V triggerFeature = liftSpec.getTriggerFeature();
+            Var triggerFeature = liftSpec.getTriggerFeature();
             vars.add(triggerFeature);
         }
 
@@ -283,9 +284,9 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         return vars;
     }
 
-    public void getPngVars(Set<V> varSet, int angle) {
+    public void getPngVars(Set<Var> varSet, int angle) {
         for (int i = 0; i < layers.size(); i++) {
-            ImLayer<V> imLayer = layers.get(i);
+            ImLayer imLayer = layers.get(i);
             if (imLayer.isZLayer()) continue;
             imLayer.getVars(varSet, angle);
         }
@@ -333,7 +334,7 @@ public class ImView<V> extends ImChildBase<V> implements IsParent<ImLayer<V>, V>
         return new Slice(getName(), angle);
     }
 
-    public Slice2<V> getSlice2(int angle) {
+    public Slice2 getSlice2(int angle) {
         return new Slice2(this, angle);
     }
 

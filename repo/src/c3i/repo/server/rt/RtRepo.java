@@ -1,6 +1,6 @@
 package c3i.repo.server.rt;
 
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.server.ImageUtil;

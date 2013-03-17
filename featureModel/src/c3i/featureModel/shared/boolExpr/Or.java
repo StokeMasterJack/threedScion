@@ -142,8 +142,8 @@ public class Or extends Junction {
     }
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
-        logAutoAssignTrue(depth);
+    public void autoAssignTrue(AutoAssignContext ctx) {
+
 
         int falseCount = 0;
         int trueCount = 0;
@@ -172,14 +172,13 @@ public class Or extends Junction {
 
         if (openCount == 1 && trueCount == 0) {
             //i.e. all false and one open
-            firstOpen.autoAssignTrue(ctx, depth + 1);
+            firstOpen.autoAssignTrue(ctx);
         }
 
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
-        logAutoAssignFalse(depth);
+    public void autoAssignFalse(AutoAssignContext ctx) {
         for (BoolExpr expr : expressions) {
             Tri value = expr.eval(ctx);
             if (value.isTrue()) {
@@ -187,7 +186,7 @@ public class Or extends Junction {
             } else if (value.isFalse()) {
                 //cool;
             } else { //open
-                expr.autoAssignFalse(ctx, depth + 1);
+                expr.autoAssignFalse(ctx);
             }
         }
     }

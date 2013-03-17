@@ -33,17 +33,20 @@ public class Not extends Unary {
         return "!";
     }
 
-
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) {
-        logAutoAssignTrue(depth);
-        getExpr().autoAssignFalse(ctx, depth);
+    public boolean containsVar(Var v) {
+        return expr.containsVar(v);
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) {
-        logAutoAssignFalse(depth);
-        getExpr().autoAssignTrue(ctx, depth);
+    public void autoAssignTrue(AutoAssignContext ctx) {
+
+        getExpr().autoAssignFalse(ctx);
+    }
+
+    @Override
+    public void autoAssignFalse(AutoAssignContext ctx) {
+        getExpr().autoAssignTrue(ctx);
     }
 
     @Override

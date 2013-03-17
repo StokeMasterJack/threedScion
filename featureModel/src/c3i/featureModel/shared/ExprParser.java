@@ -111,7 +111,7 @@ public class ExprParser {
      */
     private BoolExpr parseLiteral(BoolExprString exprString) {
         BoolExprString.Literal literal = exprString.parseLiteral();
-        Var var = fm.get(literal.getVarCode());
+        Var var = fm.getVar(literal.getVarCode());
         if (literal.isNegated()) {
             return BoolExpr.not(var);
         } else {
@@ -119,24 +119,24 @@ public class ExprParser {
         }
     }
 
-    public Iff createIff(String varCode, BoolExprString boolExprString, Vars vars) {
+    public Iff createIff(String varCode, BoolExprString boolExprString, VarSpace varSpace) {
         if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-        Var expr1 = vars.get(varCode);
+        Var expr1 = varSpace.getVar(varCode);
         BoolExpr expr2 = this.parseExpression(boolExprString);
         return BoolExpr.iff(expr1, expr2);
     }
 
 
-    public Imp createImplication(String varCode, BoolExprString exprString, Vars vars) {
+    public Imp createImplication(String varCode, BoolExprString exprString, VarSpace varSpace) {
         if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-        Var expr1 = vars.get(varCode);
+        Var expr1 = varSpace.getVar(varCode);
         BoolExpr expr2 = this.parseExpression(exprString);
         return BoolExpr.imp(expr1, expr2);
     }
 
-    public Conflict createConflict(String varCode, BoolExprString exprString, Vars vars) {
+    public Conflict createConflict(String varCode, BoolExprString exprString, VarSpace varSpace) {
         if (isEmpty(varCode)) throw new IllegalArgumentException("varCode cannot be empty");
-        Var expr1 = vars.get(varCode);
+        Var expr1 = varSpace.getVar(varCode);
         BoolExpr expr2 = this.parseExpression(exprString);
         return BoolExpr.conflict(expr1, expr2);
     }

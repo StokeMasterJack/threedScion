@@ -39,7 +39,7 @@ public abstract class Constant extends BoolExpr {
     }
 
     @Override
-    final public boolean containsDeep(Var v) {
+    final public boolean containsVar(Var v) {
         return false;
     }
 

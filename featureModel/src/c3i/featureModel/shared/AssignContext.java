@@ -1,19 +1,15 @@
 package c3i.featureModel.shared;
 
-import c3i.featureModel.shared.boolExpr.ReassignmentException;
+import c3i.featureModel.shared.boolExpr.ConflictingAssignmentException;
 import c3i.featureModel.shared.boolExpr.Var;
 
 public interface AssignContext {
 
-    void assignTrue(Var var) throws ReassignmentException;
+    boolean assignTrue(Var var) throws ConflictingAssignmentException;
 
-    void assignTrue(Var var, int depth) throws ReassignmentException;
+    boolean assignFalse(Var var) throws ConflictingAssignmentException;
 
-    void assignFalse(Var var) throws ReassignmentException;
-
-    void assignFalse(Var var, int depth) throws ReassignmentException;
-
-    AssignContext copy();
+    boolean assign(Var var, boolean value) throws ConflictingAssignmentException;
 
 
 }

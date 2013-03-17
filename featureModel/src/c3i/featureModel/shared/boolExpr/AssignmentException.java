@@ -6,7 +6,7 @@ import com.google.common.base.Preconditions;
 /**
  * Attempted to assign the value [value] to expr
  */
-public class AssignmentException extends RuntimeException {
+public class AssignmentException extends RuntimeException implements CspFailure {
 
     private final BoolExpr expr;
     private final boolean value;

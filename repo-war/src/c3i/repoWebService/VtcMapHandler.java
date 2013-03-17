@@ -1,9 +1,9 @@
 package c3i.repoWebService;
 
-import c3i.core.threedModel.shared.Brand;
+import c3i.threedModel.shared.Brand;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import org.codehaus.jackson.node.ObjectNode;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
@@ -43,8 +43,8 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
         CacheUtil.addCacheNeverResponseHeaders(response);
 
         BrandKey brandKey = r.getBrandKey();
-        Repos repos = r.getRepos();
-        Brand brandInitData = repos.getBrandInitData();
+        BrandRepo brandRepo = r.getRepos();
+        Brand brandInitData = brandRepo.getBrandInitData();
 
         BrandSerializer brandSerializer = new BrandSerializer();
 

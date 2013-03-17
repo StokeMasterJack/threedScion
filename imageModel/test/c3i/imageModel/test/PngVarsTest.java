@@ -35,5 +35,9 @@ public class PngVarsTest extends TestCase {
         assertEquals(expectedVarCodeString, pngVarCodes.toString());
     }
 
+    public void test1() throws Exception{
+
+    }
+
 }
 

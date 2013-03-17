@@ -31,12 +31,12 @@ public class True extends Constant {
 
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) throws AssignmentException {
+    public void autoAssignFalse(AutoAssignContext ctx) throws AssignmentException {
         throw new AssignmentException(this, false, ctx);
     }
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws AssignmentException {
+    public void autoAssignTrue(AutoAssignContext ctx) throws AssignmentException {
     }
 
     @Override

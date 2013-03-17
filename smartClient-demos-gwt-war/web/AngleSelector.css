@@ -1,18 +1,18 @@
-.ViewPanel .UserContent{
+.ViewPanel .UserContent {
     position: absolute;
     z-index: 1;
 }
 
-.ViewPanel .UserControl{
+.ViewPanel .UserControl {
     position: absolute;
     z-index: 3;
 }
 
-.ViewPanel .DragToSpin{
+.ViewPanel .DragToSpin {
     z-index: 2;
 }
 
-.AngleSelector  {
+.AngleSelector {
     z-index: 3;
 }
 

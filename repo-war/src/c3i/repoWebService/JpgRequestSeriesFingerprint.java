@@ -7,7 +7,7 @@ import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,8 +83,8 @@ public class JpgRequestSeriesFingerprint extends SeriesBasedRepoRequest {
     }
 
     public Profile getProfile() {
-        Repos repos = getRepos();
-        return repos.getProfilesCache().getProfile(brandKey, profileKey);
+        BrandRepo brandRepo = getRepos();
+        return brandRepo.getProfilesCache().getProfile(brandKey, profileKey);
     }
 
     public List<String> getVarCodes() {

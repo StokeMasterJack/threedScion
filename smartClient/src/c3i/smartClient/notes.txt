@@ -1,0 +1,9 @@
+
+smart client lib
+
+two versions:
+
+    EFC C3I: does not need to do fixup
+    DF  C3I: does not need to do fixup
+
+

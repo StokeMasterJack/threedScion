@@ -7,6 +7,7 @@ import c3i.featureModel.shared.Source;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.boolExpr.AssignmentException;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.node.Csp;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -40,26 +41,32 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
         }
     }
 
-    public void assignTrue(Var var, int depth) throws AssignmentException {
+    public boolean assignTrue(Var var, int depth) throws AssignmentException {
         boolean ch = autoAssign(var, true);
         if (ch) {
             dirty();
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void assignTrue(Var var) throws AssignmentException {
-        this.assignTrue(var, 0);
+    public boolean assignTrue(Var var) throws AssignmentException {
+        return this.assignTrue(var, 0);
     }
 
-    public void assignFalse(Var var, int depth) throws AssignmentException {
+    public boolean assignFalse(Var var, int depth) throws AssignmentException {
         boolean ch = autoAssign(var, false);
         if (ch) {
             dirty();
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void assignFalse(Var var) throws AssignmentException {
-        this.assignFalse(var, 0);
+    public boolean assignFalse(Var var) throws AssignmentException {
+        return this.assignFalse(var, 0);
     }
 
     private void dirty() {
@@ -244,7 +251,9 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
 
     private void fixupBasedOnConstraints() throws AssignmentException {
         clean();
-        ctx.getConstraint().autoAssignTrue(this);
+        Csp constraint = ctx.getConstraint();
+        constraint.propagate();
+        constraint.autoAssignTrue(this);
         if (isDirty()) fixupBasedOnConstraints();
     }
 
@@ -599,9 +608,12 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
         return picks;
     }
 
-    @Override
     public AutoAssignContext copy() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean isOpen(Var var) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -1,18 +1,18 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.Profile;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import c3i.repo.server.rt.RtRepo;
 
 public class JpgVersionWidthAction {
 
-    protected final Repos repos;
+    protected final BrandRepo brandRepo;
     protected final SeriesId seriesId;
     protected final Profile profile;
 
@@ -24,8 +24,8 @@ public class JpgVersionWidthAction {
     protected final SrcRepo srcRepo;
     protected final RtRepo genRepo;
 
-    public JpgVersionWidthAction(Repos repos, SeriesId seriesId, Profile profile) {
-        this.repos = repos;
+    public JpgVersionWidthAction(BrandRepo brandRepo, SeriesId seriesId, Profile profile) {
+        this.brandRepo = brandRepo;
         this.seriesId = seriesId;
         this.profile = profile;
 
@@ -33,12 +33,12 @@ public class JpgVersionWidthAction {
         this.seriesKey = seriesId.getSeriesKey();
 
 
-        this.seriesRepo = repos.getSeriesRepo(seriesKey);
+        this.seriesRepo = brandRepo.getSeriesRepo(seriesKey);
         this.srcRepo = seriesRepo.getSrcRepo();
         this.genRepo = seriesRepo.getRtRepo();
 
 
-        this.threedModel = repos.getThreedModel(seriesId);
+        this.threedModel = brandRepo.getThreedModel(seriesId);
 
     }
 

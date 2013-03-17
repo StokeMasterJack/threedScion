@@ -9,13 +9,13 @@ public class MyPngVarFilter implements VarFilter {
     private final boolean[] isPngArray;
     private final int pngVarCount;
 
-    public MyPngVarFilter(Vars vars, Set<Var> pngVars) {
-        isPngArray = new boolean[vars.size()];
+    public MyPngVarFilter(VarSpace varSpace, Set<Var> pngVars) {
+        isPngArray = new boolean[varSpace.size()];
 
         this.pngVarCount = pngVars.size();
 
         for (int i = 0; i < isPngArray.length; i++) {
-            Var var = vars.get(i);
+            Var var = varSpace.getVar(i);
             isPngArray[i] = pngVars.contains(var);
         }
     }

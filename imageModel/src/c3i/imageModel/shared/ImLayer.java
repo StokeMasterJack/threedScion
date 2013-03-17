@@ -1,5 +1,6 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.collect.ImmutableList;
 
@@ -8,17 +9,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, IsChild<V>, IsParent<ImFeatureOrPng<V>, V>, Comparable<ImLayer<V>> {
+public class ImLayer extends ImChildBase implements ImLayerOrFeature, IsChild, IsParent<ImFeatureOrPng>, Comparable<ImLayer> {
 
     private final String name;
-    private final ArrayList<ImFeatureOrPng<V>> childNodes;
+    private final ArrayList<ImFeatureOrPng> childNodes;
 
     private final boolean liftLayer;
 
-    public ImLayer(int depth, String name, List<ImFeatureOrPng<V>> childNodes, boolean liftLayer) {
+    public ImLayer(int depth, String name, List<ImFeatureOrPng> childNodes, boolean liftLayer) {
         super(depth);
         this.name = name;
-        this.childNodes = (ArrayList<ImFeatureOrPng<V>>) childNodes;
+        this.childNodes = (ArrayList<ImFeatureOrPng>) childNodes;
 
         this.liftLayer = liftLayer;
         for (ImFeatureOrPng node : childNodes) {
@@ -32,7 +33,7 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
         return getMaxAngle(this.childNodes);
     }
 
-    private static <V> int getMaxAngle(List<ImFeatureOrPng<V>> childNodes) {
+    private static int getMaxAngle(List<ImFeatureOrPng> childNodes) {
         int maxAngle = 0;
         for (ImFeatureOrPng childNode : childNodes) {
             int angle;
@@ -62,7 +63,7 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
         }
         ImView view = getView();
         ViewLiftSpec liftSpec = view.getLiftSpec();
-        Object triggerFeature = liftSpec.getTriggerFeature();
+        Var triggerFeature = liftSpec.getTriggerFeature();
         if (picks.isPicked(triggerFeature)) {
             return liftSpec.getDeltaY();
         } else {
@@ -78,7 +79,7 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
         return name;
     }
 
-    public List<ImFeatureOrPng<V>> getChildNodes() {
+    public List<ImFeatureOrPng> getChildNodes() {
         return childNodes;
     }
 
@@ -186,34 +187,34 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
     }
 
 
-    public void getVars(Set<V> varSet) {
+    public void getVars(Set varSet) {
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);
             featureOrPng.getVarSet(varSet);
         }
     }
 
-    public void getVars(Set<V> varSet, int angle) {
+    public void getVars(Set<Var> varSet, int angle) {
         for (int i = 0; i < childNodes.size(); i++) {
-            ImFeatureOrPng<V> featureOrPng = childNodes.get(i);
+            ImFeatureOrPng featureOrPng = childNodes.get(i);
             featureOrPng.getVarSet(varSet, angle);
         }
     }
 
-    public Set<V> getVars() {
-        HashSet<V> set = new HashSet<V>();
+    public Set getVars() {
+        HashSet set = new HashSet();
         getVars(set);
         return set;
     }
 
-    public void getPngs(Set<SrcPng<V>> pngs) {
-        for (ImFeatureOrPng<V> fp : childNodes) {
+    public void getPngs(Set<SrcPng> pngs) {
+        for (ImFeatureOrPng fp : childNodes) {
             fp.getPngs(pngs);
         }
     }
 
-    public Set<SrcPng<V>> getPngs() {
-        HashSet<SrcPng<V>> set = new HashSet<SrcPng<V>>();
+    public Set<SrcPng> getPngs() {
+        HashSet<SrcPng> set = new HashSet<SrcPng>();
         getPngs(set);
         return set;
     }
@@ -229,8 +230,8 @@ public class ImLayer<V> extends ImChildBase<V> implements ImLayerOrFeature<V>, I
         return this.name.compareTo(that.name);
     }
 
-    public ImView<V> getView() {
-        return (ImView<V>) getParent();
+    public ImView getView() {
+        return (ImView) getParent();
     }
 
     public boolean isBackground() {

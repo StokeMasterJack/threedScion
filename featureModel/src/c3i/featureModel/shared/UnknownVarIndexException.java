@@ -2,19 +2,19 @@ package c3i.featureModel.shared;
 
 public class UnknownVarIndexException extends RuntimeException {
 
-    private final int badVarId;
+    private final int badVarIndex;
 
-    public UnknownVarIndexException(int badVarId) {
-        this.badVarId = badVarId;
+    public UnknownVarIndexException(int badVarIndex) {
+        this.badVarIndex = badVarIndex;
     }
 
-    public int getBadVarId() {
-        return badVarId;
+    public int getBadVarIndex() {
+        return badVarIndex;
     }
 
 
     @Override
     public String getMessage() {
-        return "varId [" + badVarId + "] is not in FeatureModel";
+        return "varIndex [" + badVarIndex + "] is not in FeatureModel";
     }
 }

@@ -1,26 +1,26 @@
 package c3i.imgGen.server.taskManager;
 
-import c3i.featureModel.shared.CspForTreeSearch;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.featureModel.shared.search.SatCountProductHandler;
-import c3i.repo.server.TestConstants;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.search.CountingProductHandler;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;
+import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.Slice2;
-import c3i.imgGen.api.Kit;
-import c3i.imgGen.generic.ImgGenService;
-import c3i.imgGen.repoImpl.KitRepo;
-import c3i.imgGen.server.JpgSet;
-import c3i.imgGen.server.JpgSets;
+import c3i.imgGen.ImgGenApp;
+import c3i.imgGen.api.SrcPngLoader;
+import c3i.imgGen.api.ThreedModelService;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
 import c3i.imgGen.shared.JobStatus;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
+import c3i.repo.server.TestConstants;
+import c3i.threedModel.shared.JpgSet;
+import c3i.threedModel.shared.JpgSets;
+import c3i.threedModel.shared.ThreedModel;
 import org.junit.Before;
 import org.junit.Test;
 import sun.misc.VM;
@@ -37,55 +37,71 @@ import static org.junit.Assert.assertEquals;
 
 public class MasterTest implements TestConstants {
 
+    ImgGenApp imgGenApp;
+
     BrandRepos brandRepos;
-    Repos repos;
-    ImgGenService<SeriesId> imgGenService;
-    Kit kit;
+    BrandRepo brandRepo;
+    ThreedModelService threedModelService;
+    SrcPngLoader srcPngLoader;
 
     @Before
     public void setUp() throws Exception {
+
+        imgGenApp = new ImgGenApp();
+        this.srcPngLoader = imgGenApp.getSrcPngLoader();
         brandRepos = BrandRepos.createSingleBrand(BrandKey.TOYOTA, TOYOTA_REPO_BASE_DIR);
-        kit = new KitRepo(brandRepos);
-        repos = brandRepos.getRepos(BrandKey.TOYOTA);
-        imgGenService = new ImgGenService<SeriesId>(kit);
+//        imgGenKit = new ImgGenKitRepo(brandRepos);
+        brandRepo = brandRepos.getBrandRepo(BrandKey.TOYOTA);
+
+        threedModelService = imgGenApp.getThreedModelService();
+    }
+
+    @Test
+    public void testSatCountAvalon2014() throws Exception {
+        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, SeriesKey.AVALON);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
+        ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
+        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
+        long satCount = csp.getProductCount();
+        System.out.println(satCount);
     }
 
     @Test
     public void testSatCountTundra2013() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, SeriesKey.TUNDRA);
-        SeriesId seriesId = repos.getHead(seriesKey);
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
-        CspForTreeSearch csp = threedModel.getFeatureModel().createCspForTreeSearch();
-        long satCount = csp.getSatCount();
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
+        ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
+        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
+        long satCount = csp.getProductCount();
         System.out.println(satCount);
     }
 
     @Test
     public void testForEachTundra2013() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, SeriesKey.TUNDRA);
-        SeriesId seriesId = repos.getHead(seriesKey);
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
-        CspForTreeSearch csp = threedModel.getFeatureModel().createCspForTreeSearch();
-        SatCountProductHandler ph = new SatCountProductHandler();
-        csp.forEach(ph);
-        System.out.println(ph.getSatCount());
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
+        ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
+        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
+        CountingProductHandler ph = new CountingProductHandler();
+        csp.forEachProduct(ph);
+        System.out.println(ph.getCount());
     }
 
     @Test
     public void testMasterTaskOnTundra2013() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
-        SeriesId seriesId = repos.getHead(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
 
-        Profile profile = repos.getProfiles().get("wStd");
+        Profile profile = brandRepo.getProfiles().get("wStd");
         JobSpec jobSpec = new JobSpec(seriesId, profile);
 
         final Master master = new Master(
                 seriesRepo,
                 jobSpec,
-                imgGenService,
-                kit.createSrcPngLoader(),
+                threedModelService,
+                srcPngLoader,
                 5,
                 Thread.NORM_PRIORITY);
 
@@ -121,11 +137,9 @@ public class MasterTest implements TestConstants {
     @Test
     public void testAnalOnlyOnAvalon2014() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
-        SeriesId seriesId = repos.getHead(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        Kit<SeriesId> kit = new KitRepo(brandRepos);
-        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
-        JpgSets jpgSets = imgGenService.getJpgSets(seriesId);
+        JpgSets jpgSets = threedModelService.getThreedModel(seriesId).createJpgSets();
         int jpgCount = jpgSets.getJpgCount();
 
         assertEquals(2385, jpgCount);
@@ -136,11 +150,9 @@ public class MasterTest implements TestConstants {
     @Test
     public void testAnalOnlyOnTundra2014() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
-        SeriesId seriesId = repos.getHead(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        Kit<SeriesId> kit = new KitRepo(brandRepos);
-        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
-        JpgSets jpgSets = imgGenService.getJpgSets(seriesId);
+        JpgSets jpgSets = threedModelService.getThreedModel(seriesId).createJpgSets();
         int jpgCount = jpgSets.getJpgCount();
 
         System.out.println("jpgCount = " + jpgCount);
@@ -151,11 +163,9 @@ public class MasterTest implements TestConstants {
     @Test
     public void testAnalOnlyOnTundra2014OneAngle() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
-        SeriesId seriesId = repos.getHead(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        Kit<SeriesId> kit = new KitRepo(brandRepos);
-        ImgGenService<SeriesId> imgGenService = new ImgGenService<SeriesId>(kit);
-        JpgSet jpgSet = imgGenService.getJpgSet(seriesId, "exterior", 2);
+        JpgSet jpgSet = threedModelService.getThreedModel(seriesId).createJpgSet(new Slice("exterior", 2));
 
         System.out.println("jpgCount = " + jpgSet.getJpgCount());
 
@@ -165,9 +175,9 @@ public class MasterTest implements TestConstants {
     public void testAnalOnly2() throws Exception {
         //        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
-        SeriesId seriesId = repos.getHead(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
+        ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
 
         long jpgCount = 0;
         for (ImView view : threedModel.getViews()) {
@@ -185,9 +195,7 @@ public class MasterTest implements TestConstants {
     }
 
     public JpgSet createJpgSet(SeriesId seriesId, Slice2 slice) throws Exception {
-        JpgSet jpgSet = imgGenService.getJpgSet(seriesId, slice.getSlice());
-        long t2 = System.currentTimeMillis();
-        return jpgSet;
+        return threedModelService.getThreedModel(seriesId).createJpgSet(slice.getSlice());
     }
 
     public void printBrief(JobStatus jobStatus) {
@@ -214,8 +222,8 @@ public class MasterTest implements TestConstants {
 
     @Test
     public void testTmp() throws Exception {
-        File repoBaseDir = repos.getRepoBaseDir();
-        File cacheDir = repos.getCacheDir();
+        File repoBaseDir = brandRepo.getRepoBaseDir();
+        File cacheDir = brandRepo.getCacheDir();
         System.out.println("repoBaseDir = " + repoBaseDir);
 //          InputStream is = Files.readBytes()
     }
@@ -223,15 +231,15 @@ public class MasterTest implements TestConstants {
 
     public void test1() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
-        SeriesId seriesId = repos.getHead(seriesKey);
-        SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+        SeriesId seriesId = brandRepo.getHead(seriesKey);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
 
 
         final Master master = new Master(
                 seriesRepo,
                 new JobSpec(seriesId, Profile.STD),
-                imgGenService,
-                kit.createSrcPngLoader(),
+                threedModelService,
+                srcPngLoader,
                 5,
                 Thread.NORM_PRIORITY);
         TimerTask timerTask = new TimerTask() {

@@ -2,7 +2,8 @@ package c3i.smartClient.client.model;
 
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.featureModel.shared.node.Csp;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.util.shared.events.ChangeListener;
 import c3i.util.shared.futures.AsyncFunction;
 import c3i.util.shared.futures.AsyncKeyValue;
@@ -24,15 +25,15 @@ public class PicksSession implements RValue<FixedPicks> {
     public PicksSession(ThreedModel threedModel) {
         this.threedModel = threedModel;
         Set<Var> initPicks = threedModel.getFeatureModel().getInitiallyTruePickableVars();
-        AsyncFunction<Set<Var>, FixedPicks> asyncFunction = createAsyncFunction(threedModel);
+        AsyncFunction<Set<Var>, Csp> asyncFunction = createAsyncFunction(threedModel);
         fixedPicks = new AsyncKeyValue<Set<Var>, FixedPicks>("RawPicks", "FixedPicks", asyncFunction, initPicks);
     }
 
-    private static AsyncFunction<Set<Var>, FixedPicks> createAsyncFunction(final ThreedModel threedModel) {
-        return new AsyncFunction<Set<Var>, FixedPicks>() {
+    private static AsyncFunction<Set<Var>, Csp> createAsyncFunction(final ThreedModel threedModel) {
+        return new AsyncFunction<Set<Var>, Csp>() {
             @Override
-            public void start(Set<Var> input, Completer<FixedPicks> completer) throws Exception {
-                FixedPicks fixup = threedModel.fixup(input);
+            public void start(Set<Var> input, Completer<Csp> completer) throws Exception {
+                Csp fixup = threedModel.fixup(input);
                 completer.setResult(fixup);
             }
         };

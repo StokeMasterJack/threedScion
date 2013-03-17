@@ -2,7 +2,7 @@ package c3i.imageModel.shared;
 
 import smartsoft.util.shared.Path;
 
-public interface ImNode<V> {
+public interface ImNode {
 
     /**
      * @return the original file name from the png file/dir structure
@@ -21,15 +21,15 @@ public interface ImNode<V> {
 
     boolean isPng();
 
-    ImageModel<V> asSeries();
+    ImageModel asSeries();
 
-    ImView<V> asView();
+    ImView asView();
 
-    ImLayer<V> asLayer();
+    ImLayer asLayer();
 
-    ImFeature<V> asFeature();
+    ImFeature asFeature();
 
-    SrcPng<V> asPng();
+    SrcPng asPng();
 
     Path getUrl(Path repoBaseUrl);
 

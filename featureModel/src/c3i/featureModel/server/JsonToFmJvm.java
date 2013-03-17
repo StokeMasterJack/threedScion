@@ -187,7 +187,7 @@ public final class JsonToFmJvm {
 
     private BoolExpr mapVar(ObjectNode jsVar) {
         String varCode = jsVar.get("code").getTextValue();
-        Var var = fm.resolveVar(varCode);
+        Var var = fm.getVar(varCode);
         assert var != null : varCode + " was not in FeatureModel";
         return var;
     }

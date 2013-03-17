@@ -46,7 +46,7 @@ public class MainPanel extends DockLayoutPanel {
     }
 
     private void addTab(Widget widget) {
-        tabPanel.add(widget, getSimpleName(widget).replace("Tab",""));
+        tabPanel.add(widget, getSimpleName(widget).replace("Tab", ""));
     }
 
 

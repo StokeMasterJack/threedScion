@@ -1,14 +1,14 @@
 package c3i.admin.client;
 
 import c3i.admin.client.featurePicker.CurrentUiPicks;
-import c3i.featureModel.shared.Assignments;
+import c3i.featureModel.shared.IAssignments;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.FixedPicks;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.ViewKey;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.ImageStack;
 import c3i.smartClient.client.model.ImageStackChangeListener;
 import c3i.smartClient.client.model.Img;
@@ -240,12 +240,12 @@ public class StatusPanel extends ScrollPanel {
             int varCount = featureModel.size();
 
             if (fixedPicks.isValidBuild()) {
-                Assignments assignments = fixedPicks.getAssignments();
+                IAssignments IAssignments = fixedPicks.getIAssignments();
 
                 for (int varIndex = 0; varIndex < varCount; varIndex++) {
-                    Var var = featureModel.get(varIndex);
+                    Var var = featureModel.getVar(varIndex);
 
-                    Tri value = assignments.getValue(var);
+                    Tri value = IAssignments.getValue(var);
                     int row = varIndex + 1;
                     t.setText(row, 0, var.getCode());
                     t.setText(row, 1, var.getName());
@@ -256,7 +256,7 @@ public class StatusPanel extends ScrollPanel {
             } else {
 
                 for (int varIndex = 0; varIndex < varCount; varIndex++) {
-                    Var var = featureModel.get(varIndex);
+                    Var var = featureModel.getVar(varIndex);
 
                     Set<Var> currentTrueVars = currentUiPicks.getCurrentTrueUiVars();
                     boolean value = currentTrueVars.contains(var);

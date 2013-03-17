@@ -8,7 +8,7 @@ import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.repoImpl.SrcPngLoaderRepo;
 import c3i.imgGen.shared.Stats;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import org.junit.Before;
@@ -38,13 +38,13 @@ public class TestImages {
             .append("dave.png");
 
     BrandRepos brandRepos;
-    Repos repos;
+    BrandRepo brandRepo;
 
     @Before
     public void setup() throws Exception {
         File repoBaseDir = new File("/configurator-content-scion");
         brandRepos = BrandRepos.createSingleBrand(BrandKey.SCION, repoBaseDir);
-        repos = new Repos(BrandKey.TOYOTA, repoBaseDir);
+        brandRepo = new BrandRepo(BrandKey.TOYOTA, repoBaseDir);
     }
 
     @Test
@@ -54,11 +54,11 @@ public class TestImages {
 
         String fp = "f2cd70a-49f9b91-2926eca-0c9f56a-ce22027-01de875-957b422";
 
-        List<Profile> profiles = repos.getProfiles().getList();
+        List<Profile> profiles = brandRepo.getProfiles().getList();
 
         for (Profile profile : profiles) {
             BaseImageKey baseImage = new BaseImageKey(sk, profile, fp);
-            SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+            SeriesRepo seriesRepo = brandRepo.getSeriesRepo(sk);
             RtRepo rtRepo = seriesRepo.getRtRepo();
             File file = rtRepo.getBaseImageFileName(baseImage);
             SrcPngLoader srcPngLoader = new SrcPngLoaderRepo(brandRepos);

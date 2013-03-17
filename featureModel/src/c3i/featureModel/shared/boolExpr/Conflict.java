@@ -33,8 +33,8 @@ public class Conflict extends Pair {
     }
 
 
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws AssignmentException {
-        logAutoAssignTrue(depth);
+    public void autoAssignTrue(AutoAssignContext ctx) throws AssignmentException {
+
         BoolExpr e1 = getExpr1();
         BoolExpr e2 = getExpr2();
 
@@ -42,16 +42,16 @@ public class Conflict extends Pair {
         Tri v2 = e2.eval(ctx);
 
         if (v1.isTrue() && v2.isOpen()) {
-            e2.autoAssignFalse(ctx, depth + 1);
+            e2.autoAssignFalse(ctx);
         } else if (v1.isOpen() && v2.isTrue()) {
-            e1.autoAssignFalse(ctx, depth + 1);
+            e1.autoAssignFalse(ctx);
         } else if (v1.isTrue() && v2.isTrue()) {
             throw new ConflictAutoAssignTrueException(this, ctx);
         }
 
     }
 
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) throws AssignmentException {
+    public void autoAssignFalse(AutoAssignContext ctx) throws AssignmentException {
         throw new UnsupportedOperationException("Conflict.autoAssignFalse[" + ctx + "]");
     }
 

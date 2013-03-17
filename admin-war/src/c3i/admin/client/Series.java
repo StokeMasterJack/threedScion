@@ -7,9 +7,9 @@ import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.imageModel.shared.Profile;
-import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.shared.CommitHistory;
 import c3i.smartClient.client.model.ViewsSession;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.util.shared.futures.AsyncKeyValue;
 import c3i.util.shared.futures.RWValue;
 import smartsoft.util.shared.Path;
@@ -48,7 +48,7 @@ public class Series {
 
         AsyncKeyValue<Set<Var>, FixedPicks> fixedPicks = currentUiPicks.getFixedPicks();
         viewsSession = new ViewsSession(app.getRepoBaseUrl(), threedModel, defaultProfile, fixedPicks);
-        if (initView != null  && viewsSession.isValidViewName(initView)) {
+        if (initView != null && viewsSession.isValidViewName(initView)) {
             viewsSession.setView(initView);
         }
     }

@@ -1,9 +1,11 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.common.SimplePicks;
 import smartsoft.util.shared.Path;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,30 +13,41 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, V>, IsRoot<V> {
+public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot, IImageModel<SeriesKey, Var> {
 
     private final SeriesKey seriesKey;
-    private final List<ImView<V>> imViews;
+    private final List<ImView> imViews;
 
-    public ImageModel(int depth, List<ImView<V>> imViews, SeriesKey seriesKey) {
+    public ImageModel(int depth, List<ImView> imViews, SeriesKey seriesKey) {
         super(depth);
         checkNotNull(seriesKey);
         this.seriesKey = seriesKey;
         this.imViews = imViews;
 
-        for (ImView<V> view : imViews) {
+        for (ImView view : imViews) {
             view.initParent(this);
         }
     }
 
+    public List<Slice2> getSlices() {
+        ArrayList<Slice2> a = new ArrayList<Slice2>();
+        for (ImView imView : imViews) {
+            List<Integer> angles = imView.getAngles();
+            for (Integer angle : angles) {
+                Slice2 slice = new Slice2(imView, angle);
+                a.add(slice);
+            }
+        }
+        return a;
+    }
 
     public Slice getSlice(String viewName, int angle) {
         return getView(viewName).getSlice(angle);
     }
 
-    public Slice2<V> getSlice2(String viewName, int angle) {
-        ImView<V> view = getView(viewName);
-        Slice2<V> slice2 = view.getSlice2(angle);
+    public Slice2 getSlice2(String viewName, int angle) {
+        ImView view = getView(viewName);
+        Slice2 slice2 = view.getSlice2(angle);
         return slice2;
     }
 
@@ -64,8 +77,8 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
         }
     }
 
-    public ImView<V> getView(String viewName) {
-        for (ImView<V> view : imViews) {
+    public ImView getView(String viewName) {
+        for (ImView view : imViews) {
             if (view.is(viewName)) {
                 return view;
             }
@@ -73,7 +86,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
         throw new IllegalArgumentException("No such view[" + viewName + "]");
     }
 
-    public List<ImView<V>> getViews() {
+    public List<ImView> getViews() {
         return imViews;
     }
 
@@ -97,13 +110,13 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
 
 
     @Override
-    public List<ImView<V>> getChildNodes() {
+    public List<ImView> getChildNodes() {
         return imViews;
     }
 
     @Override
     public boolean containsAngle(int angle) {
-        List<ImView<V>> views = getViews();
+        List<ImView> views = getViews();
         if (views == null) return false;
         for (int i = 0; i < views.size(); i++) {
             if (views.get(i).containsAngle(angle)) return true;
@@ -181,7 +194,7 @@ public class ImageModel<V> extends ImNodeBase<V> implements IsParent<ImView<V>, 
         return repoBase.append(localPath).append("3d");
     }
 
-    public SeriesKey getSeriesKey() {
+    public SeriesKey getKey() {
         checkState(seriesKey != null);
         return seriesKey;
     }

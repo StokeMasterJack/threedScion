@@ -1,6 +1,6 @@
 package c3i.featureModel.shared.boolExpr;
 
-public class NegatingVarsException extends RuntimeException {
+public class NegatingVarsException extends RuntimeException implements CspFailure{
 
 
     public NegatingVarsException() {

@@ -1,6 +1,8 @@
 package c3i.imageModel.shared;
 
 
+import c3i.featureModel.shared.boolExpr.Var;
+
 import java.util.Set;
 
 public class ViewSlice2 implements ViewSlice {
@@ -22,7 +24,7 @@ public class ViewSlice2 implements ViewSlice {
     }
 
     @Override
-    public Set<Object> getPngVars() {
+    public Set<Var> getPngVars() {
         return view.getPngVars(angle);
     }
 

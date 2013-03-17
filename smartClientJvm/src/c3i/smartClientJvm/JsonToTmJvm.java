@@ -1,6 +1,6 @@
 package c3i.smartClientJvm;
 
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.server.JsonToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.common.SeriesKey;

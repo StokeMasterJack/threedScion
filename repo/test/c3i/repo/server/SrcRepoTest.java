@@ -13,35 +13,35 @@ import java.util.Set;
 
 public class SrcRepoTest extends TestCase {
 
-    Repos repos;
+    BrandRepo brandRepo;
 
     @Override
     public void setUp() throws Exception {
-        repos = new Repos(BrandKey.TOYOTA, TestConstants.TOYOTA_REPO_BASE_DIR);
+        brandRepo = new BrandRepo(BrandKey.TOYOTA, TestConstants.TOYOTA_REPO_BASE_DIR);
     }
 
     public void test_init() throws Exception {
-        Set<SeriesKey> seriesKeys = repos.getSeriesKeys();
+        Set<SeriesKey> seriesKeys = brandRepo.getSeriesKeys();
         for (SeriesKey seriesKey : seriesKeys) {
-            SeriesRepo seriesRepo = repos.getSeriesRepo(seriesKey);
+            SeriesRepo seriesRepo = brandRepo.getSeriesRepo(seriesKey);
             SrcRepo srcRepo = seriesRepo.getSrcRepo();
         }
     }
 
     public void test_checkin_Camry() throws Exception {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.CAMRY_2011);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(SeriesKey.CAMRY_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Commit Comment");
     }
 
     public void test_addAllAndCommit2() throws Exception {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.TUNDRA_2011);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(SeriesKey.TUNDRA_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
         srcRepo.addAllAndCommit("Poop");
     }
 
     public void test_getCommitHistory() throws Exception {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
 
         final CommitHistory head = srcRepo.getHeadCommitHistory();
@@ -53,7 +53,7 @@ public class SrcRepoTest extends TestCase {
 
 
     public void test_getRevCommitEager() throws Exception {
-        SeriesRepo seriesRepo = repos.getSeriesRepo(SeriesKey.AVALON_2011);
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(SeriesKey.AVALON_2011);
         SrcRepo srcRepo = seriesRepo.getSrcRepo();
 
         ObjectId head = srcRepo.resolveCommitHead();

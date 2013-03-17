@@ -1,6 +1,6 @@
 package c3i.featureModel.data;
 
-import c3i.featureModel.shared.Vars;
+import c3i.featureModel.shared.VarSpace;
 import c3i.featureModel.shared.boolExpr.Var;
 
 import java.util.HashSet;
@@ -51,10 +51,10 @@ public class Camry2011 extends TrimColorOption {
     public Set<Var> getOutputVars() {
         HashSet<Var> a = new HashSet<Var>();
 
-        Vars vars = this;
+        VarSpace varSpace = this;
 
-        for (int i = 0; i < vars.size(); i++) {
-            Var var = vars.get(i);
+        for (int i = 0; i < varSpace.size(); i++) {
+            Var var = varSpace.getVar(i);
 
             Var p = var.getParent();
             boolean even = (i % 2) == 0;

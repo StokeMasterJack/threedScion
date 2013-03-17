@@ -1,7 +1,7 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.threedModel.shared.Brand;
-import c3i.core.threedModel.shared.VtcMap;
+import c3i.threedModel.shared.Brand;
+import c3i.threedModel.shared.VtcMap;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;

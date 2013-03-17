@@ -1,12 +1,13 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public final class Slice2<V> {
+public final class Slice2 {
 
     private final ImView view;
     private final int angle;
@@ -64,7 +65,7 @@ public final class Slice2<V> {
         return "view: " + view + ", angle: " + angle;
     }
 
-    public Set<V> getPngVars() {
+    public Set<Var> getPngVars() {
         return view.getPngVars(angle);
     }
 

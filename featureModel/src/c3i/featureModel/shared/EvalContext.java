@@ -6,4 +6,12 @@ public interface EvalContext {
 
     Tri getValue(Var var);
 
+    boolean isAssigned(Var var);
+
+    boolean isTrue(Var var);
+
+    boolean isFalse(Var var);
+
+    boolean isOpen(Var var);
+
 }

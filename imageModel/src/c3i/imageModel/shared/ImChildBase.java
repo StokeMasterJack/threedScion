@@ -1,6 +1,6 @@
 package c3i.imageModel.shared;
 
-abstract public class ImChildBase<V> extends ImNodeBase<V> implements IsChild<V> {
+abstract public class ImChildBase extends ImNodeBase implements IsChild {
 
     protected ImChildBase(int depth) {
         super(depth);

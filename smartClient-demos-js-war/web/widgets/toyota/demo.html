@@ -2,7 +2,7 @@
 <html>
 <head>
 
-    <script src="/smartClient/jquery.js"></script>
+    <script src="jquery.js"></script>
     <script type="text/javascript" language="javascript" src="/smartClient/api/api.nocache.js"></script>
     <script type="text/javascript" src="demo.js"></script>
 
@@ -13,7 +13,7 @@
         }
     </style>
 
-    <link rel="stylesheet" type="text/css" href="/smartClient/AngleSelector.css"/>
+    <link rel="stylesheet" type="text/css" href="AngleSelector.css"/>
     <link rel="stylesheet" type="text/css" href="demo.css"/>
 </head>
 <body style="padding: 1em">
@@ -30,13 +30,18 @@
         <option>Exterior</option>
         <option>Interior</option>
     </select>
+
     <div style="width: 599px">
 
-        <div class="ViewPanel" >
+        <div class="ViewPanel">
             <table class="AngleSelector over">
                 <tr>
-                    <td align="left"><button onclick="threedSession.anglePrevious()">&lt;&lt;</button></td>
-                    <td align="right"><button onclick="threedSession.angleNext()">&gt;&gt;</button></td>
+                    <td align="left">
+                        <button onclick="threedSession.anglePrevious()">&lt;&lt;</button>
+                    </td>
+                    <td align="right">
+                        <button onclick="threedSession.angleNext()">&gt;&gt;</button>
+                    </td>
                 </tr>
             </table>
         </div>

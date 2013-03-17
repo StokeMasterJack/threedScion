@@ -4,7 +4,7 @@ import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.BaseImageType;
 import c3i.imgGen.api.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 import smartsoft.util.servlet.http.headers.LastModified;
@@ -31,7 +31,7 @@ public class JpgHandler extends RepoHandler<JpgRequest> {
 
         BaseImageKey jpgKey = r.getBaseImageKey();
 
-        Repos repos = r.getRepos();
+        BrandRepo brandRepo = r.getRepos();
 
         JpgGenHelper jpgGenHelper = new JpgGenHelper(pngLoader, brandRepos);
         File jpgFile = jpgGenHelper.getFileForJpg(jpgKey);

@@ -1,13 +1,13 @@
 package c3i.gwtDemo.client;
 
 import c3i.featureModel.shared.common.SeriesKey;
+import c3i.smartClient.client.model.ThreedSession;
+import c3i.smartClient.client.model.ThreedSessionFactory;
 import c3i.smartClient.client.model.ThreedSessionFuture;
 import c3i.smartClient.client.model.ThreedSessionOnSuccess;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import smartsoft.util.shared.Path;
-import c3i.smartClient.client.model.ThreedSession;
-import c3i.smartClient.client.model.ThreedSessionFactory;
 
 public class MainEntryPoint implements EntryPoint {
 
@@ -28,7 +28,6 @@ public class MainEntryPoint implements EntryPoint {
                 mainPanel.onThreedSessionReady(threedSession);
             }
         });
-
 
 
     }

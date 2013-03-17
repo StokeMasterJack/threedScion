@@ -220,7 +220,7 @@ public class ImageStack implements Exportable, HasKey {
 
             SimplePicks simplePicks = new SimplePicks() {
                 @Override
-                public boolean isPicked(Object var) {
+                public boolean isPicked(Var var) {
                     return fixedPicks.isPicked((Var) var);
                 }
 

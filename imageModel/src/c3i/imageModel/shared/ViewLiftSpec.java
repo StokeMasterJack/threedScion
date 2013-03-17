@@ -1,16 +1,18 @@
 package c3i.imageModel.shared;
 
-public class ViewLiftSpec<V> {
+import c3i.featureModel.shared.boolExpr.Var;
 
-    private V triggerFeature;
+public class ViewLiftSpec {
+
+    private Var triggerFeature;
     private int deltaY;
 
-    public ViewLiftSpec(V triggerFeature, int deltaY) {
+    public ViewLiftSpec(Var triggerFeature, int deltaY) {
         this.triggerFeature = triggerFeature;
         this.deltaY = deltaY;
     }
 
-    public V getTriggerFeature() {
+    public Var getTriggerFeature() {
         return triggerFeature;
     }
 

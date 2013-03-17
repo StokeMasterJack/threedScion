@@ -7,7 +7,7 @@ import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.ProfilesCache;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import com.google.common.collect.ImmutableSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,8 +75,8 @@ public class JpgRequestNoFingerprint extends SeriesBasedRepoRequest {
     }
 
     public Profile getProfile() {
-        Repos repos = getRepos();
-        ProfilesCache profilesCache = repos.getProfilesCache();
+        BrandRepo brandRepo = getRepos();
+        ProfilesCache profilesCache = brandRepo.getProfilesCache();
         return profilesCache.getProfile(brandKey, profileKey);
     }
 

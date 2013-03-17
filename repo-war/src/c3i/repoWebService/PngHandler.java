@@ -4,7 +4,7 @@ import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.PngSegment;
 import c3i.imgGen.server.singleJpg.ZPngGenerator;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Files;
@@ -65,8 +65,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
     }
 
     private File getFileForZPng(SeriesKey sk, int width, PngSegment pngKey, PngRequest repoRequest) {
-        Repos repos = repoRequest.getRepos();
-        SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+        BrandRepo brandRepo = repoRequest.getRepos();
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(sk);
         RtRepo genRepo = seriesRepo.getRtRepo();
 
         File pngFile = genRepo.getZPngFileName(pngKey);
@@ -84,8 +84,8 @@ public class PngHandler extends RepoHandler<PngRequest> {
     }
 
     private void createZPngOnTheFly(int width, SeriesKey sk, PngSegment pngKey, PngRequest repoRequest) {
-        Repos repos = repoRequest.getRepos();
-        ZPngGenerator zPngGenerator = new ZPngGenerator(repos, width, sk, pngKey);
+        BrandRepo brandRepo = repoRequest.getRepos();
+        ZPngGenerator zPngGenerator = new ZPngGenerator(brandRepo, width, sk, pngKey);
         zPngGenerator.generate();
     }
 

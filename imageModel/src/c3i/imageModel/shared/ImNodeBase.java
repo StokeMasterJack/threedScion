@@ -3,7 +3,7 @@ package c3i.imageModel.shared;
 import smartsoft.util.shared.Path;
 import smartsoft.util.shared.Strings;
 
-abstract public class ImNodeBase<V> implements ImNode<V> {
+abstract public class ImNodeBase implements ImNode {
 
     protected final int depth;
     protected IsParent parent;

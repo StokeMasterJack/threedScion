@@ -16,16 +16,16 @@ public class FixedPicks implements SimplePicks2, HasKey {
 
     private final Set<Var> picks;
 
-    private final Assignments assignments;
+    private final IAssignments IAssignments;
     private final AssignmentException exception;
 
-    public FixedPicks(Set<Var> picks, Assignments assignments, AssignmentException exception) {
-        Preconditions.checkArgument((assignments == null && exception != null) ||
-                (assignments != null && exception == null));
+    public FixedPicks(Set<Var> picks, IAssignments IAssignments, AssignmentException exception) {
+        Preconditions.checkArgument((IAssignments == null && exception != null) ||
+                (IAssignments != null && exception == null));
 
 //        this.pickRaw = pickRaw;
         this.picks = picks;
-        this.assignments = assignments;
+        this.IAssignments = IAssignments;
         this.exception = exception;
     }
 
@@ -35,8 +35,8 @@ public class FixedPicks implements SimplePicks2, HasKey {
         return picks;
     }
 
-    public FixedPicks(Assignments assignments) {
-        this(null, assignments, null);
+    public FixedPicks(IAssignments IAssignments) {
+        this(null, IAssignments, null);
     }
 
     public FixedPicks(AssignmentException exception) {
@@ -45,12 +45,12 @@ public class FixedPicks implements SimplePicks2, HasKey {
 
     public FixedPicks(FixedPicks that) {
         this.picks = that.picks;
-        this.assignments = that.assignments;
+        this.IAssignments = that.IAssignments;
         this.exception = that.exception;
     }
 
-    public Assignments getAssignments() {
-        return assignments;
+    public IAssignments getIAssignments() {
+        return IAssignments;
     }
 
     public AssignmentException getException() {
@@ -66,14 +66,14 @@ public class FixedPicks implements SimplePicks2, HasKey {
     }
 
     public boolean isPicked(Var var) {
-        assert assignments != null;
-        return assignments.isPicked(var);
+        assert IAssignments != null;
+        return IAssignments.isPicked(var);
     }
 
     public boolean isValidBuild() {
-        if (exception == null && assignments != null) {
+        if (exception == null && IAssignments != null) {
             return true;
-        } else if (exception != null && assignments == null) {
+        } else if (exception != null && IAssignments == null) {
             return false;
         } else {
             throw new IllegalStateException();
@@ -91,7 +91,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
     }
 
     public String toStringLong() {
-        if (isValidBuild()) return "Valid build: " + assignments.getTrueVars();
+        if (isValidBuild()) return "Valid build: " + IAssignments.getTrueVars();
         else return "Invalid build: " + exception;
     }
 
@@ -107,7 +107,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
         if (exception != null) {
             return picks.equals(that.picks) && exception.equals(that.exception);
         } else {
-            return assignments.equals(that.assignments);
+            return IAssignments.equals(that.IAssignments);
         }
     }
 
@@ -116,7 +116,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
         if (exception != null) {
             return 31 * picks.hashCode() + exception.hashCode();
         } else {
-            return assignments.hashCode();
+            return IAssignments.hashCode();
         }
     }
 

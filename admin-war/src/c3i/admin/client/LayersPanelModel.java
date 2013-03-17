@@ -7,7 +7,7 @@ import c3i.featureModel.shared.FixedPicks;
 import c3i.imageModel.shared.ImLayer;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageMode;
-import c3i.core.threedModel.shared.ThreedModel;
+import c3i.threedModel.shared.ThreedModel;
 import c3i.smartClient.client.model.ViewSession;
 import c3i.smartClient.client.model.ViewsSession;
 

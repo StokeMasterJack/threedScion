@@ -6,20 +6,24 @@ import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.JpgWidth;
 import c3i.imageModel.shared.Profile;
-import c3i.imgGen.generic.ImgGenService;
-import c3i.imgGen.repoImpl.KitRepo;
+import c3i.imgGen.ImgGenApp;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.imgGen.server.taskManager.Master;
 import c3i.imgGen.shared.JobSpec;
 import c3i.imgGen.shared.JobState;
 import c3i.imgGen.shared.JobStatus;
+import c3i.repo.ReposConfig;
+import c3i.repo.server.BrandRepo;
 import c3i.repo.server.BrandRepos;
-import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
-import smartsoft.util.CommandLineArgs;
+import smartsoft.util.Date;
 import smartsoft.util.Sys;
+import smartsoft.util.args.CommandLineArgs;
+import smartsoft.util.args.FieldDefaulter;
+import smartsoft.util.args.Schema;
 
+import javax.annotation.Nonnull;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -38,15 +42,14 @@ public class JpgGenCommandLine {
     private final Args args;
 
     public JpgGenCommandLine(String... a) {
-        args = new Args(a);
+        this(new Args(a));
+    }
 
-        //ide mode only
-        args.putRaw(Args.REPO_BASE, "/configurator-content-toyota");
+    public JpgGenCommandLine(Args args) {
+        this.args = args;
 
         System.out.println("Using options:");
         args.printMerged(1);
-
-//        Repos.setRepoBaseDir(args.getRepoBase());
     }
 
     public static void main(String... args) {
@@ -55,19 +58,19 @@ public class JpgGenCommandLine {
     }
 
     public void start() {
-        Repos repos = new Repos(args.getBrandKey(), args.getRepoBase());
 
-        BrandRepos brandRepos = BrandRepos.createSingleBrand(args.getBrandKey(), args.getRepoBase());
+        BrandRepo brandRepo = new BrandRepo(args.getBrand(), args.getRepoBase());
 
-        SeriesRepo seriesRepo = repos.getSeriesRepo(args.getSeriesKey());
+        BrandRepos brandRepos = BrandRepos.createSingleBrand(args.getBrand(), args.getRepoBase());
+
+        SeriesRepo seriesRepo = brandRepo.getSeriesRepo(args.getSeriesKey());
         RootTreeId rootTreeId = seriesRepo.getSrcRepo().resolveRootTreeId(args.getRev());
         SeriesId seriesId = new SeriesId(args.getSeriesKey(), rootTreeId);
         JobSpec jobSpec = new JobSpec(seriesId, args.getProfile());
 
-        KitRepo kit = new KitRepo(brandRepos);
-        ImgGenService imgGenService = new ImgGenService(kit);
+        ImgGenApp imgGenApp = new ImgGenApp();
 
-        final JpgGeneratorService jpgGen = new JpgGeneratorService(brandRepos, imgGenService, kit.createSrcPngLoader());
+        final JpgGeneratorService jpgGen = imgGenApp.getJpgGeneratorService();
 
         final Master job = jpgGen.startNewJpgJob(jobSpec, args.getThreadCount(), Thread.NORM_PRIORITY);
         final Timer timer = new Timer();
@@ -132,7 +135,9 @@ public class JpgGenCommandLine {
     }
 
 
-    public static class Args extends CommandLineArgs {
+    public static class Args {
+
+        CommandLineArgs args;
 
         static final String BRAND = "brand";
         static final String YEAR = "year";
@@ -143,54 +148,81 @@ public class JpgGenCommandLine {
         static final String THREAD_COUNT = "threadCount";
         static final String PRIORITY = "priority";
 
+        static final String REPO_BASE_PREFIX = "repoBasePrefix";
         static final String REPO_BASE = "repoBase";
+
+        private final Schema schema;
 
         private static Map<String, String> buildDefaults() {
             ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
             b.put(BRAND, "toyota");
-            b.put(YEAR, "2013");
-            b.put(SERIES, "tundra");
+            b.put(YEAR, new Date().getYear() + "");
+            b.put(SERIES, "avalon");
             b.put(PROFILE, "wStd");
             b.put(THREAD_COUNT, "5");
             b.put(PRIORITY, Thread.NORM_PRIORITY + "");
-            b.put(REPO_BASE, new File(Sys.getUserDir(), "configurator-content-v2").getAbsolutePath());
+            b.put(REPO_BASE_PREFIX, new File(Sys.getUserDir(), "configurator-content-").getAbsolutePath());
             return b.build();
         }
 
         public Args(String[] args) {
-            super(args, buildDefaults());
+            this.schema = buildSchema();
+            this.args = new CommandLineArgs(schema, args);
+        }
+
+        private Schema buildSchema() {
+
+            String defaultRepoBasePrefix = new File(Sys.getUserDir(), "configurator-content-").getAbsolutePath();
+
+            Schema schema = new Schema();
+
+            schema
+                    .addField(BRAND, BrandKey.TOYOTA)
+                    .addField(YEAR, new Date().getYear())
+                    .addField(SERIES, "avalon")
+                    .addField(PROFILE, "wStd")
+                    .addField(THREAD_COUNT, 5)
+                    .addField(PRIORITY, Thread.NORM_PRIORITY)
+                    .addField(REPO_BASE_PREFIX, defaultRepoBasePrefix)
+                    .addField(File.class, REPO_BASE, new FieldDefaulter<File>() {
+                        @Nonnull
+                        @Override
+                        public File getDefaultValue(File defaultValue, CommandLineArgs context) {
+                            BrandKey brand = context.get(BRAND);
+                            String repoBasePrefix = context.get(REPO_BASE_PREFIX);
+                            return new File(repoBasePrefix + brand.toString());
+                        }
+                    });
+
+            return schema;
         }
 
         public File getRepoBase() {
-            String s = get(REPO_BASE);
-            if (s == null) {
-                return new File(Sys.getUserDir(), "configurator-content-2");
-            }
-            return new File(s);
+            return args.get(REPO_BASE);
         }
 
-        public String getBrand() {
-            return get(BRAND);
+        public ReposConfig getReposConfig() {
+            return new ReposConfig(getBrand(), getRepoBase());
         }
 
-        public BrandKey getBrandKey() {
-            return BrandKey.fromString(getBrand());
+        public BrandKey getBrand() {
+            return args.get(BRAND);
         }
 
         public String getSeries() {
-            return get(SERIES);
+            return args.get(SERIES);
         }
 
-        public int getYear() {
-            return getInteger(YEAR);
+        public Integer getYear() {
+            return args.get(YEAR);
         }
 
         public String getRev() {
-            return get(REV);
+            return args.get(REV);
         }
 
         public Profile getProfile() {
-            String p = get(PROFILE);
+            String p = args.get(PROFILE);
             JpgWidth jpgWidth = new JpgWidth(p);
             return new Profile(jpgWidth);
         }
@@ -199,15 +231,18 @@ public class JpgGenCommandLine {
             return new SeriesKey(getBrand(), getYear() + "", getSeries());
         }
 
-        public int getThreadCount() {
-            return getInteger(THREAD_COUNT);
+        public Integer getThreadCount() {
+            return args.get(THREAD_COUNT);
         }
 
-        public int getPriority() {
-            return getInteger(PRIORITY);
+        public Integer getPriority() {
+            return args.get(PRIORITY);
         }
 
+        public void printMerged(int i) {
+            args.printMerged(i);
 
+        }
     }
 
     private static Logger log = Logger.getLogger("c3i");

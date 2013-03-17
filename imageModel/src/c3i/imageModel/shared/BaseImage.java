@@ -73,7 +73,7 @@ public class BaseImage extends AbstractImImage implements IBaseImageKey {
     }
 
     public SeriesKey getSeriesKey() {
-        return slice.getView().getSeries().getSeriesKey();
+        return slice.getView().getSeries().getKey();
     }
 
     @Override

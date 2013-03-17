@@ -1,5 +1,6 @@
 package c3i.imageModel.shared;
 
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 import smartsoft.util.shared.Path;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 
 
 @Immutable
-public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLeaf<V> {
+public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
 
     private final int angle;
     private final PngShortSha shortSha;
@@ -109,17 +110,17 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return false;
     }
 
-    public Set<V> getFeatures() {
-        HashSet<V> vars = new HashSet<V>();
+    public Set<Var> getFeatures() {
+        HashSet<Var> vars = new HashSet<Var>();
         getFeatures(vars);
         return vars;
     }
 
-    public void getFeatures(Set<V> features) {
+    public void getFeatures(Set<Var> features) {
         IsParent p = parent;
         while (p.isFeature()) {
-            ImFeature<V> f = p.asFeature();
-            V var = f.getVar();
+            ImFeature f = p.asFeature();
+            Var var = f.getVar();
             features.add(var);
             p = p.getParent();
         }
@@ -163,27 +164,27 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return this.angle == angle;
     }
 
-    public SrcPng<V> copy(int angle) {
+    public SrcPng copy(int angle) {
         if (this.angle == angle) return new SrcPng(depth, angle, shortSha);
         else throw new IllegalStateException();
     }
 
     @Override
-    public void getVarSet(Set<V> varSet) {
+    public void getVarSet(Set<Var> varSet) {
         //intentionally blank
     }
 
     @Override
-    public void getVarSet(Set<V> varSet, int angle) {
+    public void getVarSet(Set<Var> varSet, int angle) {
         //intentionally blank
         if (this.angle == angle) {
-            Set<V> features = getFeatures();
+            Set<Var> features = getFeatures();
             varSet.addAll(features);
         }
     }
 
     @Override
-    public void getPngs(Set<SrcPng<V>> pngs) {
+    public void getPngs(Set<SrcPng> pngs) {
         pngs.add(this);
     }
 
@@ -277,7 +278,7 @@ public class SrcPng<V> extends ImChildBase<V> implements ImFeatureOrPng<V>, IsLe
         return shortSha.hashCode();
     }
 
-    public Object getLiftTrigger() {
+    public Var getLiftTrigger() {
         return getLayer().getView().getLiftSpec().getTriggerFeature();
     }
 

@@ -1,6 +1,6 @@
 package c3i.repo.shared;
 
-import c3i.core.threedModel.shared.CommitId;
+import c3i.threedModel.shared.CommitId;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;

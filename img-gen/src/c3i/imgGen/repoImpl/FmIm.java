@@ -8,9 +8,9 @@ public class FmIm<ID> {
 
     private final ID id;
     private final FeatureModel fm;
-    private final ImageModel<Var> im;
+    private final ImageModel im;
 
-    public FmIm(ID id, FeatureModel fm, ImageModel<Var> im) {
+    public FmIm(ID id, FeatureModel fm, ImageModel im) {
         this.id = id;
         this.fm = fm;
         this.im = im;
@@ -20,7 +20,7 @@ public class FmIm<ID> {
         return fm;
     }
 
-    public ImageModel<Var> getImageModel() {
+    public ImageModel getImageModel() {
         return im;
     }
 

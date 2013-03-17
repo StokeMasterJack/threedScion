@@ -54,10 +54,9 @@ public class And extends Junction {
 
 
     @Override
-    public void autoAssignTrue(AutoAssignContext ctx, int depth) throws AssignmentException {
-        logAutoAssignTrue(depth);
+    public void autoAssignTrue(AutoAssignContext ctx) throws AssignmentException {
         for (BoolExpr e : expressions) {
-            e.autoAssignTrue(ctx, depth + 1);
+            e.autoAssignTrue(ctx);
         }
     }
 
@@ -113,8 +112,7 @@ public class And extends Junction {
     }
 
     @Override
-    public void autoAssignFalse(AutoAssignContext ctx, int depth) throws AssignmentException {
-        logAutoAssignFalse(depth);
+    public void autoAssignFalse(AutoAssignContext ctx) throws AssignmentException {
 
         //at least one term must be false
 
@@ -146,7 +144,7 @@ public class And extends Junction {
         }
 
         if (oneOpenRestTrue) {
-            firstOpen.autoAssignFalse(ctx, depth + 1);
+            firstOpen.autoAssignFalse(ctx);
         }
 
     }
@@ -233,7 +231,7 @@ public class And extends Junction {
     private LinkedHashSet<BoolExpr> getConstraintsEffecting(Var var) {
         LinkedHashSet<BoolExpr> set = new LinkedHashSet<BoolExpr>();
         for (BoolExpr expr : getExpressions()) {
-            if (expr.containsDeep(var)) set.add(expr);
+            if (expr.containsVar(var)) set.add(expr);
         }
         return set;
     }
