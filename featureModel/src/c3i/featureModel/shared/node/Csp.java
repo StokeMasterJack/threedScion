@@ -13,11 +13,10 @@ import c3i.featureModel.shared.boolExpr.True;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 import c3i.featureModel.shared.explanations.Cause;
-import c3i.featureModel.shared.search.ForEachSolutionSearch;
+import c3i.featureModel.shared.search.ForEachProductSolutionSearch;
 import c3i.featureModel.shared.search.IsSatSearch;
 import c3i.featureModel.shared.search.ProductCountSearch;
 import c3i.featureModel.shared.search.ProductHandler;
-import c3i.featureModel.shared.search.Search;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -49,7 +48,8 @@ public class Csp implements AutoAssignContext, SimplePicks {
     private static final String ONLY_OPEN_COMPLEX_OR_NULL_ALLOWED_IN_MASTER_CONSTRAINT_ARRAY = "Only open complex clauses or null are allowed in constraints array.";
 
     //shallow copy
-    private final CspContext context;
+    private final GlobalContext context;
+    private SearchContext searchContext;
 
     //core csp state assignments + constraints
     //csp core state is deep copied as we walk the search tree
@@ -59,7 +59,6 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     private int openClauseCount;
 
-    private Search search;
 
     //do not copy queue - all csp's start out clean - can not copy a dirty csp
     private LinkedList<Var> dirtyQueue = new LinkedList<Var>();
@@ -69,7 +68,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
     /**
      * Create a new top-level cspContext
      */
-    public Csp(CspContext context) {
+    public Csp(GlobalContext context) {
         this.context = context;
         this.assignments = initAssignments(context.getVarList());
         this.constraints = initComplexConstraints(context.getComplexConstraints());
@@ -126,15 +125,6 @@ public class Csp implements AutoAssignContext, SimplePicks {
     }
 
 
-    public void setSearchContext(ImmutableSet<Var> outVars) {
-        if (outVars == null) {
-            outVars = ImmutableSet.copyOf(context.getVarList());
-        }
-        Set<Var> openVars = getOpenVars();
-        LinkedList<Var> list = Lists.newLinkedList(Sets.intersection(outVars, openVars));
-        Collections.sort(list, VAR_COMPARATOR);
-    }
-
     private int getNullClauseCount() {
         int nullCount = 0;
         for (int i = 0; i < constraints.length; i++) {
@@ -145,6 +135,12 @@ public class Csp implements AutoAssignContext, SimplePicks {
         return nullCount;
     }
 
+    public void setSearchContext(SearchContext searchContext) {
+        this.searchContext = searchContext;
+        Set<Var> openVars = this.getOpenVars();
+        LinkedList<Var> list = Lists.newLinkedList(Sets.intersection(searchContext.outVars, openVars));
+        Collections.sort(list, VAR_COMPARATOR);
+    }
 
     public void maybeGcConstraints() {
         int c = getNullClauseCount();
@@ -586,25 +582,17 @@ public class Csp implements AutoAssignContext, SimplePicks {
         }
     }
 
-    public void forEachSolution(ForEachSolutionSearch search) {
-        ProductCountSearch productCounter = new ProductCountSearch();
-        productCounter.setOutVars(search.getOutVars());
-        productCounter.start(this);
-    }
-
     public void forEachProduct(ProductHandler productHandler) {
         this.forEachProduct(productHandler, null);
     }
 
-    public void forEachProduct(ProductHandler productHandler, ImmutableSet<Var> outVars) {
-        this.setSearchContext(outVars);
-        ForEachSolutionSearch search = new ForEachSolutionSearch();
-        search.setProductHandler(productHandler);
-        search.start(this);
+    public void forEachProduct(ProductHandler productHandler, Collection<Var> outVars) {
+        ForEachProductSolutionSearch search = new ForEachProductSolutionSearch(this, outVars, productHandler);
+        search.start();
     }
 
     public boolean isSat() {
-        search = new IsSatSearch(this);
+        searchContext = new IsSatSearch(this);
         if (isTrue()) {
             return true;
         } else if (isFalse()) {
@@ -734,17 +722,10 @@ public class Csp implements AutoAssignContext, SimplePicks {
     }
 
     public long getProductCount(ImmutableSet<Var> outVars) {
-        this.setSearchContext(outVars);
-
-        ProductCountSearch search = new ProductCountSearch();
-        search.setOutVars(outVars);
-        search.start(this);
+        ProductCountSearch search = new ProductCountSearch(this, outVars);
+        search.start();
         return search.getProductCount();
     }
-
-//    private Csp createSearchNode(Collection<Var> outVars) {
-//        return new SearchNode(outVars);
-//    }
 
     public ImmutableList<Var> getAllVars() {
         return context.getVarList();
@@ -762,7 +743,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
             Bit[] a = csp.assignments;
             this.varCount = a.length;
 
-            CspContext context = csp.getContext();
+            GlobalContext context = csp.getContext();
             checkState(varCount == context.getVarCount());
             final LinkedHashSet<Var> set = new LinkedHashSet<Var>();
             for (int i = 0; i < context.getVarCount(); i++) {
@@ -804,7 +785,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
         }
     }
 
-    public CspContext getContext() {
+    public GlobalContext getContext() {
         return context;
     }
 

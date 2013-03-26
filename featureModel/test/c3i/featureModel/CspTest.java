@@ -30,7 +30,7 @@ public class CspTest {
     }
 
     @Test
-    public void test_FindAll_SimpleVehicle() throws Exception {
+    public void test_ForEachProduct_SimpleVehicle() throws Exception {
         Csp csp = buildCspSimpleVehicle();
         CountingProductHandler counter = new CountingProductHandler();
         csp.forEachProduct(counter);
@@ -38,7 +38,7 @@ public class CspTest {
     }
 
     @Test
-    public void test_FindAll_MediumVehicle() throws Exception {
+    public void test_ForEachProduct_MediumVehicle() throws Exception {
         Csp csp = buildCspMediumVehicle();
         CountingProductHandler counter = new CountingProductHandler();
         csp.forEachProduct(counter);
@@ -48,46 +48,13 @@ public class CspTest {
     @Test
     public void test_ForEachProduct_ComplexVehicle() throws Exception {
         Csp csp = buildCspComplexVehicle();
-        final Count2 count = new Count2();
-        csp.forEachProduct(new ProductHandler() {
-            @Override
-            public void onProduct(SimplePicks product) {
-                count.increment();
-            }
-        });
-        assertEquals(2080512L, count.get());
-    }
-
-    @Test
-    public void test_ForEachSolution_ComplexVehicle() throws Exception {
-        Csp csp = buildCspComplexVehicle();
-
-        final Count2 count = new Count2();
-        ForEachSolutionSearch search = new ForEachSolutionSearch();
-        search.setProductHandler(new ProductHandler() {
-            @Override
-            public void onProduct(SimplePicks product) {
-                count.increment();
-            }
-        });
-
-        search.start(csp);
-
-        assertEquals(2080512L, count.get());
+        CountingProductHandler counter = new CountingProductHandler();
+        csp.forEachProduct(counter);
+        assertEquals(2080512L, counter.getCount());
     }
 
 
-    //103056
-    @Test
-    public void test_ForEachSolution_ComplexVehicle2() throws Exception {
 
-        Csp csp = buildCspComplexVehicle();
-        ForEachSolutionSearch nh = new ForEachSolutionSearch();
-
-        csp.forEachSolution(nh);
-
-        assertEquals(2080512, nh.getProductCount());
-    }
 
 
     @Test
@@ -151,8 +118,7 @@ public class CspTest {
 
     /**
      *
-     * @param cspIn
-     * @param varCode null means that no reduction occurs, cspIn is returned
+     * varCode null means that no reduction occurs, cspIn is returned
      * @return if varCode !=null, reduce the cspIn by assigning the varCode=true and return the reduced csp, else (if varCode==null) simple return cspIn
      */
 //    private Csp reduce(Csp cspIn, @Nullable String varCode) {

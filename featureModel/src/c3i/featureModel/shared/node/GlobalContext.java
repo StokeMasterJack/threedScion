@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableMap;
 /**
  * Instances of CspContext should be immutable because it is shallow copied during search
  */
-public interface CspContext {
+public interface GlobalContext {
 
     int getVarCount();
 

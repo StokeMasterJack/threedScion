@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-public class FmCspContext implements CspContext {
+public class FmCspContext implements GlobalContext {
 
     private final ImmutableList<Var> varList;
     private final ImmutableMap<String, Var> varMap;

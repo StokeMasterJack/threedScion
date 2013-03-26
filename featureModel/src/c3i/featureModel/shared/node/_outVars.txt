@@ -1,0 +1,14 @@
+outVars exist for the purpose of a csp search satCount or satAll
+
+3 scopes:
+    global (fm)
+    search
+    node (aka csp)
+
+outVars are attached to a search scope
+openOutVars are attached to a node scope
+global scope may pre-define a set of named outVars:
+    Ex1: {Series: Tundra,View:Exterior,Angle:2}
+    Ex2: {Inventory}
+
+

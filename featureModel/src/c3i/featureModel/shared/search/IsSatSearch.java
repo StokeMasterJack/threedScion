@@ -3,23 +3,22 @@ package c3i.featureModel.shared.search;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
+import c3i.featureModel.shared.node.SearchContext;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class IsSatSearch extends Search {
+public class IsSatSearch extends SearchContext {
 
     private boolean sat = false;
 
-    private Csp contextCsp;
-
-    public IsSatSearch(Csp contextCsp) {
-        this.contextCsp = contextCsp;
-        startSearch();
+    public IsSatSearch(Csp startNode) {
+        super(startNode, 0, null, null);
     }
 
-    private void startSearch() {
+    public void start() {
+        startNode.processDirtyQueue();
         try {
-            onNode(0, contextCsp);
+            super.start();
             sat = false;
         } catch (StopSearchException e) {
             sat = true;
@@ -30,15 +29,11 @@ public class IsSatSearch extends Search {
         return sat;
     }
 
-    int nodeCount = 0;
-
     public void onNode(int level, Csp csp) throws StopSearchException {
 
         checkState(csp.isStable());
         csp.checkOpenClauseCount();
 
-//        System.out.println(csp.toString());
-        nodeCount++;
         if (csp.isTrue()) {
             throw new StopSearchException(csp);
         } else if (csp.isFalse()) {

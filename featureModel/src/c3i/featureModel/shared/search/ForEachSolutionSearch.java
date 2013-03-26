@@ -1,12 +1,13 @@
 package c3i.featureModel.shared.search;
 
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.featureModel.shared.common.SimplePicks;
 import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
-import com.google.common.collect.ImmutableSet;
+import c3i.featureModel.shared.node.SearchContext;
 
-import java.util.LinkedList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
 
 /**
  *  Called for any node where csp.isSolution() where:
@@ -27,21 +28,16 @@ import java.util.LinkedList;
  *      some outVars are still in the dontCare state.
  *  Rather than instantiating a whole csp for each pureDontCare node, we can use a lighter data structure
  */
-public class ForEachSolutionSearch extends OutSearch {
+public abstract class ForEachSolutionSearch extends SearchContext {
 
-    private ProductHandler productHandler;
-
-    private ForEachProductSearch forEachProductSearch;
-
-    private long productCount;
-
-    public void setProductHandler(ProductHandler productHandler) {
-        this.productHandler = productHandler;
+    public ForEachSolutionSearch(@Nonnull Csp startNode, @Nullable Collection<Var> outVars) {
+        super(startNode, null, outVars, null);
     }
 
-    public void start(Csp node) {
-        node.processDirtyQueue();
-        onNode(0, node);
+    @Override
+    public void start() {
+        startNode.processDirtyQueue();
+        super.start();
     }
 
     @Override
@@ -52,9 +48,7 @@ public class ForEachSolutionSearch extends OutSearch {
         }
 
         if (csp.isSolution()) {
-            ForEachProductSearch search = new ForEachProductSearch(csp, productHandler);
-            search.onDontCareNode(level);
-
+            onSolution(level, csp);
         } else {
             Var var = csp.decide();
 
@@ -65,48 +59,6 @@ public class ForEachSolutionSearch extends OutSearch {
 
     }
 
-    public long getProductCount() {
-        return productCount;
-    }
-
-
-
-    public static class ForEachProductSearch implements SimplePicks {
-
-        private final Csp csp;
-        private final ProductHandler productHandler;
-
-        private final LinkedList<Var> dcAssignments = new LinkedList<Var>();
-        private long productCount;
-
-        public ForEachProductSearch(Csp csp, ProductHandler productHandler) {
-            this.csp = csp;
-            this.productHandler = productHandler;
-        }
-
-        public void start(int depth) {
-            onDontCareNode(depth);
-        }
-
-        public void onDontCareNode(int level) {
-            Var var = csp.decide();
-            if (var == null) {
-                productCount++;
-                productHandler.onProduct(this);
-            } else {
-                dcAssignments.addLast(var);
-                onDontCareNode(level + 1);
-                dcAssignments.removeLast();
-                onDontCareNode(level + 1);
-            }
-
-        }
-
-        @Override
-        public boolean isPicked(Var var) {
-            return csp.isPicked(var) || dcAssignments.contains(var);
-        }
-
-    }
+    public abstract void onSolution(int level, Csp solutionCsp);
 
 }
