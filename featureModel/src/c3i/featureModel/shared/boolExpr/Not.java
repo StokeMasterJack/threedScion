@@ -4,8 +4,10 @@ import c3i.featureModel.shared.AutoAssignContext;
 import c3i.featureModel.shared.Bit;
 import c3i.featureModel.shared.EvalContext;
 import c3i.featureModel.shared.Tri;
+import smartsoft.util.shared.ImmutableCollection;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 
 public class Not extends Unary {
@@ -14,9 +16,29 @@ public class Not extends Unary {
 
     private final int hash;
 
+    protected final BoolExpr expr;
+
     public Not(BoolExpr expr) {
-        super(expr);
+        this.expr = expr;
         this.hash = 31 * TYPE.id + expr.hashCode();
+    }
+
+    public void accept(BoolExprVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public int getExprCount() {
+        return 1;
+    }
+
+    @Override
+    public final String toString() {
+        return getSymbol() + expr;
+    }
+
+    public BoolExpr getExpr() {
+        return expr;
     }
 
     public Type getType() {
@@ -40,7 +62,6 @@ public class Not extends Unary {
 
     @Override
     public void autoAssignTrue(AutoAssignContext ctx) {
-
         getExpr().autoAssignFalse(ctx);
     }
 
@@ -150,6 +171,107 @@ public class Not extends Unary {
         BoolExpr e = getExpr();
         BoolExpr c = e.copy();
         return new Not(c);
+    }
+
+    @Override
+    public String toString(AutoAssignContext ctx) {
+        return getSymbol() + expr.simplify(ctx);
+    }
+
+    @Override
+    public Collection<BoolExpr> getExpressions() {
+        return unaryCollection;
+    }
+
+    @Override
+    public boolean containsShallow(Var v) {
+        return v.equals(expr);
+    }
+
+
+    @Override
+    public boolean containsShallow(Constant c) {
+        return expr.equals(c);
+    }
+
+    @Override
+    public boolean containsVarCodeDeep(String varCode) {
+        return expr.containsVarCodeDeep(varCode);
+    }
+
+    @Override
+    public int occurranceCount(Var var) {
+        return var.occurranceCount(var);
+    }
+
+    private class UnaryExpressionIterator implements Iterator<BoolExpr> {
+
+        private boolean hasNextBeenCalled;
+
+        @Override
+        public boolean hasNext() {
+            return !hasNextBeenCalled;
+        }
+
+        @Override
+        public BoolExpr next() {
+            if (hasNextBeenCalled) {
+                throw new IllegalStateException();
+            } else {
+                hasNextBeenCalled = true;
+                return expr;
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private final UnaryCollection unaryCollection = new UnaryCollection();
+
+    private class UnaryCollection extends ImmutableCollection<BoolExpr> {
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+
+        @Override
+        public Iterator<BoolExpr> iterator() {
+            return new UnaryExpressionIterator();
+        }
+
+        @Override
+        public BoolExpr[] toArray() {
+            return new BoolExpr[]{expr};
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return expr.equals(o);
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            for (Object o : c) {
+                if (!this.contains(o)) return false;
+            }
+            return true;
+        }
+
     }
 }
 

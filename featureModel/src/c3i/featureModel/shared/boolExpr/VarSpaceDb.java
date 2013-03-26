@@ -3,6 +3,8 @@ package c3i.featureModel.shared.boolExpr;
 import c3i.featureModel.shared.UnknownVarCodeException;
 import c3i.featureModel.shared.UnknownVarIndexException;
 import c3i.featureModel.shared.VarSpace;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,5 +138,13 @@ public class VarSpaceDb implements VarSpace, Iterable<Var> {
         VarSpaceDb that = (VarSpaceDb) obj;
 
         return this.list.equals(that.list);
+    }
+
+    public ImmutableList<Var> getVarList() {
+        return ImmutableList.copyOf(list);
+    }
+
+    public ImmutableMap<String, Var> getVarMap() {
+        return ImmutableMap.copyOf(map);
     }
 }

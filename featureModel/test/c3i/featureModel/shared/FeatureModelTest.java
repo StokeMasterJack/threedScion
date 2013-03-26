@@ -77,7 +77,7 @@ public class FeatureModelTest extends TestCase {
         FeatureModel fm = new Camry2011();
 //        System.out.println("fm.satCount() = [" + fm.satCount() + "]");
 
-        System.out.println("fm.getVarCount() = [" + fm.size() + "]");
+        System.out.println("fm.getVarCount() = [" + fm.getVarCount() + "]");
         System.out.println("fm.getAllConstraintCount() = [" + fm.getAllConstraintCount() + "]");
 
 

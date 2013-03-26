@@ -12,7 +12,7 @@ public interface PicksMutable extends PicksRO {
 
     public void resetAllAssignments();
 
-    public boolean autoAssign(Var var, boolean newValue);
+    public void autoAssign(Var var, boolean newValue);
 
     public void pick(Var var);
 

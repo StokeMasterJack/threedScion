@@ -230,7 +230,7 @@ public class Xor extends Junction {
             } else if (openCount == 1) {
                 return not(opens.iterator().next());
             } else {
-                System.out.println(9999999);
+//                System.out.println(9999999);
                 return new AllFalse(opens);
             }
         } else {

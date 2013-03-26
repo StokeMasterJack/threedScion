@@ -14,7 +14,6 @@
     <orderEntry type="library" name="jsr305" level="application" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
-    <orderEntry type="module" module-name="nfc" scope="TEST" />
     <orderEntry type="module" module-name="featureModel" />
     <orderEntry type="module" module-name="repo" scope="TEST" />
   </component>

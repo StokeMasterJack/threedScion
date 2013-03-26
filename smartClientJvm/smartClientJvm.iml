@@ -9,7 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="img-gen" />
-    <orderEntry type="module" module-name="nfc" />
     <orderEntry type="module" module-name="repo" />
     <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" name="jsr305" level="application" />

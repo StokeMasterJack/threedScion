@@ -15,12 +15,15 @@ import c3i.featureModel.shared.boolExpr.Xor;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.common.SubSeries;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
-import c3i.featureModel.shared.node.CspContext;
+import c3i.featureModel.shared.node.FmCspContext;
 import c3i.featureModel.shared.picks.Picks;
 import c3i.featureModel.shared.picks.PicksContext;
 import c3i.featureModel.shared.search.ProductHandler;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
 
@@ -37,7 +40,7 @@ import java.util.TreeSet;
 
 //import c3i.featureModel.shared.picks.PicksContextFm;
 
-public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, Iterable<Var>, CspContext, PicksContext {
+public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, Iterable<Var>, PicksContext {
 
     public final LinkedHashSet<BoolExpr> extraConstraints = new LinkedHashSet<BoolExpr>();
 
@@ -189,6 +192,19 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
         return vars.size();
     }
 
+    public LinkedHashSet<BoolExpr> getAllConstraints() {
+        LinkedHashSet<BoolExpr> a = new LinkedHashSet<BoolExpr>();
+
+        BoolExpr ec = getExtraConstraint();
+        BoolExpr tc = getTreeConstraint();
+
+        a.addAll(tc.getExpressions());
+        a.addAll(ec.getExpressions());
+
+        return a;
+    }
+
+
     public Set<Var> getVars(Collection<String> varCodes) {
         Set<Var> set = new HashSet<Var>();
         for (String code : varCodes) {
@@ -289,7 +305,7 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
     }
 
     public void printSummary() {
-        System.out.println("Var Count: " + size());
+        System.out.println("Var Count: " + getVarCount());
         System.out.println("ExtraConstraint Count: " + getExtraConstraintCount());
         System.out.println("TreeConstraint Count: " + getTreeConstraintCount());
         System.out.println("CardinalityConstraint Count: " + getCardinalityConstraintCount());
@@ -297,7 +313,7 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
     }
 
     public void printDetails() {
-        System.out.println("Var Count: " + size());
+        System.out.println("Var Count: " + getVarCount());
         System.out.println("Tree Constraint Count: " + getTreeConstraintCount());
         System.out.println("Extra Constraint Count: " + getExtraConstraintCount());
 
@@ -372,15 +388,6 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
 
     public Var getAccessoriesVar() {
         return getVar(IVarGuesser.Accessories);
-    }
-
-    public LinkedHashSet<BoolExpr> getConstraints() {
-        LinkedHashSet<BoolExpr> a = new LinkedHashSet<BoolExpr>();
-        BoolExpr ec = getExtraConstraint();
-        BoolExpr tc = getTreeConstraint();
-        a.addAll(tc.getExpressions());
-        a.addAll(ec.getExpressions());
-        return a;
     }
 
 
@@ -505,8 +512,8 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
 
 
     public Csp fixup(Set<Var> picks) {
-        Csp csp = new Csp(this);
-        csp.assignTrue(picks);
+        Csp csp = new Csp(new FmCspContext(this));
+        csp.assignTrue(picks, Cause.INFERENCE);
         csp.propagate();
         return csp;
     }
@@ -520,13 +527,14 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
         Preconditions.checkNotNull(trueVars);
         Csp csp = createCsp();
         for (Var trueVar : trueVars) {
-            csp.assignTrue(trueVar);
+            csp.assign(trueVar, true, Cause.INFERENCE);
         }
         return csp;
     }
 
+
     public Csp createCsp() {
-        return new Csp(this);
+        return new Csp(new FmCspContext(this));
     }
 
     @Override
@@ -534,10 +542,6 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
         return vars.iterator();
     }
 
-    @Override
-    public VarSpace getVarSpace() {
-        return vars;
-    }
 
     @Override
     public int getVarCount() {
@@ -558,11 +562,37 @@ public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, It
         return null;
     }
 
+    public boolean isSat() {
+        Csp csp = createCsp();
+        return csp.isSat();
+    }
+
+    public long getProductCount() {
+        Csp csp = createCsp();
+        return csp.getProductCount();
+    }
+
+    public long getProductCount(Set<Var> outVars) {
+        Csp csp = createCsp();
+        return csp.getProductCount(ImmutableSet.copyOf(outVars));
+    }
+
     public void forEachProduct(ProductHandler productHandler, Set<Var> pngVars) {
         Csp csp = createCsp();
-        csp.forEachProduct(productHandler,pngVars);
+        csp.forEachProduct(productHandler, pngVars);
+    }
 
+    public void forEachProduct(ProductHandler productHandler) {
+        Csp csp = createCsp();
+        csp.forEachProduct(productHandler);
+    }
 
+    public ImmutableList<Var> getVarList() {
+        return vars.getVarList();
+    }
+
+    public ImmutableMap<String, Var> getVarMap() {
+        return vars.getVarMap();
     }
 }
 

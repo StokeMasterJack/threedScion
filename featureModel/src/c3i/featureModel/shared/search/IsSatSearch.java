@@ -1,16 +1,26 @@
 package c3i.featureModel.shared.search;
 
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class IsSatSearch extends Search {
 
     private boolean sat = false;
 
-    public void start(Csp node) {
-        node.maybeSimplify();
+    private Csp contextCsp;
+
+    public IsSatSearch(Csp contextCsp) {
+        this.contextCsp = contextCsp;
+        startSearch();
+    }
+
+    private void startSearch() {
         try {
-            onNode(0, node);
+            onNode(0, contextCsp);
+            sat = false;
         } catch (StopSearchException e) {
             sat = true;
         }
@@ -20,18 +30,33 @@ public class IsSatSearch extends Search {
         return sat;
     }
 
-    @Override
+    int nodeCount = 0;
+
     public void onNode(int level, Csp csp) throws StopSearchException {
-        if (csp.isFalse()) {
-            //ignore
-        } else if (csp.isTrue()) {
+
+        checkState(csp.isStable());
+        csp.checkOpenClauseCount();
+
+//        System.out.println(csp.toString());
+        nodeCount++;
+        if (csp.isTrue()) {
             throw new StopSearchException(csp);
-        } else {
-            Var var = csp.decide();
-            onNode(level + 1, new Csp(csp, var, true));
-            onNode(level + 1, new Csp(csp, var, false));
+        } else if (csp.isFalse()) {
+            //skip
+        } else { //open
+            Var var = null;
+            try {
+                var = csp.decide();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            checkState(var != null); //should never occur
+            onNode(level + 1, new Csp(csp, var, true, Cause.DECISION));
+            onNode(level + 1, new Csp(csp, var, false, Cause.DECISION));
         }
+
     }
 
 
 }
+

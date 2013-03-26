@@ -1,4 +1,4 @@
-package c3i.imageModel._notes;
+package c3i.imageModel.shared.api;
 
 /**
  * Zero deps

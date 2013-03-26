@@ -15,4 +15,8 @@ public class ConflictingAssignmentException extends AssignmentException {
         System.out.println("ReassignmentException.ReassignmentException");
     }
 
+    public void test1() throws Exception {
+        //get the failed path (i.e. the failed assignment)
+    }
+
 }

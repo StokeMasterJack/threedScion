@@ -226,12 +226,8 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
     }
 
     public RawImageStack getRawImageStack(SimplePicks picks, int angle) {
-        if (picks.isValidBuild()) {
-            ImmutableList<PngSpec> srcPngs = getPngSpecs(picks, angle);
-            return new RawImageStack(picks, angle, this, srcPngs);
-        } else {
-            return new RawImageStack(picks, angle, this, ImmutableList.<PngSpec>of());
-        }
+        ImmutableList<PngSpec> srcPngs = getPngSpecs(picks, angle);
+        return new RawImageStack(picks, angle, this, srcPngs);
     }
 
     public CoreImageStack getCoreImageStack(CoreImageStack.Key spec) {

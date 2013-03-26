@@ -1,9 +1,34 @@
+There are 4 API's provided as part of C3I:
 
-smart client lib
+    c3i.smartClient.service
+    c3i.smartClient.model
+    c3i.smartClient.widget
 
-two versions:
+    Also, each of these API's expect FIXED picks as input
 
-    EFC C3I: does not need to do fixup
-    DF  C3I: does not need to do fixup
+    IOW, they do not include a SAT solver
+
+
+    c3i.smartClient.fm
+        will transparently wrap the above 3 API's to provide fixup service
+
+Temporary plan:
+
+    separate the 4 API's into 2 modules
+
+    Module 1: c3i.smartClient:
+        c3i.smartClient.service:
+            initially, we will just provide this for EFC
+            with no fixup, no widgets, no MVC, and no session management
+            this becomes a very small value add above and beyond image model
+
+    Module 2: c3i.smartClient2:
+        c3i.smartClient.model:  temporarily broken
+        c3i.smartClient.widget: temporarily broken
+        c3i.smartClient.fm:     doesn't exist yet
+
+        Module 2 will temporarily be removed from the project
+
+
 
 

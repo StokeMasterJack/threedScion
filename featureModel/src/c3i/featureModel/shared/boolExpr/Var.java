@@ -8,6 +8,7 @@ import c3i.featureModel.shared.IAssignments;
 import c3i.featureModel.shared.PngVarFilter;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.UnknownVarCodeException;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.picks.Picks;
 import com.google.common.collect.ImmutableSet;
 import smartsoft.util.shared.Strings;
@@ -570,10 +571,10 @@ public class Var extends NonConstant {
         boolean defVal = getDefaultValueForUi();
         if (defVal) {
             System.out.println("TRUE assignTrue - default value for var[" + this + "] ");
-            ctx.assignTrue(this);
+            ctx.assign(this, true, Cause.DEFAULT);
         } else {
             System.out.println("FALSE assignFalse - default value for var[" + this + "] ");
-            ctx.assignFalse(this);
+            ctx.assign(this, false, Cause.DEFAULT);
         }
     }
 
@@ -765,12 +766,12 @@ public class Var extends NonConstant {
         if (ctx instanceof IAssignments) {
 
         }
-        ctx.assignTrue(this);
+        ctx.assign(this, true,Cause.INFERENCE);
     }
 
     @Override
     public void autoAssignFalse(AutoAssignContext ctx) {
-        ctx.assignFalse(this);
+        ctx.assign(this, false,Cause.INFERENCE);
     }
 
 

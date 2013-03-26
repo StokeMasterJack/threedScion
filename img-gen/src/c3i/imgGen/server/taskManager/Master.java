@@ -291,7 +291,7 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                         int angleCount = view.getAngleCount();
                         for (int a = 1; a <= angleCount; a++) {
                             if (monitorTask.isCancelled()) throw new InterruptedException();
-                            Slice2<Var> slice = new Slice2<Var>(view, a);
+                            Slice2 slice = new Slice2(view, a);
                             CreateJpgSetTask task = new CreateJpgSetTask(slice);
                             executors.createJpgSet.submit(task);
                             builder.add(task);

@@ -54,10 +54,6 @@ public class ThreedModel implements IThreedModel<SeriesKey, Var> {
         return featureModel.fixupRaw(picksRaw);
     }
 
-//    public FixedPicks fixupRaw(Iterable<String> picksRaw) {
-//        return featureModel.fixupRaw(picksRaw);
-//    }
-
     public Csp fixup(Set<Var> picks) {
         return featureModel.fixup(picks);
     }

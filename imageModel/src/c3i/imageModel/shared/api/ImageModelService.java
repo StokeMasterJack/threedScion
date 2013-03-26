@@ -1,6 +1,7 @@
 package c3i.imageModel.shared.api;
 
-public interface ImageModelFactory {
+public interface ImageModelService {
+
 
     ImageModel createImageModel(String jsonText);
 

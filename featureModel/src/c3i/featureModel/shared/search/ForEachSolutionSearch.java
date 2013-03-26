@@ -1,11 +1,12 @@
 package c3i.featureModel.shared.search;
 
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.common.SimplePicks;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
-import c3i.featureModel.shared.node.ForEachProductSearch;
 import com.google.common.collect.ImmutableSet;
 
-import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  *  Called for any node where csp.isSolution() where:
@@ -26,9 +27,7 @@ import java.util.Collection;
  *      some outVars are still in the dontCare state.
  *  Rather than instantiating a whole csp for each pureDontCare node, we can use a lighter data structure
  */
-public class ForEachSolutionSearch extends Search {
-
-    private ImmutableSet<Var> outVars = ImmutableSet.of();
+public class ForEachSolutionSearch extends OutSearch {
 
     private ProductHandler productHandler;
 
@@ -36,46 +35,78 @@ public class ForEachSolutionSearch extends Search {
 
     private long productCount;
 
-    public void setOutVars(Collection<Var> outVars) {
-        this.outVars = ImmutableSet.copyOf(outVars);
-    }
-
     public void setProductHandler(ProductHandler productHandler) {
         this.productHandler = productHandler;
     }
 
     public void start(Csp node) {
-        node.maybeSimplify();
+        node.processDirtyQueue();
         onNode(0, node);
     }
 
     @Override
-    public void onNode(int level, Csp csp) {
+    public void onNode(int level, final Csp csp) {
 
         if (csp.isFalse()) {
             return;
         }
 
         if (csp.isSolution()) {
-            ForEachProductSearch forEachProductSearch = new ForEachProductSearch();
-            forEachProductSearch.onNode(level, csp);
+            ForEachProductSearch search = new ForEachProductSearch(csp, productHandler);
+            search.onDontCareNode(level);
+
         } else {
             Var var = csp.decide();
 
-            onNode(level + 1, new Csp(csp, var, true));
-            onNode(level + 1, new Csp(csp, var, false));
+            onNode(level + 1, new Csp(csp, var, true, Cause.DECISION));
+            onNode(level + 1, new Csp(csp, var, false, Cause.DECISION));
         }
 
 
     }
-
 
     public long getProductCount() {
         return productCount;
     }
 
 
-    public ImmutableSet<Var> getOutVars() {
-        return outVars;
+
+    public static class ForEachProductSearch implements SimplePicks {
+
+        private final Csp csp;
+        private final ProductHandler productHandler;
+
+        private final LinkedList<Var> dcAssignments = new LinkedList<Var>();
+        private long productCount;
+
+        public ForEachProductSearch(Csp csp, ProductHandler productHandler) {
+            this.csp = csp;
+            this.productHandler = productHandler;
+        }
+
+        public void start(int depth) {
+            onDontCareNode(depth);
+        }
+
+        public void onDontCareNode(int level) {
+            Var var = csp.decide();
+            if (var == null) {
+                productCount++;
+                productHandler.onProduct(this);
+            } else {
+                dcAssignments.addLast(var);
+                onDontCareNode(level + 1);
+                dcAssignments.removeLast();
+                onDontCareNode(level + 1);
+            }
+
+        }
+
+        @Override
+        public boolean isPicked(Var var) {
+            return csp.isPicked(var) || dcAssignments.contains(var);
+        }
+
     }
+
 }

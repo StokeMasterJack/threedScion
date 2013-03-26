@@ -6,7 +6,7 @@ public class Test {
 
         String fmKeyString = "fs";
 
-        EfcFactory efcFactory;
+        EfcFactory efcFactory = null;
 
         EfcService efcService = efcFactory.getEfcService();
 

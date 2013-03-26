@@ -1,6 +1,32 @@
-C3I
+Not included here
+    no MVC
+    No Widget
+    No FM or knowledge of sar solvers
+
+
+Maybe included here
+    probably no:    ajax load of imageModelJsonText
+    probably yes:   parsing of imageModelJsonText
+
+Yes included here:
+    ImageModel service
+
+    pre-fetch
+    caching??
+    async thing to avoid ui freeze up:
+        fm fixup:
+            definitely not
+
+        imgUrlComputation:
+            probably not: that should be provided in the mvc layer
+                or even the gui layer
+
 
     action steps:
+
+    Keep:
+        ImageStack
+            the data structure - nothing with DOM dependencies
 
     c3i - efcNoFm - service-api
 

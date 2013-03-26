@@ -3,6 +3,7 @@ package c3i.imgGen.server.taskManager;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
+import c3i.featureModel.shared.node.Csp;
 import c3i.featureModel.shared.search.CountingProductHandler;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;
@@ -61,9 +62,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, SeriesKey.AVALON);
         SeriesId seriesId = brandRepo.getHead(seriesKey);
         ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
-        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
-        long satCount = csp.getProductCount();
-        System.out.println(satCount);
+        Csp csp = threedModel.getFeatureModel().createCsp();
+        System.out.println(csp.getProductCount());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, SeriesKey.TUNDRA);
         SeriesId seriesId = brandRepo.getHead(seriesKey);
         ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
-        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
+        Csp csp = threedModel.getFeatureModel().createCsp();
         long satCount = csp.getProductCount();
         System.out.println(satCount);
     }
@@ -81,7 +81,7 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, SeriesKey.TUNDRA);
         SeriesId seriesId = brandRepo.getHead(seriesKey);
         ThreedModel threedModel = brandRepo.getThreedModel(seriesId);
-        ForEachSearchNode csp = threedModel.getFeatureModel().createCspForTreeSearch();
+        Csp csp = threedModel.getFeatureModel().createCsp();
         CountingProductHandler ph = new CountingProductHandler();
         csp.forEachProduct(ph);
         System.out.println(ph.getCount());

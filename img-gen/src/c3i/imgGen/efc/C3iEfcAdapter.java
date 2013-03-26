@@ -11,7 +11,7 @@ import java.util.Set;
 public class C3iEfcAdapter {
 
     private EfcService efcService;
-    private DaveService daveService
+    private DaveService daveService;
 
     public C3iEfcAdapter(EfcService efcService) {
         this.efcService = efcService;

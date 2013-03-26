@@ -1,6 +1,5 @@
 package c3i.featureModel.shared;
 
-import c3i.featureModel.shared.boolExpr.AssignmentException;
 import c3i.featureModel.shared.boolExpr.ConflictingAssignmentException;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
@@ -35,11 +34,11 @@ public interface IAssignments extends EvalContext, AutoAssignContext, SimplePick
 
     void logAssignFalse(Var var, int depth);
 
-    boolean assign(Var var, boolean value) throws ConflictingAssignmentException;
+    void assign(Var var, boolean value) throws ConflictingAssignmentException;
 
-    boolean assignTrue(Var var) throws ConflictingAssignmentException;
+    void assignTrue(Var var) throws ConflictingAssignmentException;
 
-    boolean assignFalse(Var var) throws ConflictingAssignmentException;
+    void assignFalse(Var var) throws ConflictingAssignmentException;
 
     void dirty();
 

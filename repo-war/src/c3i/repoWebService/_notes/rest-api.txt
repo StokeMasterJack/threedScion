@@ -1,0 +1,6 @@
+REST API
+    jobSpec
+        brand/series/year
+    startJob
+    cancelJob
+    getJobStatus

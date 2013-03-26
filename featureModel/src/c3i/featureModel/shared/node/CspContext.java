@@ -1,23 +1,36 @@
 package c3i.featureModel.shared.node;
 
-import c3i.featureModel.shared.VarSpace;
 import c3i.featureModel.shared.boolExpr.BoolExpr;
 import c3i.featureModel.shared.boolExpr.Var;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
-import java.util.LinkedHashSet;
-
+/**
+ * Instances of CspContext should be immutable because it is shallow copied during search
+ */
 public interface CspContext {
 
-    VarSpace getVarSpace();
-
     int getVarCount();
+
+    int getConstraintCount();
 
     Var getVar(int varIndex);
 
     Var getVar(String varCode);
 
-    public LinkedHashSet<BoolExpr> getConstraints();
+    /**
+     * Complex constraint
+     */
+    BoolExpr getConstraint(int i);
 
+    /**
+     * Complex constraints
+     */
+    ImmutableList<BoolExpr> getComplexConstraints();
 
-    int size();
+    ImmutableList<BoolExpr> getSimpleConstraints();
+
+    ImmutableList<Var> getVarList();
+
+    ImmutableMap<String, Var> getVarMap();
 }

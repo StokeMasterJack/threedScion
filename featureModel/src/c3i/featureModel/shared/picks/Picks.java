@@ -6,7 +6,9 @@ import c3i.featureModel.shared.PicksAssignment;
 import c3i.featureModel.shared.Source;
 import c3i.featureModel.shared.Tri;
 import c3i.featureModel.shared.boolExpr.AssignmentException;
+import c3i.featureModel.shared.boolExpr.ConflictingAssignmentException;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
 
 import java.util.Collection;
@@ -41,32 +43,25 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
         }
     }
 
-    public boolean assignTrue(Var var, int depth) throws AssignmentException {
-        boolean ch = autoAssign(var, true);
-        if (ch) {
-            dirty();
-            return true;
-        } else {
-            return false;
-        }
+    @Override
+    public void assign(Var var, boolean value, Cause cause) throws ConflictingAssignmentException {
+        autoAssign(var, value);
     }
 
-    public boolean assignTrue(Var var) throws AssignmentException {
-        return this.assignTrue(var, 0);
+    public void assignTrue(Var var, int depth) throws AssignmentException {
+        autoAssign(var, true);
     }
 
-    public boolean assignFalse(Var var, int depth) throws AssignmentException {
-        boolean ch = autoAssign(var, false);
-        if (ch) {
-            dirty();
-            return true;
-        } else {
-            return false;
-        }
+    public void assignTrue(Var var) throws AssignmentException {
+        this.assignTrue(var, 0);
     }
 
-    public boolean assignFalse(Var var) throws AssignmentException {
-        return this.assignFalse(var, 0);
+    public void assignFalse(Var var, int depth) throws AssignmentException {
+        autoAssign(var, false);
+    }
+
+    public void assignFalse(Var var) throws AssignmentException {
+        this.assignFalse(var, 0);
     }
 
     private void dirty() {
@@ -113,20 +108,18 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext {
     }
 
     //auto-assign
-    public boolean assign(Var var, boolean newValue) {
-
+    public void assign(Var var, boolean newValue) {
         Bit newVal = newValue ? Bit.TRUE : Bit.FALSE;
         Bit oldValue = map[var.getIndex()].getValue();
-        if (oldValue.equals(newVal)) return false;
-
+        if (oldValue.equals(newVal)) {
+            return;
+        }
         map[var.getIndex()] = PicksAssignment.create(newVal, Source.Fixup);
-
         dirty = true;
-        return true;
     }
 
-    public boolean autoAssign(Var var, boolean newValue) {
-        return assign(var, newValue);
+    public void autoAssign(Var var, boolean newValue) {
+        assign(var, newValue);
     }
 
     public void initialAssign(Var var, boolean newValue) {

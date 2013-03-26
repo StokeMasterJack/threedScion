@@ -11,7 +11,6 @@
     <orderEntry type="library" name="guava-latest-stable-release" level="application" />
     <orderEntry type="library" name="jsr305" level="application" />
     <orderEntry type="module" module-name="repo" />
-    <orderEntry type="module" module-name="nfc" />
     <orderEntry type="library" name="org.eclipse.jgit-1.1.0" level="application" />
     <orderEntry type="library" name="imgscalr-lib-4.2" level="application" />
     <orderEntry type="module" module-name="ut" />

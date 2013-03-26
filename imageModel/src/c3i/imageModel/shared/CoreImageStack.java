@@ -85,18 +85,15 @@ public class CoreImageStack {
         return rawImageStack.getImView();
     }
 
-
     private ImmutableList<ImImage> initImages(BaseImage baseImage, ImmutableList<PngSpec> zPngs) {
         ImmutableList.Builder<ImImage> builder = ImmutableList.builder();
-        if (key.getFixedPicks().isValidBuild()) {
 
-            if (baseImage != null) {
-                builder.add(baseImage);
-            }
+        if (baseImage != null) {
+            builder.add(baseImage);
+        }
 
-            for (final PngSpec zPng : zPngs) {
-                builder.add(new LayerImage(getProfile(), zPng));
-            }
+        for (final PngSpec zPng : zPngs) {
+            builder.add(new LayerImage(getProfile(), zPng));
         }
 
         return builder.build();

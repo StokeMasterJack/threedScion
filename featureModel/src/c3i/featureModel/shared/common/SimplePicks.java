@@ -9,5 +9,5 @@ public interface SimplePicks {
 
     boolean isPicked(Var var);
 
-    boolean isValidBuild();
+//    boolean isValidBuild();
 }

@@ -12,14 +12,14 @@ import javax.annotation.concurrent.Immutable;
 import java.util.Set;
 
 @Immutable
-public class FixedPicks implements SimplePicks2, HasKey {
+public class FixedPicksOld implements SimplePicks2, HasKey {
 
     private final Set<Var> picks;
 
     private final IAssignments IAssignments;
     private final AssignmentException exception;
 
-    public FixedPicks(Set<Var> picks, IAssignments IAssignments, AssignmentException exception) {
+    public FixedPicksOld(Set<Var> picks, IAssignments IAssignments, AssignmentException exception) {
         Preconditions.checkArgument((IAssignments == null && exception != null) ||
                 (IAssignments != null && exception == null));
 
@@ -35,15 +35,15 @@ public class FixedPicks implements SimplePicks2, HasKey {
         return picks;
     }
 
-    public FixedPicks(IAssignments IAssignments) {
+    public FixedPicksOld(IAssignments IAssignments) {
         this(null, IAssignments, null);
     }
 
-    public FixedPicks(AssignmentException exception) {
+    public FixedPicksOld(AssignmentException exception) {
         this(null, null, exception);
     }
 
-    public FixedPicks(FixedPicks that) {
+    public FixedPicksOld(FixedPicksOld that) {
         this.picks = that.picks;
         this.IAssignments = that.IAssignments;
         this.exception = that.exception;
@@ -103,7 +103,7 @@ public class FixedPicks implements SimplePicks2, HasKey {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FixedPicks that = (FixedPicks) o;
+        FixedPicksOld that = (FixedPicksOld) o;
         if (exception != null) {
             return picks.equals(that.picks) && exception.equals(that.exception);
         } else {

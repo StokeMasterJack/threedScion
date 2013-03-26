@@ -2,14 +2,11 @@ package c3i.featureModel.shared;
 
 import c3i.featureModel.shared.boolExpr.ConflictingAssignmentException;
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.explanations.Cause;
 
 public interface AssignContext {
 
-    boolean assignTrue(Var var) throws ConflictingAssignmentException;
-
-    boolean assignFalse(Var var) throws ConflictingAssignmentException;
-
-    boolean assign(Var var, boolean value) throws ConflictingAssignmentException;
+    void assign(Var var, boolean value, Cause cause) throws ConflictingAssignmentException;
 
 
 }

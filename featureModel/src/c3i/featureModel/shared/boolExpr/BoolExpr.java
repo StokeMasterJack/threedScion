@@ -112,8 +112,7 @@ public abstract class BoolExpr implements Tri {
 //    }
 
 
-    private boolean isComplex() {
-
+    public boolean isComplex() {
         if (this instanceof HasChildContent) {
             if (this instanceof Not) {
                 Not not = (Not) this;

@@ -1,12 +1,13 @@
 package c3i.featureModel.shared.search;
 
 import c3i.featureModel.shared.boolExpr.Var;
+import c3i.featureModel.shared.explanations.Cause;
 import c3i.featureModel.shared.node.Csp;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.Collection;
 
-public class ProductCountSearch extends Search {
+public class ProductCountSearch extends OutSearch {
 
     private ImmutableSet<Var> outVars = ImmutableSet.of();
 
@@ -17,7 +18,7 @@ public class ProductCountSearch extends Search {
     }
 
     public void start(Csp node) {
-        node.maybeSimplify();
+        node.processDirtyQueue();
         onNode(0, node);
     }
 
@@ -34,8 +35,8 @@ public class ProductCountSearch extends Search {
         } else {
             Var var = csp.decide();
 
-            onNode(level + 1, new Csp(csp, var, true));
-            onNode(level + 1, new Csp(csp, var, false));
+            onNode(level + 1, new Csp(csp, var, true, Cause.DECISION));
+            onNode(level + 1, new Csp(csp, var, false, Cause.DECISION));
         }
 
     }

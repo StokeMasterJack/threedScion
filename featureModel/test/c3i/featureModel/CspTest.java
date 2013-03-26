@@ -15,8 +15,6 @@ import org.junit.After;
 import org.junit.Test;
 import smartsoft.util.Count2;
 
-import javax.annotation.Nullable;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -26,9 +24,10 @@ public class CspTest {
     @Test
     public void test_IsSat_SimpleVehicle() throws Exception {
         Csp csp = buildCspSimpleVehicle();
-        assertTrue(csp.isSat());
+//        csp.print();
+        boolean sat = csp.isSat();
+        assertTrue(sat);
     }
-
 
     @Test
     public void test_FindAll_SimpleVehicle() throws Exception {
@@ -173,8 +172,6 @@ public class CspTest {
 //            return reduced;
 //        }
 //    }
-
-
     @After
     public void tearDown() throws Exception {
         System.out.flush();
@@ -183,26 +180,26 @@ public class CspTest {
 
     private Csp buildCspSimpleVehicle() {
         FeatureModel fm = new Trim();
-        Csp csp = new Csp(fm);
+        Csp csp = fm.createCsp();
         return csp;
     }
 
     private Csp buildCspMediumVehicle() {
         FeatureModel fm = new TrimColor();
-        Csp csp = new Csp(fm);
+        Csp csp = fm.createCsp();
         return csp;
     }
 
     private Csp buildCspSemiComplexVehicle() {
         FeatureModel fm = new TrimColorOption();
         //        Csp csp = new CspSimple(fm, fm.getConstraint());
-        Csp csp = new Csp(fm);
+        Csp csp = fm.createCsp();
         return csp;
     }
 
     private Csp buildCspComplexVehicle() {
         FeatureModel fm = new Camry2011();
-        Csp csp = new Csp(fm);
+        Csp csp = fm.createCsp();
         return csp;
     }
 
