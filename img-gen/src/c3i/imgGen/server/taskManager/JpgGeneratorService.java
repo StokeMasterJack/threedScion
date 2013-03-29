@@ -1,10 +1,9 @@
 package c3i.imgGen.server.taskManager;
 
 
-import c3i.threedModel.shared.ThreedModel;
+import c3i.ip.SrcPngLoader;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
-import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.generic.ThreedModelServiceRepo;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
@@ -13,6 +12,7 @@ import c3i.repo.server.BrandRepos;
 import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
+import c3i.threedModel.client.ThreedModel;
 import com.google.common.util.concurrent.AbstractIdleService;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;

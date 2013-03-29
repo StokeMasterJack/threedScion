@@ -15,10 +15,10 @@ public class IsSatSearch extends SearchContext {
         super(startNode, 0, null, null);
     }
 
-    public void start() {
-        startNode.processDirtyQueue();
+    public void execute() {
+
         try {
-            super.start();
+            super.execute();
             sat = false;
         } catch (StopSearchException e) {
             sat = true;
@@ -30,7 +30,7 @@ public class IsSatSearch extends SearchContext {
     }
 
     public void onNode(int level, Csp csp) throws StopSearchException {
-
+        assert csp.searchContext == this;
         checkState(csp.isStable());
         csp.checkOpenClauseCount();
 

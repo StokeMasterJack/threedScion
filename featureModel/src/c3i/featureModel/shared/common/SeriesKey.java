@@ -191,7 +191,9 @@ public class SeriesKey implements Comparable<SeriesKey>, Serializable {
     public static final SeriesKey RAV4_2010 = new SeriesKey(BrandKey.TOYOTA, 2010, RAV4);
     public static final SeriesKey RAV4_2011 = new SeriesKey(BrandKey.TOYOTA, 2011, RAV4);
     public static final SeriesKey TACOMA_2011 = new SeriesKey(BrandKey.TOYOTA, 2011, TACOMA);
+    public static final SeriesKey TACOMA_2013 = new SeriesKey(BrandKey.TOYOTA, 2013, TACOMA);
     public static final SeriesKey TUNDRA_2011 = new SeriesKey(BrandKey.TOYOTA, 2011, TUNDRA);
+    public static final SeriesKey TUNDRA_2014 = new SeriesKey(BrandKey.TOYOTA, 2014, TUNDRA);
     public static final SeriesKey AVALON_2011 = new SeriesKey(BrandKey.TOYOTA, 2011, AVALON);
     public static final SeriesKey AVALON_2014 = new SeriesKey(BrandKey.TOYOTA, 2014, AVALON);
     public static final SeriesKey AVALON_2010 = new SeriesKey(BrandKey.TOYOTA, 2010, AVALON);

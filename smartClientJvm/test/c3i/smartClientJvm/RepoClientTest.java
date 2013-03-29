@@ -5,7 +5,7 @@ import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.repo.server.BrandRepo;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import org.junit.Test;
 import smartsoft.util.shared.Path;
 

@@ -1,6 +1,6 @@
 package c3i.imgGen.api;
 
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 
 public interface ThreedModelService<ID> {
 

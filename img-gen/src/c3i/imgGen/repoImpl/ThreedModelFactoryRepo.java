@@ -6,7 +6,7 @@ import c3i.imageModel.shared.ImageModel;
 import c3i.imgGen.api.FeatureModelFactory;
 import c3i.imgGen.api.ImageModelFactory;
 import c3i.imgGen.api.ThreedModelFactory;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

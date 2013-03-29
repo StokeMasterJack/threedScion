@@ -1,11 +1,11 @@
 package c3i.smartClientJvm;
 
-import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.server.JsonToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.server.JsonToImJvm;
 import c3i.imageModel.shared.ImageModel;
+import c3i.threedModel.client.ThreedModel;
 import com.google.common.io.Closeables;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;

@@ -1,7 +1,7 @@
 package c3i.repoWebService;
 
 import c3i.repo.server.TmToJsonJvm;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.repo.server.BrandRepos;

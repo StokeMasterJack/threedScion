@@ -8,10 +8,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="library" name="guava-latest-stable-release" level="application" />
     <orderEntry type="library" name="jsr305" level="application" />
-    <orderEntry type="module" module-name="ut" />
     <orderEntry type="library" name="jackson-1.8.1" level="application" />
     <orderEntry type="library" name="dom4j-1.6.1" level="application" />
     <orderEntry type="library" name="gwt-user-2.4" level="application" />

@@ -2,7 +2,7 @@ package c3i.repoWebService;
 
 import c3i.imageModel.shared.BaseImageKey;
 import c3i.imageModel.shared.BaseImageType;
-import c3i.imgGen.api.SrcPngLoader;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.BrandRepo;
 import com.google.common.io.Files;

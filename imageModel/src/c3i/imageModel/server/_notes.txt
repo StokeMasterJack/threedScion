@@ -1,0 +1,1 @@
+These classes are used *only* by the jvm (e.g. eBro) version of smart client

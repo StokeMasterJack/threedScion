@@ -9,6 +9,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static smartsoft.util.shared.Console.prindent;
+
 /**
  *  Called for any node where csp.isSolution() where:
  *      Csp.isSolution() =>  isTrue() || (isOutComplete() && isSat());
@@ -35,25 +38,30 @@ public abstract class ForEachSolutionSearch extends SearchContext {
     }
 
     @Override
-    public void start() {
-        startNode.processDirtyQueue();
-        super.start();
-    }
-
-    @Override
     public void onNode(int level, final Csp csp) {
 
         if (csp.isFalse()) {
+            prindent(level,"False: ");
+            prindent(level,"\t t: " + csp.getTrueVars());
+            prindent(level,"\t f: " + csp.getFalseVars());
             return;
         }
+
+        prindent(level, "T: " + csp.getTrueVars());
 
         if (csp.isSolution()) {
             onSolution(level, csp);
         } else {
             Var var = csp.decide();
+            checkNotNull(var);
 
-            onNode(level + 1, new Csp(csp, var, true, Cause.DECISION));
-            onNode(level + 1, new Csp(csp, var, false, Cause.DECISION));
+
+            Csp cspTrue = new Csp(csp, var, true, Cause.DECISION);
+            onNode(level + 1, cspTrue);
+
+
+            Csp cspFalse = new Csp(csp, var, false, Cause.DECISION);
+            onNode(level + 1, cspFalse);
         }
 
 

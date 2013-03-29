@@ -1,6 +1,6 @@
 package c3i.repoWebService;
 
-import c3i.imgGen.api.SrcPngLoader;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;

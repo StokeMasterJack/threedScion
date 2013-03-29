@@ -1,6 +1,6 @@
 package c3i.repo.server.vnode;
 
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.repo.server.BrandRepo;
 import c3i.repo.server.SeriesRepo;

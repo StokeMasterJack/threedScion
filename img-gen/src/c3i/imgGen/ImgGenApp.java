@@ -2,12 +2,12 @@ package c3i.imgGen;
 
 import c3i.imgGen.api.FeatureModelFactory;
 import c3i.imgGen.api.ImageModelFactory;
-import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.api.ThreedModelService;
 import c3i.imgGen.generic.ThreedModelServiceRepo;
 import c3i.imgGen.repoImpl.FeatureModelFactoryRepo;
 import c3i.imgGen.repoImpl.ImageModelFactoryRepo;
-import c3i.imgGen.repoImpl.SrcPngLoaderRepo;
+import c3i.ip.SrcPngLoader;
+import c3i.repo.server.SrcPngLoaderRepo;
 import c3i.imgGen.repoImpl.ThreedModelFactoryRepo;
 import c3i.imgGen.server.taskManager.JpgGeneratorService;
 import c3i.repo.ReposConfig;

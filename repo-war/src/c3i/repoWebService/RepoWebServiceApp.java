@@ -2,7 +2,7 @@ package c3i.repoWebService;
 
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.imgGen.ImgGenApp;
-import c3i.imgGen.api.SrcPngLoader;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import com.google.common.collect.ImmutableMap;
 import smartsoft.util.config.App;

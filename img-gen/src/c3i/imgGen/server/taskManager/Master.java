@@ -9,9 +9,8 @@ import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawBaseImage;
 import c3i.imageModel.shared.Slice2;
-import c3i.imgGen.api.SrcPngLoader;
 import c3i.imgGen.api.ThreedModelService;
-import c3i.imgGen.server.singleJpg.BaseImageGenerator;
+import c3i.ip.BaseImageGenerator;
 import c3i.imgGen.shared.ExecutorStatus;
 import c3i.imgGen.shared.JobId;
 import c3i.imgGen.shared.JobSpec;
@@ -21,10 +20,11 @@ import c3i.imgGen.shared.JpgState;
 import c3i.imgGen.shared.JpgStateCounts;
 import c3i.imgGen.shared.Stats;
 import c3i.imgGen.shared.TerminalStatus;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
-import c3i.threedModel.shared.JpgSet;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.jpgSets.JpgSet;
+import c3i.threedModel.client.ThreedModel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.ExceptionRenderer;
@@ -488,7 +488,7 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                     File outFile = rtRepo.getBaseImageFileName(baseImage);
 
                     BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(outFile, baseImage, pngLoader);
-                    jpgGeneratorPureJava.generate(stats);
+                    jpgGeneratorPureJava.generate();
 
                     return JpgState.COMPLETE;
                 }

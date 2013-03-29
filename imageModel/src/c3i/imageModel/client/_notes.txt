@@ -1,0 +1,1 @@
+These classes are used *only* by the client-side gwt version of smart client

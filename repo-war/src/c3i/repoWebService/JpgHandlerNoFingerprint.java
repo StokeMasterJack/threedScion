@@ -8,10 +8,10 @@ import c3i.imageModel.shared.ImageMode;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
-import c3i.imgGen.api.SrcPngLoader;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.BrandRepo;
 import c3i.repo.server.BrandRepos;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Files;
 import smartsoft.util.servlet.http.headers.LastModified;
@@ -20,7 +20,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.logging.Logger;
-
 
 public class JpgHandlerNoFingerprint extends RepoHandler<JpgRequestNoFingerprint> {
 

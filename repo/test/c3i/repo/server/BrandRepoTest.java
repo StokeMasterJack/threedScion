@@ -1,6 +1,6 @@
 package c3i.repo.server;
 
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.imageModel.server.ImageUtil;
 import junit.framework.TestCase;

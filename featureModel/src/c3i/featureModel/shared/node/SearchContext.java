@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 public abstract class SearchContext {
 
@@ -56,7 +57,10 @@ public abstract class SearchContext {
         return outVars;
     }
 
-    public void start() {
+    public void execute() {
+        checkState(startNode != null);
+        checkState(startNode.openOutVars != null);
+        startNode.processDirtyQueue();
         this.onNode(startLevel, startNode);
     }
 

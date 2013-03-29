@@ -6,14 +6,10 @@ import c3i.featureModel.data.TrimColor;
 import c3i.featureModel.data.TrimColorOption;
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.boolExpr.MoreThanOneTrueTermXorAssignmentException;
-import c3i.featureModel.shared.common.SimplePicks;
 import c3i.featureModel.shared.node.Csp;
 import c3i.featureModel.shared.search.CountingProductHandler;
-import c3i.featureModel.shared.search.ForEachSolutionSearch;
-import c3i.featureModel.shared.search.ProductHandler;
 import org.junit.After;
 import org.junit.Test;
-import smartsoft.util.Count2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,6 +28,8 @@ public class CspTest {
     @Test
     public void test_ForEachProduct_SimpleVehicle() throws Exception {
         Csp csp = buildCspSimpleVehicle();
+//        csp.printMultiLine();
+//        System.out.println();
         CountingProductHandler counter = new CountingProductHandler();
         csp.forEachProduct(counter);
         assertEquals(11, counter.getCount());
@@ -52,9 +50,6 @@ public class CspTest {
         csp.forEachProduct(counter);
         assertEquals(2080512L, counter.getCount());
     }
-
-
-
 
 
     @Test
@@ -142,7 +137,6 @@ public class CspTest {
     public void tearDown() throws Exception {
         System.out.flush();
     }
-
 
     private Csp buildCspSimpleVehicle() {
         FeatureModel fm = new Trim();

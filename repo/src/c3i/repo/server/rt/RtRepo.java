@@ -1,6 +1,5 @@
 package c3i.repo.server.rt;
 
-import c3i.threedModel.shared.ThreedModel;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.server.ImageUtil;
@@ -11,6 +10,7 @@ import c3i.imageModel.shared.PngSegment;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
 import c3i.repo.server.TwoThirty8;
+import c3i.threedModel.client.ThreedModel;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;

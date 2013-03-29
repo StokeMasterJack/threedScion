@@ -3,7 +3,7 @@ package c3i.repo.server;
 import c3i.featureModel.server.ModelXml;
 import c3i.featureModel.server.XmlToFmJvm;
 import c3i.featureModel.shared.FeatureModel;
-import c3i.threedModel.shared.ThreedModel;
+import c3i.threedModel.client.ThreedModel;
 import c3i.featureModel.shared.common.RootTreeId;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;

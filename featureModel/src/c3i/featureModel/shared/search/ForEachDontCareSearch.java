@@ -42,4 +42,8 @@ public class ForEachDontCareSearch implements SimplePicks {
         return solutionNode.isPicked(var) || dcAssignments.contains(var);
     }
 
+    @Override
+    public String toString() {
+        return solutionNode.getTrueVars() + "    " + dcAssignments;
+    }
 }

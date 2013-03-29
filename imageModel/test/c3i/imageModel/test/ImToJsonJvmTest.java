@@ -9,9 +9,7 @@ import org.codehaus.jackson.node.ObjectNode;
 
 public class ImToJsonJvmTest extends TestCase {
 
-
     public void test() throws Exception {
-
 
 //        Repos repos1 = new Repos(BrandKey.TOYOTA, );
         ImageModel imageModel = getTestImageModel(); //slow
@@ -30,6 +28,6 @@ public class ImToJsonJvmTest extends TestCase {
 
     ImageModel getTestImageModel() {
         BrandRepo repos = BrandRepo.testRepoToyota();
-        return repos.getThreedModelForHead(SeriesKey.TACOMA_2011).getImageModel();
+        return repos.getThreedModelForHead(SeriesKey.TUNDRA_2014).getImageModel();
     }
 }

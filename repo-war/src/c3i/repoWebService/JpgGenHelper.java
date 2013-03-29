@@ -2,8 +2,8 @@ package c3i.repoWebService;
 
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.IBaseImageKey;
-import c3i.imgGen.api.SrcPngLoader;
-import c3i.imgGen.server.singleJpg.BaseImageGenerator;
+import c3i.ip.BaseImageGenerator;
+import c3i.ip.SrcPngLoader;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;

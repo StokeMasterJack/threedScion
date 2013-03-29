@@ -17,6 +17,7 @@
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="module" module-name="imageModel" />
     <orderEntry type="module" module-name="featureModel" />
+    <orderEntry type="module" module-name="threedModel" />
   </component>
 </module>
 

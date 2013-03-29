@@ -49,7 +49,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     //shallow copy
     private final GlobalContext context;
-    private SearchContext searchContext;
+    public SearchContext searchContext;
 
     //core csp state assignments + constraints
     //csp core state is deep copied as we walk the search tree
@@ -63,7 +63,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
     //do not copy queue - all csp's start out clean - can not copy a dirty csp
     private LinkedList<Var> dirtyQueue = new LinkedList<Var>();
 
-    private LinkedList<Var> openOutVars;
+    public LinkedList<Var> openOutVars;
 
     /**
      * Create a new top-level cspContext
@@ -135,11 +135,15 @@ public class Csp implements AutoAssignContext, SimplePicks {
         return nullCount;
     }
 
+    /**
+     * Initializes openOutVars
+     */
     public void setSearchContext(SearchContext searchContext) {
         this.searchContext = searchContext;
         Set<Var> openVars = this.getOpenVars();
         LinkedList<Var> list = Lists.newLinkedList(Sets.intersection(searchContext.outVars, openVars));
         Collections.sort(list, VAR_COMPARATOR);
+        this.openOutVars = list;
     }
 
     public void maybeGcConstraints() {
@@ -341,14 +345,14 @@ public class Csp implements AutoAssignContext, SimplePicks {
         Bit proposedValue = Bit.fromBool(newValue);
         if (currentValue.isOpen()) {
             assignments[varIndex] = proposedValue;
-            if (cause.isInference()) {
-                openOutVarsRemove(var);
-            }
+//            if (cause.isInference()) {
+            openOutVarsRemove(var);
+//            }
             dirty(var);
         } else {
             if (currentValue == proposedValue) {
                 //no action
-                System.out.println("Dup Assignment: " + var + "=" + proposedValue);
+                System.out.println("Dup Assignment: " + var + "=" + proposedValue + " cause[" + cause + "]");
             } else {
                 cspFailed(var);
             }
@@ -356,7 +360,9 @@ public class Csp implements AutoAssignContext, SimplePicks {
     }
 
     protected void openOutVarsRemove(Var var) {
-        openOutVars.removeFirst();
+        if (openOutVars != null) {
+            openOutVars.remove(var);
+        }
     }
 
 
@@ -432,6 +438,17 @@ public class Csp implements AutoAssignContext, SimplePicks {
         for (int i = 0; i < context.getVarCount(); i++) {
             Var var = context.getVar(i);
             if (assignments[i].isTrue() && var.isLeaf()) {
+                set.add(var);
+            }
+        }
+        return set;
+    }
+
+    public Set<Var> getFalseVars() {
+        final LinkedHashSet<Var> set = new LinkedHashSet<Var>();
+        for (int i = 0; i < context.getVarCount(); i++) {
+            Var var = context.getVar(i);
+            if (assignments[i].isFalse() && var.isLeaf()) {
                 set.add(var);
             }
         }
@@ -588,19 +605,15 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     public void forEachProduct(ProductHandler productHandler, Collection<Var> outVars) {
         ForEachProductSolutionSearch search = new ForEachProductSolutionSearch(this, outVars, productHandler);
-        search.start();
+        setSearchContext(search);
+        search.execute();
     }
 
     public boolean isSat() {
-        searchContext = new IsSatSearch(this);
-        if (isTrue()) {
-            return true;
-        } else if (isFalse()) {
-            return false;
-        } else {
-            IsSatSearch search = new IsSatSearch(this);
-            return search.isSat();
-        }
+        IsSatSearch search = new IsSatSearch(this);
+        setSearchContext(search);
+        search.execute();
+        return search.isSat();
     }
 
     public void print() {
@@ -723,7 +736,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     public long getProductCount(ImmutableSet<Var> outVars) {
         ProductCountSearch search = new ProductCountSearch(this, outVars);
-        search.start();
+        search.execute();
         return search.getProductCount();
     }
 
@@ -816,6 +829,27 @@ public class Csp implements AutoAssignContext, SimplePicks {
         }
     }
 
+    public void printMultiLine() {
+        printMultiLine(0);
+    }
+
+    public void printMultiLine(int depth) {
+        if (isTrue()) {
+            prindent(depth, True.TRUE.toString());
+        } else if (isFalse()) {
+            prindent(depth, False.FALSE.toString());
+        } else if (isOpen()) {
+            for (BoolExpr constraint : constraints) {
+                if (constraint != null) {
+                    prindent(depth, constraint);
+                }
+            }
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+
     private int computeOpenClauseCount() {
         if (constraints == null) {
             return 0;
@@ -866,7 +900,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
     }
 
     public Var decide() {
-        return openOutVars.removeFirst();
+        return openOutVars.pollFirst();
     }
 
     @Override
