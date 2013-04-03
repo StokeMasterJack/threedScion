@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/build/build.iml" filepath="$PROJECT_DIR$/build/build.iml" />
       <module fileurl="file://$PROJECT_DIR$/featureModel/featureModel.iml" filepath="$PROJECT_DIR$/featureModel/featureModel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iga/iga.iml" filepath="$PROJECT_DIR$/iga/iga.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageModel/imageModel.iml" filepath="$PROJECT_DIR$/imageModel/imageModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/img-gen/img-gen.iml" filepath="$PROJECT_DIR$/img-gen/img-gen.iml" />
       <module fileurl="file://$PROJECT_DIR$/ip/ip.iml" filepath="$PROJECT_DIR$/ip/ip.iml" />

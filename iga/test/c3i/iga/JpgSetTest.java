@@ -1,4 +1,4 @@
-package c3i.imgGen;
+package c3i.iga;
 
 import c3i.featureModel.shared.common.BrandKey;
 import c3i.featureModel.shared.common.SeriesId;
@@ -7,12 +7,9 @@ import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.RawImageStack;
 import c3i.imageModel.shared.Slice;
 import c3i.imageModel.test.Avalon2014Picks;
+import c3i.imgGen.ImgGenApp;
 import c3i.imgGen.api.ThreedModelService;
 import c3i.repo.server.BrandRepos;
-import c3i.jpgSets.JpgSet;
-import c3i.jpgSets.JpgSetTask;
-import c3i.jpgSets.JpgSets;
-import c3i.jpgSets.JpgSetsTask;
 import c3i.threedModel.client.ThreedModel;
 import junit.framework.TestCase;
 
@@ -36,16 +33,16 @@ public class JpgSetTest extends TestCase {
     public void testJpgSet() throws Exception {
         Slice slice = new Slice("exterior", 2);
         ThreedModel threedModel = threedModelService.getThreedModel(id);
-        JpgSetTask jpgSetTask = threedModel.createJpgSetTask(slice);
+
+        JpgSetTask jpgSetTask = Util.createJpgSetTask(threedModel, slice);
         jpgSetTask.start();
         JpgSet jpgSet = jpgSetTask.getJpgSet();
         assertEquals(189, jpgSet.size());
     }
 
-
     public void testJpgSets() throws Exception {
         ThreedModel threedModel = threedModelService.getThreedModel(id);
-        JpgSetsTask task = threedModel.createJpgSetsTask();
+        JpgSetsTask task = Util.createJpgSetsTask(threedModel);
         task.start();
         JpgSets jpgSets = task.getJpgSets();
         assertEquals(2385, jpgSets.getJpgCount());

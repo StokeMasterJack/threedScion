@@ -8,20 +8,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="guava-latest-stable-release" level="application" />
-    <orderEntry type="library" name="jsr305" level="application" />
-    <orderEntry type="module" module-name="repo" />
-    <orderEntry type="library" name="org.eclipse.jgit-1.1.0" level="application" />
-    <orderEntry type="library" name="imgscalr-lib-4.2" level="application" />
-    <orderEntry type="module" module-name="ut" />
-    <orderEntry type="library" name="jackson-1.8.1" level="application" />
-    <orderEntry type="library" name="gwt-user-2.4" level="application" />
     <orderEntry type="library" scope="TEST" name="junit-3.8" level="application" />
     <orderEntry type="module" module-name="imageModel" />
     <orderEntry type="module" module-name="featureModel" />
-    <orderEntry type="module" module-name="ip" />
     <orderEntry type="module" module-name="threedModel" />
-    <orderEntry type="module" module-name="iga" />
+    <orderEntry type="library" name="guava-latest-stable-release" level="application" />
+    <orderEntry type="module" module-name="ut" />
+    <orderEntry type="module" module-name="repo" scope="TEST" />
+    <orderEntry type="module" module-name="img-gen" scope="TEST" />
   </component>
 </module>
 

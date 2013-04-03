@@ -1,4 +1,4 @@
-package c3i.jpgSets;
+package c3i.iga;
 
 import c3i.featureModel.shared.FeatureModel;
 import c3i.featureModel.shared.common.SimplePicks;
@@ -8,6 +8,7 @@ import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.Slice2;
 import c3i.threedModel.client.ThreedModel;
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
 import smartsoft.util.shared.IORuntimeException;
@@ -18,8 +19,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkState;
 
 public class JpgSetTask {
 
@@ -48,15 +47,19 @@ public class JpgSetTask {
     }
 
     public void start() {
-        checkState(state == State.NOT_STARTED);
+        Preconditions.checkState(state == State.NOT_STARTED);
         state = State.IN_PROCESS;
         FeatureModel fm = threedModel.getFeatureModel();
-        fm.forEachProduct(new ProductHandler() {
-            @Override
-            public void onProduct(SimplePicks product) {
-                System.out.println("onProduct");
-            }
-        }, slice2.getPngVars());
+
+
+//        fm.forEachProduct(new ProductHandler() {
+//            @Override
+//            public void onProduct(SimplePicks product) {
+//                System.out.println("onProduct");
+//            }
+//        }, slice2.getPngVars());
+
+        fm.forEachProduct(productHandler, slice2.getPngVars());
 
 
         state = State.COMPLETE;

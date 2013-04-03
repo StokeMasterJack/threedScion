@@ -46,6 +46,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     private static final VarComparator VAR_COMPARATOR = new VarComparator();
     private static final String ONLY_OPEN_COMPLEX_OR_NULL_ALLOWED_IN_MASTER_CONSTRAINT_ARRAY = "Only open complex clauses or null are allowed in constraints array.";
+    private static final int FAIL_FLAG = -1;
 
     //shallow copy
     private final GlobalContext context;
@@ -59,11 +60,14 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     private int openClauseCount;
 
-
     //do not copy queue - all csp's start out clean - can not copy a dirty csp
     private LinkedList<Var> dirtyQueue = new LinkedList<Var>();
 
     public LinkedList<Var> openOutVars;
+
+    //level-specific state: do not copy
+    private Simple decision;
+    private int level;
 
     /**
      * Create a new top-level cspContext
@@ -117,13 +121,14 @@ public class Csp implements AutoAssignContext, SimplePicks {
      *      it adds the new assignment and
      *      calls maybeSimplify()
      */
-    public Csp(Csp parent, Var var, boolean value, Cause cause) {
+    public Csp(Csp parent, Var var, boolean value, int level, Cause cause) {
         this(parent);
 //        System.out.println("About to assign: " + var + "=" + value);
+        decision = new Simple(var, value);
+        this.level = level;
         assign(var, value, cause);
         processDirtyQueue();
     }
-
 
     private int getNullClauseCount() {
         int nullCount = 0;
@@ -133,6 +138,19 @@ public class Csp implements AutoAssignContext, SimplePicks {
             }
         }
         return nullCount;
+    }
+
+    public void prindentNode() {
+//        String occ = "" + openClauseCount + ": " + this ;
+        if (isFalse()) {
+            prindent(level, decision + "~");
+        } else if (isTrue()) {
+            prindent(level, decision + "$");
+        } else if (isOpen()) {
+            prindent(level, decision + "*");
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     /**
@@ -237,7 +255,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
     private void cspFailed(Object cspFailure) {
         assert isOpen();
-        this.openClauseCount = -1;
+        this.openClauseCount = FAIL_FLAG;
         constraints = null;
         dirtyQueue = null;
         analyseCspFailure(cspFailure);
@@ -245,7 +263,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
 
 
     public boolean isFalse() {
-        if (openClauseCount == -1) {
+        if (openClauseCount == FAIL_FLAG) {
             checkState(constraints == null);
             return true;
         } else {
@@ -262,7 +280,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
             return true;
         } else {
             checkState(constraints == null, "Expecting null constraints because clause openClauseCount is " + openClauseCount);
-            checkState(openClauseCount == 0 || openClauseCount == -1);
+            checkState(openClauseCount == 0 || openClauseCount == FAIL_FLAG);
             return false;
         }
     }
@@ -272,7 +290,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
             checkState(constraints == null);
             return true;
         } else {
-            boolean f = openClauseCount == -1 && constraints == null;
+            boolean f = openClauseCount == FAIL_FLAG && constraints == null;
             boolean o = openClauseCount > 0 && constraints != null;
             checkState(f || o);
             return false;
@@ -354,6 +372,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
                 //no action
                 System.out.println("Dup Assignment: " + var + "=" + proposedValue + " cause[" + cause + "]");
             } else {
+                System.out.println("Var conflict");
                 cspFailed(var);
             }
         }
@@ -499,9 +518,9 @@ public class Csp implements AutoAssignContext, SimplePicks {
             BoolExpr constraint = constraints[i];
 
             if (constraint != null) {
-                if (constraint.containsVar(var)) {
-                    maybeSimplifyClause(i);
-                }
+//                if (constraint.containsVar(var)) {
+                maybeSimplifyClause(i);
+//                }
             }
         }
     }
@@ -539,6 +558,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
             if (after.isTrue()) {
                 removeClause(i);
             } else if (after.isFalse()) {
+//                System.out.println("Constraint[" + before + "] simplified to false");
                 cspFailed(before);
             } else if (after.isSimple()) {
                 assignSimple(after, Cause.INFERENCE);
@@ -868,7 +888,7 @@ public class Csp implements AutoAssignContext, SimplePicks {
     }
 
     public void checkOpenClauseCount() throws IllegalStateException {
-        if (openClauseCount == -1) {
+        if (openClauseCount == FAIL_FLAG) {
             checkState(constraints == null);
         } else if (openClauseCount == 0) {
             checkState(constraints == null);

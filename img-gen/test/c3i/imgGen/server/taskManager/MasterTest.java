@@ -5,6 +5,7 @@ import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.featureModel.shared.node.Csp;
 import c3i.featureModel.shared.search.CountingProductHandler;
+import c3i.iga.Util;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.Profile;
 import c3i.imageModel.shared.Slice;
@@ -19,8 +20,8 @@ import c3i.repo.server.BrandRepo;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.TestConstants;
-import c3i.jpgSets.JpgSet;
-import c3i.jpgSets.JpgSets;
+import c3i.iga.JpgSet;
+import c3i.iga.JpgSets;
 import c3i.threedModel.client.ThreedModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -139,7 +140,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
         SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        JpgSets jpgSets = threedModelService.getThreedModel(seriesId).createJpgSets();
+        ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+        JpgSets jpgSets = Util.createJpgSets(threedModel);
         int jpgCount = jpgSets.getJpgCount();
 
         assertEquals(2385, jpgCount);
@@ -152,7 +154,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
         SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        JpgSets jpgSets = threedModelService.getThreedModel(seriesId).createJpgSets();
+        ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+        JpgSets jpgSets = Util.createJpgSets(threedModel);
         int jpgCount = jpgSets.getJpgCount();
 
         System.out.println("jpgCount = " + jpgCount);
@@ -165,7 +168,8 @@ public class MasterTest implements TestConstants {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "tundra");
         SeriesId seriesId = brandRepo.getHead(seriesKey);
 
-        JpgSet jpgSet = threedModelService.getThreedModel(seriesId).createJpgSet(new Slice("exterior", 2));
+        ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+        JpgSet jpgSet = Util.createJpgSet(threedModel,new Slice("exterior", 2));
 
         System.out.println("jpgCount = " + jpgSet.getJpgCount());
 
@@ -195,7 +199,8 @@ public class MasterTest implements TestConstants {
     }
 
     public JpgSet createJpgSet(SeriesId seriesId, Slice2 slice) throws Exception {
-        return threedModelService.getThreedModel(seriesId).createJpgSet(slice.getSlice());
+        ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
+        return Util.createJpgSet(threedModel,slice.getSlice());
     }
 
     public void printBrief(JobStatus jobStatus) {

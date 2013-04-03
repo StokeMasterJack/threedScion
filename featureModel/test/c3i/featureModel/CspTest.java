@@ -44,13 +44,20 @@ public class CspTest {
     }
 
     @Test
+    public void test_ForEachProduct_SemiComplexVehicle() throws Exception {
+        Csp csp = buildCspSemiComplexVehicle();
+        CountingProductHandler counter = new CountingProductHandler();
+        csp.forEachProduct(counter);
+        assertEquals(44944, counter.getCount());
+    }
+
+    @Test
     public void test_ForEachProduct_ComplexVehicle() throws Exception {
         Csp csp = buildCspComplexVehicle();
         CountingProductHandler counter = new CountingProductHandler();
         csp.forEachProduct(counter);
         assertEquals(2080512L, counter.getCount());
     }
-
 
     @Test
     public void test_SatCount_MediumVehicle() throws Exception {

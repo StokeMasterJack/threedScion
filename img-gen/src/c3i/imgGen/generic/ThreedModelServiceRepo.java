@@ -1,13 +1,8 @@
 package c3i.imgGen.generic;
 
 import c3i.featureModel.shared.common.SeriesId;
-import c3i.imageModel.shared.Slice;
 import c3i.imgGen.api.ThreedModelService;
 import c3i.imgGen.repoImpl.ThreedModelFactoryRepo;
-import c3i.jpgSets.JpgSet;
-import c3i.jpgSets.JpgSetTask;
-import c3i.jpgSets.JpgSets;
-import c3i.jpgSets.JpgSetsTask;
 import c3i.threedModel.client.ThreedModel;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -44,21 +39,21 @@ public class ThreedModelServiceRepo implements ThreedModelService<SeriesId> {
         }
     }
 
-    public JpgSetTask createJpgSetTask(SeriesId id, Slice slice) {
-        ThreedModel threedModel = getThreedModel(id);
-        return threedModel.createJpgSetTask(slice);
-    }
+//    public JpgSetTask createJpgSetTask(SeriesId id, Slice slice) {
+//        ThreedModel threedModel = getThreedModel(id);
+//        return threedModel.createJpgSetTask(slice);
+//    }
 
-    public JpgSet buildJpgSet(SeriesId id, Slice slice) {
-        JpgSetTask task = createJpgSetTask(id, slice);
-        task.start();
-        return task.getJpgSet();
-    }
+//    public JpgSet buildJpgSet(SeriesId id, Slice slice) {
+//        JpgSetTask task = createJpgSetTask(id, slice);
+//        task.start();
+//        return task.getJpgSet();
+//    }
 
-    public JpgSetsTask createJpgSetsTask(SeriesId id) {
-        ThreedModel threedModel = getThreedModel(id);
-        return threedModel.createJpgSetsTask();
-    }
+//    public JpgSetsTask createJpgSetsTask(SeriesId id) {
+//        ThreedModel threedModel = getThreedModel(id);
+//        return threedModel.createJpgSetsTask();
+//    }
 
 //    public JpgSets buildJpgSets(SeriesId id) {
 //        JpgSetsTask task = createJpgSetsTask(id);
@@ -66,11 +61,11 @@ public class ThreedModelServiceRepo implements ThreedModelService<SeriesId> {
 //        return task.getJpgSets();
 //    }
 
-    public JpgSets buildJpgSets(SeriesId id) {
-        ThreedModel threedModel = getThreedModel(id);
-        JpgSetsTask task = new JpgSetsTask(threedModel);
-        task.start();
-        return task.getJpgSets();
-    }
+//    public JpgSets buildJpgSets(SeriesId id) {
+//        ThreedModel threedModel = getThreedModel(id);
+//        JpgSetsTask task = new JpgSetsTask(threedModel);
+//        task.start();
+//        return task.getJpgSets();
+//    }
 
 }

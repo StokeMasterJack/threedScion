@@ -10,10 +10,6 @@ import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.ViewKeyOld;
 import c3i.imageModel.shared.ViewSlice;
-import c3i.jpgSets.JpgSet;
-import c3i.jpgSets.JpgSetTask;
-import c3i.jpgSets.JpgSets;
-import c3i.jpgSets.JpgSetsTask;
 import c3i.threedModel.shared.IThreedModel;
 import com.google.common.collect.ImmutableSet;
 
@@ -189,25 +185,6 @@ public class ThreedModel implements IThreedModel<SeriesKey, Var> {
         return vars;
     }
 
-    public JpgSetTask createJpgSetTask(Slice slice) {
-        return new JpgSetTask(this, slice);
-    }
-
-    public JpgSetsTask createJpgSetsTask() {
-        return new JpgSetsTask(this);
-    }
-
-    public JpgSet createJpgSet(Slice slice) {
-        JpgSetTask task = new JpgSetTask(this, slice);
-        task.start();
-        return task.getJpgSet();
-    }
-
-    public JpgSets createJpgSets() {
-        JpgSetsTask task = new JpgSetsTask(this);
-        task.start();
-        return task.getJpgSets();
-    }
 
 
 

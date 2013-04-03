@@ -36,9 +36,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-//import c3i.featureModel.shared.picks.PicksContextFm;
-
-//import c3i.featureModel.shared.picks.PicksContextFm;
 
 public class FeatureModel implements VarSpace, IFeatureModel<SeriesKey, Var>, Iterable<Var>, PicksContext {
 

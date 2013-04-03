@@ -59,6 +59,7 @@ public class AllFalse extends Junction {
             if (v.isTrue()) {
                 return FALSE;
             } else if (v.isFalse()) {
+                anyChange = true;
                 //skip it
             } else {
                 try {
@@ -75,10 +76,13 @@ public class AllFalse extends Junction {
             anyChange = true;
         }
 
-        if (!anyChange) return this;
+        if (!anyChange) {
+            return this;
+        }
 
         if (a.size() == 1) {
-            return a.getFirst();
+            return not(a.getFirst());
+//            return a.getFirst();
         } else if (a.isEmpty()) {
             return TRUE;
         } else {

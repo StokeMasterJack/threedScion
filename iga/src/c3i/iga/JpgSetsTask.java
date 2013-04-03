@@ -1,4 +1,4 @@
-package c3i.jpgSets;
+package c3i.iga;
 
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;

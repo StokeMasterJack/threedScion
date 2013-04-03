@@ -11,7 +11,7 @@ public class CountingProductHandler implements ProductHandler {
 
     @Override
     public void onProduct(SimplePicks product) {
-        System.out.println(product);
+//        System.out.println(product);
         count++;
     }
 

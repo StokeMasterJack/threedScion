@@ -1,4 +1,4 @@
-package c3i.jpgSets;
+package c3i.iga;
 
 import c3i.imageModel.shared.Slice;
 import com.google.common.collect.ImmutableMap;

@@ -3,6 +3,7 @@ package c3i.imgGen.server.taskManager;
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesId;
 import c3i.featureModel.shared.common.SimplePicks;
+import c3i.iga.Util;
 import c3i.imageModel.shared.BaseImage;
 import c3i.imageModel.shared.ImView;
 import c3i.imageModel.shared.ImageModel;
@@ -23,7 +24,7 @@ import c3i.imgGen.shared.TerminalStatus;
 import c3i.ip.SrcPngLoader;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
-import c3i.jpgSets.JpgSet;
+import c3i.iga.JpgSet;
 import c3i.threedModel.client.ThreedModel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
@@ -374,7 +375,10 @@ public class Master implements IMaster<SimplePicks, SeriesId, Var> {
                     log.info("Start: jpgSetAction: " + slice);
 
                     ThreedModel threedModel = threedModelService.getThreedModel(seriesId);
-                    JpgSet jpgSet = threedModel.createJpgSet(slice.getSlice());
+
+
+                    JpgSet jpgSet = Util.createJpgSet(threedModel, slice.getSlice());
+//                    JpgSet jpgSet = threedModel.createJpgSet(slice.getSlice());
 
                     log.info("Complete: jpgSetAction: " + slice + "  jpgCount: " + jpgSet.size());
 

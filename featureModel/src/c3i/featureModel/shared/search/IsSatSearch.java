@@ -46,8 +46,8 @@ public class IsSatSearch extends SearchContext {
                 throw new RuntimeException(e);
             }
             checkState(var != null); //should never occur
-            onNode(level + 1, new Csp(csp, var, true, Cause.DECISION));
-            onNode(level + 1, new Csp(csp, var, false, Cause.DECISION));
+            onNode(level + 1, new Csp(csp, var, true, level + 1,Cause.DECISION));
+            onNode(level + 1, new Csp(csp, var, false, level + 1,Cause.DECISION));
         }
 
     }
