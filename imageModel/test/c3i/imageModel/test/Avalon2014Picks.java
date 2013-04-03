@@ -1,11 +1,10 @@
 package c3i.imageModel.test;
 
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
-public class Avalon2014Picks implements SimplePicks {
+public class Avalon2014Picks implements c3i.imageModel.shared.SimplePicks {
 
     public static final Splitter SPLITTER = Splitter.on(',').trimResults().omitEmptyStrings();
 

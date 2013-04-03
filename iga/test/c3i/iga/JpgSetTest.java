@@ -52,7 +52,7 @@ public class JpgSetTest extends TestCase {
 
         String viewName = "exterior";
         int angle = 2;
-        SimplePicks simplePicks = new Avalon2014Picks();
+        Avalon2014Picks simplePicks = new Avalon2014Picks();
 
         ThreedModel threedModel = threedModelService.getThreedModel(id);
 

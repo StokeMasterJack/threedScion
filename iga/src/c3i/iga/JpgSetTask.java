@@ -1,6 +1,7 @@
 package c3i.iga;
 
 import c3i.featureModel.shared.FeatureModel;
+import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SimplePicks;
 import c3i.featureModel.shared.search.ProductHandler;
 import c3i.imageModel.shared.RawBaseImage;
@@ -81,6 +82,20 @@ public class JpgSetTask {
         return getJpgSet().size();
     }
 
+    private static class SimplePicksAdapter implements c3i.imageModel.shared.SimplePicks {
+
+        private final c3i.featureModel.shared.common.SimplePicks simplePicks;
+
+        private SimplePicksAdapter(SimplePicks simplePicks) {
+            this.simplePicks = simplePicks;
+        }
+
+        @Override
+        public boolean isPicked(Var var) {
+            return this.simplePicks.isPicked(var);
+        }
+    }
+
     private static class JpgSetProductHandler implements ProductHandler {
 
         //input
@@ -96,9 +111,11 @@ public class JpgSetTask {
             this.slice2 = slice2;
         }
 
+
         @Override
         public void onProduct(SimplePicks product) {
-            RawBaseImage rawBaseImage = slice2.getPngSegments(product);
+            SimplePicksAdapter simplePicks = new SimplePicksAdapter(product);
+            RawBaseImage rawBaseImage = slice2.getPngSegments(simplePicks);
             boolean added = set.add(rawBaseImage);
             if (added) {
 //                System.out.println(set.size() + ":Added: " + product.toString());

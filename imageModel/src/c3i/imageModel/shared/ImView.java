@@ -2,7 +2,6 @@ package c3i.imageModel.shared;
 
 import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
-import c3i.featureModel.shared.common.SimplePicks;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import smartsoft.util.shared.Strings;

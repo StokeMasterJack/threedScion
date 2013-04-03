@@ -1,7 +1,7 @@
 package c3i.imageModel.test;
 
 import c3i.featureModel.shared.boolExpr.Var;
-import c3i.featureModel.shared.common.SimplePicks;
+import c3i.imageModel.shared.SimplePicks;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
@@ -20,8 +20,5 @@ public class TundraPicks implements SimplePicks {
     public boolean isPicked(Var var) {
         return setPicks.contains(var.toString());
     }
-
-
-
 
 }

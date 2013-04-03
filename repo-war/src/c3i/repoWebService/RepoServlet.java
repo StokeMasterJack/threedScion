@@ -43,8 +43,6 @@ public class RepoServlet extends HttpServlet {
     private VtcHandler vtcHandler;
     private VtcMapHandler vtcMapHandler;
     private JpgHandler jpgHandler;
-    private JpgHandlerSeriesFingerprint jpgHandlerSeriesFingerprint;
-    private JpgHandlerNoFingerprint jpgHandlerNoFingerprint;
     private ThreedModelHandler threedModelHandler;
     private ThreedModelHandlerJsonP threedModelHandlerJsonP;
     private GitObjectHandler gitObjectHandler;
@@ -74,8 +72,6 @@ public class RepoServlet extends HttpServlet {
         vtcHandler = new VtcHandler(brandRepos);
         vtcMapHandler = new VtcMapHandler(brandRepos);
         jpgHandler = new JpgHandler(brandRepos, pngLoader);
-        jpgHandlerSeriesFingerprint = new JpgHandlerSeriesFingerprint(brandRepos, pngLoader);
-        jpgHandlerNoFingerprint = new JpgHandlerNoFingerprint(brandRepos, pngLoader);
         threedModelHandler = new ThreedModelHandler(brandRepos);
         threedModelHandlerJsonP = new ThreedModelHandlerJsonP(brandRepos);
         gitObjectHandler = new GitObjectHandler(brandRepos);
@@ -118,13 +114,9 @@ public class RepoServlet extends HttpServlet {
             } else if (isVtcMapRequest(request)) {
                 log.fine("isVtcMapRequest");
                 vtcMapHandler.handle(new RepoRequest(brandRepos, request, response));
-            } else if (isJpgRequestSeriesFingerprintRequest(request)) {
-                log.fine("isJpgRequestSeriesFingerprintRequest");
-                jpgHandlerSeriesFingerprint.handle(new JpgRequestSeriesFingerprint(brandRepos, request, response));
-            } else if (isJpgRequestNoFingerprintRequest(request)) {
-                log.fine("isJpgRequestNoFingerprintRequest");
-                jpgHandlerNoFingerprint.handle(new JpgRequestNoFingerprint(brandRepos, request, response));
-            } else if (isPngRequest(request)) {
+            }
+
+            else if (isPngRequest(request)) {
                 log.fine("isPngRequest");
                 pngHandler.handle(new PngRequest(brandRepos, request, response));
             } else if (isJpgRequest(request)) {
