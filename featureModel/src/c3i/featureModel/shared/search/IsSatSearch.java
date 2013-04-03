@@ -16,7 +16,6 @@ public class IsSatSearch extends SearchContext {
     }
 
     public void execute() {
-
         try {
             super.execute();
             sat = false;
