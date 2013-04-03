@@ -60,7 +60,8 @@ public class JpgSetTask {
 //            }
 //        }, slice2.getPngVars());
 
-        fm.forEachProduct(productHandler, slice2.getPngVars());
+        Set<Var> varSet = fm.varCodesToVars(slice2.getPngVars());
+        fm.forEachProduct(productHandler, varSet);
 
 
         state = State.COMPLETE;
@@ -82,7 +83,7 @@ public class JpgSetTask {
         return getJpgSet().size();
     }
 
-    private static class SimplePicksAdapter implements c3i.imageModel.shared.SimplePicks {
+    private class SimplePicksAdapter implements c3i.imageModel.shared.SimplePicks {
 
         private final c3i.featureModel.shared.common.SimplePicks simplePicks;
 
@@ -91,12 +92,14 @@ public class JpgSetTask {
         }
 
         @Override
-        public boolean isPicked(Var var) {
+        public boolean isPicked(String varCode) {
+            Var var = threedModel.getFeatureModel().getVar(varCode);
             return this.simplePicks.isPicked(var);
         }
+
     }
 
-    private static class JpgSetProductHandler implements ProductHandler {
+    private class JpgSetProductHandler implements ProductHandler {
 
         //input
         private final Slice2 slice2;

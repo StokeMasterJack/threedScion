@@ -1,6 +1,5 @@
 package c3i.imageModel.shared;
 
-import c3i.featureModel.shared.boolExpr.Var;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
@@ -109,17 +108,17 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return false;
     }
 
-    public Set<Var> getFeatures() {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<String > getFeatures() {
+        HashSet<String > vars = new HashSet<String >();
         getFeatures(vars);
         return vars;
     }
 
-    public void getFeatures(Set<Var> features) {
+    public void getFeatures(Set<String > features) {
         IsParent p = parent;
         while (p.isFeature()) {
             ImFeature f = p.asFeature();
-            Var var = f.getVar();
+            String  var = f.getVar();
             features.add(var);
             p = p.getParent();
         }
@@ -169,15 +168,15 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
     }
 
     @Override
-    public void getVarSet(Set<Var> varSet) {
+    public void getVarSet(Set<String > varSet) {
         //intentionally blank
     }
 
     @Override
-    public void getVarSet(Set<Var> varSet, int angle) {
+    public void getVarSet(Set<String > varSet, int angle) {
         //intentionally blank
         if (this.angle == angle) {
-            Set<Var> features = getFeatures();
+            Set<String > features = getFeatures();
             varSet.addAll(features);
         }
     }
@@ -277,7 +276,7 @@ public class SrcPng extends ImChildBase implements ImFeatureOrPng, IsLeaf {
         return shortSha.hashCode();
     }
 
-    public Var getLiftTrigger() {
+    public String  getLiftTrigger() {
         return getLayer().getView().getLiftSpec().getTriggerFeature();
     }
 

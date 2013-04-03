@@ -113,7 +113,7 @@ public class ImageModelBuilder {
 
         ViewLiftSpec parse(Properties properties, FeatureModel vars) {
             String varCode = properties.getProperty("trigger-feature");
-            Var var = vars.getVar(varCode);
+            String var = vars.getVar(varCode).toString();
             int deltaY = Integer.parseInt(properties.getProperty("delta-y"));
             return new ViewLiftSpec(var, deltaY);
         }
@@ -223,9 +223,9 @@ public class ImageModelBuilder {
 
     private ImFeature createImFeatureFromFeatureDir(VNode featureDir) {
         String featureCode = featureDir.getName();
-        Var var = null;
+        String  var = null;
         try {
-            var = featureModel.getVar(featureCode);
+            var = featureModel.getVar(featureCode).toString();
         } catch (UnknownVarCodeException e) {
             System.out.println("Feature [" + featureCode + "] was found in imageModel tree here [" + featureDir.getFullPath() + "]");
             System.out.println(e.getMessage());

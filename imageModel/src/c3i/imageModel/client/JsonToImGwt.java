@@ -1,7 +1,6 @@
 package c3i.imageModel.client;
 
 import c3i.featureModel.shared.FeatureModel;
-import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
@@ -101,8 +100,7 @@ public class JsonToImGwt {
 
 
     ViewLiftSpec parseViewLiftSpec(JSONObject jsLift) {
-        String triggerFeatureVarCode = jsLift.get("triggerFeature").isString().stringValue();
-        Var triggerFeature = featureModel.getVar(triggerFeatureVarCode);
+        String triggerFeature = jsLift.get("triggerFeature").isString().stringValue();
         int deltaY = (int) jsLift.get("deltaY").isNumber().doubleValue();
         return new ViewLiftSpec(triggerFeature, deltaY);
     }
@@ -146,9 +144,8 @@ public class JsonToImGwt {
 
 
     private ImFeature parseFeature(int depth, JSONObject jsFeature) {
-        String varCode = jsFeature.keySet().iterator().next();
-        Var var = featureModel.getVar(varCode);
-        JSONArray jsFeaturesOrPngs = jsFeature.get(varCode).isArray();
+        String var = jsFeature.keySet().iterator().next();
+        JSONArray jsFeaturesOrPngs = jsFeature.get(var).isArray();
         List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(depth, jsFeaturesOrPngs);
         return new ImFeature(depth, var, imFeatureOrPngs);
     }

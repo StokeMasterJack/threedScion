@@ -1,7 +1,6 @@
 package c3i.imageModel.server;
 
 import c3i.featureModel.shared.FeatureModel;
-import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import c3i.imageModel.shared.ImFeature;
 import c3i.imageModel.shared.ImFeatureOrPng;
@@ -22,7 +21,7 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class JsonToImJvm<V> {
+public class JsonToImJvm {
 
     private final FeatureModel featureModel;
 
@@ -135,14 +134,11 @@ public class JsonToImJvm<V> {
 
     private ImFeature parseFeature(int depth, JsonNode jsFeature) {
 
-        String varCode = jsFeature.getFieldNames().next();
-
-
-        Var var = featureModel.getVar(varCode);
+        String var = jsFeature.getFieldNames().next();
         if (var == null) {
-            throw new IllegalStateException("varCode[" + varCode + "] is not contained in fm[" + featureModel + "]");
+            throw new IllegalStateException("varCode[" + var + "] is not contained in fm[" + featureModel + "]");
         }
-        JsonNode jsFeaturesOrPngs = jsFeature.get(varCode);
+        JsonNode jsFeaturesOrPngs = jsFeature.get(var);
         List<ImFeatureOrPng> imFeatureOrPngs = parseFeaturesOrPngs(depth, jsFeaturesOrPngs);
         return new ImFeature(depth, var, imFeatureOrPngs);
     }

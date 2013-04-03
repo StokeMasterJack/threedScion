@@ -1,6 +1,5 @@
 package c3i.imageModel.shared;
 
-import c3i.featureModel.shared.boolExpr.Var;
 import smartsoft.util.shared.Path;
 
 import java.util.HashSet;
@@ -38,12 +37,12 @@ public class PngSpec {
 //        return srcPng.indexOf(accessory);
 //    }
 
-    public Set<Var> getFeatures() {
+    public Set<String> getFeatures() {
         if (!isLifted()) {
             return srcPng.getFeatures();
         } else {
-            HashSet<Var> features = new HashSet<Var>(srcPng.getFeatures());
-            Var f = srcPng.getLiftTrigger();
+            HashSet<String> features = new HashSet<String>(srcPng.getFeatures());
+            String f = srcPng.getLiftTrigger();
             features.add(f);
             return features;
         }

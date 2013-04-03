@@ -1,6 +1,5 @@
 package c3i.imageModel.shared;
 
-import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -267,11 +266,11 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         }
     }
 
-    public Set<Var> getPngVars(int angle) {
-        HashSet<Var> vars = new HashSet<Var>();
+    public Set<String> getPngVars(int angle) {
+        HashSet<String> vars = new HashSet<String>();
 
         if (liftSpec != null) {
-            Var triggerFeature = liftSpec.getTriggerFeature();
+            String triggerFeature = liftSpec.getTriggerFeature();
             vars.add(triggerFeature);
         }
 
@@ -279,7 +278,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return vars;
     }
 
-    public void getPngVars(Set<Var> varSet, int angle) {
+    public void getPngVars(Set<String> varSet, int angle) {
         for (int i = 0; i < layers.size(); i++) {
             ImLayer imLayer = layers.get(i);
             if (imLayer.isZLayer()) continue;

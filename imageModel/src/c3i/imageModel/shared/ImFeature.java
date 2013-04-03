@@ -1,18 +1,16 @@
 package c3i.imageModel.shared;
 
 
-import c3i.featureModel.shared.boolExpr.Var;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrFeature, IsChild, IsParent<ImFeatureOrPng> {
 
-    private final Var var;
+    private final String  var;
     private final List<ImFeatureOrPng> childNodes;
 
-    public ImFeature(int depth, Var var, List<ImFeatureOrPng> childNodes) {
+    public ImFeature(int depth, String  var, List<ImFeatureOrPng> childNodes) {
         super(depth);
         if (var == null) throw new IllegalArgumentException("var must be non-null");
         if (childNodes == null) throw new IllegalArgumentException("childNodes must be non-null");
@@ -26,10 +24,10 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
 
     @Override
     public String getName() {
-        return var.toString();
+        return var;
     }
 
-    public Var getVar() {
+    public String  getVar() {
         return var;
     }
 
@@ -100,7 +98,7 @@ public class ImFeature extends ImChildBase implements ImFeatureOrPng, ImLayerOrF
     }
 
     @Override
-    public void getVarSet(Set<Var> varSet, int angle) {
+    public void getVarSet(Set<String> varSet, int angle) {
         varSet.add(var);
         for (int i = 0; i < childNodes.size(); i++) {
             ImFeatureOrPng featureOrPng = childNodes.get(i);

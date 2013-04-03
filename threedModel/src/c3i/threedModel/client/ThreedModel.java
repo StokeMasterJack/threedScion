@@ -10,7 +10,6 @@ import c3i.imageModel.shared.ImageModel;
 import c3i.imageModel.shared.Slice;
 import c3i.imageModel.shared.ViewKeyOld;
 import c3i.imageModel.shared.ViewSlice;
-import c3i.threedModel.shared.IThreedModel;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ThreedModel implements IThreedModel<SeriesKey, Var> {
+public class ThreedModel  {
 
     private final FeatureModel featureModel;
     private final ImageModel imageModel;
@@ -120,7 +119,7 @@ public class ThreedModel implements IThreedModel<SeriesKey, Var> {
     }
 
 
-    public Collection<Var> getPngVarsForSlice1(Slice slice) {
+    public Collection<String> getPngVarsForSlice1(Slice slice) {
         String viewName = slice.getView();
         ImView view = imageModel.getView(viewName);
         return view.getPngVars(slice.getAngle());
@@ -184,8 +183,6 @@ public class ThreedModel implements IThreedModel<SeriesKey, Var> {
         }
         return vars;
     }
-
-
 
 
 }

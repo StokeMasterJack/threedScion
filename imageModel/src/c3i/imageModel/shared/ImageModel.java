@@ -1,6 +1,5 @@
 package c3i.imageModel.shared;
 
-import c3i.featureModel.shared.boolExpr.Var;
 import c3i.featureModel.shared.common.SeriesKey;
 import smartsoft.util.shared.Path;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot, IImageModel<SeriesKey, Var> {
+public class ImageModel extends ImNodeBase implements IsParent<ImView>, IsRoot {
 
     private final SeriesKey seriesKey;
     private final List<ImView> imViews;
