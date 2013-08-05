@@ -17,8 +17,9 @@ import c3i.repo.server.SeriesRepo;
 import com.google.common.collect.ImmutableMap;
 import java.util.logging.Logger;
 
-import smartsoft.util.CommandLineArgs;
+import smartsoft.util.args.CommandLineArgs;
 import smartsoft.util.Sys;
+import smartsoft.util.args.Schema;
 
 import java.awt.*;
 import java.io.File;
@@ -31,16 +32,16 @@ public class JpgGenCommandLine {
 
     private static final NumberFormat PERCENT_FORMAT = NumberFormat.getPercentInstance();
 
-    private final Args args;
+    private final Args args = null;
 
     public JpgGenCommandLine(String... a) {
-        args = new Args(a);
-
-        //ide mode only
-        args.putRaw(Args.REPO_BASE, "/configurator-content-toyota");
-
-        System.out.println("Using options:");
-        args.printMerged(1);
+//        args = new Args(a);
+//
+//        //ide mode only
+//        args.putRaw(Args.REPO_BASE, "/configurator-content-toyota");
+//
+//        System.out.println("Using options:");
+//        args.printMerged(1);
 
 //        Repos.setRepoBaseDir(args.getRepoBase());
     }
@@ -153,8 +154,12 @@ public class JpgGenCommandLine {
             return b.build();
         }
 
-        public Args(String[] args) {
-            super(args, buildDefaults());
+//        public Args(String[] args) {
+//            super(args, buildDefaults());
+//        }
+
+        public Args(Schema schema, String... args) {
+            super(schema, args);
         }
 
         public File getRepoBase() {
