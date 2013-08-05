@@ -8,7 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/jsDemoWebApp/jsDemoWebApp.iml" filepath="$PROJECT_DIR$/jsDemoWebApp/jsDemoWebApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/nfc/nfc.iml" filepath="$PROJECT_DIR$/nfc/nfc.iml" />
       <module fileurl="file://$PROJECT_DIR$/repoWebApp/repoWebApp.iml" filepath="$PROJECT_DIR$/repoWebApp/repoWebApp.iml" />
-      <module fileurl="file://$repos$/ut/ut/ut.iml" filepath="$repos$/ut/ut/ut.iml" />
+      <module fileurl="file://$repos$/ssutil/ssutil.iml" filepath="$repos$/ssutil/ssutil.iml" />
     </modules>
   </component>
 </project>

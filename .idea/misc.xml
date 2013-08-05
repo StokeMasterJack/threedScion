@@ -15,137 +15,39 @@
     <option name="OPEN_IN_BROWSER" value="true" />
     <option name="OUTPUT_DIRECTORY" value="/temp/exportToHTML" />
   </component>
-  <component name="FacetAutodetectingManager">
-    <autodetection-disabled>
-      <facet-type id="gwt">
-        <modules>
-          <module name="adminTool">
-            <files>
-              <file url="file://$PROJECT_DIR$/adminTool/src/java/com/tms/nfc/adminTool/AdminTool.gwt.xml" />
-            </files>
-          </module>
-          <module name="featureModel">
-            <files>
-              <file url="file://$PROJECT_DIR$/featureModel/src/com/tms/threed/featureModel/FeatureModel.gwt.xml" />
-            </files>
-          </module>
-          <module name="featurePicker">
-            <files>
-              <file url="file://$PROJECT_DIR$/featurePicker/src/com/tms/threed/featurePicker/FeaturePicker.gwt.xml" />
-              <file url="file://$PROJECT_DIR$/featurePicker/src/com/tms/threed/featurePicker/FeaturePickerTest.gwt.xml" />
-            </files>
-          </module>
-          <module name="gwtCollections">
-            <files>
-              <file url="file://$PROJECT_DIR$/gwtCollections/out/production/gwtCollections/com/google/gwt/collections/Collections.gwt.xml" />
-              <file url="file://$PROJECT_DIR$/gwtCollections/src/com/google/gwt/collections/Collections.gwt.xml" />
-            </files>
-          </module>
-          <module name="imageModel">
-            <files>
-              <file url="file://$PROJECT_DIR$/imageModel/src/com/tms/threed/imageModel/ImageModel.gwt.xml" />
-            </files>
-          </module>
-          <module name="previewPane">
-            <files>
-              <file url="file://$PROJECT_DIR$/previewPane/src/com/tms/threed/previewPane/PreviewPane.gwt.xml" />
-              <file url="file://$PROJECT_DIR$/previewPane/src/com/tms/threed/previewPane/PreviewPaneTest.gwt.xml" />
-            </files>
-          </module>
-          <module name="previewPaneAdapter">
-            <files>
-              <file url="file://$PROJECT_DIR$/previewPaneAdapter/src/com/tms/threed/previewPaneAdapter/PreviewPaneAdapter.gwt.xml" />
-            </files>
-          </module>
-          <module name="previewPanel">
-            <files>
-              <file url="file://$PROJECT_DIR$/previewPanel/src/com/tms/threed/previewPanel/PreviewPanel.gwt.xml" />
-              <file url="file://$PROJECT_DIR$/previewPanel/src/com/tms/threed/previewPanel/PreviewPanelTest.gwt.xml" />
-            </files>
-          </module>
-          <module name="Threed_Framework">
-            <files>
-              <file url="file:///temp/Threed_Framework-2010-03-27-BU/src/java/com/tms/threed/Threed.gwt.xml" />
-            </files>
-          </module>
-          <module name="threedAdmin" />
-          <module name="threedCore">
-            <files>
-              <file url="file://$PROJECT_DIR$/threedCore/src/com/tms/threed/threedCore/ThreedCore.gwt.xml" />
-            </files>
-          </module>
-          <module name="threedFramework">
-            <files>
-              <file url="file://$PROJECT_DIR$/threedFramework/src/com/tms/threed/Threed.gwt.xml" />
-            </files>
-          </module>
-          <module name="util">
-            <files>
-              <file url="file://$PROJECT_DIR$/util/src/com/tms/nfc/util/Util.gwt.xml" />
-              <file url="file://$PROJECT_DIR$/util/src/com/tms/threed/util/Util.gwt.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
-      <facet-type id="javaeeApplication">
-        <modules>
-          <module name="Configurator-ToyotaApp">
-            <files>
-              <file url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
-              <file url="file://$repos$/Configurator-ToyotaApp/src/ear/application.xml" />
-              <file url="file://$PROJECT_DIR$/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
-      <facet-type id="web">
-        <modules>
-          <module name="adminTool">
-            <files>
-              <file url="file://$PROJECT_DIR$/adminTool/src/web/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="Configurator-ToyotaApp">
-            <files>
-              <file url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
-              <file url="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
-              <file url="file://$repos$/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="htdocs">
-            <files>
-              <file url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pub/WEB-INF/web.xml" />
-              <file url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pubOriginal/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="jpgGen">
-            <files>
-              <file url="file://$PROJECT_DIR$/jpgGen/web/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="jpgGenerator">
-            <files>
-              <file url="file://$PROJECT_DIR$/jpgGenerator/WebContent/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="previewPane">
-            <files>
-              <file url="file://$PROJECT_DIR$/previewPane/web/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="repoServlets">
-            <files>
-              <file url="file://$PROJECT_DIR$/repoServlets/web/WEB-INF/web.xml" />
-            </files>
-          </module>
-          <module name="ThreedAdmin">
-            <files>
-              <file url="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/ThreedAdmin/src/docroot/WEB-INF/web.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
-    </autodetection-disabled>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="gwt" url="file:///temp/Threed_Framework-2010-03-27-BU/src/java/com/tms/threed/Threed.gwt.xml" />
+    <file type="gwt" url="file://$repos$/ssutil" />
+    <file type="gwt" url="file://$PROJECT_DIR$/adminTool/src/java/com/tms/nfc/adminTool/AdminTool.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/featureModel/src/com/tms/threed/featureModel/FeatureModel.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/featurePicker/src/com/tms/threed/featurePicker/FeaturePicker.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/featurePicker/src/com/tms/threed/featurePicker/FeaturePickerTest.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/gwtCollections/out/production/gwtCollections/com/google/gwt/collections/Collections.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/gwtCollections/src/com/google/gwt/collections/Collections.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/imageModel/src/com/tms/threed/imageModel/ImageModel.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/previewPane/src/com/tms/threed/previewPane/PreviewPane.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/previewPane/src/com/tms/threed/previewPane/PreviewPaneTest.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/previewPaneAdapter/src/com/tms/threed/previewPaneAdapter/PreviewPaneAdapter.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/previewPanel/src/com/tms/threed/previewPanel/PreviewPanel.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/previewPanel/src/com/tms/threed/previewPanel/PreviewPanelTest.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/threedCore/src/com/tms/threed/threedCore/ThreedCore.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/threedFramework/src/com/tms/threed/Threed.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/util/src/com/tms/nfc/util/Util.gwt.xml" />
+    <file type="gwt" url="file://$PROJECT_DIR$/util/src/com/tms/threed/util/Util.gwt.xml" />
+    <file type="javaeeApplication" url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
+    <file type="javaeeApplication" url="file://$repos$/Configurator-ToyotaApp/src/ear/application.xml" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/ear/application.xml" />
+    <file type="web" url="file:///../_projects/tmsRepo/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
+    <file type="web" url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pub/WEB-INF/web.xml" />
+    <file type="web" url="file:///../_projects/tmsRepo/TMS/htdocs/configurator_toyota/pubOriginal/WEB-INF/web.xml" />
+    <file type="web" url="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
+    <file type="web" url="file://$USER_HOME$/cvsCheckouts/CVSROOT/TMS/apps/ThreedAdmin/src/docroot/WEB-INF/web.xml" />
+    <file type="web" url="file://$repos$/Configurator-ToyotaApp/src/docroot/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/adminTool/src/web/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/jpgGen/web/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/jpgGenerator/WebContent/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/previewPane/web/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/repoServlets/web/WEB-INF/web.xml" />
   </component>
   <component name="IdProvider" IDEtalkID="3AA234F3284B11A001C2C7AFDD0424F1" />
   <component name="JavadocGenerationManager">
@@ -170,6 +72,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/gwt-exporter/pom.xml" />
+        <option value="$repos$/ssutil/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
