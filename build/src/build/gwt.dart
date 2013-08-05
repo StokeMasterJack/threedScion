@@ -22,22 +22,22 @@ void main(){
     try{
     
       if(mode==null){
-        throw new IllegalArgumentException("mode is required");
+        throw new ArgumentError("mode is required");
       }
      
       if(app==null){
-        throw new IllegalArgumentException("app is required");
+        throw new ArgumentError("app is required");
       }
   
       if(!apps.containsKey(app) && app != "all"){
-        throw new IllegalArgumentException("Invalid appName: $app");
+        throw new ArgumentError("Invalid appName: $app");
       }
       
       if(!modes.contains(mode)){
-        throw new IllegalArgumentException("Invalid mode: $mode");
+        throw new ArgumentError("Invalid mode: $mode");
       }
     
-    } on IllegalArgumentException catch(e){
+    } on ArgumentError catch(e){
       print(e.message);
       print("Usage: ${usage}");
       return;
