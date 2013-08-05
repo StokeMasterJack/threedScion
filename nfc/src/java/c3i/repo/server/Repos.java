@@ -300,8 +300,8 @@ public class Repos {
             throw new IllegalStateException("repoBaseDir[" + repoBaseDir + "] which is defined in web.xml contains no child directories. ");
         }
 
-        System.out.println("seriesNameDirs.length = " + seriesNameDirs.length);
-        System.out.println("seriesNameDirs = " + Arrays.toString(seriesNameDirs));
+//        System.out.println("seriesNameDirs.length = " + seriesNameDirs.length);
+//        System.out.println("seriesNameDirs = " + Arrays.toString(seriesNameDirs));
 
         ArrayList<Series> seriesNamesWithYears = new ArrayList<Series>();
         for (File seriesNameDir : seriesNameDirs) {
