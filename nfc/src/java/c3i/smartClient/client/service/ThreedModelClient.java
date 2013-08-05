@@ -50,7 +50,7 @@ public class ThreedModelClient {
     private final Path repoBaseUrl;
     private final RequestContext requestContext;
 
-    private boolean jsonp = true;
+    private boolean jsonp = false;
 
     private UserLog userLog = UserLog.DEFAULT;
 
