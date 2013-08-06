@@ -1,8 +1,13 @@
 #!/usr/bin/env dart
 
-#import('dart:io');
+import 'dart:io';
+import 'dart:async';
+import 'dart:collection';
 
 String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo|all";
+
+String modeDefault = "compile";
+String appDefault = "jsDemo";
 
 Map<String,App> apps = {
   "gwtDemo":new App(contextPath:"gwtDemo",module:"c3i.gwtDemo.GwtDemo",startupPage:"GwtDemo.html"),
@@ -22,11 +27,13 @@ void main(){
     try{
     
       if(mode==null){
-        throw new ArgumentError("mode is required");
+        mode = modeDefault;
+        //throw new ArgumentError("mode is required");
       }
      
       if(app==null){
-        throw new ArgumentError("app is required");
+        app = appDefault;
+        //throw new ArgumentError("app is required");
       }
   
       if(!apps.containsKey(app) && app != "all"){
@@ -44,7 +51,7 @@ void main(){
     }
     
     bool devMode = mode=="dev";
-    Collection<App> appsToProcess = app=="all"?apps.values:[apps[app]]; 
+    Iterable<App> appsToProcess = app=="all"?apps.values:[apps[app]]; 
     appsToProcess.forEach( (App a) => doIt(devMode,a) );
 }
 
@@ -81,17 +88,18 @@ void doIt(bool devMode,App a) {
   
   var apps = '$cvsRoot/TMS/apps';
   var frameworks = '$cvsRoot/TMS/framework';
+  var m2 = '/Users/dford/.m2/repository';
   var lib = '/Users/dford/daven-repository';
   
   var threedRepo = '$repos/threedScion';
-  var utilRepo = '$repos/ut';
+  var utilRepo = '$repos/ssutil';
   
   
   List<String> srcFolders = [
     '$threedRepo/nfc/src/java',
     '$threedRepo/adminWebApp/src',
     '$threedRepo/gwtDemoWebApp/src',
-    '$utilRepo/ut/src/java',
+    '$utilRepo/src',
   ];       
   
 //  var gwtVersion = '2.5.0';
@@ -105,14 +113,17 @@ void doIt(bool devMode,App a) {
     '$gwtHome/gwt-servlet-deps.jar',
     '$gwtHome/validation-api-1.0.0.GA.jar',
     '$gwtHome/validation-api-1.0.0.GA-sources.jar',
+    
     '$lib/jsr305/1.0/jsr305.jar',
-    '$lib/guava/11.0/guava-11.0.2.jar',
-    '$lib/guava/11.0/guava-gwt-11.0.2.jar',
-    '$lib/gwtexporter/SNAPSHOT/gwtexporter-2.4.0-M2-SNAPSHOT.jar', 
+    '$lib/gwtexporter/gwtexporter-2.4.0-SNAPSHOT.jar',
+
+    '$m2/com/google/guava/guava/11.0.2/guava-11.0.2.jar',
+    '$m2/com/google/guava/guava-gwt/11.0.2/guava-gwt-11.0.2.jar'
+     
   ];
   
-  String cpSrc = Strings.join(srcFolders, ":");
-  String cpLibs = Strings.join(libs,':');
+  String cpSrc = srcFolders.join(":");
+  String cpLibs = libs.join(':');
   
   var cp = "${cpSrc}:${cpLibs}";
   
@@ -188,24 +199,38 @@ void doIt(bool devMode,App a) {
   });
   
   processArgs.add(modFullName);
+  
+  
 
+  print('About to start process');
   Process.start('java',processArgs).then((Process p){
-    var stdoutStream = new StringInputStream(p.stdout);
-    var stderrStream = new StringInputStream(p.stderr);
     
-    stdoutStream.onLine = () {
-      print(stdoutStream.readLine());
-    };
-  
-    stderrStream.onLine = () {
-      print(stderrStream.readLine());
-    };
-  
-    p.onExit = (exitCode) {
+    Stream<List<int>> stdoutStream = p.stdout;
+    Stream<List<int>> stderrStream = p.stderr;
+    
+    stdoutStream
+      .transform(new StringDecoder())
+      .transform(new LineTransformer())
+      .listen((String line) { print(line); },
+          onDone: () { print('no more lines'); },
+          onError: (e) { print('onError: $e'); });
+    
+    stderrStream
+    .transform(new StringDecoder())
+      .transform(new LineTransformer())
+      .listen((String line) { print(line); },
+          onDone: () { print('no more lines'); },
+          onError: (e) { print('onError: $e'); });
+    
+    
+    Future<int>  exitCode = p.exitCode;
+    exitCode.then( (exitCode) {
       print('exit code: $exitCode');
-    };
+    });
     
   });
+  
+  print('Process started!');
   
   
   
