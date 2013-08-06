@@ -151,7 +151,12 @@ public class ThreedModelClient {
 
     public Future<Brand> getBrandInit(BrandKey brandKey) throws Exception {
         final Completer<Brand> f = new CompleterImpl<Brand>();
-        brandLoaderFunctionJsonp.start(brandKey, f);
+
+        if (jsonp) {
+            brandLoaderFunctionJsonp.start(brandKey, f);
+        } else {
+            brandLoaderFunctionXhr.start(brandKey, f);
+        }
         return f.getFuture();
     }
 
