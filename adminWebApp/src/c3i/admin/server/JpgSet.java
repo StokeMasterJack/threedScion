@@ -26,6 +26,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * JpgSet is profile neutral: i.e. it can be shared between profiles (i.e. jpgWidth/baseImageType)
+ */
 public class JpgSet implements Serializable {
 
     private static final long serialVersionUID = 8042356853513828480L;
@@ -55,9 +58,14 @@ public class JpgSet implements Serializable {
         HashSet<PngSegments> hashSet = new HashSet<PngSegments>();
         try {
             is = new BufferedReader(new FileReader(specFileName));
-            String fingerprint = is.readLine();
-            PngSegments pngSegments = new PngSegments(fingerprint);
-            hashSet.add(pngSegments);
+            while (true) {
+                String fingerprint = is.readLine();
+                if (fingerprint == null) {
+                    break;
+                }
+                PngSegments pngSegments = new PngSegments(fingerprint);
+                hashSet.add(pngSegments);
+            }
             return new JpgSet(ImmutableSet.copyOf(hashSet), key);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -110,7 +118,7 @@ public class JpgSet implements Serializable {
         });
 
         treeSearch.start(csp);
-        return new JpgSet(ImmutableSet.copyOf(set),key);
+        return new JpgSet(ImmutableSet.copyOf(set), key);
     }
 
     @Override
@@ -151,6 +159,11 @@ public class JpgSet implements Serializable {
 
         public File getFileName(File cacheDir) {
             return new File(cacheDir, getKey() + ".txt");
+        }
+
+        @Override
+        public String toString() {
+            return getKey();
         }
     }
 }
