@@ -576,7 +576,7 @@ public class Master {
         private final Class<T> id;
 
         private MyThreadPoolExecutor(Class<T> id, int nThreads) {
-            this(id, nThreads, Thread.NORM_PRIORITY);
+            this(id, nThreads, Thread.MIN_PRIORITY);
 
         }
 
