@@ -54,10 +54,9 @@ class ModeSelector extends FlowPanel {
 
     private ListBox createListBox() {
         ListBox b = new ListBox();
-        ImageMode[] values = ImageMode.values();
-        for (ImageMode value : values) {
-            b.addItem(value.name());
-        }
+        b.addItem(ImageMode.JPG.name());
+        b.addItem(ImageMode.JPG_SKIP_Z_LAYERS.name());
+        b.addItem(ImageMode.PNG.name());
         return b;
     }
 

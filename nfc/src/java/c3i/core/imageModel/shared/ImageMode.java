@@ -1,7 +1,7 @@
 package c3i.core.imageModel.shared;
 
 public enum ImageMode {
-    PNG, JPG, JPG_SKIP_Z_LAYERS;
+    JPG, JPG_SKIP_Z_LAYERS, PNG;
 
     public boolean isPngMode() {
         return this == PNG;
