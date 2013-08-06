@@ -91,8 +91,44 @@ public class MasterTest implements TestConstants {
 
     }
 
+
     @Test
-    public void test2() throws Exception {
+    public void test_MasterAvalon() throws Exception {
+        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
+        SeriesId seriesId = repos.getHead(seriesKey);
+
+        Profile profile = repos.getProfiles().get("wStd");
+        final Master master = new Master(repos, new JobSpec(seriesId, profile), 5, Thread.NORM_PRIORITY);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+//                master.printStatusBrief();
+                printBrief(master.getStatus());
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 0, 5000);
+
+
+        System.err.println("awaitDoneDeep..");
+        master.awaitDoneDeep();
+        log.info("Complete!");
+
+
+        log.info("Final status:");
+        master.printStatus();
+
+        log.info(null);
+
+        master.getStats().printDeltas();
+
+
+    }
+
+
+    @Test
+    public void test_MasterTundra() throws Exception {
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
         SeriesId seriesId = repos.getHead(seriesKey);
 
@@ -127,10 +163,8 @@ public class MasterTest implements TestConstants {
 
     @Test
     public void testAnalOnly() throws Exception {
-//        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2013, "tundra");
         SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2011, "avalon");
         SeriesId seriesId = repos.getHead(seriesKey);
-
 
         ThreedModel threedModel = repos.getThreedModel(seriesId);
 
@@ -239,16 +273,7 @@ public class MasterTest implements TestConstants {
 
     }
 
-    @Test
-    public void test4() throws Exception {
 
-
-
-        System.out.println(VM.maxDirectMemory());
-        //  129,957,888
-        //2,117,795,840
-
-    }
 
     private static Logger log = Logger.getLogger("c3i");
 
