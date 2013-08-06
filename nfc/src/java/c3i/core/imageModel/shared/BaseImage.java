@@ -1,6 +1,7 @@
 package c3i.core.imageModel.shared;
 
 import c3i.core.common.shared.SeriesKey;
+import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.Slice2;
 import smartsoft.util.shared.Path;
 
@@ -77,8 +78,14 @@ public class BaseImage extends AbstractImImage implements IBaseImageKey {
         return slice.getView().getSeries().getSeriesKey();
     }
 
+
     @Override
     public boolean isLayerPng() {
         return false;
     }
+
+
+
+
+
 }

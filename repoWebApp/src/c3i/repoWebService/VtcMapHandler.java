@@ -40,7 +40,8 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
         response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
 
-        CacheUtil.addCacheNeverResponseHeaders(response);
+//        CacheUtil.addCacheNeverResponseHeaders(response);
+        CacheUtil.addCacheForXHoursResponseHeaders(response, 24);
 
         BrandKey brandKey = r.getBrandKey();
         Repos repos = r.getRepos();

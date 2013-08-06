@@ -11,16 +11,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class CacheFilter implements Filter {
 
-    public CacheFilter() {
-        System.out.println("CacheFilter.CacheFilter");
-    }
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("CacheFilter.init");
+        log.info("SmartClient CacheFilter.init");
     }
 
     @Override
@@ -30,17 +27,10 @@ public class CacheFilter implements Filter {
 
         if (CacheUtil.isDotCacheFile(req)) {
             CacheUtil.addCacheForeverResponseHeaders(response);
+
         } else if (CacheUtil.isDotNocacheFile(req)) {
-            CacheUtil.addCacheNeverResponseHeaders(response);
-        } else {
-            String uri = request.getRequestURI();
-            if (request.getMethod().equalsIgnoreCase("GET")) {
-                if (uri.contains("gwt/chrome")) {
-                    CacheUtil.addCacheForXDaysResponseHeaders(response, 30);
-                } else if (uri.contains("help_16.png")) {
-                    CacheUtil.addCacheForeverResponseHeaders(response);
-                }
-            }
+//            CacheUtil.addCacheNeverResponseHeaders(response);
+            CacheUtil.addCacheForXHoursResponseHeaders(response, 24);
         }
 
         chain.doFilter(request, response);
@@ -49,6 +39,8 @@ public class CacheFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        log.info("SmartClient CacheFilter.destroy");
     }
+
+    private static Logger log = Logger.getLogger(CacheFilter.class.getName());
 }

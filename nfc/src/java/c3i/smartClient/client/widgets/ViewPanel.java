@@ -17,7 +17,10 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.logging.Level;import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import smartsoft.util.shared.Path;
 import smartsoft.util.shared.RectSize;
 
 import static smartsoft.util.shared.GwtSafe.getSimpleName;
@@ -159,7 +162,9 @@ public class ViewPanel extends ComplexPanel {
             for (int i = 0; i < IMAGE_COUNT; i++) {
                 try {
                     Img img = imageStack.get(i);
-                    imageWidgets.get(i).setUrl(img.getUrl());
+                    ImageWidget imageWidget = imageWidgets.get(i);
+                    Path url = img.getUrl();
+                    imageWidget.setUrl(url);
                     boolean imageEnable = img.isEnabled();
                     imageWidgets.get(i).setVisible(imageEnable);
                 } catch (IndexOutOfBoundsException e) {

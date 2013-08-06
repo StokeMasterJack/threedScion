@@ -24,12 +24,14 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.eclipse.jgit.lib.ObjectId;
 import smartsoft.util.FileUtil;
+import smartsoft.util.Props;
 import smartsoft.util.shared.RectSize;
 import smartsoft.util.shared.Strings;
 
@@ -42,6 +44,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -203,7 +206,8 @@ public class Repos {
     public Brand getBrandInitData() {
         VtcMap vtcMap = getVtcMap();
         Profiles profiles = getProfiles();
-        return new Brand(brandKey, vtcMap, profiles);
+        Map<String,String> config = getConfig();
+        return new Brand(brandKey, vtcMap, profiles,config);
     }
 
     private Profiles profiles;
@@ -237,7 +241,7 @@ public class Repos {
                             baseImageType = BaseImageType.valueOf(sBaseImageType);
                         }
                     } catch (IllegalArgumentException e) {
-                        log.log(Level.SEVERE,"Problem reading baseImageType", e);
+                        log.log(Level.SEVERE, "Problem reading baseImageType", e);
                         baseImageType = BaseImageType.JPG;
                     }
                 } else {
@@ -271,6 +275,25 @@ public class Repos {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Map<String,String> getConfig() {
+        File repoBaseDir = getRepoBaseDir();
+        if (repoBaseDir == null) throw new IllegalStateException();
+        File brandBaseDir = repoBaseDir;
+        if (!brandBaseDir.exists()) {
+            log.warning("Missing config brandBaseDir: " + brandBaseDir);
+            return ImmutableMap.of();
+        }
+
+        File configFile = new File(brandBaseDir, ".profiles/config.properties");
+        if (!configFile.exists()) {
+            log.warning("Missing config file: " + configFile);
+            return ImmutableMap.of();
+        }
+
+        return Props.readFromFile(configFile);
+
     }
 
     public Set<SeriesKey> getSeriesKeys() {

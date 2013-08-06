@@ -8,9 +8,13 @@ import java.io.Serializable;
 
 public class BrandKey implements Serializable {
 
-    public static final BrandKey TOYOTA = new BrandKey("toyota");
-    public static final BrandKey SCION = new BrandKey("scion");
-    public static final BrandKey LEXUS = new BrandKey("lexus");
+    private static final String SCION_KEY = "scion";
+    private static final String TOYOTA_KEY = "toyota";
+    private static final String LEXUS_KEY = "lexus";
+
+    public static final BrandKey TOYOTA = new BrandKey(TOYOTA_KEY);
+    public static final BrandKey SCION = new BrandKey(SCION_KEY);
+    public static final BrandKey LEXUS = new BrandKey(LEXUS_KEY);
 
     private static final ImmutableList<BrandKey> ALL = ImmutableList.of(TOYOTA, SCION, LEXUS);
 
@@ -60,12 +64,9 @@ public class BrandKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         BrandKey brandKey = (BrandKey) o;
+        return key.equals(brandKey.key);
 
-        if (!key.equals(brandKey.key)) return false;
-
-        return true;
     }
 
     @Override

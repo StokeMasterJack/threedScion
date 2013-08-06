@@ -9,6 +9,9 @@
         <webroots>
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$repos$/threedScion/smartClientWebApp/src" />
+        </sourceRoots>
       </configuration>
     </facet>
     <facet type="gwt" name="GWT">
@@ -23,15 +26,12 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$repos$/threedScion/smartClientWebApp/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="servlet-api-2.5" level="application" />
-    <orderEntry type="module" module-name="nfc" />
-    <orderEntry type="library" scope="PROVIDED" name="gwtexporter-2.4.0-M2-SNAPSHOT" level="application" />
-    <orderEntry type="library" name="jsr305" level="application" />
-    <orderEntry type="library" name="com.google.guava:guava:13.0.1" level="application" />
+    <orderEntry type="module" module-name="ssutil" />
   </component>
 </module>
 

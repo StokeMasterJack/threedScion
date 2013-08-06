@@ -8,11 +8,14 @@ import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.VtcMap;
 import com.google.common.collect.ImmutableList;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.node.ObjectNode;
 import smartsoft.util.shared.RectSize;
 
 import java.util.List;
+import java.util.Map;
 
 public class BrandSerializer {
 
@@ -24,6 +27,15 @@ public class BrandSerializer {
         o.put("brandKey", brandKey.toJson());
         o.put("vtcMap", toJson(brand.getVtcMap()));
         o.put("profileMap", toJson(brand.getProfiles()));
+
+        ObjectNode configJson = objectMapper.createObjectNode();
+        Map<String,String> configMap = brand.getConfig();
+        for (String propName : configMap.keySet()) {
+            String propValue = configMap.get(propName);
+            configJson.put(propName, propValue);
+        }
+
+        o.put("config",configJson);
         return o;
     }
 

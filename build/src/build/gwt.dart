@@ -129,8 +129,8 @@ void doIt(bool devMode,App a) {
   
   var gwtParamsCommon = {
        'war':             '$userHome/p-java/apache-tomcat-6.0.10/webapps/${a.contextPath}/',
-       'logLevel':        'DEBUG',
-//       'logLevel':        'WARN',
+//       'logLevel':        'DEBUG',
+       'logLevel':        'WARN',
        'extra':           '$userHome/temp/gwt/extra',
        'gen':             '$userHome/temp/gwt/gen',
        'workDir':         '$userHome/temp/gwt/workDir'
@@ -159,7 +159,7 @@ void doIt(bool devMode,App a) {
   }
   
   var gwtParamsCompile = {
-  //        'style':                   'PRETTY'
+//          'style':                   'PRETTY'
       'style':                   'OBF'
   //        'draftCompile':            '',
   //        'localWorkers':            '2',

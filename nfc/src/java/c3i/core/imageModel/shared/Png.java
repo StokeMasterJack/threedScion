@@ -1,5 +1,6 @@
 package c3i.core.imageModel.shared;
 
+import c3i.core.common.shared.SeriesKey;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,7 +16,6 @@ public abstract class Png extends AbstractImImage {
     }
 
     public Path getUrl(Path repoBaseUrl) {
-        String profileKey = profile.getKey();
         ImSeries series = basePng.getSeries();
         String pngUrlSegment = basePng.serializeToUrlSegment();
         Path threedBaseUrl = series.getThreedBaseUrl(repoBaseUrl);
@@ -41,6 +41,11 @@ public abstract class Png extends AbstractImImage {
         int result = profile.hashCode();
         result = 31 * result + basePng.hashCode();
         return result;
+    }
+
+    @Override
+    public SeriesKey getSeriesKey() {
+        return basePng.getSeries().getSeriesKey();
     }
 
 

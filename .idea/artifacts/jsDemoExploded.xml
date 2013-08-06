@@ -2,7 +2,12 @@
   <artifact type="exploded-war" build-on-make="true" name="jsDemoExploded">
     <output-path>$USER_HOME$/p-java/apache-tomcat-6.0.10/webapps/smartClient</output-path>
     <root id="root">
-      <element id="directory" name="WEB-INF" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ssutil" />
+          <element id="module-output" name="jsDemoWebApp" />
+        </element>
+      </element>
       <element id="javaee-facet-resources" facet="jsDemoWebApp/web/Web" />
     </root>
   </artifact>

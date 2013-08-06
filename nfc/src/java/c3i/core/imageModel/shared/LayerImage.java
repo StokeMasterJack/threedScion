@@ -1,12 +1,13 @@
 package c3i.core.imageModel.shared;
 
+import c3i.core.common.shared.SeriesKey;
 import smartsoft.util.shared.Path;
 
 public class LayerImage extends AbstractImImage {
 
     private final PngSpec pngSpec;
 
-    public LayerImage(Profile profile,PngSpec pngSpec) {
+    public LayerImage(Profile profile, PngSpec pngSpec) {
         super(profile);
         this.pngSpec = pngSpec;
     }
@@ -23,5 +24,10 @@ public class LayerImage extends AbstractImImage {
 
     public PngSpec getSrcPng() {
         return pngSpec;
+    }
+
+    @Override
+    public SeriesKey getSeriesKey() {
+        return pngSpec.getSeries().getSeriesKey();
     }
 }

@@ -140,12 +140,13 @@ public class ThreedSessionFactory implements Exportable {
                 public void onSuccess(@Nonnull Brand brand) {
                     final Profile profile = brand.getProfile(profileKey);
                     SeriesId seriesId = brand.getSeriesId(seriesKey);
+                    final Path imageRepoBaseUrl = brand.getImageRepoBaseUrl();
                     final ThreedModelLoader seriesLoader = new ThreedModelLoader(threedModelClient, seriesId);
                     final Future<ThreedModel> seriesFuture = seriesLoader.ensureLoaded();
                     seriesFuture.success(new OnSuccess<ThreedModel>() {
                         @Override
                         public void onSuccess(@Nonnull ThreedModel threedModel) {
-                            ThreedSession session = new ThreedSession(repoBaseUrl, threedModel, profile);
+                            ThreedSession session = new ThreedSession(imageRepoBaseUrl, threedModel, profile);
                             threedSessionCompleter.setResult(session);
                         }
                     });

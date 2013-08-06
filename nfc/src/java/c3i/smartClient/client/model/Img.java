@@ -21,6 +21,11 @@ import java.util.HashMap;
 
 public class Img implements Exportable {
 
+    public static final String CONFIGURATOR_CONTENT_V2 = "configurator-content-v2";
+    public static final Path SCION_MEDIA_DOMAIN = new Path("http://media.scion.com");
+    public static final Path SCION_IMAGE_REPO_BASE = new Path(SCION_MEDIA_DOMAIN, CONFIGURATOR_CONTENT_V2);
+    public static final Path TOYOTA_IMAGE_REPO_BASE = new Path("/" + CONFIGURATOR_CONTENT_V2);
+
     private final ImImage imImage;
     private final Path url;
     private final LayerState m;
@@ -50,7 +55,15 @@ public class Img implements Exportable {
     public Img(Path repoBaseUrl, ImImage imImage, LayerState m) {
         Preconditions.checkNotNull(imImage);
         this.imImage = imImage;
+
+//        if (imImage.isScionImage()) {
+//            this.url = imImage.getUrl(SCION_IMAGE_REPO_BASE);
+//        } else {
+//            this.url = imImage.getUrl(repoBaseUrl);
+//        }
+
         this.url = imImage.getUrl(repoBaseUrl);
+
         this.m = m;
 
         ImageElement cachedImageElement = cache.get(url);
@@ -63,7 +76,7 @@ public class Img implements Exportable {
             Event.setEventListener(imageElement, domEventListener);
             Event.sinkEvents(imageElement, Event.ONLOAD | Event.ONERROR);
 //            log.log(Level.INFO, "loading: " + url);
-            cache.put(url,imageElement);
+            cache.put(url, imageElement);
             this.imageElement.setSrc(url.toString());  //start loading
         }
 
@@ -126,6 +139,7 @@ public class Img implements Exportable {
         return url;
     }
 
+
     @Export
     public boolean isFailed() {
         return loader.getFuture().isFailed();
@@ -168,7 +182,7 @@ public class Img implements Exportable {
     }
 
     public void setVisible(boolean newValue) {
-        imageElement.getStyle().setVisibility(newValue? Style.Visibility.VISIBLE : Style.Visibility.HIDDEN);
+        imageElement.getStyle().setVisibility(newValue ? Style.Visibility.VISIBLE : Style.Visibility.HIDDEN);
     }
 
 //    public LoadState getState(){

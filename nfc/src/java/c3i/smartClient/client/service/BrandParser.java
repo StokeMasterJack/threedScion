@@ -17,6 +17,8 @@ import com.google.gwt.json.client.JSONValue;
 import smartsoft.util.shared.RectSize;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -50,7 +52,19 @@ public class BrandParser {
         VtcMap vtcMap = parseVtcMap(brandKey, jsVtcMap);
         Profiles profiles = parseProfileMap(jsProfileMap);
 
-        return new Brand(brandKey, vtcMap, profiles);
+
+        Map<String, String> configMap = new HashMap<String, String>();
+        JSONValue config = jsBrandInit.get("config");
+        if (config != null) {
+            JSONObject jsConfig = config.isObject();
+            for (String key : jsConfig.keySet()) {
+                JSONValue jsonValue = jsConfig.get(key);
+                JSONString string = jsonValue.isString();
+                configMap.put(key, string.stringValue());
+            }
+        }
+
+        return new Brand(brandKey, vtcMap, profiles, configMap);
     }
 
     private VtcMap parseVtcMap(BrandKey brandKey, JSONObject json) {
