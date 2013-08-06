@@ -7,6 +7,7 @@
           <element id="module-output" name="nfc" />
           <element id="module-output" name="adminWebApp" />
           <element id="module-output" name="ut" />
+          <element id="module-output" name="ssutil" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="application" name="imgscalr-lib-4.2" />

@@ -8,6 +8,7 @@
           <element id="module-output" name="util" />
           <element id="module-output" name="repoWebApp" />
           <element id="module-output" name="ut" />
+          <element id="module-output" name="ssutil" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="application" name="imgscalr-lib-4.2" />
