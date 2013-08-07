@@ -7,7 +7,7 @@ import 'dart:collection';
 String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo|all";
 
 String modeDefault = "compile";
-String appDefault = "jsDemo";
+String appDefault = "admin";
 
 Map<String,App> apps = {
   "gwtDemo":new App(contextPath:"gwtDemo",module:"c3i.gwtDemo.GwtDemo",startupPage:"GwtDemo.html"),

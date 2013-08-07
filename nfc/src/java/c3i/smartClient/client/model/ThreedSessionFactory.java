@@ -104,7 +104,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
 
     @Export
     public void setImageBaseUrl(String newValue) {
-        args.imgBaseUrl.setClientValue(new Path(newValue));
+        args.imageBaseUrl.setClientValue(new Path(newValue));
     }
 
     @NoExport
@@ -202,7 +202,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
     public static Path computeImageBaseUrl(SessionArgs sessionArgs, Brand brand) {
         log.info("computeImageBaseUrl for [" + brand.getBrandKey() + "]");
         log.info("First check sessionArgs.imgBaseUrl");
-        Path p = sessionArgs.imgBaseUrl.get();
+        Path p = sessionArgs.imageBaseUrl.get();
 
         //first check client args
         if (p != null) {
@@ -211,7 +211,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
         } else {
             log.info("sessionArgs.imgBaseUrl was null - next we look for a value in vtcMap.config.imgBaseUrl");
             //fallback to vtcMap config params
-            p = brand.getImageRepoBaseUrl();
+            p = brand.getImageBaseUrl();
             if (p != null) {
                 log.info("Using imgBaseUrl from vtcMap.config.imgBaseUrl[" + p + "]");
                 return p;
@@ -243,7 +243,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
 
         public final Arg<Path> fmBaseUrl = Arg.create("fmBaseUrl", BASE_URL_FM);
 
-        public final Arg<Path> imgBaseUrl = Arg.create("imgBaseUrl");
+        public final Arg<Path> imageBaseUrl = Arg.create("imageBaseUrl");
 
         public final Arg<BrandKey> brandKey = Arg.create("brandKey", new DefaultFunction<BrandKey>() {
             @Override
@@ -260,7 +260,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
             seriesKey.log("\tseriesKey", log);
             vtcBaseUrl.log("\tvtcBaseUrl", log);
             fmBaseUrl.log("\tfmBaseUrl", log);
-            imgBaseUrl.log("\timgBaseUrl", log);
+            imageBaseUrl.log("\timgBaseUrl", log);
             jsonp.log("\tjsonp", log);
         }
 

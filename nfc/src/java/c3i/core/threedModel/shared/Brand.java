@@ -9,12 +9,13 @@ import com.google.common.base.Preconditions;
 import smartsoft.util.shared.Path;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Brand {
 
-    public static final String IMAGE_BASE_URL_KEY = "imageRepoBaseUrl";
+    public static final String IMAGE_BASE_URL_KEY = "imageBaseUrl";
 
     private final BrandKey brandKey;
     private final VtcMap vtcMap;
@@ -63,8 +64,10 @@ public class Brand {
         }
     }
 
-    public Path getImageRepoBaseUrl() {
+    public Path getImageBaseUrl() {
+        log.info("IMAGE_BASE_URL_KEY = " + IMAGE_BASE_URL_KEY);
         String configProperty = getConfigProperty(IMAGE_BASE_URL_KEY);
+        log.info("configProperty = " + configProperty);
         if (configProperty == null) {
             return null;
         } else {
@@ -75,5 +78,7 @@ public class Brand {
     private boolean isScion() {
         return brandKey.isScion();
     }
+
+    private static Logger log = Logger.getLogger(Brand.class.getName());
 
 }
