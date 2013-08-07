@@ -50,25 +50,25 @@ public class ThreedModelClient {
     private final String urlTemplate = "${repoBase.url}/${brandName}/${seriesName}/${seriesYear}/3d/models/${rootTreeId}.json";
 
     private final JsonUnmarshallerTm jsonThreedModelBuilder;
-    private final Path repoBaseUrl;
+    private final Path fmRepoBaseUrl;
     private final RequestContext requestContext;
 
     private boolean jsonp = false;
 
     private UserLog userLog = UserLog.DEFAULT;
 
-    public ThreedModelClient(Path repoBaseUrl) {
-        this(null, repoBaseUrl);
+    public ThreedModelClient(Path fmRepoBaseUrl) {
+        this(null, fmRepoBaseUrl);
     }
 
-    public ThreedModelClient(RequestContext requestContext, Path repoBaseUrl) {
-        checkNotNull(repoBaseUrl);
+    public ThreedModelClient(RequestContext requestContext, Path fmRepoBaseUrl) {
+        checkNotNull(fmRepoBaseUrl);
         if (requestContext == null) {
             requestContext = new RequestContext();
         }
 
         this.requestContext = requestContext;
-        this.repoBaseUrl = repoBaseUrl;
+        this.fmRepoBaseUrl = fmRepoBaseUrl;
 
         this.jsonThreedModelBuilder = new JsonUnmarshallerTm();
 
@@ -100,10 +100,10 @@ public class ThreedModelClient {
     }
 
     public ThreedModel parseJsonThreedModel(String threedModelJsonText) {
-        if (repoBaseUrl == null) {
+        if (fmRepoBaseUrl == null) {
             throw new IllegalArgumentException("repoBaseUrl must be non-null before calling parseJsonThreedModel(..)");
         }
-        return jsonThreedModelBuilder.createModelFromJsonText(threedModelJsonText);
+        return JsonUnmarshallerTm.createModelFromJsonText(threedModelJsonText);
     }
 
     public Path getThreedModelUrl(final SeriesId seriesId) {
@@ -116,19 +116,13 @@ public class ThreedModelClient {
 //        return new Path(jsUrl);
 //    }
 
-    public Path getVtcMapUrl(BrandKey brandKey) {
-        if (repoBaseUrl == null) {
-            throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
-        }
-        return new Path("vtcMap.json").prepend(brandKey.getKey()).prepend(repoBaseUrl);
-    }
 
     public Path getVtcUrl(SeriesKey seriesKey) {
-        if (repoBaseUrl == null) {
+        if (fmRepoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
         }
 
-        return repoBaseUrl
+        return fmRepoBaseUrl
                 .append(seriesKey.getBrandKey().getKey())
                 .append(seriesKey.getName())
                 .append(seriesKey.getYear())
@@ -137,28 +131,19 @@ public class ThreedModelClient {
     }
 
     public Path getThreedModelUrl(final SeriesKey seriesKey, RootTreeId rootTreeId) {
-        if (repoBaseUrl == null) {
+        if (fmRepoBaseUrl == null) {
             throw new IllegalStateException("repoBaseUrl must be non-null before calling getThreedModelUrl(..)");
         }
         String url = urlTemplate.replace("${brandName}", seriesKey.getBrandKey().getKey());
         url = url.replace("${seriesName}", seriesKey.getName());
         url = url.replace("${seriesYear}", seriesKey.getYear() + "");
         url = url.replace("${rootTreeId}", rootTreeId.getName());
-        url = url.replace("${repoBase.url}", repoBaseUrl.toString());
+        url = url.replace("${repoBase.url}", fmRepoBaseUrl.toString());
 
         return new Path(url);
     }
 
-    public Future<Brand> getBrandInit(BrandKey brandKey) throws Exception {
-        final Completer<Brand> f = new CompleterImpl<Brand>();
 
-        if(jsonp){
-        brandLoaderFunctionJsonp.start(brandKey, f);
-        }else{
-            brandLoaderFunctionXhr.start(brandKey, f);
-        }
-        return f.getFuture();
-    }
 
     public Future<String> getVtc(SeriesKey seriesKey) throws Exception {
         final Completer<String> f = new CompleterImpl<String>();
@@ -257,65 +242,6 @@ public class ThreedModelClient {
         void onThreeModelReceived(ThreedModel threedModel);
     }
 
-    public AsyncFunction<BrandKey, Brand> brandLoaderFunctionJsonp = new AsyncFunction<BrandKey, Brand>() {
-
-        @Override
-        public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
-            Path vtcMapUrl = getVtcMapUrl(brandKey);
-            JsonpRequestBuilder requestBuilder = new JsonpRequestBuilder();
-            requestBuilder.requestObject(vtcMapUrl.toString(), new AsyncCallback<JavaScriptObject>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                    f.setException(new RuntimeException("getVtcMap return non-200 response[" + caught + "]"));
-                }
-
-                @Override
-                public void onSuccess(JavaScriptObject result) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    Brand brandInitData = BrandParser.parse(jsonObject);
-                    f.setResult(brandInitData);
-                }
-            });
-
-
-        }
-    };
-
-    public AsyncFunction<BrandKey, Brand> brandLoaderFunctionXhr = new AsyncFunction<BrandKey, Brand>() {
-
-        @Override
-        public void start(BrandKey brandKey, final Completer<Brand> f) throws RuntimeException {
-            Path vtcMapUrl = getVtcMapUrl(brandKey);
-
-            RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
-            requestBuilder.setCallback(new RequestCallback() {
-
-                @Override
-                public void onResponseReceived(Request request, final Response response) {
-                    if (response.getStatusCode() != 200) {
-                        f.setException(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
-                    } else {
-                        Brand brandInitData = BrandParser.parse(response.getText());
-                        f.setResult(brandInitData);
-                    }
-                }
-
-                @Override
-                public void onError(Request request, Throwable exception) {
-                    f.setException(exception);
-                }
-
-            });
-
-            try {
-                requestBuilder.send();
-            } catch (RequestException e) {
-                e.printStackTrace();
-                f.setException(e);
-            }
-
-        }
-    };
 
     public AsyncFunction<SeriesKey, String> vtcLoaderFunction = new AsyncFunction<SeriesKey, String>() {
 

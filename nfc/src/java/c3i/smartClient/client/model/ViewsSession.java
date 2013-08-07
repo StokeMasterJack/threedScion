@@ -33,7 +33,7 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     private final ValueChangeTopic<AngleKey> angleChange = new ValueChangeTopic<AngleKey>("AngleChangeTopic");
 
     //fixed init state
-    private final Path repoBaseUrl;
+    private final Path imageRepoBaseUrl;
     private final ThreedModel threedModel;
 
 
@@ -52,12 +52,12 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     private ViewSession viewSession; //current (aka selected aka main) view
 
 
-    public ViewsSession(final Path repoBaseUrl, final ThreedModel threedModel, Profile initialProfile, RValue<FixedPicks> picks) {
+    public ViewsSession(final Path imageRepoBaseUrl, final ThreedModel threedModel, Profile initialProfile, RValue<FixedPicks> picks) {
 
         Preconditions.checkNotNull(initialProfile);
         initialProfile.getBaseImageType();
 
-        this.repoBaseUrl = repoBaseUrl;
+        this.imageRepoBaseUrl = imageRepoBaseUrl;
         this.threedModel = threedModel;
 
         this.picks = picks;
@@ -254,8 +254,8 @@ public class ViewsSession implements DragToSpinModel, ViewModel {
     }
 
 
-    public Path getRepoBaseUrl() {
-        return repoBaseUrl;
+    public Path getImageRepoBaseUrl() {
+        return imageRepoBaseUrl;
     }
 
     public RValue<FixedPicks> fixedPicks() {

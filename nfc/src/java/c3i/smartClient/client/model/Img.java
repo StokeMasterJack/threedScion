@@ -3,6 +3,7 @@ package c3i.smartClient.client.model;
 import c3i.core.imageModel.shared.ImImage;
 import c3i.core.imageModel.shared.LayerImage;
 import c3i.core.imageModel.shared.PngSpec;
+import c3i.smartClient.client.ThreedConstants;
 import com.google.common.base.Preconditions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.ImageElement;
@@ -19,12 +20,9 @@ import smartsoft.util.shared.Path;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 
-public class Img implements Exportable {
+public class Img implements Exportable,ThreedConstants {
 
-    public static final String CONFIGURATOR_CONTENT_V2 = "configurator-content-v2";
-    public static final Path SCION_MEDIA_DOMAIN = new Path("http://media.scion.com");
-    public static final Path SCION_IMAGE_REPO_BASE = new Path(SCION_MEDIA_DOMAIN, CONFIGURATOR_CONTENT_V2);
-    public static final Path TOYOTA_IMAGE_REPO_BASE = new Path("/" + CONFIGURATOR_CONTENT_V2);
+
 
     private final ImImage imImage;
     private final Path url;

@@ -1,35 +1,61 @@
-{"brandKey": "toyota", "vtcMap": {
-    "2011 camry": "d35e0f38906142fcdeb335b309ca2f7598b3df6c",
-    "2011 tundra": "3723904adbc81f956751be014d54efee5411dd3f",
-    "2014 avalon": "d2df0c8d8f1ffab3c7b40784170f5e6421098e70",
-    "2014 camry": "06cf88f037ba4413c0d23e8cfdfbe5905a3eca94",
-    "2011 sienna": "a0401daeac5911821362671420b97a9bf0ac7f2f",
-    "2013 avalon": "d2df0c8d8f1ffab3c7b40784170f5e6421098e70",
-    "2011 landcruiser": "7b5063490412ca08ebe5bd87489f34381bfe8ad9",
-    "2011 avalon": "4c9cc5bbc3693f4005644170044f43ed397073ed",
-    "2011 fj": "34dd87784a336ba8fd576b7317137b0a69787c0f",
-    "2011 venza": "c05bfcbcc2db0bf87d5966e6fe5eba101d5a20a8",
-    "2012 avalon": "48095f947bed6b46c670aa415a039504cb86a1ff"
-}, "profileMap": {
-    "wStd": {
-        "imageSize": {
-            "w": 599,
-            "h": 366
-        },
-        "baseImageType": "JPG"
+{
+
+    "wStd":{
+       "image":{
+           "w":960,
+           "h":540
+       }
+   },
+
+    "wStdP":{
+       "image":{
+           "w":960,
+           "h":540
+       },
+       "baseImageType":"PNG"
+   },
+
+
+    "w720":{
+        "image":{
+            "w":720,
+            "h":405
+        }
     },
-    "w480": {
-        "imageSize": {
-            "w": 480,
-            "h": 293
+
+    "w720P":{
+        "image":{
+            "w":720,
+            "h":405
         },
-        "baseImageType": "JPG"
+        "baseImageType":"PNG"
     },
-    "wStdP": {
-        "imageSize": {
-            "w": 599,
-            "h": 366
+
+    "w640":{
+        "image":{
+            "w":640,
+            "h":360
+        }
+    },
+    "w640P":{
+        "image":{
+            "w":640,
+            "h":360
         },
-        "baseImageType": "PNG"
+        "baseImageType":"PNG"
+    },
+    "w480":{
+        "image":{
+            "w":480,
+            "h":270
+        }
+    },
+    "w480P":{
+        "image":{
+            "w":480,
+            "h":270
+        },
+        "baseImageType":"PNG"
     }
-}}
+
+}

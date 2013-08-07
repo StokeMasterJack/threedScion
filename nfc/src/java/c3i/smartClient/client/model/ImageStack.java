@@ -7,7 +7,6 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
-import c3i.util.shared.futures.Future;
 import smartsoft.util.shared.Path;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.imageModel.shared.AngleKey;
@@ -66,7 +65,7 @@ public class ImageStack implements Exportable, HasKey {
         ImmutableList<? extends ImImage> images = coreImageStack.getImages();
         for (int i = 0; i < images.size(); i++) {
             ImImage imImage = images.get(i);
-            final Img image = new Img(key.getRepoBase(), imImage, m);
+            final Img image = new Img(key.getImageRepoBaseUrl(), imImage, m);
             image.ensureLoaded().complete(new OnComplete() {
                 @Override
                 public void call() {
@@ -207,16 +206,16 @@ public class ImageStack implements Exportable, HasKey {
 
     public static class Key {
 
-        private final Path repoBase;
+        private final Path imageRepoBaseUrl;
         private final CoreImageStack.Key coreKey;
 
-        public Key(Path repoBase, CoreImageStack.Key coreKey) {
-            this.repoBase = repoBase;
+        public Key(Path imageRepoBaseUrl, CoreImageStack.Key coreKey) {
+            this.imageRepoBaseUrl = imageRepoBaseUrl;
             this.coreKey = coreKey;
         }
 
-        public Key(Path repoBaseUrl, AngleKey angleKey, FixedPicks fixedPicks, Profile profile, ImageMode imageMode) {
-            this.repoBase = repoBaseUrl;
+        public Key(Path imageRepoBaseUrl, AngleKey angleKey, FixedPicks fixedPicks, Profile profile, ImageMode imageMode) {
+            this.imageRepoBaseUrl = imageRepoBaseUrl;
             RawImageStack.Key rawSpec = new RawImageStack.Key(angleKey, fixedPicks);
             this.coreKey = new CoreImageStack.Key(rawSpec, profile, imageMode);
         }
@@ -225,8 +224,8 @@ public class ImageStack implements Exportable, HasKey {
             return coreKey;
         }
 
-        public Path getRepoBase() {
-            return repoBase;
+        public Path getImageRepoBaseUrl() {
+            return imageRepoBaseUrl;
         }
 
         public AngleKey getAngleKey() {
@@ -260,13 +259,13 @@ public class ImageStack implements Exportable, HasKey {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Key that = (Key) o;
-            return coreKey.equals(that.coreKey) && repoBase.equals(that.repoBase);
+            return coreKey.equals(that.coreKey) && imageRepoBaseUrl.equals(that.imageRepoBaseUrl);
 
         }
 
         @Override
         public int hashCode() {
-            int result = repoBase.hashCode();
+            int result = imageRepoBaseUrl.hashCode();
             result = 31 * result + coreKey.hashCode();
             return result;
         }

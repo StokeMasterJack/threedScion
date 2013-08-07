@@ -1,6 +1,8 @@
 package c3i.repoWebService;
 
+import c3i.core.common.shared.BrandKey;
 import c3i.repo.server.BrandRepos;
+import c3i.repo.server.Repos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 
@@ -9,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -36,6 +39,7 @@ import java.util.logging.Logger;
  * 5.   Any git source object (backdoor)
  */
 public class RepoServlet extends HttpServlet {
+
 
     private ThreedRepoApp app;
     private Logger log;
@@ -69,6 +73,10 @@ public class RepoServlet extends HttpServlet {
             log.log(Level.SEVERE, msg, e);
             throw new RuntimeException(msg, e);
         }
+
+        Repos repos = brandRepos.getRepos(BrandKey.TOYOTA);
+        File repoBaseDir = repos.getRepoBaseDir();
+        System.err.println("repoBaseDir[" + repoBaseDir + "]");
 
         pngHandler = new PngHandler(brandRepos);
         vtcHandler = new VtcHandler(brandRepos);

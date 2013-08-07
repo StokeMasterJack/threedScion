@@ -48,7 +48,11 @@ public class BaseImageGenerator {
     }
 
     public void generate(Stats stats) {
-        if (getOutputFile().exists()) return;
+        File outputFile = getOutputFile();
+        if (outputFile.exists()) return;
+
+        jpgGenLog.info(outputFile.toString());
+
         BufferedImage combined = combinePngs(stats);
         BufferedImage scaled = maybeScale(combined, stats);
         writeBaseImage(stats, scaled);
@@ -209,7 +213,7 @@ public class BaseImageGenerator {
 
     }
 
-    private static Logger log = Logger.getLogger("c3i");
+
 
     private File getOutputFile() {
         RtRepo genRepo = seriesRepo.getRtRepo();
@@ -284,6 +288,9 @@ public class BaseImageGenerator {
             }
         }
     }
+
+    private static Logger log = Logger.getLogger(BaseImageGenerator.class.getName());
+    private static Logger jpgGenLog = Logger.getLogger("1jpgGen");
 
 
 }

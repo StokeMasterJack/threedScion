@@ -22,7 +22,8 @@ public class MainEntryPoint implements EntryPoint {
         ThreedSessionFactory f = new ThreedSessionFactory();
         f.setProfileKey("wStd");
         f.setSeriesKey(SeriesKey.AVALON_2011);
-        f.setRepoBaseUrl(new Path("/configurator-content-v2"));
+//        f.setRepoBaseUrl(new Path("/configurator-content-v2"));
+
         final ThreedSessionFuture threedSessionFuture = f.createSession();
 
         threedSessionFuture.success(new ThreedSessionOnSuccess() {

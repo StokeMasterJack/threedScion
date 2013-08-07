@@ -59,9 +59,9 @@ public class ThreedSession implements ViewModel, Exportable {
     private final PicksSession picksSession;
 
     @NoExport
-    public ThreedSession(final Path repoBaseUrl, final ThreedModel threedModel, Profile initialProfile) {
+    public ThreedSession(final Path imgRepoBaseUrl, final ThreedModel threedModel, Profile initialProfile) {
         picksSession = new PicksSession(threedModel);
-        this.viewsSession = new ViewsSession(repoBaseUrl, threedModel, initialProfile, picksSession);
+        this.viewsSession = new ViewsSession(imgRepoBaseUrl, threedModel, initialProfile, picksSession);
     }
 
     @NoExport
@@ -223,7 +223,7 @@ public class ThreedSession implements ViewModel, Exportable {
 
     @Export
     public Path getRepoBaseUrl() {
-        return viewsSession.getRepoBaseUrl();
+        return viewsSession.getImageRepoBaseUrl();
     }
 
     @Export

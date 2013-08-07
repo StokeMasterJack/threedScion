@@ -23,7 +23,7 @@ public class StatusPanelModel {
     }
 
     public Path getRepoBaseUrl() {
-        return viewSession.getRepoBaseURl();
+        return viewSession.getImageRepoBaseURl();
     }
 
     public String getUserPicks() {

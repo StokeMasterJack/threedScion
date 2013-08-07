@@ -5,18 +5,16 @@ import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.Profiles;
-import c3i.smartClient.client.model.Img;
 import com.google.common.base.Preconditions;
 import smartsoft.util.shared.Path;
 
 import java.util.Map;
 
-import static smartsoft.util.shared.Strings.isEmpty;
 import static smartsoft.util.shared.Strings.notEmpty;
 
 public class Brand {
 
-    public static final String IMAGE_REPO_BASE_URL_KEY = "imageRepoBaseUrl";
+    public static final String IMAGE_BASE_URL_KEY = "imageRepoBaseUrl";
 
     private final BrandKey brandKey;
     private final VtcMap vtcMap;
@@ -55,22 +53,22 @@ public class Brand {
         return config;
     }
 
-    public Path getImageRepoBaseUrl() {
+    public String getConfigProperty(String propName) {
         Map<String, String> cfg = getConfig();
         String s;
         if (cfg == null) {
-            return Img.SCION_IMAGE_REPO_BASE;
+            return null;
         } else {
-            String imageRepoBaseUrl = cfg.get(IMAGE_REPO_BASE_URL_KEY);
-            if (isEmpty(imageRepoBaseUrl)) {
-                if (isScion()) {
-                    return Img.SCION_IMAGE_REPO_BASE;
-                } else {
-                    return Img.TOYOTA_IMAGE_REPO_BASE;
-                }
-            } else {
-                return new Path(imageRepoBaseUrl);
-            }
+            return cfg.get(propName);
+        }
+    }
+
+    public Path getImageRepoBaseUrl() {
+        String configProperty = getConfigProperty(IMAGE_BASE_URL_KEY);
+        if (configProperty == null) {
+            return null;
+        } else {
+            return new Path(configProperty);
         }
     }
 

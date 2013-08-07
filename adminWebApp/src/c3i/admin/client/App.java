@@ -6,6 +6,8 @@ import c3i.admin.shared.BrandInit;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesKey;
 import c3i.repo.shared.CommitHistory;
+import c3i.smartClient.client.ThreedConstants;
+import c3i.smartClient.client.model.ThreedSessionFactory;
 import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.util.shared.futures.Future;
 import c3i.util.shared.futures.Loader;
@@ -21,11 +23,12 @@ import static smartsoft.util.shared.StringUtil.isEmpty;
 /**
  * Note: the repoContextPath in configFile is never used
  */
-public class App {
+public class App implements ThreedConstants {
 
     private final TabCreator tabCreator;
     private final BrandKey brandKey;
-    private final Path repoBaseUrl;
+
+
     private final UserLog userLog;
 
     private final RequestContext requestContext;
@@ -35,11 +38,21 @@ public class App {
     private final JpgGenClient jpgGenClient;
     private final Loader<BrandKey, BrandInit> loader;
 
+
+    private final Path vtcBaseUrl;
+    private final Path fmBaseUrl;
+    private final Path imgBaseUrl;
+
     public App(TabCreator tabCreator) {
+
         this.tabCreator = tabCreator;
 
         brandKey = initBrandKey();
-        repoBaseUrl = initRepoBaseUrl();
+
+        vtcBaseUrl = BASE_URL_VTC;
+        fmBaseUrl = BASE_URL_FM;
+
+        imgBaseUrl = ThreedConstants.BASE_URL_IMG;
 
         userLog = UserLog.get();
 
@@ -48,9 +61,9 @@ public class App {
 
         threedAdminClient = new ThreedAdminClient(requestContext);
 
-        jpgGenClient = new JpgGenClient(requestContext,brandKey);
+        jpgGenClient = new JpgGenClient(requestContext, brandKey);
 
-        threedModelClient = new ThreedModelClient(repoBaseUrl);
+        threedModelClient = new ThreedModelClient(fmBaseUrl);
         threedModelClient.setUserLog(userLog);
 
         loader = new BrandLoader(brandKey, threedAdminClient);
@@ -116,10 +129,10 @@ public class App {
     }
 
     public Path getRepoBaseUrl() {
-        return repoBaseUrl;
+        return fmBaseUrl;
     }
 
-    public void log(String msg){
+    public void log(String msg) {
         userLog.log(msg);
     }
 }

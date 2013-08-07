@@ -3,7 +3,11 @@ var threedSession;
      function onThreedReady() {
          console.log("onThreedReady");
          var factory = new c3i.smartClient.model.ThreedSessionFactory();
-         factory.setRepoBase("/configurator-content-v2");
+         console.log("ThreedSessionFactory created");
+//         factory.setRepoBase("/configurator-content-v2");
+//         factory.setImageBaseUrl("http://media.scion.com/configurator-content-v2");
+//         factory.setImageBaseUrl("http://smartsoftdev.net/configurator-content-v2");
+
          factory.setProfileKey("wStd");
          factory.setSeries("scion", 2013, "frs");
          var threedSessionFuture = factory.createSession();

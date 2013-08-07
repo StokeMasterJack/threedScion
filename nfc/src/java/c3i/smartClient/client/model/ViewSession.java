@@ -292,8 +292,8 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         return imageMode().get().isPngMode();
     }
 
-    public Path getRepoBaseURl() {
-        return viewsSession.getRepoBaseUrl();
+    public Path getImageRepoBaseURl() {
+        return viewsSession.getImageRepoBaseUrl();
     }
 
 
@@ -317,7 +317,7 @@ public class ViewSession implements DragToSpinModel, ViewModel {
             this.prefetchCurrentAngle = prefetchCurrentAngle;
             this.prefetchImageMode = viewsSession.imageMode.get();
             this.prefetchProfile = viewsSession.profile.get();
-            this.prefetchRepoBaseUrl = viewsSession.getRepoBaseUrl();
+            this.prefetchRepoBaseUrl = viewsSession.getImageRepoBaseUrl();
         }
 
         private ImageStack.Key getPrefetchImageStackKey(final int angleToCache) {
@@ -468,7 +468,9 @@ public class ViewSession implements DragToSpinModel, ViewModel {
         RawImageStack.Key rawKey = new RawImageStack.Key(angleKey, viewsSession.picks.get());
         CoreImageStack.Key coreKey = new CoreImageStack.Key(rawKey, viewsSession.profile.get(), viewsSession.imageMode.get());
 
-        return new ImageStack.Key(viewsSession.getRepoBaseUrl(), coreKey);
+        Path imageRepoBaseUrl = viewsSession.getImageRepoBaseUrl();
+
+        return new ImageStack.Key(imageRepoBaseUrl, coreKey);
     }
 
     public LayerState getLayerState() {

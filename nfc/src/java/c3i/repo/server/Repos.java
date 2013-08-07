@@ -271,9 +271,16 @@ public class Repos {
 
         try {
             String jsonString = Files.toString(profileFile, Charset.defaultCharset());
-            return mapper.readValue(jsonString, ObjectNode.class);
+            try {
+                return mapper.readValue(jsonString, ObjectNode.class);
+            } catch (IOException e) {
+                System.err.println("----");
+                System.err.println(jsonString);
+                System.err.println("----");
+                throw new RuntimeException("Problem parsing file: " + profileFile ,e);
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem parsing file: " + profileFile ,e);
         }
     }
 

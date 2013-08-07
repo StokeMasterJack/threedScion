@@ -3,6 +3,7 @@ package c3i.core.common.shared;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import smartsoft.util.shared.Path;
 
 import java.io.Serializable;
 
@@ -73,4 +74,5 @@ public class BrandKey implements Serializable {
     public int hashCode() {
         return key.hashCode();
     }
+
 }
