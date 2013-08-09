@@ -27,17 +27,17 @@ public class CacheFilter implements Filter {
 
         if (CacheUtil.isDotCacheFile(req)) {
             CacheUtil.addCacheForeverResponseHeaders(response);
-
-        } else if (CacheUtil.isDotNocacheFile(req)) {
-//            CacheUtil.addCacheNeverResponseHeaders(response);
-            int maxAgeBrowser = 4; //hours
+        } else {
             int maxAgeCdn = 24; //hours
+            int maxAgeBrowser = 4; //hours
             CacheUtil.addCacheForXHoursResponseHeaders(response, maxAgeCdn, maxAgeBrowser);
+//            CacheUtil.addCacheForXHoursResponseHeaders(response, 24);
         }
 
         chain.doFilter(request, response);
 
     }
+
 
     @Override
     public void destroy() {
