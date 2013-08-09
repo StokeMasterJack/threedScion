@@ -107,9 +107,10 @@ public class JpgGenServlet extends RemoteServiceServlet implements JpgGenService
 
         Repos repos = brandRepos.getRepos(brandKey);
         try {
-            int threadCount = 3;
+            int threadCount = 2;
             int priority = Thread.MIN_PRIORITY;
             if (isDfLocal()) {
+                log.warning("DAVE LOCAL");
                 threadCount = 1;
                 priority = Thread.MIN_PRIORITY;
             }
