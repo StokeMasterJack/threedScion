@@ -92,7 +92,6 @@ public class GitObjectHandler extends RepoHandler<GitObjectRequest> {
 //        response.setHeader("Content-Encoding", "gzip");
 //                response.setContentLength(retVal.length);
 
-        //TODO: ADD CACHE FOREVER STUFF
 
         try {
             ServletOutputStream os = response.getOutputStream();

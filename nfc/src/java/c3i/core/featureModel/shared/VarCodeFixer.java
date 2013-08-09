@@ -17,9 +17,6 @@ public class VarCodeFixer implements IVarGuesser {
         }
     }
 
-    /**
-     * TODO use reflection for this
-     */
     private static Set<String> getCommonVarNames() {
         final HashSet<String> s = new HashSet<String>();
 

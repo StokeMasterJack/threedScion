@@ -219,7 +219,7 @@ public class Picks implements PicksRO, PicksMutable, AutoAssignContext, SimplePi
         valid = null;
         errorMessage = null;
         try {
-            fixupBasedOnConstraints();  //todo freeze entire system
+            fixupBasedOnConstraints();
             fixupLeafVarsBasedOnDefaults();
             fixupNonLeafVarsBasedOnDefaults();
             valid = true;

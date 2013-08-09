@@ -338,9 +338,6 @@ public class FeatureModel implements Vars {
         }
     }
 
-    public FeatureModel copy() {
-        return this;  //todo
-    }
 
     public String getSeriesName() {
         return getSeriesKey().getShortName();

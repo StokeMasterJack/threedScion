@@ -63,7 +63,6 @@ public class BytExteriorAngleSelector extends AngleSelector {
         flexTable.setWidget(0, 1, createComboCenterPanel());
         flexTable.setWidget(0, 2, createNextButton());
 
-        //            PreviewPanelStyles.set(this);  //todo df
         return flexTable;
     }
 

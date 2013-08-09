@@ -9,7 +9,7 @@ public class RawPicksSnapshot {
 
     @Nonnull public final String modelCode;
     @Nonnull public final String exteriorColor;
-    @Nonnull public final String exteriorColorFixed; //todo, handle this more elegently
+    @Nonnull public final String exteriorColorFixed;
     @Nonnull public final String interiorColor;
 
     @Nullable public final String packageCodes;

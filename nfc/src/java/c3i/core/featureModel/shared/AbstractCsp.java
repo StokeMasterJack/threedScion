@@ -11,7 +11,7 @@ import java.util.Set;
 
 abstract public class AbstractCsp<A extends Assignments, C extends AbstractCsp> implements AutoAssignContext {
 
-    //shallow copy - todo can shallow copy be replaced by NO copy? These values never change for the duration of a search
+    //shallow copy -
     protected final Vars vars;
     //try using shallow copy as these are immutable
     protected final MasterConstraint constraint;

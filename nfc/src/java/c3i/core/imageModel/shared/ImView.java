@@ -244,17 +244,6 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return this.name.equalsIgnoreCase(viewName);
     }
 
-
-//    public Jpg getJpg(Picks picks, int angle) {
-//        final List<Png> pngs = getPngs(picks, angle);
-//        if (pngs == null) return null;
-//        int version = 1; //todo fix this: "version" shouldn't be hard-coded
-//
-//        assert pngs.size() != 0;
-////        return new Jpg(this, pngs, angle);
-//        return null;
-//    }
-
     public int getLayerCount() {
         if (layers == null) return 0;
         return layers.size();

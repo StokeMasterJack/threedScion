@@ -88,7 +88,7 @@ public class XmlToFmJvm {
         Preconditions.checkNotNull(featuresElement);
 
 
-        fm = new FeatureModel(seriesKey, seriesDisplayName); //todo
+        fm = new FeatureModel(seriesKey, seriesDisplayName);
 
         Var rootVar = fm.getRootVar();
         processFeatureChildren(rootVar, featuresElement);

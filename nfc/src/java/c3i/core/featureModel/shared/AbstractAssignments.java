@@ -11,7 +11,7 @@ import java.util.Set;
 
 abstract public class AbstractAssignments<A extends Assignments> implements Assignments<A> {
 
-    //shallow copy   todo can shallow copy be replaced by NO copy? These values never change for the duration of a search
+    //shallow copy
     protected final Vars allVars;
 
     //not copied at all, a newly copies csp should start out clean
