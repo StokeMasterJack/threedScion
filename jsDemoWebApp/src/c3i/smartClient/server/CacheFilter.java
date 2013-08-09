@@ -30,7 +30,9 @@ public class CacheFilter implements Filter {
 
         } else if (CacheUtil.isDotNocacheFile(req)) {
 //            CacheUtil.addCacheNeverResponseHeaders(response);
-            CacheUtil.addCacheForXHoursResponseHeaders(response, 24);
+            int maxAgeBrowser = 4; //hours
+            int maxAgeCdn = 24; //hours
+            CacheUtil.addCacheForXHoursResponseHeaders(response, maxAgeCdn, maxAgeBrowser);
         }
 
         chain.doFilter(request, response);
