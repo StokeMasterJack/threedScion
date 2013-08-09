@@ -7,7 +7,7 @@ import org.timepedia.exporter.client.Export;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-class FutureImpl<T> implements Future<T> {
+public class FutureImpl<T> implements Future<T> {
 
     private final ArrayList<OnComplete> completeHandlers = new ArrayList<OnComplete>();
     private final ArrayList<OnSuccess<T>> successHandlers = new ArrayList<OnSuccess<T>>();

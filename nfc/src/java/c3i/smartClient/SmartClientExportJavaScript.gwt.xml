@@ -4,13 +4,14 @@
 
 <module rename-to="api">
 
+    <inherits name="com.google.gwt.logging.Logging"/>
     <inherits name="c3i.smartClient.SmartClient"/>
     <inherits name='org.timepedia.exporter.Exporter'/>
     <set-property name="export" value="yes"/>
 
     <entry-point class='c3i.smartClient.client.ExportJavaScriptEntryPoint'/>
 
-    <collapse-all-properties/>
+    <!--<collapse-all-properties/>-->
 
 
 </module>

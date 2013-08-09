@@ -7,12 +7,12 @@
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.google.common.cache.Cache"/>
     <inherits name='org.timepedia.exporter.Exporter'/>
+    <inherits name='com.google.gwt.xhr.XMLHttpRequest'/>
 
     <inherits name="c3i.util.C3iUtil"/>
     <inherits name="smartsoft.util.Util"/>
     <inherits name="c3i.core.ThreedCore"/>
 
-    <collapse-all-properties/>
-
+    <!--<collapse-all-properties/>-->
 
 </module>

@@ -7,7 +7,7 @@ import 'dart:collection';
 String usage = "gwt.dart --mode=dev|compile --app=admin|gwtDemo|jsDemo|all";
 
 String modeDefault = "compile";
-String appDefault = "admin";
+String appDefault = "jsDemo";
 
 Map<String,App> apps = {
   "gwtDemo":new App(contextPath:"gwtDemo",module:"c3i.gwtDemo.GwtDemo",startupPage:"GwtDemo.html"),
@@ -102,7 +102,7 @@ void doIt(bool devMode,App a) {
     '$utilRepo/src',
   ];       
   
-//  var gwtVersion = '2.5.0';
+//  var gwtVersion = '2.5.1';
   var gwtVersion = '2.4.0';
   var gwtHome = '${userHome}/p-java/gwt-${gwtVersion}';
   
@@ -115,7 +115,8 @@ void doIt(bool devMode,App a) {
     '$gwtHome/validation-api-1.0.0.GA-sources.jar',
     
     '$lib/jsr305/1.0/jsr305.jar',
-    '$lib/gwtexporter/gwtexporter-2.4.0-SNAPSHOT.jar',
+    '$lib/gwtexporter/gwtexporter-2.5.0-SNAPSHOT.jar',
+//    '$lib/gwtexporter/gwtexporter-2.4.0-SNAPSHOT.jar',
 
     '$m2/com/google/guava/guava/11.0.2/guava-11.0.2.jar',
     '$m2/com/google/guava/guava-gwt/11.0.2/guava-gwt-11.0.2.jar'
@@ -159,8 +160,8 @@ void doIt(bool devMode,App a) {
   }
   
   var gwtParamsCompile = {
-//          'style':                   'PRETTY'
-      'style':                   'OBF'
+          'style':                   'PRETTY'
+//      'style':                   'OBF'
   //        'draftCompile':            '',
   //        'localWorkers':            '2',
   //        'XdisableCastChecking':    '',
