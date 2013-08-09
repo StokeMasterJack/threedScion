@@ -50,7 +50,7 @@
 
         function onColor(varCode) {
 //            event.preventDefault();
-            console.log(varCode);
+            if(window.console) console.log(varCode);
             threedSession.setPicks([varCode]);
         }
     </script>
