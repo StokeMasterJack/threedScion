@@ -160,8 +160,8 @@ void doIt(bool devMode,App a) {
   }
   
   var gwtParamsCompile = {
-          'style':                   'PRETTY'
-//      'style':                   'OBF'
+//          'style':                   'PRETTY'
+      'style':                   'OBF'
   //        'draftCompile':            '',
   //        'localWorkers':            '2',
   //        'XdisableCastChecking':    '',
