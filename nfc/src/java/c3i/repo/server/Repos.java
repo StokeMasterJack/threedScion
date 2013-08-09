@@ -24,7 +24,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -40,7 +39,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -206,8 +204,8 @@ public class Repos {
     public Brand getBrandInitData() {
         VtcMap vtcMap = getVtcMap();
         Profiles profiles = getProfiles();
-        Map<String,String> config = getConfig();
-        return new Brand(brandKey, vtcMap, profiles,config);
+        Map<String, String> config = getConfig();
+        return new Brand(brandKey, vtcMap, profiles, config);
     }
 
     private Profiles profiles;
@@ -277,14 +275,14 @@ public class Repos {
                 System.err.println("----");
                 System.err.println(jsonString);
                 System.err.println("----");
-                throw new RuntimeException("Problem parsing file: " + profileFile ,e);
+                throw new RuntimeException("Problem parsing file: " + profileFile, e);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Problem parsing file: " + profileFile ,e);
+            throw new RuntimeException("Problem parsing file: " + profileFile, e);
         }
     }
 
-    public Map<String,String> getConfig() {
+    public Map<String, String> getConfig() {
         File repoBaseDir = getRepoBaseDir();
         if (repoBaseDir == null) throw new IllegalStateException();
         File brandBaseDir = repoBaseDir;
@@ -424,6 +422,14 @@ public class Repos {
         SeriesRepo seriesRepo = getSeriesRepo(seriesKey);
         RootTreeId rootTreeId = seriesRepo.getSrcRepo().resolveHeadRootTreeId();
         return new SeriesId(seriesKey, rootTreeId);
+    }
+
+
+    public File getFileNameForCachedThreedModelJson(SeriesId seriesId) {
+        File cacheDir = getCacheDir();
+        File threedModelsDir = new File(cacheDir, "threedModels");
+        File seriesDir = new File(threedModelsDir, seriesId.getSeriesKey().getKey());
+        return new File(seriesDir, seriesId.getRootTreeId().toString() + ".json");
     }
 
     public ThreedModel getThreedModel(SeriesId seriesId) {

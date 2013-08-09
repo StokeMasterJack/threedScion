@@ -6,21 +6,22 @@ import c3i.core.threedModel.server.TmToJsonJvm;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
+import c3i.repo.server.SeriesRepo;
+import com.google.common.base.Charsets;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.Closeables;
-import java.util.logging.Logger;
-
+import com.google.common.io.Files;
 import smartsoft.util.servlet.http.headers.CacheUtil;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -86,7 +87,7 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
                 .build(
                         new CacheLoader<SeriesId, byte[]>() {
                             public byte[] load(SeriesId seriesId) {
-                                return createJson(seriesId);
+                                return createThreedModelJson(seriesId);
                             }
                         });
 
@@ -166,7 +167,6 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
 
         response.setHeader("X-Content-Type-Options", "nosniff");
 
-
         try {
             ServletOutputStream out = response.getOutputStream();
             out.write(retVal);
@@ -174,33 +174,40 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
         } catch (IOException e) {
             throw new NotFoundException("Problem streaming jsonText to client", e);
         }
-
-
     }
 
-    private byte[] createJson(SeriesId seriesId) {
+    private byte[] createThreedModelJson(SeriesId seriesId) {
         BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
         Repos repos = getRepos(brandKey);
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
-        String jsonText = TmToJsonJvm.toJson(threedModel);
-        byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
+        File jsonFile = repos.getFileNameForCachedThreedModelJson(seriesId);
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            os.write(jsonBytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (jsonFile.exists()) {
+            try {
+                return Files.toByteArray(jsonFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            SeriesRepo seriesRepo = repos.getSeriesRepo(seriesId.getSeriesKey());
+            ThreedModel threedModel = seriesRepo.createThreedModelFromPngFolders(seriesId.getRootTreeId());
+            String jsonText = TmToJsonJvm.toJson(threedModel);
+            try {
+                Files.createParentDirs(jsonFile);
+                Files.write(jsonText, jsonFile, Charsets.UTF_8); //cache for next time
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return jsonText.getBytes(Charsets.UTF_8);
         }
-
-        return os.toByteArray();
     }
+
 
     private byte[] createGzippedJson(SeriesId seriesId) {
-        BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
-        Repos repos = getRepos(brandKey);
-        ThreedModel threedModel = repos.getThreedModel(seriesId);
-        String jsonText = TmToJsonJvm.toJson(threedModel);
-        byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
+//        BrandKey brandKey = seriesId.getSeriesKey().getBrandKey();
+//        Repos repos = getRepos(brandKey);
+//        ThreedModel threedModel = repos.getThreedModel(seriesId);
+//        String jsonText = TmToJsonJvm.toJson(threedModel);
+//        byte[] jsonBytes = jsonText.getBytes(Charset.forName("UTF-8"));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         GZIPOutputStream gzipOut = null;
@@ -213,8 +220,9 @@ public class ThreedModelHandler extends RepoHandler<ThreedModelRequest> {
 
 
             try {
+                byte[] jsonBytes = this.jsonMapNotZipped.get(seriesId);
                 gzipOut.write(jsonBytes);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } finally {

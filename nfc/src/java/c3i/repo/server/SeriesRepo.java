@@ -19,8 +19,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.io.InputSupplier;
-import java.util.logging.Logger;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -38,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 public class SeriesRepo {
 
@@ -56,6 +55,7 @@ public class SeriesRepo {
     SeriesRepo(Repos repos, final File repoBaseDir, final SeriesKey seriesKey) {
         Preconditions.checkNotNull(repoBaseDir);
         Preconditions.checkNotNull(seriesKey);
+
 
         this.vtcBaseDir = repos.getVtcBaseDir();
         this.repoBaseDir = repoBaseDir;
@@ -264,6 +264,12 @@ public class SeriesRepo {
         return threedModel;
     }
 
+
+    public ThreedModel createThreedModelFromPngFolders(@Nonnull RootTreeId rootTreeId) {
+        return createThreedModel(rootTreeId);
+    }
+
+
     public ThreedModel createThreedModel(@Nonnull RootTreeId rootTreeId) {
         Preconditions.checkNotNull(rootTreeId);
 
@@ -287,6 +293,7 @@ public class SeriesRepo {
 
         return threedModel;
     }
+
 
 //     private ThreedModel createThreedModel(@Nonnull String fullCommitSha) {
 //        Preconditions.checkNotNull(fullCommitSha);
