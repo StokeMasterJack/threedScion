@@ -1,23 +1,22 @@
 package c3i.admin.server.taskManager;
 
-import c3i.core.common.shared.BrandKey;
-import c3i.core.common.shared.SeriesId;
 import c3i.admin.shared.jpgGen.JobId;
 import c3i.admin.shared.jpgGen.JobSpec;
 import c3i.admin.shared.jpgGen.JobState;
+import c3i.core.common.shared.BrandKey;
+import c3i.core.common.shared.SeriesId;
 import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.SrcRepo;
 import com.google.common.util.concurrent.AbstractIdleService;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class JpgGeneratorService extends AbstractIdleService {
 
@@ -44,7 +43,6 @@ public class JpgGeneratorService extends AbstractIdleService {
         jobQueue.put(master.getId(), master);
         return master;
     }
-
 
 
     private boolean isThereAlreadyAnOpenJobWithThisSpec(JobSpec jobSpec) {
@@ -93,11 +91,14 @@ public class JpgGeneratorService extends AbstractIdleService {
 
     public void removeJob(JobId jobId) {
         log.info("Server removing job[" + jobId + "]");
-        Master job = getJob(jobId);
-        if (!job.getFuture().isCancelled()) {
-            job.cancel();
+        Master job = jobQueue.remove(jobId);
+        if (job != null) {
+            Master.KickOffTask future = job.getFuture();
+            if (future != null && !future.isCancelled()) {
+                job.cancel();
+            }
         }
-        jobQueue.remove(jobId);
+
     }
 
 
