@@ -17,7 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <repo-url-base>/configurator-content/sienna/2011/objects/
+ *
+ * http://www.scion.com/configurator-content-v2/scion/iq/2014/objects/a2e2a88125d36d0d11454baaa42704a61686bcee:model.xml
+ *
+ * [repo-url-base]/configurator-content-v2/[brand]/]year]/objects/[revisionParameter]
  *
  *      HEAD
  *      789fd31617fac2ec2ffa482792b7fe2db63eef00
