@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="repoWar">
-    <output-path>$USER_HOME$/temp/3d-target</output-path>
-    <root id="archive" name="configurator-content-v2.war">
-      <element id="artifact" artifact-name="repoExploded" />
-    </root>
-  </artifact>
-</component>

@@ -1,0 +1,61 @@
+{
+
+    "wStd":{
+       "image":{
+           "w":960,
+           "h":540
+       }
+   },
+
+    "wStdP":{
+       "image":{
+           "w":960,
+           "h":540
+       },
+       "baseImageType":"PNG"
+   },
+
+
+    "w720":{
+        "image":{
+            "w":720,
+            "h":405
+        }
+    },
+
+    "w720P":{
+        "image":{
+            "w":720,
+            "h":405
+        },
+        "baseImageType":"PNG"
+    },
+
+    "w640":{
+        "image":{
+            "w":640,
+            "h":360
+        }
+    },
+    "w640P":{
+        "image":{
+            "w":640,
+            "h":360
+        },
+        "baseImageType":"PNG"
+    },
+    "w480":{
+        "image":{
+            "w":480,
+            "h":270
+        }
+    },
+    "w480P":{
+        "image":{
+            "w":480,
+            "h":270
+        },
+        "baseImageType":"PNG"
+    }
+
+}

@@ -1,0 +1,5 @@
+Admin Remote services are exposed in two servlets:
+    ThreedAdminService (POST - gwt-rpc) - [repo-base]/threed-admin/threedAdminService
+    JpgGenService   (POST - gwt-rpc) - [repo-base]/threed-admin/jpgGenService
+
+

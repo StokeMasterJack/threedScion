@@ -1,0 +1,75 @@
+Picks are used by:
+
+    1.  ebro
+
+        a.  to represent the user picks coming from the ebro request
+
+        b.  It used to to do the "fix up" then discarded
+
+    2.  NFC
+
+        a.  to represent the user picks coming from the "left side"
+
+        b.  It used to to do the "fix up" then discarded
+
+    3.  JPG generator
+
+        a.  The jpg generator loops thru every possible valid "product" (or picks).
+
+            The Bdd Iterator's next method returns a boolean[] for each product.
+            For each iteration:
+                The boolean[] product is converted to a Picks (mapping var ids to array indexes)  
+                The picks is converted to a jpg
+
+            Here is the code that execute for each product:
+                boolean[] productAsBoolArray = it.next();
+                Picks picks = bddBuilder.boolArrayToPicks(productAsBoolArray);
+                Jpg jpg = imView.getJpg(picks, angle);
+
+            No fixup occurs
+
+    4.  Feature Picker
+
+        a.  It is used to do a fixup but *not* discarded
+
+        b.  It is used to maintain the "current picks" state
+            for the user's entire session (or until he switches series??)
+
+        c.  It is used a source of picks change events
+
+Problem Definition
+
+    These are really 3 different things that are going on.
+    
+        1.  eBro/NFC:
+                Represent picks (for duration of fixup and throw away)
+                Fixup picks
+                Discard Picks object after fixup
+
+        2.  JpgGen:
+                represent picks
+                var index mapping
+                No fixup
+                Discard Picks object after each iteration
+                
+        3.  FeaturePicker
+                Long lived session state (picks state)
+                Generate picks change events
+                Provide the M in the MVC
+
+    Using the same object for all 3 of these functions probably causes problems for all 3.
+
+    Tri-state versus bi-state fixup: The fixup algorithm assumes a tri-state var: true|false|unassigned
+        It recursively loops thru all unassigned vars attempting to assign them
+            This makes perfect since for ebro and nfc
+            For FeaturePicker, we pre-assign all visible vars to either true or false.
+                Thus, all visible vars are always pre-assigned and thus:
+                    never unassigned and never fixed up
+
+    Current Bug: Since picks are not "flushed" after each pick it
+
+        Clear out and re-evaluate fixups whenever a user pick is changed
+        
+    
+
+

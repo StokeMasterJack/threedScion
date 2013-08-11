@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <script src="/smartClient/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="/smartClient/api/api.nocache.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+
+    <style>
+        td {
+            padding: .3em;
+            vertical-align: top;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="/smartClient/AngleSelector.css"/>
+    <link rel="stylesheet" type="text/css" href="demo.css"/>
+</head>
+<body style="padding: 1em">
+<div style="padding-bottom: 1em;">
+
+    <div style="padding-bottom: 1em;">
+        Picks:
+        <button onclick="threedSession.setPicks(['Base', 'V6', '6AT', '202']);">'Base', 'V6', '6AT', '202'
+        </button>
+        <button onclick="threedSession.setPicks(['LTD', 'V6', '6AT', '8N0']);">'LTD', 'V6', '6AT', '8N0'
+        </button>
+    </div>
+    <select id="viewSelector" class="ViewSelector">
+        <option>Exterior</option>
+        <option>Interior</option>
+    </select>
+    <div style="width: 599px">
+
+        <div class="ViewPanel" >
+            <table class="AngleSelector over">
+                <tr>
+                    <td align="left"><button onclick="threedSession.anglePrevious()">&lt;&lt;</button></td>
+                    <td align="right"><button onclick="threedSession.angleNext()">&gt;&gt;</button></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

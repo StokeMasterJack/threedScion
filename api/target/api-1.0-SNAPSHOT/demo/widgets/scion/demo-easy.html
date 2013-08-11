@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script type="text/javascript" language="javascript" src="/smartClient/api/api.nocache.js"></script>
+
+    <script>
+        function onThreedReady() {
+
+            var factory = new c3i.smartClient.model.ThreedSessionFactory();
+
+            factory.setRepoBase("/configurator-content-v2");
+            factory.setSeries("scion", 2012, "iq");
+
+            factory.createSession().success(function (threedSession) {
+
+                threedSession.setPicks(["1F7", "SS", "R7", "MDS"]);
+                threedSession.setView(0);  //0=exterior
+                threedSession.setAngle(2); //2=hero angle
+
+                threedSession.scan();      //look for divs with class ViewPanel and replace with configured 3D image
+
+            });
+
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="ViewPanel"></div>
+
+</body>
+</html>

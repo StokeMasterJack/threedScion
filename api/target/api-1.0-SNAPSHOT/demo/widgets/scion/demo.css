@@ -1,0 +1,21 @@
+td {
+    padding: .3em;
+    vertical-align: top;
+}
+
+.AngleSelector {
+    position: absolute;
+    margin: 0 auto;
+    width: 80px;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+}
+
+.ViewPanel{
+    /*border: thin black solid;*/
+}
+
+.Log{
+    background-color: yellow;
+}

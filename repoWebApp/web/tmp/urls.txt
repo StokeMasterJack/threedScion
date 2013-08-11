@@ -1,5 +1,0 @@
-http://www.scion.com/configurator-content-v2/.*/vtcMap.json: cache for 24 hours
-http://www.scion.com/configurator-content-v2/**/everything else: cache for a year
-
-
-http://www.scion.com/configurator-content-v2/scion/.*/.*/3d/models/*.json

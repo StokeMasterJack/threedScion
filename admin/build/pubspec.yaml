@@ -1,0 +1,5 @@
+name: threed_api
+description: A sample application
+dependencies:
+  path: 0.6.15+3
+  daven: any

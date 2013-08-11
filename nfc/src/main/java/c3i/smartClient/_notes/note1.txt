@@ -1,0 +1,4 @@
+The smartClient package won't actually contain most of the smartClient code. Why? Because that most
+of the code will come from threedCore which is "shared" code.
+
+By shared we mean: compiled to both JVM byte code and JavaScript (via GWT)

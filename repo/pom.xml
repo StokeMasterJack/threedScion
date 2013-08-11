@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.tms.threed</groupId>
+        <artifactId>threed-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>repo</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.tms.threed</groupId>
+            <artifactId>nfc</artifactId>
+            <scope>compile</scope>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.timepedia.exporter</groupId>
+            <artifactId>gwtexporter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>dom4j</groupId>-->
+            <!--<artifactId>dom4j</artifactId>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
+
+    </dependencies>
+
+    <!--<build>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-war-plugin</artifactId>-->
+    <!--<configuration>-->
+    <!--<outputDirectory>/Users/dford/p-java/apache-tomcat-6.0.10/webapps/configurator-content-v2</outputDirectory>-->
+    <!--</configuration>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</build>-->
+
+</project>

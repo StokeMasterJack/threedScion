@@ -1,0 +1,18 @@
+PngSegments
+    has the largest retained size of all c3i objects during jpg gen
+    has the 3rd largest *shallow* size of all c3i objects during jpg gen
+    Doesn't seem to go away
+    Does this really need to reside in memory
+
+JpgTask
+    has the largest *shallow* size of all c3i objects during jpg gen
+    has the 3rd largest retained size of all c3i objects during jpg gen
+
+
+We do not need to store the entire jpgSet in ram while generating jpgs
+We can use something smaller to store the jpgSet:
+    Set<String> instead of Set<PngSegments>
+
+
+Single biggest (retained and shallow) hog: byte[]
+    must be the BufferedImage
