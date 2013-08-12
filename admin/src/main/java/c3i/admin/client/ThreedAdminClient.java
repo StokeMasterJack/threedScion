@@ -48,6 +48,7 @@ public class ThreedAdminClient {
     }
 
     public Req<CommitHistory> getCommitHistory(SeriesKey seriesKey) {
+        System.err.println("ThreedAdminClient.getCommitHistory");
         Req<CommitHistory> r = newRequest("getCommitHistory");
         service.getCommitHistory(seriesKey, r);
         return r;

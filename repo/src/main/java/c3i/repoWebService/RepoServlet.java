@@ -5,8 +5,10 @@ import c3i.repo.server.BrandRepos;
 import c3i.repo.server.Repos;
 import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
+import smartsoft.util.servlet.HttpErrorHandler;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +42,6 @@ import java.util.logging.Logger;
  */
 public class RepoServlet extends HttpServlet {
 
-
     private ThreedRepoApp app;
     private Logger log;
 
@@ -55,13 +56,23 @@ public class RepoServlet extends HttpServlet {
     private ThreedModelHandlerJsonP threedModelHandlerJsonP;
     private GitObjectHandler gitObjectHandler;
 
+    private HttpErrorHandler http500ErrorHandler;
+    private HttpErrorHandler http404ErrorHandler;
+
     private BrandRepos brandRepos;
+    private String simpleName;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         log = Logger.getLogger(RepoServlet.class.getName());
-        log.info("Initializing " + getClass().getSimpleName());
+        simpleName = getClass().getSimpleName();
+        log.info("Initializing " + simpleName);
+
+        ServletContext servletContext = config.getServletContext();
+
+        http500ErrorHandler = new HttpErrorHandler(servletContext, log, simpleName, 500);
+        http404ErrorHandler = new HttpErrorHandler(servletContext, log, simpleName, 400);
 
         try {
             app = ThreedRepoApp.getFromServletContext(getServletContext());
@@ -156,19 +167,10 @@ public class RepoServlet extends HttpServlet {
             }
 
 
+        } catch (NotFoundException e) {
+            http404ErrorHandler.handleError(request, response, e);
         } catch (Exception e) {
-            e.printStackTrace();
-            if (!response.isCommitted()) {
-                log.log(Level.SEVERE, e.getMessage(), e);
-                try {
-                    response.sendError(404, e.getMessage());
-                } catch (Exception e1) {
-                    log.log(Level.SEVERE, "Exception sending error response to client", e);
-                }
-            } else {
-                log.severe("Response committed. Could not send error response back to client for exception [" + e.toString() + "]");
-                log.log(Level.SEVERE, e.getMessage(), e);
-            }
+            http500ErrorHandler.handleError(request, response, e);
         }
 
     }

@@ -17,14 +17,20 @@ import c3i.repo.shared.CommitHistory;
 import c3i.repo.shared.RepoHasNoHeadException;
 import c3i.repo.shared.Series;
 import com.google.common.base.Preconditions;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RPC;
+import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
+import smartsoft.util.servlet.HttpErrorHandler;
+import smartsoft.util.shared.Gwt500Error;
 import smartsoft.util.shared.Path;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -48,11 +54,16 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
     private BrandRepos brandRepos;
     private String initErrorMessage;
 
+    private HttpErrorHandler http500ErrorHandler;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         log = Logger.getLogger("c3i");
-        log.info("Initializing " + getClass().getSimpleName());
+        String simpleName = getClass().getSimpleName();
+        log.info("Initializing " + simpleName);
+
+        http500ErrorHandler = new HttpErrorHandler(config.getServletContext(), log, simpleName, 500);
 
         try {
             app = ThreedAdminApp.getFromServletContext(config.getServletContext());
@@ -64,6 +75,18 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
             log.log(Level.SEVERE, initErrorMessage, e);
         }
 
+    }
+
+    @Override
+    public String processCall(String payload) throws SerializationException {
+        try {
+            return super.processCall(payload);
+        } catch (SerializationException se) {
+            throw se;
+        } catch (RuntimeException e) {
+            Gwt500Error ee = HttpErrorHandler.serializeExceptionForGwt(e);
+            return RPC.encodeResponseForFailure(null, ee);
+        }
     }
 
     private void checkCacheFile(int msg) {
@@ -200,12 +223,23 @@ public class ThreedAdminServlet extends RemoteServiceServlet implements ThreedAd
         repos.purgeCache();
     }
 
-
     @Override
     protected void doUnexpectedFailure(Throwable e) {
-        log.log(Level.SEVERE, "Problem in RPC method", e);
-        super.doUnexpectedFailure(e);
+        log.log(Level.SEVERE, "daveDoUnexpectedFailure");
+
+        HttpServletRequest request = getThreadLocalRequest();
+        HttpServletResponse response = getThreadLocalResponse();
+
+        log.log(Level.SEVERE, "About to enter dave error handler...");
+        http500ErrorHandler.handleError(request, response, e);
+        log.log(Level.SEVERE, "dave error handler complete");
+
+
     }
 
+    @Override
+    protected void onAfterRequestDeserialized(RPCRequest rpcRequest) {
+        super.onAfterRequestDeserialized(rpcRequest);
+    }
 
 }

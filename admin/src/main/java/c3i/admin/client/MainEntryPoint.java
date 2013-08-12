@@ -24,7 +24,6 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.logging.Level;import java.util.logging.Logger;
 import smartsoft.util.gwt.client.rpc.FailureCallback;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.SuccessCallback;
@@ -33,6 +32,8 @@ import smartsoft.util.gwt.client.ui.tabLabel.TabCreator;
 import smartsoft.util.gwt.client.ui.tabLabel.TabLabel;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainEntryPoint implements EntryPoint, TabCreator {
 
@@ -78,7 +79,7 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
     private void gotoPlace(BrandInit brand, Place place) {
         final SeriesKey sk = place.getSeriesKey();
         if (sk != null) {
-            openSeriesHead(brand, sk,place);
+            openSeriesHead(brand, sk, place);
         }
     }
 
@@ -117,8 +118,8 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
                         }
                     };
                 } else {
-                    String msg = "Could not fetch list of versions (i.e. commits) for series [" + seriesKey + "].  Error: [" + r.exception.toString() + "]. ";
-                    log.log(Level.INFO, msg);
+                    String msg = "Could not fetch list of versions (i.e. commits) for series [" + seriesKey + "]: ";
+                    log.log(Level.INFO, msg, r.exception);
                     r.exception.printStackTrace();
                 }
             }
@@ -134,18 +135,19 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
             public void call(Req<CommitHistory> request) {
                 CommitHistory commitHistory = request.result;
                 SeriesCommit seriesCommit = new SeriesCommit(seriesKey, commitHistory);
-                openSeriesVersion(brand, seriesCommit,place.getViewName());
+                openSeriesVersion(brand, seriesCommit, place.getViewName());
             }
         };
     }
 
     private void openSeriesVersion(BrandInit brand, final SeriesCommit seriesCommit) {
-        openSeriesVersion(brand, seriesCommit,null);
+        openSeriesVersion(brand, seriesCommit, null);
 
     }
+
     private void openSeriesVersion(BrandInit brand, final SeriesCommit seriesCommit, String viewName) {
         assert seriesCommit != null;
-        SeriesSession seriesSession = new SeriesSession(app, brand, seriesCommit,viewName);
+        SeriesSession seriesSession = new SeriesSession(app, brand, seriesCommit, viewName);
         SeriesPanel seriesPanel = new SeriesPanel(seriesSession);
         addTab(seriesPanel);
     }
@@ -281,7 +283,7 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
         }
     }
 
-    public void toggleStatusPanel()  {
+    public void toggleStatusPanel() {
         int selectedIndex = tab.getSelectedIndex();
         Widget w = tab.getWidget(selectedIndex);
         if (w instanceof SeriesPanel) {
@@ -290,7 +292,7 @@ public class MainEntryPoint implements EntryPoint, TabCreator {
         }
     }
 
-    public void toggleClutter(){
+    public void toggleClutter() {
         toggleLogView();
         toggleStatusPanel();
     }

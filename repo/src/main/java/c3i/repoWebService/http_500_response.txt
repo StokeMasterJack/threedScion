@@ -1,0 +1,13 @@
+Internal Server Error in RepoServlet.
+
+requestURI: [{0}]
+
+QueryString: [{1}].
+
+Exception stackTrace:
+
+[{2}];
+
+    private static final String MSG_INTERNAL_SERVER_RESPONSE_COMMITTED =
+            MSG_INTERNAL_SERVER_RESPONSE_PREFIX + " Response already committed.";
+

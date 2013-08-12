@@ -14,10 +14,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.JGitText;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
@@ -59,6 +55,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import static smartsoft.util.shared.Strings.isEmpty;
 
@@ -110,11 +107,18 @@ public class SrcRepo {
     }
 
     public String getLocalResource(String localName) {
-        URL configFileUrl = Resources.getResource( localName);
+        URL configFileUrl = null;
+        try {
+            configFileUrl = Resources.getResource(getClass(), localName);
+        } catch (Exception e) {
+            String msg = "Failed to load local resource: [" + localName + "]";
+            throw new RuntimeException(msg, e);
+        }
         try {
             return Resources.toString(configFileUrl, Charsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            String msg = "Failed to load local resource: [" + configFileUrl + "]";
+            throw new RuntimeException(msg, e);
         }
     }
 
@@ -869,8 +873,6 @@ public class SrcRepo {
 //    }
 
 
-    private static Logger log = Logger.getLogger("c3i");
-
     public ObjectId toGitObjectId(FullSha objectId) {
         return ObjectId.fromString(objectId.getName());
     }
@@ -891,4 +893,6 @@ public class SrcRepo {
 
 
     }
+
+    private static Logger log = Logger.getLogger(SrcRepo.class.getName());
 }
