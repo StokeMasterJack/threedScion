@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as path;
 
-const String cp = "smartClient";
+const String cp = "threed-admin-v2";
 
 final local = new Local();
 
@@ -20,7 +20,7 @@ class Local{
   String host;
   String webapps;
   String contextPath;
-  Local({this.repos:'repos',this.userHome:'/Users/dford', this.webapps:'/p-java/apache-tomcat-6.0.10/webapps',this.contextPath:cp});
+  Local({this.repos:'admin',this.userHome:'/Users/dford', this.webapps:'/p-java/apache-tomcat-6.0.10/webapps',this.contextPath:cp});
   
   String fromDirTomcat(){
     return  path.normalize('$userHome/$webapps/$contextPath/');
