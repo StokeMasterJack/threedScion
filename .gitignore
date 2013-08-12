@@ -1,3 +1,60 @@
+# Dave
+gen/
+artifacts/
+
+# Java Files
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+*.ser
+*.ec
+
+# IntelliJ Idea
+.idea/
+out/
+*.ipr
+*.iws
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Text Mate
+*.tmproj
+*.tmproject
+tmtags
+
+
+
+# GWT
+gwt_bree/
+gwt-unitCache/
+.apt_generated/
+WEB-INF/deploy/
+WEB-INF/classes/
+generated
+
+
+##############
+From git hub
+##############
+   
 # Compiled source #
 ###################
 *.com
@@ -9,8 +66,6 @@
 
 # Packages #
 ############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
 *.7z
 *.dmg
 *.gz
@@ -36,9 +91,3 @@
 Icon?
 ehthumbs.db
 Thumbs.db
-
-# Dave #
-######################
-out
-workspace.xml
-gen
