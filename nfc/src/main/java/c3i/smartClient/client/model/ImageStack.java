@@ -1,13 +1,6 @@
 package c3i.smartClient.client.model;
 
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.Exportable;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.CompleterImpl;
-import smartsoft.util.shared.Path;
 import c3i.core.featureModel.shared.FixedPicks;
 import c3i.core.imageModel.shared.AngleKey;
 import c3i.core.imageModel.shared.CoreImageStack;
@@ -17,8 +10,15 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.imageModel.shared.RawImageStack;
 import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.imageModel.shared.ViewKey;
+import c3i.util.shared.futures.CompleterImpl;
+import c3i.util.shared.futures.FutureCompleter;
 import c3i.util.shared.futures.HasKey;
 import c3i.util.shared.futures.OnComplete;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.Exportable;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -40,25 +40,29 @@ public class ImageStack implements Exportable, HasKey {
     private final CoreImageStack coreImageStack;
     private final LayerState m;
 
-    private final Completer<ImageStack> loader = new CompleterImpl<ImageStack>();
+    private final FutureCompleter<ImageStack> loader;
     private int completeCount;
 
     private final ImmutableList<Img> images;
 
-    private ImageStack(){
+    private ImageStack() {
         throw new UnsupportedOperationException("needed (but not called) by gwt-exporter");
     }
 
     public ImageStack(final Key key, CoreImageStack coreImageStack) {
-          this(key, coreImageStack,null);
+        this(key, coreImageStack, null);
     }
 
     public ImageStack(final Key key, CoreImageStack coreImageStack, LayerState m) {
         Preconditions.checkNotNull(key);
         Preconditions.checkNotNull(coreImageStack);
+
+
         this.key = key;
         this.coreImageStack = coreImageStack;
         this.m = m;
+
+        loader = new CompleterImpl<ImageStack>();
 
         ImmutableList.Builder<Img> builder = ImmutableList.builder();
 
@@ -270,8 +274,6 @@ public class ImageStack implements Exportable, HasKey {
             return result;
         }
     }
-
-
 
 
 }

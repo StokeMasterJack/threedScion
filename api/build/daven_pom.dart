@@ -73,7 +73,6 @@ class DavenPom {
   String logLevel = 'DEBUG'; //  [WARN | DEBUG] 
   
   get gwtCommonArgs => {
-    'war': warDir,
     'logLevel': logLevel,
      'extra':           '$gwtTmp/extra',
      'deploy':          '$gwtTmp/deploy',
@@ -87,7 +86,10 @@ class DavenPom {
   String get startupUrl => 'http://localhost:8080/$contextPath/$startupPage';
   
   Map<String,String> get gwtCompileArgs  {
-    var m = {'style': pretty?'PRETTY':'OBF'};
+    var m = {
+        'style': pretty?'PRETTY':'OBF',
+        'war': warDir
+    };
     if(disableCastChecking){
       m['XdisableCastChecking'] = '';
     }
@@ -96,8 +98,14 @@ class DavenPom {
   
   Map<String,String> get gwtDevModeArgs => {
        'startupUrl':      startupUrl,
-       'logdir':          '$userHome/temp/gwt/logdir'
+       'logdir':          '$userHome/temp/gwt/logdir',
+      'war': warDir,
   };
+
+  Map<String,String> get gwtSuperDevArgs => {
+        'startupUrl':      startupUrl,
+        'logdir':          '$userHome/temp/gwt/logdir'
+   };
   
   
 }

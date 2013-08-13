@@ -15,7 +15,7 @@ import org.timepedia.exporter.client.Exportable;
  *   });
  */
 
-public interface Future<T> extends Exportable{
+public interface Future<T> extends Exportable {
 
     /** The value provided. Throws an exception if [hasValue] is false. */
     @Export
@@ -35,10 +35,9 @@ public interface Future<T> extends Exportable{
     boolean isComplete();
 
     /**
-     * Whether the value is available (meaning [isComplete] is true, and there was
-     * no exception).
+     * complete with no exceptions
      */
-    boolean isLoaded();
+    boolean isSuccess();
 
     /**
      * When this future is complete and has a value, then [onComplete] is called
@@ -99,9 +98,11 @@ public interface Future<T> extends Exportable{
 
     void complete(OnComplete onComplete);
 
-    boolean isLoading();
+    boolean isProcessing();
 
     LoadState getState();
+
+
 }
 
 

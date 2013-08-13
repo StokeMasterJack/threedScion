@@ -1,34 +1,30 @@
 package c3i.smartClient.client.service;
 
-import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
 import c3i.core.threedModel.client.JsThreedModel;
 import c3i.core.threedModel.client.JsonUnmarshallerTm;
-import c3i.core.threedModel.shared.Brand;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.ThreedModel;
 import c3i.util.shared.futures.AsyncFunction;
 import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
-import com.google.gwt.core.client.JavaScriptObject;
+import c3i.util.shared.futures.FutureCompleter;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import smartsoft.util.gwt.client.UserLog;
 import smartsoft.util.gwt.client.rpc.Req;
 import smartsoft.util.gwt.client.rpc.RequestContext;
 import smartsoft.util.shared.Path;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -144,9 +140,9 @@ public class ThreedModelClient {
     }
 
 
-
     public Future<String> getVtc(SeriesKey seriesKey) throws Exception {
-        final Completer<String> f = new CompleterImpl<String>();
+        String name = "loadVtc(" + seriesKey + ")";
+        final FutureCompleter<String> f = new CompleterImpl<String>();
         vtcLoaderFunction.start(seriesKey, f);
         return f.getFuture();
     }
@@ -246,8 +242,8 @@ public class ThreedModelClient {
     public AsyncFunction<SeriesKey, String> vtcLoaderFunction = new AsyncFunction<SeriesKey, String>() {
 
         @Override
-        public void start(SeriesKey seriesKey, final Completer<String> f) throws RuntimeException {
-            Path vtcMapUrl = getVtcUrl(seriesKey);
+        public void start(SeriesKey arg, final Completer<String> f) throws RuntimeException {
+            Path vtcMapUrl = getVtcUrl(arg);
 
             RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
             requestBuilder.setCallback(new RequestCallback() {

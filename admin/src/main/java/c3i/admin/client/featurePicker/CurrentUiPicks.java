@@ -51,8 +51,8 @@ public class CurrentUiPicks implements UiPicks, RValue<FixedPicks> {
     private static AsyncFunction<Set<Var>, FixedPicks> createAsyncFunction(final ThreedModel threedModel) {
         return new AsyncFunction<Set<Var>, FixedPicks>() {
             @Override
-            public void start(Set<Var> input, Completer<FixedPicks> completer) throws Exception {
-                FixedPicks fixup = threedModel.fixup(input);
+            public void start(Set<Var> arg, Completer<FixedPicks> completer) throws Exception {
+                FixedPicks fixup = threedModel.fixup(arg);
                 completer.setResult(fixup);
             }
         };

@@ -3,7 +3,7 @@ var threedSession;
 var picks = ["Base", "V6", "6AT", "070"];
 
 function onThreedReady() {
-    if(window.console) console.log("onThreedReady");
+    if (window.console) console.log("onThreedReady");
 
     var factory = new c3i.smartClient.model.ThreedSessionFactory();
 
@@ -11,11 +11,11 @@ function onThreedReady() {
     factory.setProfileKey("wStd");
     factory.setSeries("toyota", 2013, "avalon");
     var threedSessionFuture = factory.createSession();
-    if(window.console) console.log("threedSessionFuture: " + threedSessionFuture);
+    if (window.console) console.log("threedSessionFuture: " + threedSessionFuture);
 
 
     threedSessionFuture.success(function () {
-        if(window.console) console.log("threedSession success");
+        if (window.console) console.log("threedSession success");
         threedSession = threedSessionFuture.getResult();
         threedSession.setPicks(picks);
 

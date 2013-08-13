@@ -14,7 +14,7 @@
     <inherits name="com.google.gwt.logging.Logging"/>
         <!--<set-property name="gwt.logging.enabled" value="FALSE"/> # To disable logging-->
 
-        <set-property name="gwt.logging.logLevel" value="FINE"/> # To change the default logLevel
+        <set-property name="gwt.logging.logLevel" value="WARNING"/> # To change the default logLevel
 
         <set-property name="gwt.logging.consoleHandler" value="ENABLED"/>  # To disable a default Handler
         <set-property name="gwt.logging.developmentModeHandler" value="ENABLED" />
@@ -28,6 +28,7 @@
         <inherits name="smartsoft.util.Util"/>
         <inherits name='org.timepedia.exporter.Exporter'/>
         <inherits name="com.google.common.collect.Collect"/>
+
 
 
 </module>

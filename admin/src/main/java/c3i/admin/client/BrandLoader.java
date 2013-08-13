@@ -14,14 +14,14 @@ public class BrandLoader extends Loader<BrandKey, BrandInit> {
 
         super(brandKey, new AsyncFunction<BrandKey, BrandInit>() {
             @Override
-            public void start(final BrandKey brandKey, final Completer<BrandInit> completer) throws Exception {
-                threedAdminClient.log("Loading " + brandKey + "...");
-                Req<BrandInit> request = threedAdminClient.getInitData(brandKey);
+            public void start(final BrandKey arg, final Completer<BrandInit> completer) throws Exception {
+                threedAdminClient.log("Loading " + arg + "...");
+                Req<BrandInit> request = threedAdminClient.getInitData(arg);
                 request.onSuccess = new SuccessCallback<BrandInit>() {
 
                     @Override
                     public void call(Req<BrandInit> r) {
-                        threedAdminClient.log("\t Loading " + brandKey + " complete!");
+                        threedAdminClient.log("\t Loading " + arg + " complete!");
                         completer.setResult(r.result);
                     }
 

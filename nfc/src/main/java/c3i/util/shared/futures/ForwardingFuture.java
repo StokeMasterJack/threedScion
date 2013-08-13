@@ -26,8 +26,8 @@ public class ForwardingFuture<T> implements Future<T> {
     }
 
     @Override
-    public boolean isLoaded() {
-        return delegate.isLoaded();
+    public boolean isSuccess() {
+        return delegate.isSuccess();
     }
 
     public void success(OnSuccess<T> successHandler) {
@@ -58,12 +58,13 @@ public class ForwardingFuture<T> implements Future<T> {
     }
 
     @Override
-    public boolean isLoading() {
-        return delegate.isLoading();
+    public boolean isProcessing() {
+        return delegate.isProcessing();
     }
 
     @Override
     public LoadState getState() {
         return delegate.getState();
     }
+
 }

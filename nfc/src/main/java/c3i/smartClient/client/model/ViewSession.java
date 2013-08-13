@@ -175,9 +175,9 @@ public class ViewSession implements DragToSpinModel, ViewModel {
     private AsyncFunction<ImageStack.Key, ImageStack> createAsyncFunction() {
         return new AsyncFunction<ImageStack.Key, ImageStack>() {
             @Override
-            public void start(ImageStack.Key key, Completer<ImageStack> completer) throws Exception {
+            public void start(ImageStack.Key arg, Completer<ImageStack> completer) throws Exception {
 
-                FixedPicks fixedPicks = key.getCoreKey().getRawKey().getFixedPicks();
+                FixedPicks fixedPicks = arg.getCoreKey().getRawKey().getFixedPicks();
                 if (fixedPicks == null) {
                     completer.setResult(null);
                 } else {
@@ -190,9 +190,9 @@ public class ViewSession implements DragToSpinModel, ViewModel {
 
                     ImageStack imageStack;
                     if (imageMode().get().isPngMode()) {
-                        imageStack = new ImageStack(key, coreImageStack, layerState);
+                        imageStack = new ImageStack(arg, coreImageStack, layerState);
                     } else {
-                        imageStack = new ImageStack(key, coreImageStack);
+                        imageStack = new ImageStack(arg, coreImageStack);
                     }
 
                     completer.setResult(imageStack);

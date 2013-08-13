@@ -11,9 +11,9 @@ import c3i.smartClient.client.service.ThreedModelClient;
 import c3i.smartClient.client.service.ThreedModelLoader;
 import c3i.smartClient.client.settings.Arg;
 import c3i.smartClient.client.settings.DefaultFunction;
-import c3i.util.shared.futures.Completer;
 import c3i.util.shared.futures.CompleterImpl;
 import c3i.util.shared.futures.Future;
+import c3i.util.shared.futures.FutureCompleter;
 import c3i.util.shared.futures.OnException;
 import c3i.util.shared.futures.OnSuccess;
 import org.timepedia.exporter.client.Export;
@@ -146,14 +146,14 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
 
 
         try {
-
             args.check();
 
             final BrandLoaderFactory brandLoaderFactory = new BrandLoaderFactoryXhr(args.brandKey.get(), args.vtcBaseUrl.get());
+
             final BrandLoader brandLoader = brandLoaderFactory.createLoader();
             final Future<Brand> brandFuture = brandLoader.ensureLoaded();
 
-            final Completer<ThreedSession> threedSessionCompleter = new CompleterImpl<ThreedSession>();
+            final FutureCompleter<ThreedSession> threedSessionCompleter = new CompleterImpl<ThreedSession>();
 
             brandFuture.success(new OnSuccess<Brand>() {
                 @Override
@@ -165,6 +165,7 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
                     ThreedModelClient threedModelClient = new ThreedModelClient(args.fmBaseUrl.get());
 
                     final ThreedModelLoader seriesLoader = new ThreedModelLoader(threedModelClient, seriesId);
+
                     final Future<ThreedModel> seriesFuture = seriesLoader.ensureLoaded();
 
                     seriesFuture.success(new OnSuccess<ThreedModel>() {
@@ -176,6 +177,8 @@ public class ThreedSessionFactory implements Exportable, ThreedConstants {
                             threedSessionCompleter.setResult(session);
                         }
                     });
+
+
                 }
             });
 

@@ -18,8 +18,8 @@ public class VtcLoader extends Loader<SeriesKey, String> {
     public VtcLoader(SeriesKey input, final ThreedModelClient client) {
         super(input, new AsyncFunction<SeriesKey, String>() {
             @Override
-            public void start(SeriesKey input, final Completer<String> vtcCompleter) throws Exception {
-                Future<String> f = client.getVtc(input);
+            public void start(SeriesKey arg, final Completer<String> vtcCompleter) throws Exception {
+                Future<String> f = client.getVtc(arg);
 
                 f.success(new OnSuccess<String>() {
                     @Override

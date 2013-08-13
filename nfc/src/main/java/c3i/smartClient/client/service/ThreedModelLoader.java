@@ -17,29 +17,7 @@ public class ThreedModelLoader extends Loader<SeriesId, ThreedModel> {
 
 
     public ThreedModelLoader(final ThreedModelClient threedModelClient, final SeriesId seriesId) {
-        super(seriesId, new AsyncFunction<SeriesId, ThreedModel>() {
-            @Override
-            public void start(SeriesId input, final Completer<ThreedModel> completer) throws Exception {
-
-                threedModelClient.log("Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "]...");
-                Req<ThreedModel> r1 = threedModelClient.fetchThreedModel(seriesId);
-
-                r1.onSuccess = new SuccessCallback<ThreedModel>() {
-                    @Override
-                    public void call(Req<ThreedModel> request) {
-                        threedModelClient.log("\t Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "] complete!");
-                        completer.setResult(request.result);
-                    }
-                };
-
-                r1.onFailure = new FailureCallback() {
-                    @Override
-                    public void call(Req request) {
-                        completer.setException(request.exception);
-                    }
-                };
-            }
-        });
+        super(seriesId, new ThreedModelLoaderFunction(threedModelClient, seriesId));
 
 
         this.client = threedModelClient;
@@ -56,4 +34,36 @@ public class ThreedModelLoader extends Loader<SeriesId, ThreedModel> {
         return seriesId;
     }
 
+    public static class ThreedModelLoaderFunction implements AsyncFunction<SeriesId, ThreedModel> {
+
+        private final ThreedModelClient threedModelClient;
+        private final SeriesId seriesId;
+
+        public ThreedModelLoaderFunction(ThreedModelClient threedModelClient, SeriesId seriesId) {
+            this.threedModelClient = threedModelClient;
+            this.seriesId = seriesId;
+        }
+
+        @Override
+        public void start(SeriesId arg, final Completer<ThreedModel> completer) throws Exception {
+
+            threedModelClient.log("Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "]...");
+            Req<ThreedModel> r1 = threedModelClient.fetchThreedModel(seriesId);
+
+            r1.onSuccess = new SuccessCallback<ThreedModel>() {
+                @Override
+                public void call(Req<ThreedModel> request) {
+                    threedModelClient.log("\t Loading ThreedModel [" + seriesId.getSeriesKey().getShortName() + "] complete!");
+                    completer.setResult(request.result);
+                }
+            };
+
+            r1.onFailure = new FailureCallback() {
+                @Override
+                public void call(Req request) {
+                    completer.setException(request.exception);
+                }
+            };
+        }
+    }
 }

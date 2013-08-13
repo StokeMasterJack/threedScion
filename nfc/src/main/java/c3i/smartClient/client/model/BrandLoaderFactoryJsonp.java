@@ -40,7 +40,7 @@ public class BrandLoaderFactoryJsonp implements BrandLoaderFactory, ThreedConsta
 
         return new BrandLoaderFunction() {
             @Override
-            public void start(BrandKey brandKey, final Completer<Brand> completer) throws RuntimeException {
+            public void start(BrandKey arg, final Completer<Brand> completer) throws RuntimeException {
 
                 final Path vtcMapUrl = getVtcMapUrl();
 

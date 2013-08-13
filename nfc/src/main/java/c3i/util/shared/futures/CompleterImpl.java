@@ -1,11 +1,11 @@
 package c3i.util.shared.futures;
 
-public class CompleterImpl<T> implements Completer<T> {
+public class CompleterImpl<T> implements FutureCompleter<T> {
 
     final FutureImpl<T> futureImpl;
 
     public CompleterImpl() {
-        futureImpl = new FutureImpl();
+        futureImpl = new FutureImpl<T>();
     }
 
     public Future<T> getFuture() {
@@ -19,4 +19,5 @@ public class CompleterImpl<T> implements Completer<T> {
     public void setException(Throwable exception) {
         futureImpl._setException(exception);
     }
+
 }

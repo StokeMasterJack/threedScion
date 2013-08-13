@@ -15,6 +15,11 @@ void devmode(DavenPom app){
   command.run();
 }
 
+void superdevmode(DavenPom app){
+  SuperDevMode command = new SuperDevMode(app);
+  command.run();
+}
+
 void compileEmpty(DavenPom app){
   CompileEmpty command = new CompileEmpty(app);
   command.run();
@@ -29,6 +34,8 @@ abstract class  Command{
   
   void run(){
     ProcessArgs  processArgs = buildProcessArgs();
+    processArgs.list.forEach((arg) => print(arg));
+
     startProcess('java', processArgs.list);
   }
   
@@ -79,9 +86,15 @@ class Compile extends Command{
 }
 
 class DevMode extends Command{
-  static const String mainClass = 'com.google.gwt.dev.DevMode';
+  final String mainClass = 'com.google.gwt.dev.DevMode';
   DevMode(DavenPom app): super(app);
   Map<String, String> get gwtCommandArgs => app.gwtDevModeArgs;
+}
+
+class SuperDevMode extends Command{
+  final String mainClass = 'com.google.gwt.dev.codeserver.CodeServer';
+  SuperDevMode(DavenPom app): super(app);
+  Map<String, String> get gwtCommandArgs => app.gwtSuperDevModeArgs;
 }
 
 class CompileEmpty extends Command{

@@ -48,7 +48,7 @@ public class SeriesSession {
 
         this.seriesLoader = new Loader<SeriesId, Series>(seriesId, new AsyncFunction<SeriesId, Series>() {
             @Override
-            public void start(SeriesId input, final Completer<Series> completer) throws Exception {
+            public void start(SeriesId arg, final Completer<Series> completer) throws Exception {
 
                 Future<ThreedModel> ff = threedModelLoader.ensureLoaded();
                 ff.success(new OnSuccess<ThreedModel>() {

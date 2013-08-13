@@ -1,8 +1,11 @@
 package c3i.core.threedModel.shared;
 
-import com.google.common.collect.ImmutableMap;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
+import com.google.common.collect.ImmutableMap;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VtcMap {
 
@@ -32,12 +35,21 @@ public class VtcMap {
     }
 
     public RootTreeId getRootTreeId(SeriesKey seriesKey) {
-        return vtcMap.get(seriesKey);
+        RootTreeId rootTreeId = vtcMap.get(seriesKey);
+        if (rootTreeId == null) {
+            String msg = "vtcMap does not contain the key: [" + seriesKey + "]. The valid vtcMap keys are: " + vtcMap.keySet();
+            log.log(Level.SEVERE,"A: " + msg);
+            throw new IllegalArgumentException("B: " + msg);
+        }
+
+        return rootTreeId;
     }
 
     public SeriesId getSeriesId(SeriesKey seriesKey) {
         RootTreeId rootTreeId = getRootTreeId(seriesKey);
         return new SeriesId(seriesKey, rootTreeId);
     }
+
+    private static Logger log = Logger.getLogger(VtcMap.class.getName());
 
 }

@@ -36,62 +36,58 @@ public class BrandLoaderFactoryXhr implements BrandLoaderFactory, ThreedConstant
 
     public Path getVtcMapUrl() {
         Path brandBase = getVtcMapBrandBase();
-        System.err.println("brandBase[" + brandBase + "]");
-
-        Path vtcMapUrl = brandBase.append(LOCAL_NAME_VTC);
-        System.err.println("vtcMapUrl[" + vtcMapUrl + "]");
-        return vtcMapUrl;
+        return brandBase.append(LOCAL_NAME_VTC);
     }
 
     public BrandLoaderFunction createLoaderFunction() {
+        return new BrandLoaderFunctionXhr();
+    }
 
-        return new BrandLoaderFunction() {
 
-            @Override
-            public void start(BrandKey brandKey, final Completer<Brand> completer) throws Exception {
+    private class BrandLoaderFunctionXhr implements BrandLoaderFunction {
 
-                final Path vtcMapUrl = getVtcMapUrl();
+        @Override
+        public void start(BrandKey arg, final Completer<Brand> completer) throws Exception {
 
-                log.info("Start loading VtcMap from url[" + vtcMapUrl + "]...");
+            final Path vtcMapUrl = getVtcMapUrl();
 
-                RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
-                requestBuilder.setCallback(new RequestCallback() {
+            log.info("Start loading VtcMap from url[" + vtcMapUrl + "]...");
 
-                    @Override
-                    public void onResponseReceived(Request request, final Response response) {
-                        if (response.getStatusCode() != 200) {
-                            completer.setException(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
-                        } else {
-                            log.info("Complete loading VtcMap from url[" + vtcMapUrl + "]");
+            RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, vtcMapUrl.toString());
+            requestBuilder.setCallback(new RequestCallback() {
 
-                            log.info("Start parsing VtcMap...");
-                            Brand brandInitData = BrandParser.parse(response.getText());
-                            log.info("Complete parsing VtcMap");
+                @Override
+                public void onResponseReceived(Request request, final Response response) {
+                    if (response.getStatusCode() != 200) {
+                        completer.setException(new RuntimeException("getVtcMap return non-200 response[" + response.getStatusCode() + "]. Response text: " + response.getText()));
+                    } else {
+                        log.info("Loading VtcMap complete!");
 
-                            completer.setResult(brandInitData);
+                        log.info("Start parsing VtcMap...");
+                        Brand brandInitData = BrandParser.parse(response.getText());
+                        log.info("Complete parsing VtcMap");
 
-                        }
+                        completer.setResult(brandInitData);
+
                     }
-
-                    @Override
-                    public void onError(Request request, Throwable exception) {
-                        completer.setException(exception);
-                    }
-
-                });
-
-                try {
-                    requestBuilder.send();
-                } catch (RequestException e) {
-                    e.printStackTrace();
-                    completer.setException(e);
                 }
 
+                @Override
+                public void onError(Request request, Throwable exception) {
+                    completer.setException(exception);
+                }
+
+            });
+
+            try {
+                requestBuilder.send();
+            } catch (RequestException e) {
+                e.printStackTrace();
+                completer.setException(e);
             }
-        };
+
+        }
     }
 
     private static Logger log = Logger.getLogger(BrandLoaderFactoryXhr.class.getName());
-
-
 }

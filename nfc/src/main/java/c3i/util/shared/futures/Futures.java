@@ -28,7 +28,7 @@ public class Futures {
             return immediate(ImmutableList.of());
         }
 
-        final Completer<List> completer = new CompleterImpl<List>();
+        final FutureCompleter<List> completer = new CompleterImpl<List>();
         final Future<List> result = completer.getFuture();
         final int[] remaining = {futures.size()};
         final List<Object> values = new ArrayList(futures.size());
@@ -65,8 +65,25 @@ public class Futures {
         return result;
     }
 
-    public static <T> Completer<T> createCompleter() {
+    public static <T> FutureCompleter<T> createCompleter() {
         return new CompleterImpl<T>();
+    }
+
+    public static <I, T> NamedAsyncFunction<I, T> createNamedAsyncFunction(final String name, final AsyncFunction<I, T> asyncFunction) {
+
+        return new NamedAsyncFunction<I, T>() {
+
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public void start(I arg, Completer<T> completer) throws Exception {
+                asyncFunction.start(arg, completer);
+            }
+
+        };
     }
 
 

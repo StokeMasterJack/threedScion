@@ -22,8 +22,6 @@ package c3i.util.shared.futures;
  */
 public interface Completer<T> {
 
-    /** The future that will contain the value produced by this completer. */
-    Future<T> getFuture();
 
     /** Supply a value for [future]. */
     void setResult(T value);

@@ -4,6 +4,9 @@ import c3i.core.imageModel.shared.ImImage;
 import c3i.core.imageModel.shared.LayerImage;
 import c3i.core.imageModel.shared.PngSpec;
 import c3i.smartClient.client.ThreedConstants;
+import c3i.util.shared.futures.CompleterImpl;
+import c3i.util.shared.futures.Future;
+import c3i.util.shared.futures.FutureCompleter;
 import com.google.common.base.Preconditions;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.ImageElement;
@@ -12,16 +15,14 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import c3i.util.shared.futures.Completer;
-import c3i.util.shared.futures.CompleterImpl;
-import c3i.util.shared.futures.Future;
 import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Img implements Exportable,ThreedConstants {
-
+public class Img implements Exportable, ThreedConstants {
 
 
     private final ImImage imImage;
@@ -31,7 +32,7 @@ public class Img implements Exportable,ThreedConstants {
     private final ImageElement imageElement;
 
 
-    private final Completer<Img> loader = new CompleterImpl<Img>();
+    private final FutureCompleter<Img> loader;
 
     private final EventListener domEventListener = new EventListener() {
         @Override
@@ -53,12 +54,8 @@ public class Img implements Exportable,ThreedConstants {
     public Img(Path repoBaseUrl, ImImage imImage, LayerState m) {
         Preconditions.checkNotNull(imImage);
         this.imImage = imImage;
+        loader = new CompleterImpl<Img>();
 
-//        if (imImage.isScionImage()) {
-//            this.url = imImage.getUrl(SCION_IMAGE_REPO_BASE);
-//        } else {
-//            this.url = imImage.getUrl(repoBaseUrl);
-//        }
 
         this.url = imImage.getUrl(repoBaseUrl);
 
@@ -73,13 +70,11 @@ public class Img implements Exportable,ThreedConstants {
             imageElement = Document.get().createImageElement();
             Event.setEventListener(imageElement, domEventListener);
             Event.sinkEvents(imageElement, Event.ONLOAD | Event.ONERROR);
-//            log.log(Level.INFO, "loading: " + url);
+            log.log(Level.INFO, "loading: " + url);
             cache.put(url, imageElement);
             this.imageElement.setSrc(url.toString());  //start loading
         }
 
-
-//        refresh();
 
     }
 
@@ -145,12 +140,12 @@ public class Img implements Exportable,ThreedConstants {
 
     @Export
     public boolean isLoaded() {
-        return loader.getFuture().isLoaded();
+        return loader.getFuture().isSuccess();
     }
 
     @Export
     public boolean isLoading() {
-        return loader.getFuture().isLoading();
+        return loader.getFuture().isProcessing();
     }
 
     /**
@@ -233,6 +228,8 @@ public class Img implements Exportable,ThreedConstants {
         }
 
     }
+
+    private static Logger log = Logger.getLogger(Img.class.getName());
 
 //    private void refresh() {
 //        boolean v = isEnabled();

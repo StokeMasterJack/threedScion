@@ -75,6 +75,11 @@ public class Brand {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Brand[" + brandKey + "]";
+    }
+
     private boolean isScion() {
         return brandKey.isScion();
     }

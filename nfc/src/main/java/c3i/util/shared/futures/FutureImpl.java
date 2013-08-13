@@ -2,12 +2,15 @@ package c3i.util.shared.futures;
 
 
 import c3i.util.shared.events.LoadState;
-import org.timepedia.exporter.client.Export;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FutureImpl<T> implements Future<T> {
+
+    public static ExceptionHandlerFactory exceptionHandlerFactory = new DefaultExceptionHandlerFactory();
 
     private final ArrayList<OnComplete> completeHandlers = new ArrayList<OnComplete>();
     private final ArrayList<OnSuccess<T>> successHandlers = new ArrayList<OnSuccess<T>>();
@@ -48,13 +51,13 @@ public class FutureImpl<T> implements Future<T> {
     }
 
     @Override
-    public boolean isLoaded() {
+    public boolean isSuccess() {
         return _isComplete && _exception == null;
     }
 
     @Override
     public void success(OnSuccess<T> successHandler) throws RuntimeException {
-        if (isLoaded()) {
+        if (isSuccess()) {
             successHandler.onSuccess(getResult());
         } else if (!isComplete()) {
             successHandlers.add(successHandler);
@@ -69,7 +72,7 @@ public class FutureImpl<T> implements Future<T> {
 
     @Override
     public void complete(OnComplete completeHandler) {
-        if (isLoaded()) {
+        if (isSuccess()) {
             completeHandler.call();
         } else if (!isComplete()) {
             completeHandlers.add(completeHandler);
@@ -83,7 +86,7 @@ public class FutureImpl<T> implements Future<T> {
     }
 
     @Override
-    public boolean isLoading() {
+    public boolean isProcessing() {
         return !isComplete();
     }
 
@@ -99,9 +102,16 @@ public class FutureImpl<T> implements Future<T> {
         }
     }
 
+    private static Logger log = Logger.getLogger(FutureImpl.class.getName());
+
     void _complete() {
+
         _isComplete = true;
         if (_exception != null) {
+
+            if (exceptionHandlers.size() == 0) {
+                log.log(Level.WARNING, "An exception occurred while executing an async method but no exception handlers was registered.");
+            }
 
             for (OnException exceptionHandler : exceptionHandlers) {
                 //Explicitly check for true here so that if the handler returns null,
@@ -114,9 +124,14 @@ public class FutureImpl<T> implements Future<T> {
             }
         }
 
-        if (isLoaded()) {
+        if (isSuccess()) {
             for (OnSuccess<T> successHandler : successHandlers) {
-                successHandler.onSuccess(getResult());
+                T result = getResult();
+                try {
+                    successHandler.onSuccess(result);
+                } catch (RuntimeException e) {
+                    log.log(Level.SEVERE, "An uncaught exception was thrown from callback onSuccess(" + result + ")", e);
+                }
             }
         } else {
             if (!_exceptionHandled && successHandlers.size() > 0) {
@@ -133,6 +148,7 @@ public class FutureImpl<T> implements Future<T> {
             completeHandler.call();
         }
     }
+
 
     void _setValue(T value) {
         if (_isComplete) {
@@ -155,7 +171,7 @@ public class FutureImpl<T> implements Future<T> {
 
     @Override
     public <O> Future transform(final SyncTransform<T, O> transformation) {
-        final Completer<O> completer = new CompleterImpl<O>();
+        final CompleterImpl<O> completer = new CompleterImpl<O>();
 
 
         failure(new OnException() {
@@ -187,7 +203,7 @@ public class FutureImpl<T> implements Future<T> {
 
     @Override
     public <O> Future chain(final AsyncTransform<T, O> transformation) {
-        final Completer<Future<O>> completer = new CompleterImpl<Future<O>>();
+        final CompleterImpl<Future<O>> completer = new CompleterImpl<Future<O>>();
 
         failure(new OnException() {
             @Override
@@ -230,9 +246,9 @@ public class FutureImpl<T> implements Future<T> {
     public LoadState getState() {
         if (isFailed()) {
             return LoadState.FAILED;
-        } else if (isLoaded()) {
+        } else if (isSuccess()) {
             return LoadState.LOADED;
-        } else if (isLoading()) {
+        } else if (isProcessing()) {
             return LoadState.LOADING;
         } else {
             throw new IllegalStateException();
@@ -241,4 +257,22 @@ public class FutureImpl<T> implements Future<T> {
     }
 
 
+    private static class DefaultExceptionHandlerFactory implements ExceptionHandlerFactory {
+
+        @Override
+        public OnException createExceptionHandler(final Future future) {
+
+            return new OnException() {
+                @Override
+                public boolean onException(Throwable e) {
+                    String msg = "Exception occurred while processing future action[" + future + "]";
+                    log.log(Level.SEVERE, msg, e);
+                    //String render = ExceptionRenderer.render(e);
+                    return true;
+                }
+            };
+        }
+
+
+    }
 }
