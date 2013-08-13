@@ -9,7 +9,7 @@ function onThreedReady() {
 
     factory.setRepoBase("/configurator-content-v2");
     factory.setProfileKey("wStd");
-    factory.setSeries("toyota", 2014, "avalon");
+    factory.setSeries("toyota", 2013, "avalon");
     var threedSessionFuture = factory.createSession();
     if(window.console) console.log("threedSessionFuture: " + threedSessionFuture);
 

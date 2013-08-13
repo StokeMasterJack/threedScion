@@ -6,7 +6,7 @@ function onThreedReady() {
 
     factory.setRepoBase("/configurator-content-v2");
 //    factory.setRepoBase("http://smartsoftdev.net/configurator-content-v2");
-    factory.setSeries("toyota", 2014, "avalon");
+    factory.setSeries("toyota", 2013, "avalon");
 
     factory.createSession().success(function (_threedSession) {
         threedSession = _threedSession;
