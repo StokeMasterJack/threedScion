@@ -1,5 +1,9 @@
 package c3i.admin.server.taskManager;
 
+import c3i.admin.server.JpgSet;
+import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.admin.shared.jpgGen.JobState;
+import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.core.common.shared.BrandKey;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.common.shared.SeriesKey;
@@ -14,16 +18,9 @@ import c3i.core.imageModel.shared.SimplePicks;
 import c3i.core.threedModel.server.TestConstants;
 import c3i.core.threedModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.admin.server.JpgSet;
-import c3i.admin.shared.jpgGen.JobSpec;
-import c3i.admin.shared.jpgGen.JobState;
-import c3i.admin.shared.jpgGen.JobStatus;
 import c3i.repo.server.Repos;
-import java.util.logging.Logger;
-
 import org.junit.Before;
 import org.junit.Test;
-import sun.misc.VM;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -33,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class MasterTest implements TestConstants {
 
@@ -91,10 +89,19 @@ public class MasterTest implements TestConstants {
 
     }
 
-
     @Test
     public void test_MasterAvalon() throws Exception {
-        SeriesKey seriesKey = new SeriesKey(BrandKey.TOYOTA, 2014, "avalon");
+        test_Master("toyota", "avalon", 2013);
+    }
+
+
+    @Test
+    public void test_MasterTundra1() throws Exception {
+        test_Master("toyota", "tundra", 2013);
+    }
+
+    public void test_Master(String brand, String series, int year) throws Exception {
+        SeriesKey seriesKey = new SeriesKey(BrandKey.fromString(brand), year, series);
         SeriesId seriesId = repos.getHead(seriesKey);
 
         Profile profile = repos.getProfiles().get("wStd");
@@ -125,7 +132,6 @@ public class MasterTest implements TestConstants {
 
 
     }
-
 
     @Test
     public void test_MasterTundra() throws Exception {
@@ -272,7 +278,6 @@ public class MasterTest implements TestConstants {
 
 
     }
-
 
 
     private static Logger log = Logger.getLogger("c3i");

@@ -8,10 +8,7 @@ import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
 import c3i.repo.server.rt.RtRepo;
-import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import java.util.logging.Logger;
-
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
 import org.imgscalr.Scalr;
@@ -21,12 +18,15 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Takes multiple pngs and turns them into a single jpg
@@ -116,7 +116,9 @@ public class BaseImageGenerator {
             }
 
             if (i != 0 && background) {
-                throw new IllegalStateException();
+                String shortSha = pngKey.getShortSha();
+                String msg = "Attempt to use an opaque image [" + shortSha + "] for a non-background layer[" + i + "]";
+                throw new IllegalStateException(msg);
             }
 
             boolean skip = background && !includeBackground();
@@ -212,7 +214,6 @@ public class BaseImageGenerator {
 
 
     }
-
 
 
     private File getOutputFile() {

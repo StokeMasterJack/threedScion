@@ -3,6 +3,7 @@ package c3i.core.featureModel.shared;
 import c3i.core.featureModel.data.Camry2011;
 import c3i.core.featureModel.data.Trim;
 import c3i.core.featureModel.data.TrimColor;
+import c3i.core.featureModel.data.TrimColorOption;
 import c3i.core.featureModel.shared.boolExpr.MasterConstraint;
 
 public class CspTestBase {
@@ -20,13 +21,16 @@ public class CspTestBase {
     }
 
 
+    protected Csp buildCspSemiComplexVehicle() {
+        FeatureModel fm = new TrimColorOption();
+        Csp csp = new CspForTreeSearch(fm, fm.getConstraint());
+        return csp;
+    }
+
+
     protected Csp buildCspComplexVehicle() {
         FeatureModel fm = new Camry2011();
-        //        Csp csp = new CspSimple(fm, fm.getConstraint());
-
         MasterConstraint constraint = fm.getConstraint();
-        constraint.print();
-        Csp csp = new CspForTreeSearch(fm, constraint, null);
-        return csp;
+        return new CspForTreeSearch(fm, constraint, null);
     }
 }

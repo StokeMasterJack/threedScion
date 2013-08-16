@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class CspSatCountTest extends CspTestBase {
 
-
     @Test
     public void simple() throws Exception {
         Csp csp = buildCspSimpleVehicle();
@@ -25,9 +24,16 @@ public class CspSatCountTest extends CspTestBase {
     }
 
     @Test
+    public void semi() throws Exception {
+        Csp csp = buildCspSemiComplexVehicle();
+        long satCount = csp.satCount();
+        assertEquals(44944, satCount);
+    }
+
+    @Test
     public void complex() throws Exception {
-        if (true) return;     //todo
         Csp csp = buildCspComplexVehicle();
+        csp.print();
         long satCount = csp.satCount();
         assertEquals(2080512, satCount);
     }
