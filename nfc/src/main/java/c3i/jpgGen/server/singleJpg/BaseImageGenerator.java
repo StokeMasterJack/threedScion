@@ -5,9 +5,7 @@ import c3i.core.imageModel.shared.IBaseImageKey;
 import c3i.core.imageModel.shared.PngSegment;
 import c3i.core.imageModel.shared.PngSegments;
 import c3i.jpgGen.shared.Stats;
-import c3i.repo.server.Repos;
 import c3i.repo.server.SeriesRepo;
-import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.Files;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectStream;
@@ -37,10 +35,12 @@ public class BaseImageGenerator {
 
     private final IBaseImageKey baseImage;
     private final SeriesRepo seriesRepo;
+    private final File outFile;
 
-    public BaseImageGenerator(final Repos repos, final IBaseImageKey baseImage) {
+    public BaseImageGenerator(final File outFile, final SeriesRepo seriesRepo, final IBaseImageKey baseImage) {
+        this.outFile = outFile;
+        this.seriesRepo = seriesRepo;
         this.baseImage = baseImage;
-        this.seriesRepo = repos.getSeriesRepo(baseImage.getSeriesKey());
     }
 
     public void generate() {
@@ -48,10 +48,9 @@ public class BaseImageGenerator {
     }
 
     public void generate(Stats stats) {
-        File outputFile = getOutputFile();
-        if (outputFile.exists()) return;
+        if (outFile.exists()) return;
 
-        jpgGenLog.info(outputFile.toString());
+        jpgGenLog.info(outFile.toString());
 
         BufferedImage combined = combinePngs(stats);
         BufferedImage scaled = maybeScale(combined, stats);
@@ -173,7 +172,7 @@ public class BaseImageGenerator {
 
         FileImageOutputStream output = null;
         try {
-            output = newFileImageOs(getOutputFile());
+            output = newFileImageOs(outFile);
             writer.setOutput(output);
             IIOImage image = new IIOImage(input, null, null);
             writeImage(writer, iwp, image);
@@ -184,7 +183,7 @@ public class BaseImageGenerator {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    log.warning("Problem closing file [" + getOutputFile() + "]");
+                    log.warning("Problem closing file [" + output + "]");
                 }
             }
         }
@@ -200,9 +199,8 @@ public class BaseImageGenerator {
     private void writeBasePng(BufferedImage input, Stats stats) {
         long t1 = System.currentTimeMillis();
         try {
-            File outputFile = getOutputFile();
-            Files.createParentDirs(outputFile);
-            ImageIO.write(input, "PNG", outputFile);
+            Files.createParentDirs(outFile);
+            ImageIO.write(input, "PNG", outFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -213,12 +211,6 @@ public class BaseImageGenerator {
         }
 
 
-    }
-
-
-    private File getOutputFile() {
-        RtRepo genRepo = seriesRepo.getRtRepo();
-        return genRepo.getBaseImageFileName(baseImage);
     }
 
     private void createParentDirs(File jpgFile) {

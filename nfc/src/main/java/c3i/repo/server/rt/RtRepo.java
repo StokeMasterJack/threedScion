@@ -170,8 +170,7 @@ public class RtRepo implements BlinkChecker {
         File jpgDirForSize = getJpgDirForSize(profile);
         String fingerprint = jpgKey.getFingerprint();
         TwoThirty8 twoThirty8 = TwoThirty8.getTwoThirty8(fingerprint);
-        File jpgFileName = twoThirty8.getFileName(jpgDirForSize, baseImageType);
-        return jpgFileName;
+        return twoThirty8.getFileName(jpgDirForSize, baseImageType);
     }
 
     public boolean exists(IBaseImageKey jpgKey) {

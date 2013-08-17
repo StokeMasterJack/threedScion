@@ -1,5 +1,13 @@
 package c3i.admin.server.taskManager;
 
+import c3i.admin.server.JpgSet;
+import c3i.admin.shared.jpgGen.ExecutorStatus;
+import c3i.admin.shared.jpgGen.JobId;
+import c3i.admin.shared.jpgGen.JobSpec;
+import c3i.admin.shared.jpgGen.JobStatus;
+import c3i.admin.shared.jpgGen.JobStatusItem;
+import c3i.admin.shared.jpgGen.JpgState;
+import c3i.admin.shared.jpgGen.JpgStateCounts;
 import c3i.core.common.shared.SeriesId;
 import c3i.core.imageModel.shared.BaseImage;
 import c3i.core.imageModel.shared.ImView;
@@ -8,15 +16,7 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.RootTreeId;
 import c3i.core.threedModel.shared.Slice2;
 import c3i.core.threedModel.shared.ThreedModel;
-import c3i.admin.server.JpgSet;
 import c3i.jpgGen.server.singleJpg.BaseImageGenerator;
-import c3i.admin.shared.jpgGen.ExecutorStatus;
-import c3i.admin.shared.jpgGen.JobId;
-import c3i.admin.shared.jpgGen.JobSpec;
-import c3i.admin.shared.jpgGen.JobStatus;
-import c3i.admin.shared.jpgGen.JobStatusItem;
-import c3i.admin.shared.jpgGen.JpgState;
-import c3i.admin.shared.jpgGen.JpgStateCounts;
 import c3i.jpgGen.shared.Stats;
 import c3i.jpgGen.shared.TerminalStatus;
 import c3i.repo.server.Repos;
@@ -25,10 +25,6 @@ import c3i.repo.server.rt.RtRepo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import smartsoft.util.servlet.ExceptionRenderer;
 
 import java.io.File;
@@ -43,6 +39,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Master {
 
@@ -64,6 +62,7 @@ public class Master {
 
     private final Stats stats = new Stats();
 
+    private final SeriesRepo seriesRepo;
     private final ThreedModel threedModel;
 
     public Master(final Repos repos, JobSpec jobSpec, int threadCount, int priority) {
@@ -81,6 +80,8 @@ public class Master {
         this.profile = jobSpec.getProfile();
         profile.getBaseImageType();
 
+
+        seriesRepo = repos.getSeriesRepo(seriesId.getSeriesKey());
         threedModel = repos.getThreedModel(seriesId);
 
         stats.masterJobStartTime = id.getEnqueueTime();
@@ -406,16 +407,20 @@ public class Master {
                     for (final PngSegments fingerprint : jpgSet.getJpgSpecs()) {
                         if (monitorTask.isCancelled()) throw new InterruptedException();
 
+                        BaseImage baseImage = new BaseImage(profile, slice, fingerprint);
+                        RtRepo genRepo = seriesRepo.getRtRepo();
+                        File outFile = genRepo.getBaseImageFileName(baseImage);
+                        if (!outFile.exists()) {
 
-                        JpgTask jpgTask = new JpgTask(slice, fingerprint);
-                        executors.jpg.submit(jpgTask);
-                        builder.add(jpgTask);
+                            JpgTask jpgTask = new JpgTask(outFile, seriesRepo, baseImage);
+                            executors.jpg.submit(jpgTask);
+                            builder.add(jpgTask);
+                        }
 
 
                     }
 
-                    ImmutableList<JpgTask> jpgFutureTasks = builder.build();
-                    return jpgFutureTasks;
+                    return builder.build();
                 }
             });
 
@@ -469,22 +474,15 @@ public class Master {
 
     private final class JpgTask extends MyFutureTask<JpgState> {
 
-        private JpgTask(final Slice2 slice, final PngSegments fingerprint) {
+        private JpgTask(final File outFile, final SeriesRepo seriesRepo, final BaseImage baseImage) {
             super(new Callable<JpgState>() {
                 @Override
                 public JpgState call() throws Exception {
-
                     if (monitorTask.isCancelled()) throw new InterruptedException();
-
-                    BaseImage baseImage = new BaseImage(profile, slice, fingerprint);
-
-                    BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(repos, baseImage);
+                    BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(outFile, seriesRepo, baseImage);
                     jpgGeneratorPureJava.generate(stats);
-
                     return JpgState.COMPLETE;
                 }
-
-
             });
         }
 

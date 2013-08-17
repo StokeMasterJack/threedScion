@@ -6,6 +6,8 @@ import c3i.core.imageModel.shared.Profile;
 import c3i.core.threedModel.shared.BaseImageKey;
 import c3i.jpgGen.shared.Stats;
 import c3i.repo.server.Repos;
+import c3i.repo.server.SeriesRepo;
+import c3i.repo.server.rt.RtRepo;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
 import org.junit.Before;
@@ -13,7 +15,8 @@ import org.junit.Test;
 import smartsoft.util.shared.Path;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
@@ -45,19 +48,22 @@ public class TestImages {
 
     @Test
     public void test0() throws Exception {
-        Repos repos = new Repos(BrandKey.TOYOTA,new File(SCION_REPO) );
+        Repos repos = new Repos(BrandKey.TOYOTA, new File(SCION_REPO));
         Stats stats = new Stats();
         SeriesKey sk = SeriesKey.FRS_2013;
         String fp = "f2cd70a-49f9b91-2926eca-0c9f56a-ce22027-01de875-957b422";
+
+        SeriesRepo seriesRepo = repos.getSeriesRepo(sk);
+        RtRepo rtRepo = seriesRepo.getRtRepo();
 
         List<Profile> profiles = repos.getProfiles().getList();
 
         for (Profile profile : profiles) {
             BaseImageKey baseImage = new BaseImageKey(sk, profile, fp);
-            BaseImageGenerator g = new BaseImageGenerator(repos, baseImage);
+            File outFile = rtRepo.getBaseImageFileName(baseImage);
+            BaseImageGenerator g = new BaseImageGenerator(outFile, seriesRepo, baseImage);
             g.generate(stats);
         }
-
 
         stats.printDeltas();
     }
