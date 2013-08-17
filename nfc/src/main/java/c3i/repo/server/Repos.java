@@ -402,7 +402,7 @@ public class Repos {
 
         if (!jpgFile.exists()) {
             log.warning("Creating fallback jpg on the fly: " + jpgFile);
-            createJpgOnTheFly(jpgFile, seriesRepo, jpgKey);
+            createJpgOnTheFly(jpgKey);
 
             if (!jpgFile.exists()) {
                 throw new RuntimeException("Failed to create fallback jpg[" + jpgFile + "]");
@@ -412,9 +412,9 @@ public class Repos {
         return jpgFile;
     }
 
-    private void createJpgOnTheFly(File outFile, SeriesRepo seriesRepo, IBaseImageKey jpgKey) {
-        BaseImageGenerator jpgGeneratorPureJava = new BaseImageGenerator(outFile, seriesRepo, jpgKey);
-        jpgGeneratorPureJava.generate();
+    private void createJpgOnTheFly(IBaseImageKey jpgKey) {
+        BaseImageGenerator jpgGeneratorPureJava2 = new BaseImageGenerator(this, jpgKey);
+        jpgGeneratorPureJava2.generate();
     }
 
 
