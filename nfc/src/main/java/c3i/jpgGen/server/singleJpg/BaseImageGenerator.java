@@ -183,6 +183,7 @@ public class BaseImageGenerator {
             if (output != null) {
                 try {
                     output.close();
+                    writer.dispose();
                 } catch (IOException e) {
                     log.warning("Problem closing file [" + getOutputFile() + "]");
                 }
