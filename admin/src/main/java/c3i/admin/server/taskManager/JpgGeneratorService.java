@@ -99,6 +99,8 @@ public class JpgGeneratorService extends AbstractIdleService {
             }
         }
 
+        log.info("\t job removed[" + jobId + "]!");
+
     }
 
 
