@@ -3,6 +3,7 @@ package c3i.core.imageModel.shared;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import smartsoft.util.shared.Path;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,6 +70,7 @@ public class PngSpec {
 //        return srcPng.getUrl(repoBase);
 //    }
 
+    @Nonnull
     public PngSegment getKey(){
         return new PngSegment(srcPng.getShortSha(),deltaY);
     }

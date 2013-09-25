@@ -13,7 +13,7 @@ public class PngSegment {
     private final String shortSha;      //7 digits
     private final int deltaY;    //2 or 0 digits
 
-    public PngSegment(String shortSha, int deltaY) {
+    public PngSegment(String shortSha, int deltaY) throws IllegalArgumentException{
         Preconditions.checkNotNull(shortSha);
         Preconditions.checkArgument(shortSha.length() == 7);
         Preconditions.checkArgument(deltaY >= 0);
@@ -22,7 +22,18 @@ public class PngSegment {
         this.deltaY = deltaY;
     }
 
-    public PngSegment(String pngSegment) {
+    public PngSegment(String pngSegment) throws IllegalArgumentException {
+
+        if (pngSegment == null) {
+            throw new IllegalArgumentException("Invalid PngSegment fingerprint: pngSegment fingerprint cannot be null");
+        }
+
+        pngSegment = pngSegment.trim();
+
+        if (pngSegment.length() == 0) {
+            throw new IllegalArgumentException("Invalid PngSegment fingerprint: pngSegment fingerprint cannot be empty");
+        }
+
         if (pngSegment.length() == 9) {
             this.shortSha = pngSegment.substring(0, 7);
             String sTransform = pngSegment.substring(7);
@@ -31,7 +42,7 @@ public class PngSegment {
             this.shortSha = pngSegment;
             this.deltaY = 0;
         } else {
-            throw new IllegalArgumentException("Invalid pngSegment[" + pngSegment + "]");
+            throw new IllegalArgumentException("Invalid PngSegment fingerprint[" + pngSegment + "]");
         }
     }
 

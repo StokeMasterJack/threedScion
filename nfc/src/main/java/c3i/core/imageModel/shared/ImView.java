@@ -6,8 +6,10 @@ import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.shared.Slice;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import smartsoft.util.shared.Path;
 import smartsoft.util.shared.Strings;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 //import threed.core.imageModel.shared.slice.ImageSlice;
 //import threed.core.imageModel.shared.slice.Layer;
@@ -59,7 +63,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
 
         angleCount = getMaxAngle(layers);
 
-        log.info("angleCount for view["+getName() + "] is [" + angleCount + "]");
+        log.info("angleCount for view[" + getName() + "] is [" + angleCount + "]");
 
         this.initialAngle = getInitialAngle(initialAngle, name);
 
@@ -188,16 +192,50 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return name.equals("interior");
     }
 
+    public String getSliceString(int angle) {
+        return super.toString();
+    }
+
+    public SeriesKey getSeriesKey() {
+        return getSeries().getSeriesKey();
+    }
+
+    public Path getFullPathWithAngleAndPicks(SimplePicks picks, int angle) {
+        checkNotNull(picks);
+        Path viewPath = getUrl(new Path());
+        System.err.println("viewPath[" + viewPath + "]");
+        Path slicePath = viewPath.append("angle-" + angle);
+
+        if (picks instanceof FixedPicks) {
+            FixedPicks fixedPicks = (FixedPicks) picks;
+            Path picksPath = fixedPicks.getPath();
+            if (picksPath != null) {
+                System.err.println("picksPath[" + picksPath + "]");
+                slicePath.append(picksPath);
+            }
+        }
+
+        return slicePath;
+    }
+
     public PngSegments getPngSegments(SimplePicks picks, int angle) {
         ImmutableList.Builder<PngSegment> pngs = ImmutableList.builder();
         ImmutableList<PngSpec> pngSpecs = getPngSpecs(picks, angle);
-        for (PngSpec pngSpec : pngSpecs) {
-            PngSegment pngSegment = pngSpec.getKey();
-            pngs.add(pngSegment);
+        checkNotNull(pngSpecs);
+
+        if (pngSpecs.isEmpty()) {
+            Path p = getFullPathWithAngleAndPicks(picks, angle);
+            throw new IllegalStateException("Generated an empty 3D image for [" + p + "]");
         }
+
+        for (PngSpec pngSpec : pngSpecs) {
+            pngs.add(pngSpec.getKey());
+        }
+
         return new PngSegments(pngs.build());
     }
 
+    @Nonnull
     public ImmutableList<PngSpec> getPngSpecs(SimplePicks picks, int angle) {
         Preconditions.checkNotNull(picks);
         Preconditions.checkArgument(angle > 0, "Angle must be greater than zero for " + getName() + " view");
@@ -418,8 +456,7 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         int retVal;
         if (isLast) {
             retVal = 1;
-        }
-        else retVal = currentAngle + 1;
+        } else retVal = currentAngle + 1;
         return retVal;
     }
 
@@ -474,7 +511,9 @@ public class ImView extends ImChildBase implements IsParent<ImLayer> {
         return angles;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return Strings.capFirstLetter(name);
     }
+
+
 }

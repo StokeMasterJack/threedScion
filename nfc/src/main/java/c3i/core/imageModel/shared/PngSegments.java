@@ -11,11 +11,23 @@ public class PngSegments implements Serializable {
 
     private String fingerprint;
 
-    public PngSegments(ImmutableList<PngSegment> pngs) {
+    public PngSegments(ImmutableList<PngSegment> pngs) throws IllegalArgumentException {
         fingerprint = generateFingerprint(pngs);
     }
 
-    public PngSegments(String fingerprint) {
+    public PngSegments(String fingerprint) throws IllegalArgumentException {
+
+        if (fingerprint == null) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngSegments fingerprint cannot be null");
+        }
+
+        fingerprint = fingerprint.trim();
+
+        if (fingerprint.length() == 0) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngSegments fingerprint cannot be empty");
+        }
+
+
         this.fingerprint = fingerprint;
     }
 
@@ -30,16 +42,40 @@ public class PngSegments implements Serializable {
         return fingerprint;
     }
 
-    public static ImmutableList<PngSegment> parse(String fingerprint) {
+    public static ImmutableList<PngSegment> parse(String fingerprint) throws IllegalArgumentException {
+        if (fingerprint == null) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngSegments fingerprint cannot be null");
+        }
+
+        fingerprint = fingerprint.trim();
+
+        if (fingerprint.length() == 0) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngSegments fingerprint cannot be empty");
+        }
+
         ImmutableList.Builder<PngSegment> builder = ImmutableList.builder();
         String[] pngSegments = fingerprint.split("-");
         for (String pngSegment : pngSegments) {
-            builder.add(new PngSegment(pngSegment));
+            PngSegment ps = null;
+            try {
+                ps = new PngSegment(pngSegment);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid PngSegments fingerprint[" + fingerprint + "]", e);
+            }
+            builder.add(ps);
         }
+
         return builder.build();
     }
 
-    public static String generateFingerprint(ImmutableList<PngSegment> pngs) {
+    public static String generateFingerprint(ImmutableList<PngSegment> pngs) throws IllegalArgumentException {
+        if (pngs == null) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngs cannot be null");
+        }
+        if (pngs.isEmpty()) {
+            throw new IllegalArgumentException("Invalid PngSegments fingerprint: pngs cannot be empty");
+        }
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < pngs.size(); i++) {
             PngSegment srcPng = pngs.get(i);

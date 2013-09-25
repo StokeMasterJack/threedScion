@@ -1,14 +1,17 @@
 package c3i.core.featureModel.shared;
 
-import com.google.common.base.Preconditions;
 import c3i.core.featureModel.shared.boolExpr.AssignmentException;
 import c3i.core.featureModel.shared.boolExpr.Var;
 import c3i.core.threedModel.client.SimplePicks2;
 import c3i.util.shared.futures.HasKey;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import smartsoft.util.shared.Path;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Immutable
 public class FixedPicks implements SimplePicks2, HasKey {
@@ -83,10 +86,23 @@ public class FixedPicks implements SimplePicks2, HasKey {
         return !isValidBuild();
     }
 
+    public Path getPath() {
+        TreeSet<String> ts = new TreeSet<String>();
+        Set trueVars = assignments.getTrueVars();
+        for (Object var : trueVars) {
+            ts.add(var.toString());
+        }
+        String join = Joiner.on('/').join(ts);
+        return new Path(join);
+    }
+
     @Override
     public String toString() {
-        if (isValidBuild()) return "Valid build";
-        else return "Invalid build: " + exception;
+        if (isValidBuild()) {
+            return "Valid build";
+        } else {
+            return "InvalidBuild: " + exception;
+        }
     }
 
     public String toStringLong() {
