@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
-import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import org.eclipse.jgit.lib.Constants;
@@ -25,12 +24,7 @@ import java.security.Security;
 import java.util.HashSet;
 import java.util.Set;
 
-//import org.apache.tools.ant.filters.StringInputStream;
-
 public class ImageUtil {
-
-//    private static final int IMAGE_WIDTH = 599;
-//    private static final int IMAGE_HEIGHT = 366;
 
     public static class ImageInfo {
         private final int pixelCount;
@@ -74,12 +68,6 @@ public class ImageUtil {
             return true;
         }
     }
-//
-//    public static boolean isEmpty(File imageFile) {
-//        ImageInfo imageInfo = imageInfo(imageFile);
-//        return imageInfo.isEmpty();
-//    }      '
-
 
     public static boolean isEmptyPng(String fullFileName, InputSupplier<? extends InputStream> content) {
 
@@ -121,7 +109,6 @@ public class ImageUtil {
 
         return true;
     }
-
 
     public static ImageInfo imageInfo(File imageFile) {
         if (imageFile == null) throw new IllegalArgumentException();
@@ -235,23 +222,6 @@ public class ImageUtil {
             throw new RuntimeException(e);
         }
     }
-
-//    public static String getSHAFingerPrint(Jpg jpg) throws NoSuchAlgorithmException {
-//        StringBuilder cattedPngs = new StringBuilder();
-//        String fp = null;
-//
-//        for (ImPng png : jpg.getPngs()) {
-//            cattedPngs.append(png.getPath().toString()).append("|");
-//        }
-//
-//        MessageDigest md = MessageDigest.getInstance("MD5");
-//        md.update(cattedPngs.toString().getBytes());
-//        md.update(jpg.getPath().toString().getBytes());
-//        byte[] hashedBytes = md.digest();
-//
-//        fp = StringUtil.byteArray2Hex(hashedBytes).replaceAll(" ", "");
-//        return fp;
-//    }
 
     @Nonnull
     public static String getFingerprint(@Nonnull final String text) {
