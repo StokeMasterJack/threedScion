@@ -27,7 +27,7 @@ import static smartsoft.util.shared.GwtSafe.getSimpleName;
 
 public class ViewPanel extends ComplexPanel {
 
-    private static final int IMAGE_COUNT = 20;
+    private static final int IMAGE_COUNT = 30;
 
     private ViewModel viewModel;
     private RectSize fixedSize;
