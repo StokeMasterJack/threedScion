@@ -28,13 +28,16 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
 
         HttpServletResponse response = r.getResponse();
 
-        String callback = r.getRequest().getParameter("callback");
-        String contentType;
-        if (callback == null) {
-            contentType = "application/json";
-        } else {
-            contentType = "text/javascript";
-        }
+        String contentType = "application/json";
+
+//        String callback = r.getRequest().getParameter("callback");
+
+//        String contentType;
+//        if (callback == null) {
+//         contentType = "application/json";
+//        } else {
+//            contentType = "text/javascript";
+//        }
 
 
         response.setContentType(contentType);
@@ -43,6 +46,8 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
         int maxAgeBrowser = 4; //hours
         int maxAgeCdn = 24; //hours
         CacheUtil.addCacheForXHoursResponseHeaders(response, maxAgeCdn, maxAgeBrowser);
+
+//        CacheUtil.addCacheNeverResponseHeaders(response);
 
         BrandKey brandKey = r.getBrandKey();
         Repos repos = r.getRepos();
@@ -54,9 +59,9 @@ public class VtcMapHandler extends RepoHandler<RepoRequest> {
         ObjectNode jsBrandInitData = brandSerializer.toJson(brandInitData);
         String jsonString = jsBrandInitData.toString();
 
-        if (callback != null) {
-            jsonString = callback + "(" + jsonString + ");";
-        }
+//        if (callback != null) {
+//            jsonString = callback + "(" + jsonString + ");";
+//        }
 
         log.fine("About to server brandInit: ");
         log.fine(jsonString);

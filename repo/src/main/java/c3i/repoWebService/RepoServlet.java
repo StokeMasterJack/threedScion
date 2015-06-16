@@ -228,16 +228,19 @@ public class RepoServlet extends HttpServlet {
 
     private boolean isThreedModelRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        String callback = request.getParameter("callback");
-        if (callback != null) return false;
-        return (uri.endsWith(".json") || uri.endsWith(".js")) && uri.contains("/3d/models/");
+//        String callback = request.getParameter("callback");
+//        if (callback != null) return false;
+        return uri.endsWith(".json") && uri.contains("/3d/models/");
     }
 
     private boolean isThreedModelJsonpRequest(HttpServletRequest request) {
-        String uri = request.getRequestURI();
-        String callback = request.getParameter("callback");
-        if (callback == null) return false;
-        return (uri.endsWith(".json") || uri.endsWith(".js")) && uri.contains("/3d/models/");
+        //for security reasons:
+        return false;
+
+//        String uri = request.getRequestURI();
+//        String callback = request.getParameter("callback");
+//        if (callback == null) return false;
+//        return (uri.endsWith(".json") || uri.endsWith(".js")) && uri.contains("/3d/models/");
     }
 
     private boolean isObjectRequest(HttpServletRequest request) {
